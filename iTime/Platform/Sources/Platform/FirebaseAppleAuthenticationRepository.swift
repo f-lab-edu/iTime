@@ -11,12 +11,16 @@ import CryptoKit
 import RxSwift
 import RIBs
 
+// MARK: - ASAuthorizationContextProviding
+
+public protocol ASAuthorizationContextProviding: ASAuthorizationControllerPresentationContextProviding {}
+
 // MARK: - FirebaseAppleLoginRepository
 
 public protocol FirebaseAppleAuthenticationRepository {
-    func signInWithApple(_ presentation: ASAuthorizationControllerPresentationContextProviding)
+    func signInWithApple(_ presentation: ASAuthorizationContextProviding)
     func signOut()
-    func deleteCurrentUser(_ presentation: ASAuthorizationControllerPresentationContextProviding)
+    func deleteCurrentUser(_ presentation: ASAuthorizationContextProviding)
 }
 
 // MARK: - FirebaseAppleAuthenticationRepositoryImpl
@@ -27,7 +31,7 @@ public final class FirebaseAppleAuthenticationRepositoryImpl:
 {
     fileprivate var currentNonce: String?
     
-    public func signInWithApple(_ presentation: ASAuthorizationControllerPresentationContextProviding) {
+    public func signInWithApple(_ presentation: ASAuthorizationContextProviding) {
         let nonce = randomNonceString()
         currentNonce = nonce
         let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -108,7 +112,7 @@ extension FirebaseAppleAuthenticationRepositoryImpl: ASAuthorizationControllerDe
 // MARK: - Delete User
 
 extension FirebaseAppleAuthenticationRepositoryImpl {
-    public func deleteCurrentUser(_ presentation: ASAuthorizationControllerPresentationContextProviding) {
+    public func deleteCurrentUser(_ presentation: ASAuthorizationContextProviding) {
         let nonce = randomNonceString()
         currentNonce = nonce
         let appleIDProvider = ASAuthorizationAppleIDProvider()
