@@ -54,7 +54,7 @@ final class FirestoreRespositoryImpl: FirestoreRepository {
     init(database: Firestore = Firestore.firestore()) {
         self.database = database
     }
-
+    
     ///
     /// - Parameter data: Data serialized to [String: Any] format
     /// - Parameter reference: enumerated doc reference
@@ -75,7 +75,7 @@ final class FirestoreRespositoryImpl: FirestoreRepository {
             return Disposables.create()
         }
     }
-
+    
     /// Updating existing document
     /// - Parameter data: Data serialized to [String: Any] format
     /// - Parameter reference: enumerated doc reference
@@ -97,7 +97,7 @@ final class FirestoreRespositoryImpl: FirestoreRepository {
             return Disposables.create()
         }
     }
-
+    
     /// Observable for collections in Firebase
     ///
     /// - Parameters:
@@ -119,7 +119,7 @@ final class FirestoreRespositoryImpl: FirestoreRepository {
             }
         return changesSubject.asObservable()
     }
-
+    
     /// Observable for documents in Firebase
     ///
     /// - Parameters:

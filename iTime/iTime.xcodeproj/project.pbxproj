@@ -19,6 +19,7 @@
 		DE4E55272AEA65FF00DDD145 /* LoggedOut in Frameworks */ = {isa = PBXBuildFile; productRef = DE4E55262AEA65FF00DDD145 /* LoggedOut */; };
 		DE4E55292AEA65FF00DDD145 /* LoggedOutImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE4E55282AEA65FF00DDD145 /* LoggedOutImpl */; };
 		DE4E552B2AEA677800DDD145 /* NeedleGenerated.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E552A2AEA677800DDD145 /* NeedleGenerated.swift */; };
+		DE4E552D2AEA92FB00DDD145 /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = DE4E552C2AEA92FB00DDD145 /* Domain */; };
 		DEB54D3C2AE7F33400E940BE /* Platform in Frameworks */ = {isa = PBXBuildFile; productRef = DEB54D3B2AE7F33400E940BE /* Platform */; };
 		DEB54D3E2AE7F33400E940BE /* ProxyPackage in Frameworks */ = {isa = PBXBuildFile; productRef = DEB54D3D2AE7F33400E940BE /* ProxyPackage */; };
 		DEB54D402AE7F84600E940BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEB54D3F2AE7F84600E940BE /* GoogleService-Info.plist */; };
@@ -52,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE4E552D2AEA92FB00DDD145 /* Domain in Frameworks */,
 				DEB54D3E2AE7F33400E940BE /* ProxyPackage in Frameworks */,
 				DE4E55292AEA65FF00DDD145 /* LoggedOutImpl in Frameworks */,
 				DEB54D3C2AE7F33400E940BE /* Platform in Frameworks */,
@@ -156,6 +158,7 @@
 				DEB54D3D2AE7F33400E940BE /* ProxyPackage */,
 				DE4E55262AEA65FF00DDD145 /* LoggedOut */,
 				DE4E55282AEA65FF00DDD145 /* LoggedOutImpl */,
+				DE4E552C2AEA92FB00DDD145 /* Domain */,
 			);
 			productName = iTime;
 			productReference = DE05709F2AE6735E00669BDF /* iTime.app */;
@@ -443,6 +446,10 @@
 		DE4E55282AEA65FF00DDD145 /* LoggedOutImpl */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LoggedOutImpl;
+		};
+		DE4E552C2AEA92FB00DDD145 /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
 		};
 		DEB54D3B2AE7F33400E940BE /* Platform */ = {
 			isa = XCSwiftPackageProductDependency;
