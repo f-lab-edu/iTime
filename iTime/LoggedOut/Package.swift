@@ -31,6 +31,7 @@ let package = Package(
         .target(
             name: "LoggedOutImpl",
             dependencies: [
+                "LoggedOut",
                 "Domain"
             ]
         ),

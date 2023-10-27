@@ -9,6 +9,7 @@ import ReactorKit
 import RIBs
 import RxSwift
 
+import Domain
 import LoggedOut
 
 // MARK: - LoggedOutPresentable
@@ -46,7 +47,8 @@ final class LoggedOutInteractor:
     
     init(
         presenter: LoggedOutPresentable,
-        initialState: LoggedOutPresentableState
+        initialState: LoggedOutPresentableState,
+        authenticationUsecase: AuthenticationUsecase
     ) {
         self.initialState = initialState
         

@@ -8,11 +8,14 @@
 import NeedleFoundation
 import RIBs
 
+import Domain
 import LoggedOut
 
 // MARK: - LoggedOutDependency
 
-public protocol LoggedOutDependency: NeedleFoundation.Dependency {}
+public protocol LoggedOutDependency: NeedleFoundation.Dependency {
+    var authenticaitonUsecase: AuthenticationUsecase { get }
+}
 
 // MARK: - LoggedOutComponent
 
@@ -34,9 +37,16 @@ public final class LoggedOutBuilder:
       _ payload: LoggedOutBuildDependency
     ) -> LoggedOutRouting {
         let viewController = LoggedOutViewController()
-        let interactor = LoggedOutInteractor(presenter: viewController, initialState: component.initialState)
+        let interactor = LoggedOutInteractor(
+            presenter: viewController,
+            initialState: component.initialState,
+            authenticationUsecase: component.authenticaitonUsecase
+        )
         
         interactor.listener = payload.listener
-        return LoggedOutRouter(interactor: interactor, viewController: viewController)
+        return LoggedOutRouter(
+            interactor: interactor,
+            viewController: viewController
+        )
     }
 }
