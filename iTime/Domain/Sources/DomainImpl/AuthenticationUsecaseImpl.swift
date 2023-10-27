@@ -81,7 +81,7 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
 // MARK: - Set Authetication Notification
 
 extension AuthenticationUsecaseImpl {
-    private func addSignInObservers(_ handleNotification: (ThirdPartyAuthenticationResult) -> Void) {
+    private func addSignInObservers(_ handleNotification: @escaping (ThirdPartyAuthenticationResult) -> Void) {
         NotificationCenter.default.addObserver(
             forName: ThirdPartyAuthenticationResult.AuthenticationSuccess.signIn.notificationName,
             object: nil,
@@ -97,7 +97,7 @@ extension AuthenticationUsecaseImpl {
             }
     }
     
-    private func addSignOutObservers(_ handleNotification: (ThirdPartyAuthenticationResult) -> Void) {
+    private func addSignOutObservers(_ handleNotification: @escaping (ThirdPartyAuthenticationResult) -> Void) {
         NotificationCenter.default.addObserver(
             forName: ThirdPartyAuthenticationResult.AuthenticationSuccess.signOut.notificationName,
             object: nil,
@@ -113,7 +113,7 @@ extension AuthenticationUsecaseImpl {
             }
     }
     
-    private func addDeleteUserObservers(_ handleNotification: (ThirdPartyAuthenticationResult) -> Void) {
+    private func addDeleteUserObservers(_ handleNotification: @escaping (ThirdPartyAuthenticationResult) -> Void) {
         NotificationCenter.default.addObserver(
             forName: ThirdPartyAuthenticationResult.AuthenticationSuccess.deleteUser.notificationName,
             object: nil,

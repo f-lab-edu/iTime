@@ -7,6 +7,8 @@
 
 import Platform
 
+import RxSwift
+
 // MARK: ㅡ AuthenticaitonUsecase
 
 public protocol AuthenticationUsecase {
