@@ -153,26 +153,44 @@ extension FirebaseAppleAuthenticationRepositoryImpl {
 
 extension FirebaseAppleAuthenticationRepositoryImpl {
     private func postNotificationSignInSuccess() {
-        NotificationCenter.default.post(name: ThirdPartyAuthenticationResult.signInSuccess.notificationName, object: nil)
+        NotificationCenter.default.post(
+            name: ThirdPartyAuthenticationResult.AuthenticationSuccess.signIn.notificationName,
+            object: nil
+        )
     }
     
     private func postNotificationSignInError() {
-        NotificationCenter.default.post(name: ThirdPartyAuthenticationResult.signInError.notificationName, object: nil)
+        NotificationCenter.default.post(
+            name: ThirdPartyAuthenticationResult.AuthenticationError.signInError.notificationName,
+            object: nil
+        )
     }
     
     private func postNotificationSignOutSuccess() {
-        NotificationCenter.default.post(name: ThirdPartyAuthenticationResult.signOutSuccess.notificationName, object: nil)
+        NotificationCenter.default.post(
+            name: ThirdPartyAuthenticationResult.AuthenticationSuccess.signOut.notificationName,
+            object: nil
+        )
     }
     
     private func postNotificationSignOutError() {
-        NotificationCenter.default.post(name: ThirdPartyAuthenticationResult.signOutError.notificationName, object: nil)
+        NotificationCenter.default.post(
+            name: ThirdPartyAuthenticationResult.AuthenticationError.signOutError.notificationName,
+            object: nil
+        )
     }
     
     private func postNotificationDeleteUserSuccess() {
-        NotificationCenter.default.post(name: ThirdPartyAuthenticationResult.deleteUserSuccess.notificationName, object: nil)
+        NotificationCenter.default.post(
+            name: ThirdPartyAuthenticationResult.AuthenticationSuccess.deleteUser.notificationName,
+            object: nil
+        )
     }
     
     private func postNotificationDeleteUserError() {
-        NotificationCenter.default.post(name: ThirdPartyAuthenticationResult.deleteUserError.notificationName, object: nil)
+        NotificationCenter.default.post(
+            name: ThirdPartyAuthenticationResult.AuthenticationError.deleteUserError.notificationName,
+            object: nil
+        )
     }
 }

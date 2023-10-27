@@ -10,7 +10,7 @@ import Platform
 // MARK: ㅡ AuthenticaitonUsecase
 
 public protocol AuthenticationUsecase {
-    func appleSignUp(_ presentation: ASAuthorizationContextProviding)
-    func signOut()
-    func deleteUser(_ presentation: ASAuthorizationContextProviding)
+    func appleSignUp(_ presentation: ASAuthorizationContextProviding) -> Observable<Void>
+    func signOut() -> Observable<Void>
+    func deleteUser(_ presentation: ASAuthorizationContextProviding) -> Observable<Void>
 }
