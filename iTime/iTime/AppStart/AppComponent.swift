@@ -10,6 +10,7 @@ import NeedleFoundation
 import Platform
 import PlatformImpl
 import Domain
+import DomainImpl
 import LoggedOut
 import LoggedOutImpl
 
@@ -26,8 +27,8 @@ final class AppComponent:
         }
     }
     
-    var authenticaitonUsecase: AuthenticationUsecase {
-        AuthenticationUsecaseImpl()
+    var authenticationUsecase: AuthenticationUsecase {
+        AuthenticationUsecaseImpl(appleAuthenticationRepository: firebaseAppleAuthenticationRepository)
     }
 
 }
