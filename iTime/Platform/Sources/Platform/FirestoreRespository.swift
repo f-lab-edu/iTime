@@ -24,10 +24,10 @@ public protocol FirestoreRepository {
     func collectionObservable(
         for reference: DocumentReferenceConvertible,
         includeMetadata: Bool
-    ) -> Observable<QuerySnapshotWrapper>
+    ) -> Observable<iTimeQuerySnapshot>
     
     func documentObservable(
         for reference: DocumentReferenceConvertible,
         includeMetadata: Bool
-    ) -> Observable<DocumentSnapshotWrapper>
+    ) -> Observable<iTimeDocumentSnapshot>
 }

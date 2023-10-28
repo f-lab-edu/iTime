@@ -10,6 +10,16 @@ import RxSwift
 
 import Platform
 
+// MARK: - DocumentSnapshot & QuerySnapshot
+
+extension DocumentSnapshot: iTimeDocumentSnapshot {}
+
+extension QuerySnapshot: iTimeQuerySnapshot {
+    public var iTimeDocuments: [iTimeDocumentSnapshot] {
+        self.documents
+    }
+}
+
 // MARK: - FirestoreRespositoryImpl
 
 final class FirestoreRespositoryImpl: FirestoreRepository {
@@ -17,6 +27,7 @@ final class FirestoreRespositoryImpl: FirestoreRepository {
     
     init(database: Firestore = Firestore.firestore()) {
         self.database = database
+        
     }
     
     /// Create new document
@@ -70,17 +81,18 @@ final class FirestoreRespositoryImpl: FirestoreRepository {
     func collectionObservable(
         for reference: DocumentReferenceConvertible,
         includeMetadata: Bool
-    ) -> Observable<QuerySnapshotWrapper> {
-        let changesSubject = PublishSubject<QuerySnapshotWrapper>()
+    ) -> Observable<iTimeQuerySnapshot> {
+        let changesSubject = PublishSubject<iTimeQuerySnapshot>()
         database
             .collection(reference.referencePath)
             .addSnapshotListener(includeMetadataChanges: includeMetadata) { snapshot, error in
                 if let error = error {
                     changesSubject.onError(error)
                 } else {
-                    snapshot.map { changesSubject.onNext(QuerySnapshotWrapper(querySnapshot: $0)) }
+                    snapshot.map { changesSubject.onNext($0) }
                 }
             }
+        
         return changesSubject.asObservable()
     }
     
@@ -92,15 +104,15 @@ final class FirestoreRespositoryImpl: FirestoreRepository {
     func documentObservable(
         for reference: DocumentReferenceConvertible,
         includeMetadata: Bool
-    ) -> Observable<DocumentSnapshotWrapper> {
-        let changesSubject = PublishSubject<DocumentSnapshotWrapper>()
+    ) -> Observable<iTimeDocumentSnapshot> {
+        let changesSubject = PublishSubject<iTimeDocumentSnapshot>()
         database
             .document(reference.referencePath)
             .addSnapshotListener(includeMetadataChanges: includeMetadata) { snapshot, error in
                 if let error = error {
                     changesSubject.onError(error)
                 } else {
-                    snapshot.map { changesSubject.onNext(DocumentSnapshotWrapper(documentSnapshot: $0)) }
+                    snapshot.map { changesSubject.onNext($0) }
                 }
             }
         return changesSubject.asObservable()
