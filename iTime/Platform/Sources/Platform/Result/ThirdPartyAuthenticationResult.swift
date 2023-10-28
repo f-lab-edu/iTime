@@ -7,30 +7,27 @@
 
 import Foundation
 
-// MARK: - ThirdPartyAuthenticationResult
+// MARK: - AuthenticationSuccess
 
-public enum ThirdPartyAuthenticationResult {
-    case success(AuthenticationSuccess)
-    case error(AuthenticationError)
+public enum AuthenticationSuccess: String {
+    case signOut
+    case signIn
+    case deleteUser
     
-    public enum AuthenticationSuccess: String {
-        case signOut
-        case signIn
-        case deleteUser
-        
-        public var notificationName: NSNotification.Name {
-            return NSNotification.Name(rawValue: self.rawValue)
-        }
+    public var notificationName: NSNotification.Name {
+        return NSNotification.Name(rawValue: self.rawValue)
     }
+}
 
-    public enum AuthenticationError: String, Error {
-        case signOutError
-        case signInError
-        case deleteUserError
-        case osError
-        
-        public var notificationName: NSNotification.Name {
-            return NSNotification.Name(rawValue: self.rawValue)
-        }
+// MARK: - AuthenticationError
+
+public enum AuthenticationError: String, Error {
+    case signOutError
+    case signInError
+    case deleteUserError
+    case osError
+    
+    public var notificationName: NSNotification.Name {
+        return NSNotification.Name(rawValue: self.rawValue)
     }
 }

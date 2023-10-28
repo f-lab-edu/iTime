@@ -33,7 +33,7 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
                 switch result {
                     case .success(_):
                         observer.onNext(Void())
-                    case let .error(error):
+                    case let .failure(error):
                         observer.onError(error)
                 }
             }
@@ -50,7 +50,7 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
                 switch result {
                     case .success(_):
                         observer.onNext(Void())
-                    case let .error(error):
+                    case let .failure(error):
                         observer.onError(error)
                 }
             }
@@ -67,7 +67,7 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
                 switch result {
                     case .success(_):
                         observer.onNext(Void())
-                    case let .error(error):
+                    case let .failure(error):
                         observer.onError(error)
                 }
             }
@@ -81,51 +81,53 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
 // MARK: - Set Authetication Notification
 
 extension AuthenticationUsecaseImpl {
-    private func addSignInObservers(_ handleNotification: @escaping (ThirdPartyAuthenticationResult) -> Void) {
+    typealias ThirdPartyAuthenticationResult = (Result<AuthenticationSuccess, AuthenticationError>) -> Void
+    
+    private func addSignInObservers(_ handleNotification: @escaping ThirdPartyAuthenticationResult) {
         NotificationCenter.default.addObserver(
-            forName: ThirdPartyAuthenticationResult.AuthenticationSuccess.signIn.notificationName,
+            forName: AuthenticationSuccess.signIn.notificationName,
             object: nil,
             queue: OperationQueue.current) { _ in
                 handleNotification(.success(.signIn))
             }
         
         NotificationCenter.default.addObserver(
-            forName: ThirdPartyAuthenticationResult.AuthenticationError.signInError.notificationName,
+            forName: AuthenticationError.signInError.notificationName,
             object: nil,
             queue: OperationQueue.current) { _ in
-                handleNotification(.error(.signInError))
+                handleNotification(.failure(.signInError))
             }
     }
     
-    private func addSignOutObservers(_ handleNotification: @escaping (ThirdPartyAuthenticationResult) -> Void) {
+    private func addSignOutObservers(_ handleNotification: @escaping ThirdPartyAuthenticationResult) {
         NotificationCenter.default.addObserver(
-            forName: ThirdPartyAuthenticationResult.AuthenticationSuccess.signOut.notificationName,
+            forName: AuthenticationSuccess.signOut.notificationName,
             object: nil,
             queue: OperationQueue.current) { _ in
                 handleNotification(.success(.signOut))
             }
         
         NotificationCenter.default.addObserver(
-            forName: ThirdPartyAuthenticationResult.AuthenticationError.signOutError.notificationName,
+            forName: AuthenticationError.signOutError.notificationName,
             object: nil,
             queue: OperationQueue.current) { _ in
-                handleNotification(.error(.signOutError))
+                handleNotification(.failure(.signOutError))
             }
     }
     
-    private func addDeleteUserObservers(_ handleNotification: @escaping (ThirdPartyAuthenticationResult) -> Void) {
+    private func addDeleteUserObservers(_ handleNotification: @escaping ThirdPartyAuthenticationResult) {
         NotificationCenter.default.addObserver(
-            forName: ThirdPartyAuthenticationResult.AuthenticationSuccess.deleteUser.notificationName,
+            forName: AuthenticationSuccess.deleteUser.notificationName,
             object: nil,
             queue: OperationQueue.current) { _ in
                 handleNotification(.success(.deleteUser))
             }
         
         NotificationCenter.default.addObserver(
-            forName: ThirdPartyAuthenticationResult.AuthenticationError.deleteUserError.notificationName,
+            forName: AuthenticationError.deleteUserError.notificationName,
             object: nil,
             queue: OperationQueue.current) { _ in
-                handleNotification(.error(.deleteUserError))
+                handleNotification(.failure(.deleteUserError))
             }
     }
 }
