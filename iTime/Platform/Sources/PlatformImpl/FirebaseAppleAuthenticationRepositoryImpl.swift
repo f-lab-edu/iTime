@@ -18,6 +18,11 @@ public final class FirebaseAppleAuthenticationRepositoryImpl:
     FirebaseAppleAuthenticationRepository
 {
     fileprivate var currentNonce: String?
+    fileprivate var notificationCenter: Postable
+    
+    init(notificationCenter: Postable = NotificationCenter.default) {
+        self.notificationCenter = notificationCenter
+    }
     
     public func signInWithApple(_ presentation: ASAuthorizationContextProviding) {
         let nonce = randomNonceString()
@@ -153,42 +158,42 @@ extension FirebaseAppleAuthenticationRepositoryImpl {
 
 extension FirebaseAppleAuthenticationRepositoryImpl {
     private func postNotificationSignInSuccess() {
-        NotificationCenter.default.post(
+        notificationCenter.post(
             name: AuthenticationSuccess.signIn.notificationName,
             object: nil
         )
     }
     
     private func postNotificationSignInError() {
-        NotificationCenter.default.post(
+        notificationCenter.post(
             name: AuthenticationError.signInError.notificationName,
             object: nil
         )
     }
     
     private func postNotificationSignOutSuccess() {
-        NotificationCenter.default.post(
+        notificationCenter.post(
             name: AuthenticationSuccess.signOut.notificationName,
             object: nil
         )
     }
     
     private func postNotificationSignOutError() {
-        NotificationCenter.default.post(
+        notificationCenter.post(
             name: AuthenticationError.signOutError.notificationName,
             object: nil
         )
     }
     
     private func postNotificationDeleteUserSuccess() {
-        NotificationCenter.default.post(
+        notificationCenter.post(
             name: AuthenticationSuccess.deleteUser.notificationName,
             object: nil
         )
     }
     
     private func postNotificationDeleteUserError() {
-        NotificationCenter.default.post(
+        notificationCenter.post(
             name: AuthenticationError.deleteUserError.notificationName,
             object: nil
         )

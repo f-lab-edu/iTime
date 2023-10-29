@@ -15,6 +15,9 @@ let package = Package(
         .library(
             name: "PlatformImpl",
             targets: ["PlatformImpl"]),
+        .library(
+            name: "PlatformTestSupports",
+            targets: ["PlatformTestSupports"]),
     ],
     dependencies: [
         .package(path: "../ProxyPackage")
@@ -27,6 +30,12 @@ let package = Package(
             ]),
         .target(
             name: "PlatformImpl",
+            dependencies: [
+                "Platform",
+                "ProxyPackage",
+            ]),
+        .target(
+            name: "PlatformTestSupports",
             dependencies: [
                 "Platform",
                 "ProxyPackage",
