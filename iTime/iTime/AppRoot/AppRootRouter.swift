@@ -45,11 +45,7 @@ final class AppRootRouter:
     func attachLoggedOut() {
         guard loggedOutRouter == nil else { return }
         
-        let router = loggedOutBuilder.build(
-            with: LoggedOutBuildDependency(
-                listener: interactor
-            )
-        )
+        let router = loggedOutBuilder.build(with: interactor)
         loggedOutRouter = router
         attachChild(router)
         viewController.present(router.viewControllable, animated: true, completion: nil)

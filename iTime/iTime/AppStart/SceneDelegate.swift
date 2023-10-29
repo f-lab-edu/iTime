@@ -35,7 +35,7 @@ extension SceneDelegate {
     private func configureAppLaunch() {
         guard let window = window else { return }
         let appComponent = AppComponent()
-        self.launchRouter = appComponent.appRootBuilder.build()
+        self.launchRouter = AppRootBuilder(dependency: appComponent).build()
         self.launchRouter?.launch(from: window)
     }
 }
