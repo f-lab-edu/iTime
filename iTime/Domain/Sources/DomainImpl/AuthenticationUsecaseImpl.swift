@@ -9,8 +9,10 @@ import Foundation
 
 import RxSwift
 
-import Platform
+
 import Domain
+import Platform
+import ProxyPackage
 
 // MARK: - AuthenticationUsecaseImpl
 
@@ -27,9 +29,8 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
     }
     
     public func appleSignUp(_ presentation: ASAuthorizationContextProviding) -> Observable<Void> {
-        return Observable.create { [weak self] observer in
-            guard let self else { return Disposables.create() }
-            self.addSignInObservers { result in
+        Observable.create(with: self) { this, observer in
+            this.addSignInObservers { result in
                 switch result {
                     case .success(_):
                         observer.onNext(Void())
@@ -38,15 +39,14 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
                 }
             }
             
-            self.appleAuthenticationRepository.signInWithApple(presentation)
+            this.appleAuthenticationRepository.signInWithApple(presentation)
             return Disposables.create()
         }
     }
     
     public func signOut() -> Observable<Void> {
-        return Observable.create { [weak self] observer in
-            guard let self else { return Disposables.create() }
-            self.addSignOutObservers { result in
+        Observable.create(with: self) { this, observer in
+            this.addSignOutObservers { result in
                 switch result {
                     case .success(_):
                         observer.onNext(Void())
@@ -55,15 +55,14 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
                 }
             }
             
-            self.appleAuthenticationRepository.signOut()
+            this.appleAuthenticationRepository.signOut()
             return Disposables.create()
         }
     }
     
     public func deleteUser(_ presentation: ASAuthorizationContextProviding) -> Observable<Void> {
-        return Observable.create { [weak self] observer in
-            guard let self else { return Disposables.create() }
-            self.addDeleteUserObservers { result in
+        Observable.create(with: self) { this, observer in
+            this.addDeleteUserObservers { result in
                 switch result {
                     case .success(_):
                         observer.onNext(Void())
@@ -71,8 +70,7 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
                         observer.onError(error)
                 }
             }
-            
-            self.appleAuthenticationRepository.deleteCurrentUser(presentation)
+            this.appleAuthenticationRepository.deleteCurrentUser(presentation)
             return Disposables.create()
         }
     }
