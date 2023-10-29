@@ -33,6 +33,10 @@ let package = Package(
             ]),
         .testTarget(
             name: "DomainTests",
-            dependencies: ["Domain"]),
+            dependencies: [
+                "DomainImpl",
+                "Platform",
+                .product(name: "PlatformTestSupports", package: "Platform"),
+            ]),
     ]
 )

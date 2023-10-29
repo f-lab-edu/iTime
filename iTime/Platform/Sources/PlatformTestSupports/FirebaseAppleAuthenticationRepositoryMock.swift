@@ -11,10 +11,10 @@ import Platform
 
 public final class FirebaseAppleAuthenticationRepositoryMock: FirebaseAppleAuthenticationRepository {
     
-    public var signWithAppleCallCount = 0
+    public var signInCallCount = 0
     public var signWithPresentation: ASAuthorizationContextProviding?
     public func signInWithApple(_ presentation: Platform.ASAuthorizationContextProviding) {
-        signWithAppleCallCount += 1
+        signInCallCount += 1
         signWithPresentation = presentation
     }
     
@@ -27,4 +27,6 @@ public final class FirebaseAppleAuthenticationRepositoryMock: FirebaseAppleAuthe
     public func deleteCurrentUser(_ presentation: Platform.ASAuthorizationContextProviding) {
         deleteCurrentUserCallCount += 1
     }
+    
+    public init() {}
 }

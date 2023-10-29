@@ -11,21 +11,28 @@ import Platform
 
 // MARK: - NotificationCenterSpy
 
-final class NotificationCenterSpy:
+public final class NotificationCenterSpy:
     Postable,
     Addable
 {
     
     var didPostNotificaitonWithName: String?
-    func post(
+    public func post(
         name aName: Notification.Name,
         object anObject: Any?
     ) {
         didPostNotificaitonWithName = aName.rawValue
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + delaySeconds, execute: {
+            NotificationCenter.default.post(
+                name: aName,
+                object: anObject
+            )
+        })
     }
     
     var didAddObserverWithName: String?
-    func addObserver(
+    public func addObserver(
         forName name: NSNotification.Name?,
         object obj: Any?,
         queue: OperationQueue?,
@@ -33,11 +40,23 @@ final class NotificationCenterSpy:
     {
         didAddObserverWithName = name?.rawValue
         
-        return NSObject()
+        return NotificationCenter.default.addObserver(
+            forName: name,
+            object: obj,
+            queue: queue,
+            using: block
+        )
     }
 
     var didCallRemoveObserverWithName = false
-    func removeObserver(_ observer: Any) {
+    public func removeObserver(_ observer: Any) {
         didCallRemoveObserverWithName = true
+        
+        NotificationCenter.default.removeObserver(observer)
+    }
+    
+    private var delaySeconds: DispatchTimeInterval = .seconds(0)
+    public init(delaySeconds: Int) {
+        self.delaySeconds = DispatchTimeInterval.seconds(delaySeconds)
     }
 }
