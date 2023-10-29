@@ -20,7 +20,7 @@ public final class FirebaseAppleAuthenticationRepositoryImpl:
     fileprivate var currentNonce: String?
     fileprivate var notificationCenter: Postable
     
-    init(notificationCenter: Postable = NotificationCenter.default) {
+    public init(notificationCenter: Postable = NotificationCenter.default) {
         self.notificationCenter = notificationCenter
     }
     
