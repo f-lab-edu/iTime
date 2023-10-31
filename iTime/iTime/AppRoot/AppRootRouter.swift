@@ -25,8 +25,7 @@ protocol AppRootViewControllable: ViewControllable {
 // MARK: - AppRootRouter
 
 final class AppRootRouter:
-    LaunchRouter<AppRootInteractable,
-    AppRootViewControllable>,
+    LaunchRouter<AppRootInteractable, AppRootViewControllable>,
     AppRootRouting
 {
     

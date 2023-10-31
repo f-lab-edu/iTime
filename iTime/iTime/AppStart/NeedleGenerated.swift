@@ -1,9 +1,11 @@
 
 
+import Domain
 import Foundation
 import LoggedOut
 import LoggedOutImpl
 import NeedleFoundation
+import Platform
 import RIBs
 
 // swiftlint:disable unused_declaration
@@ -15,20 +17,26 @@ private func parent1(_ component: NeedleFoundation.Scope) -> NeedleFoundation.Sc
     return component.parent
 }
 
+private func parent2(_ component: NeedleFoundation.Scope) -> NeedleFoundation.Scope {
+    return component.parent.parent
+}
+
 // MARK: - Providers
 
 #if !NEEDLE_DYNAMIC
 
 private class LoggedOutDependencyd80ab2fd4f0c552fa83fProvider: LoggedOutDependency {
-
-
-    init() {
-
+    var authenticaitonUsecase: AuthenticationUsecase {
+        return appComponent.authenticaitonUsecase
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->AppRootComponent->LoggedOutComponent
-private func factory19919712107fbe4d3399e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return LoggedOutDependencyd80ab2fd4f0c552fa83fProvider()
+private func factory19919712107fbe4d3399b7304b634b3e62c64b3c(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return LoggedOutDependencyd80ab2fd4f0c552fa83fProvider(appComponent: parent2(component) as! AppComponent)
 }
 private class AppRootDependency9fafbf379aae0424b417Provider: AppRootDependency {
 
@@ -45,7 +53,7 @@ private func factorya90cb427e52e03443c85e3b0c44298fc1c149afb(_ component: Needle
 #else
 extension LoggedOutComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\LoggedOutDependency.authenticaitonUsecase] = "authenticaitonUsecase-AuthenticaitonUsecase"
     }
 }
 extension AppComponent: Registration {
@@ -76,7 +84,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
 #if !NEEDLE_DYNAMIC
 
 @inline(never) private func register1() {
-    registerProviderFactory("^->AppComponent->AppRootComponent->LoggedOutComponent", factory19919712107fbe4d3399e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->AppRootComponent->LoggedOutComponent", factory19919712107fbe4d3399b7304b634b3e62c64b3c)
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->AppRootComponent", factorya90cb427e52e03443c85e3b0c44298fc1c149afb)
 }

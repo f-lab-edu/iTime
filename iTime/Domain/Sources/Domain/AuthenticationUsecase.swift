@@ -12,17 +12,17 @@ import RIBs
 
 // MARK: - AuthenticationUsecase
 
-protocol AuthenticationUsecase {
+public protocol AuthenticationUsecase {
     func signInWithApple(_ presentation: ASAuthorizationControllerPresentationContextProviding)
     func signOut()
 }
 
 // MARK: - AuthenticationUsecaseImpl
 
-class AuthenticationUsecaseImpl: NSObject, AuthenticationUsecase {
+public final class AuthenticationUsecaseImpl: NSObject, AuthenticationUsecase {
     fileprivate var currentNonce: String?
     
-    func signInWithApple(_ presentation: ASAuthorizationControllerPresentationContextProviding) {
+    public func signInWithApple(_ presentation: ASAuthorizationControllerPresentationContextProviding) {
         let nonce = randomNonceString()
         currentNonce = nonce
         let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -36,7 +36,7 @@ class AuthenticationUsecaseImpl: NSObject, AuthenticationUsecase {
         authorizationController.performRequests()
     }
     
-    func signOut() {
+    public func signOut() {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
@@ -50,7 +50,7 @@ class AuthenticationUsecaseImpl: NSObject, AuthenticationUsecase {
 // MARK: - ASAuthorizationControllerDelegate
 
 extension AuthenticationUsecaseImpl: ASAuthorizationControllerDelegate {
-    func authorizationController(
+    public func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
@@ -83,7 +83,7 @@ extension AuthenticationUsecaseImpl: ASAuthorizationControllerDelegate {
         }
     }
     
-    func authorizationController(
+    public func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithError error: Error
     ) {
