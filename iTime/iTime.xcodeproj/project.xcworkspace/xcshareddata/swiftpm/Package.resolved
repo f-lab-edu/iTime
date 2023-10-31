@@ -91,15 +91,6 @@
       }
     },
     {
-      "identity" : "needle",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/uber/needle.git",
-      "state" : {
-        "revision" : "2f2856d4fbe8f8828ebda86e69960007f5577f37",
-        "version" : "0.23.0"
-      }
-    },
-    {
       "identity" : "promises",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/promises.git",
@@ -124,15 +115,6 @@
       "state" : {
         "revision" : "39cd06603e784117a1e68f6eb0aa7ad0f0a94cad",
         "version" : "0.14.1"
-      }
-    },
-    {
-      "identity" : "rxdatasources",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/RxSwiftCommunity/RxDataSources.git",
-      "state" : {
-        "revision" : "241c62e7b578b2346c8b60efdf31b4eb2eab2966",
-        "version" : "5.0.0"
       }
     },
     {

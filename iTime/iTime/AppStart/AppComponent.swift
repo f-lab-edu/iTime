@@ -5,38 +5,16 @@
 //  Created by 이상헌 on 2023/10/26.
 //
 
-import NeedleFoundation
-
-import Platform
-import PlatformImpl
-import Domain
-import DomainImpl
-import LoggedOut
-import LoggedOutImpl
-
+import RIBs
 
 // MARK: - AppComponent
 
 final class AppComponent:
-    BootstrapComponent,
+    Component<EmptyDependency>,
     AppRootDependency
 {
-    var appRootBuilder: AppRootBuildable {
-        AppRootBuilder {
-            AppRootComponent(parent: self)
-        }
-    }
-    
-    var authenticationUsecase: AuthenticationUsecase {
-        AuthenticationUsecaseImpl(appleAuthenticationRepository: firebaseAppleAuthenticationRepository)
+    init() {
+        super.init(dependency: EmptyComponent())
     }
 
-}
-
-// MARK: - Private
-
-extension AppComponent {
-    private var firebaseAppleAuthenticationRepository: FirebaseAppleAuthenticationRepository {
-        return FirebaseAppleAuthenticationRepositoryImpl()
-    }
 }

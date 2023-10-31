@@ -28,5 +28,5 @@ public struct LoggedOutBuildDependency {
 // MARK: - LoggedOutBuildable
 
 public protocol LoggedOutBuildable: Buildable {
-    func build(with dynamicBuildDependency: LoggedOutBuildDependency) -> LoggedOutRouting
+    func build(with listener: LoggedOutListener) -> LoggedOutRouting
 }

@@ -5,20 +5,27 @@
 //  Created by 이상헌 on 2023/10/26.
 //
 
-import NeedleFoundation
 import RIBs
 
 import LoggedOut
 import LoggedOutImpl
+import Domain
+import DomainImpl
+import PlatformImpl
 
-protocol AppRootDependency: NeedleFoundation.Dependency {
-   
+protocol AppRootDependency: Dependency {
+    
 }
 
-final class AppRootComponent: NeedleFoundation.Component<AppRootDependency> {
-    var loggedOutBuilder: LoggedOutBuildable {
-        LoggedOutBuilder {
-            LoggedOutComponent(parent: self)
+final class AppRootComponent:
+    Component<AppRootDependency>,
+    LoggedOutDependency
+{
+    var authenticationUsecase: AuthenticationUsecase {
+        shared {
+            AuthenticationUsecaseImpl(
+                appleAuthenticationRepository: FirebaseAppleAuthenticationRepositoryImpl()
+            )
         }
     }
 }
@@ -30,19 +37,24 @@ protocol AppRootBuildable: Buildable {
 }
 
 final class AppRootBuilder:
-    SimpleComponentizedBuilder<AppRootComponent, LaunchRouting>,
+    Builder<AppRootDependency>,
     AppRootBuildable
 {
-
-    override func build(with component: AppRootComponent) -> LaunchRouting {
+    override init(dependency: AppRootDependency) {
+        super.init(dependency: dependency)
+    }
+    
+    func build() -> LaunchRouting {
         let viewController = AppRootViewController()
         let interactor = AppRootInteractor(presenter: viewController)
+        let component = AppRootComponent(dependency: dependency)
+        let loggedOutBuilder = LoggedOutBuilder(dependency: component)
         
         return AppRootRouter(
             interactor: interactor,
             viewController: viewController,
-            loggedOutBuilder: component.loggedOutBuilder
-            )
+            loggedOutBuilder: loggedOutBuilder
+        )
     }
 }
 
