@@ -11,6 +11,7 @@
 		DE0570A52AE6735E00669BDF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0570A42AE6735E00669BDF /* SceneDelegate.swift */; };
 		DE0570AC2AE6735F00669BDF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE0570AB2AE6735F00669BDF /* Assets.xcassets */; };
 		DE0570AF2AE6735F00669BDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE0570AD2AE6735F00669BDF /* LaunchScreen.storyboard */; };
+		DE081E3A2AEE2987005B5CC8 /* PlatformTestSupports in Frameworks */ = {isa = PBXBuildFile; productRef = DE081E392AEE2987005B5CC8 /* PlatformTestSupports */; };
 		DE4E551C2AEA483F00DDD145 /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E551B2AEA483F00DDD145 /* AppComponent.swift */; };
 		DE4E551F2AEA48FB00DDD145 /* AppRootBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E551E2AEA48FB00DDD145 /* AppRootBuilder.swift */; };
 		DE4E55212AEA493100DDD145 /* AppRootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E55202AEA493100DDD145 /* AppRootInteractor.swift */; };
@@ -56,6 +57,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE7D715F2AEBDF8300ECFCBB /* DomainImpl in Frameworks */,
+				DE081E3A2AEE2987005B5CC8 /* PlatformTestSupports in Frameworks */,
 				DE4E552D2AEA92FB00DDD145 /* Domain in Frameworks */,
 				DEB54D3E2AE7F33400E940BE /* ProxyPackage in Frameworks */,
 				DE4E55292AEA65FF00DDD145 /* LoggedOutImpl in Frameworks */,
@@ -165,6 +167,7 @@
 				DE4E552C2AEA92FB00DDD145 /* Domain */,
 				DE7D715E2AEBDF8300ECFCBB /* DomainImpl */,
 				DE7D71602AEBDF8300ECFCBB /* PlatformImpl */,
+				DE081E392AEE2987005B5CC8 /* PlatformTestSupports */,
 			);
 			productName = iTime;
 			productReference = DE05709F2AE6735E00669BDF /* iTime.app */;
@@ -445,6 +448,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DE081E392AEE2987005B5CC8 /* PlatformTestSupports */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PlatformTestSupports;
+		};
 		DE4E55262AEA65FF00DDD145 /* LoggedOut */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LoggedOut;

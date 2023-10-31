@@ -21,11 +21,16 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
     // MARK: - Properties
     
     private let appleAuthenticationRepository: FirebaseAppleAuthenticationRepository
+    fileprivate var notificationCenter: Addable
     
     // MARK: initialize
     
-    public init(appleAuthenticationRepository: FirebaseAppleAuthenticationRepository) {
+    public init(
+        appleAuthenticationRepository: FirebaseAppleAuthenticationRepository,
+        notificationCenter: Addable = NotificationCenter.default
+    ) {
         self.appleAuthenticationRepository = appleAuthenticationRepository
+        self.notificationCenter = notificationCenter
     }
     
     public func appleSignUp(_ presentation: ASAuthorizationContextProviding) -> Observable<Void> {
@@ -82,14 +87,14 @@ extension AuthenticationUsecaseImpl {
     typealias ThirdPartyAuthenticationResult = (Result<AuthenticationSuccess, AuthenticationError>) -> Void
     
     private func addSignInObservers(_ handleNotification: @escaping ThirdPartyAuthenticationResult) {
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             forName: AuthenticationSuccess.signIn.notificationName,
             object: nil,
             queue: OperationQueue.current) { _ in
                 handleNotification(.success(.signIn))
             }
         
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             forName: AuthenticationError.signInError.notificationName,
             object: nil,
             queue: OperationQueue.current) { _ in
@@ -98,14 +103,14 @@ extension AuthenticationUsecaseImpl {
     }
     
     private func addSignOutObservers(_ handleNotification: @escaping ThirdPartyAuthenticationResult) {
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             forName: AuthenticationSuccess.signOut.notificationName,
             object: nil,
             queue: OperationQueue.current) { _ in
                 handleNotification(.success(.signOut))
             }
         
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             forName: AuthenticationError.signOutError.notificationName,
             object: nil,
             queue: OperationQueue.current) { _ in
@@ -114,14 +119,14 @@ extension AuthenticationUsecaseImpl {
     }
     
     private func addDeleteUserObservers(_ handleNotification: @escaping ThirdPartyAuthenticationResult) {
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             forName: AuthenticationSuccess.deleteUser.notificationName,
             object: nil,
             queue: OperationQueue.current) { _ in
                 handleNotification(.success(.deleteUser))
             }
         
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             forName: AuthenticationError.deleteUserError.notificationName,
             object: nil,
             queue: OperationQueue.current) { _ in
