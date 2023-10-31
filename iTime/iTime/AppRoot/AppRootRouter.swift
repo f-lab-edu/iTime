@@ -12,49 +12,48 @@ import LoggedOut
 // MARK: - AppRootInteractable
 
 protocol AppRootInteractable: Interactable, LoggedOutListener {
-    var router: AppRootRouting? { get set }
-    var listener: AppRootListener? { get set }
+  var router: AppRootRouting? { get set }
+  var listener: AppRootListener? { get set }
 }
 
 // MARK: - AppRootViewControllable
 
 protocol AppRootViewControllable: ViewControllable {
-    // TODO: Declare methods the router invokes to manipulate the view hierarchy.
+  // TODO: Declare methods the router invokes to manipulate the view hierarchy.
 }
 
 // MARK: - AppRootRouter
 
 final class AppRootRouter:
-    LaunchRouter<AppRootInteractable, AppRootViewControllable>,
-    AppRootRouting
+  LaunchRouter<AppRootInteractable, AppRootViewControllable>,
+  AppRootRouting
 {
-    
-    private let loggedOutBuilder: LoggedOutBuildable
-    private var loggedOutRouter: LoggedOutRouting?
-    
-    init(
-        interactor: AppRootInteractable,
-        viewController: AppRootViewControllable,
-        loggedOutBuilder: LoggedOutBuildable
-    ) {
-        self.loggedOutBuilder = loggedOutBuilder
-        super.init(interactor: interactor, viewController: viewController)
-        interactor.router = self
-    }
-    
-    func attachLoggedOut() {
-        guard loggedOutRouter == nil else { return }
-        
-        let router = loggedOutBuilder.build(with: interactor)
-        loggedOutRouter = router
-        attachChild(router)
-        viewController.present(router.viewControllable, animated: true, completion: nil)
-    }
-    
-    func detachLoggedOut() {
-        guard let router = loggedOutRouter else { return }
-        loggedOutRouter = nil
-        detachChild(router)
-        viewController.popViewController(animated: false, completion: nil)
-    }
+  
+  private let loggedOutBuilder: LoggedOutBuildable
+  private var loggedOutRouter: LoggedOutRouting?
+  
+  init(
+    interactor: AppRootInteractable,
+    viewController: AppRootViewControllable,
+    loggedOutBuilder: LoggedOutBuildable
+  ) {
+    self.loggedOutBuilder = loggedOutBuilder
+    super.init(interactor: interactor, viewController: viewController)
+    interactor.router = self
+  }
+  
+  func attachLoggedOut() {
+    guard loggedOutRouter == nil else { return }
+    let router = loggedOutBuilder.build(with: interactor)
+    loggedOutRouter = router
+    attachChild(router)
+    viewController.presentFullScreen(router.viewControllable, animated: true, completion: nil)
+  }
+  
+  func detachLoggedOut(_ completion: (() -> Void)? = nil) {
+    guard let router = loggedOutRouter else { return }
+    loggedOutRouter = nil
+    detachChild(router)
+    viewController.dismiss(completion: nil)
+  }
 }

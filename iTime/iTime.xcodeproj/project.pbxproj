@@ -79,7 +79,7 @@
 				DE0570A02AE6735E00669BDF /* Products */,
 				DEB54D3A2AE7F33400E940BE /* Frameworks */,
 			);
-			indentWidth = 4;
+			indentWidth = 2;
 			sourceTree = "<group>";
 		};
 		DE0570A02AE6735E00669BDF /* Products */ = {

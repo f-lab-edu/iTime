@@ -31,6 +31,7 @@ final class FirestoreRespositoryImpl: FirestoreRepository {
     }
     
     /// Create new document
+    ///
     /// - Parameter data: Data serialized to [String: Any] format
     /// - Parameter reference: enumerated doc reference
     /// - Parameter merge: merge with current session data or overwrite
@@ -52,6 +53,7 @@ final class FirestoreRespositoryImpl: FirestoreRepository {
     }
     
     /// Updating existing document
+    /// 
     /// - Parameter data: Data serialized to [String: Any] format
     /// - Parameter reference: enumerated doc reference
     /// - Parameter merge: merge with current session data or overwrite

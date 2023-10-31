@@ -2,81 +2,59 @@
 //  LoggedOutInteractor.swift
 //  
 //
-//  Created by 이상헌 on 2023/10/26.
+//  Created by 이상헌 on 2023/10/31.
 //
 
-import ReactorKit
 import RIBs
 import RxSwift
 
 import Domain
+import Platform
 import LoggedOut
-
-// MARK: - LoggedOutPresentable
 
 protocol LoggedOutPresentable: Presentable {
     var listener: LoggedOutPresentableListener? { get set }
+    func presentErrorMessage(_ message: String)
 }
-
-// MARK: - LoggedOutInteractor
 
 final class LoggedOutInteractor:
     PresentableInteractor<LoggedOutPresentable>,
     LoggedOutInteractable,
-    LoggedOutPresentableListener,
-    Reactor
+    LoggedOutPresentableListener
 {
-    
-    // MARK: - Reactor
-    
-    typealias Action = LoggedOutPresentableAction
-    typealias State = LoggedOutPresentableState
-    
-    enum Mutation {
-        
-    }
-    
-    // MARK: - Properties
     
     weak var router: LoggedOutRouting?
     weak var listener: LoggedOutListener?
     
-    let initialState: LoggedOutPresentableState
-    
-    // MARK: - Initialization & Deinitialization
-    
+    private let authenticationUsecase: AuthenticationUsecase
+
     init(
         presenter: LoggedOutPresentable,
-        initialState: LoggedOutPresentableState,
         authenticationUsecase: AuthenticationUsecase
     ) {
-        self.initialState = initialState
-        
+        self.authenticationUsecase = authenticationUsecase
         super.init(presenter: presenter)
         presenter.listener = self
     }
-    
-    // MARK: - LoggedOutPresentableListener
-    
-    func sendAction(_ action: Action) {
-        self.action.on(.next(action))
+
+    override func didBecomeActive() {
+        super.didBecomeActive()
     }
 }
 
-// MARK: - mutate
+// MARK: - Mutation
 
 extension LoggedOutInteractor {
-    func mutate(action: Action) -> Observable<Mutation> {
-        
-    }
-}
-
-// MARK: - reduce
-
-extension LoggedOutInteractor {
-    func reduce(state: State, mutation: Mutation) -> State {
-        var newState = state
-        
-        return newState
+    func requestAppleLogin(_ presenter: ASAuthorizationContextProviding) {
+        authenticationUsecase.appleSignUp(presenter)
+            .catch { [weak self] error in
+                guard let self else { return .empty() }
+                self.presenter.presentErrorMessage(error.localizedDescription)
+                return .empty()
+            }
+            .subscribe(with: self) { owner, _ in
+                print("APPLE Login Success")
+            }
+            .disposeOnDeactivate(interactor: self)
     }
 }
