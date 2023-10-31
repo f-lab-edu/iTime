@@ -20,27 +20,15 @@ extension QuerySnapshot: iTimeQuerySnapshot {
     }
 }
 
-// MARK: - FirestoreRespositoryImpl
+// MARK: - FirestoreRepository Implemetation
 
-final class FirestoreRespositoryImpl: FirestoreRepository {
-    private let database: Firestore
-    
-    init(database: Firestore = Firestore.firestore()) {
-        self.database = database
-        
-    }
-    
-    /// Create new document
-    ///
-    /// - Parameter data: Data serialized to [String: Any] format
-    /// - Parameter reference: enumerated doc reference
-    /// - Parameter merge: merge with current session data or overwrite
+extension FirestoreRepository {
     func create(
         reference: DocumentReferenceConvertible,
         with data: [String : Any]
     ) -> Observable<String> {
         Observable.create { observer in
-            let document = self.database.collection(reference.referencePath).document()
+            let document = Firestore.firestore().collection(reference.referencePath).document()
             document.setData(data, merge: true) { error in
                 if let error = error {
                     observer.onError(error)
@@ -52,18 +40,13 @@ final class FirestoreRespositoryImpl: FirestoreRepository {
         }
     }
     
-    /// Updating existing document
-    /// 
-    /// - Parameter data: Data serialized to [String: Any] format
-    /// - Parameter reference: enumerated doc reference
-    /// - Parameter merge: merge with current session data or overwrite
     func update(
         reference: DocumentReferenceConvertible,
         with data: [String: Any],
         merge: Bool
     ) -> Observable<String> {
         Observable.create { observer in
-            let document = self.database.document(reference.referencePath)
+            let document = Firestore.firestore().document(reference.referencePath)
             document.setData(data, merge: merge) { error in
                 if let error = error{
                     observer.onError(error)
@@ -75,17 +58,12 @@ final class FirestoreRespositoryImpl: FirestoreRepository {
         }
     }
     
-    /// Observable for collections in Firebase
-    ///
-    /// - Parameters:
-    ///   - reference: Reference to a document in Firebase database
-    ///   - includeMetadataChanges: ability to listen also for changes in metadata
     func collectionObservable(
         for reference: DocumentReferenceConvertible,
         includeMetadata: Bool
     ) -> Observable<iTimeQuerySnapshot> {
         let changesSubject = PublishSubject<iTimeQuerySnapshot>()
-        database
+        Firestore.firestore()
             .collection(reference.referencePath)
             .addSnapshotListener(includeMetadataChanges: includeMetadata) { snapshot, error in
                 if let error = error {
@@ -98,17 +76,12 @@ final class FirestoreRespositoryImpl: FirestoreRepository {
         return changesSubject.asObservable()
     }
     
-    /// Observable for documents in Firebase
-    ///
-    /// - Parameters:
-    ///   - reference: Reference to a document in Firebase database
-    ///   - includeMetadataChanges: ability to listen also for changes in metadata
     func documentObservable(
         for reference: DocumentReferenceConvertible,
         includeMetadata: Bool
     ) -> Observable<iTimeDocumentSnapshot> {
         let changesSubject = PublishSubject<iTimeDocumentSnapshot>()
-        database
+        Firestore.firestore()
             .document(reference.referencePath)
             .addSnapshotListener(includeMetadataChanges: includeMetadata) { snapshot, error in
                 if let error = error {

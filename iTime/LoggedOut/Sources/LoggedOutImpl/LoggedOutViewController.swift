@@ -46,6 +46,7 @@ final class LoggedOutViewController:
     override func viewDidLoad() {
         super.viewDidLoad()
         bindActions()
+        setupUI()
     }
     
     deinit {
