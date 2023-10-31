@@ -38,3 +38,13 @@ extension ObservableType {
             .map { $0.value }
     }
 }
+
+extension ObservableType {
+    public static func create<Object: AnyObject>(with obj: Object, _ subscribe: @escaping (Object, AnyObserver<Element>) -> Disposable) -> Observable<(Element)> {
+        return Observable.create { [weak obj] observer in
+            guard let obj else { return Disposables.create() }
+            
+            return subscribe(obj, observer)
+        }
+    }
+}

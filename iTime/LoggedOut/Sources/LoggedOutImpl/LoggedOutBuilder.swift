@@ -14,7 +14,7 @@ import LoggedOut
 // MARK: - LoggedOutDependency
 
 public protocol LoggedOutDependency: NeedleFoundation.Dependency {
-    var authenticaitonUsecase: AuthenticationUsecase { get }
+    var authenticationUsecase: AuthenticationUsecase { get }
 }
 
 // MARK: - LoggedOutComponent
@@ -40,7 +40,7 @@ public final class LoggedOutBuilder:
         let interactor = LoggedOutInteractor(
             presenter: viewController,
             initialState: component.initialState,
-            authenticationUsecase: component.authenticaitonUsecase
+            authenticationUsecase: component.authenticationUsecase
         )
         
         interactor.listener = payload.listener

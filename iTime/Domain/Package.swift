@@ -12,6 +12,9 @@ let package = Package(
         .library(
             name: "Domain",
             targets: ["Domain"]),
+        .library(
+            name: "DomainImpl",
+            targets: ["DomainImpl"]),
     ],
     dependencies: [
         .package(path: "../Platform")
@@ -20,6 +23,12 @@ let package = Package(
         .target(
             name: "Domain",
             dependencies: [
+                "Platform"
+            ]),
+        .target(
+            name: "DomainImpl",
+            dependencies: [
+                "Domain",
                 "Platform"
             ]),
         .testTarget(

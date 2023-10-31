@@ -1,11 +1,13 @@
 
 
 import Domain
+import DomainImpl
 import Foundation
 import LoggedOut
 import LoggedOutImpl
 import NeedleFoundation
 import Platform
+import PlatformImpl
 import RIBs
 
 // swiftlint:disable unused_declaration
@@ -26,8 +28,8 @@ private func parent2(_ component: NeedleFoundation.Scope) -> NeedleFoundation.Sc
 #if !NEEDLE_DYNAMIC
 
 private class LoggedOutDependencyd80ab2fd4f0c552fa83fProvider: LoggedOutDependency {
-    var authenticaitonUsecase: AuthenticationUsecase {
-        return appComponent.authenticaitonUsecase
+    var authenticationUsecase: AuthenticationUsecase {
+        return appComponent.authenticationUsecase
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -53,7 +55,7 @@ private func factorya90cb427e52e03443c85e3b0c44298fc1c149afb(_ component: Needle
 #else
 extension LoggedOutComponent: Registration {
     public func registerItems() {
-        keyPathToName[\LoggedOutDependency.authenticaitonUsecase] = "authenticaitonUsecase-AuthenticaitonUsecase"
+        keyPathToName[\LoggedOutDependency.authenticationUsecase] = "authenticationUsecase-AuthenticationUsecase"
     }
 }
 extension AppComponent: Registration {

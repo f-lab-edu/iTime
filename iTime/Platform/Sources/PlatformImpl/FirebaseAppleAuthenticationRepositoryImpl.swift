@@ -107,7 +107,7 @@ extension FirebaseAppleAuthenticationRepositoryImpl {
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
         request.nonce = sha256(nonce)
-
+        
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = presentation
@@ -119,33 +119,33 @@ extension FirebaseAppleAuthenticationRepositoryImpl {
 
 extension FirebaseAppleAuthenticationRepositoryImpl {
     private func randomNonceString(length: Int = 32) -> String {
-      precondition(length > 0)
-      var randomBytes = [UInt8](repeating: 0, count: length)
-      let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
-      if errorCode != errSecSuccess {
-        assertionFailure(
-          "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
-        )
-      }
-
-      let charset: [Character] =
+        precondition(length > 0)
+        var randomBytes = [UInt8](repeating: 0, count: length)
+        let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
+        if errorCode != errSecSuccess {
+            assertionFailure(
+                "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+            )
+        }
+        
+        let charset: [Character] =
         Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-
-      let nonce = randomBytes.map { byte in
-        charset[Int(byte) % charset.count]
-      }
-
-      return String(nonce)
+        
+        let nonce = randomBytes.map { byte in
+            charset[Int(byte) % charset.count]
+        }
+        
+        return String(nonce)
     }
     
     private func sha256(_ input: String) -> String {
-      let inputData = Data(input.utf8)
-      let hashedData = SHA256.hash(data: inputData)
-      let hashString = hashedData.compactMap {
-        String(format: "%02x", $0)
-      }.joined()
-
-      return hashString
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            String(format: "%02x", $0)
+        }.joined()
+        
+        return hashString
     }
 }
 
@@ -153,26 +153,44 @@ extension FirebaseAppleAuthenticationRepositoryImpl {
 
 extension FirebaseAppleAuthenticationRepositoryImpl {
     private func postNotificationSignInSuccess() {
-        NotificationCenter.default.post(name: ThirdPartyAuthenticationResult.signInSuccess.notificationName, object: nil)
+        NotificationCenter.default.post(
+            name: AuthenticationSuccess.signIn.notificationName,
+            object: nil
+        )
     }
     
     private func postNotificationSignInError() {
-        NotificationCenter.default.post(name: ThirdPartyAuthenticationResult.signInError.notificationName, object: nil)
+        NotificationCenter.default.post(
+            name: AuthenticationError.signInError.notificationName,
+            object: nil
+        )
     }
     
     private func postNotificationSignOutSuccess() {
-        NotificationCenter.default.post(name: ThirdPartyAuthenticationResult.signOutSuccess.notificationName, object: nil)
+        NotificationCenter.default.post(
+            name: AuthenticationSuccess.signOut.notificationName,
+            object: nil
+        )
     }
     
     private func postNotificationSignOutError() {
-        NotificationCenter.default.post(name: ThirdPartyAuthenticationResult.signOutError.notificationName, object: nil)
+        NotificationCenter.default.post(
+            name: AuthenticationError.signOutError.notificationName,
+            object: nil
+        )
     }
     
     private func postNotificationDeleteUserSuccess() {
-        NotificationCenter.default.post(name: ThirdPartyAuthenticationResult.deleteUserSuccess.notificationName, object: nil)
+        NotificationCenter.default.post(
+            name: AuthenticationSuccess.deleteUser.notificationName,
+            object: nil
+        )
     }
     
     private func postNotificationDeleteUserError() {
-        NotificationCenter.default.post(name: ThirdPartyAuthenticationResult.deleteUserError.notificationName, object: nil)
+        NotificationCenter.default.post(
+            name: AuthenticationError.deleteUserError.notificationName,
+            object: nil
+        )
     }
 }
