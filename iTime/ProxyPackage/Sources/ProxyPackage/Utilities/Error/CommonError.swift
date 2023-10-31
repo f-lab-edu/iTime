@@ -35,4 +35,5 @@ extension MyError {
     public static let firebaseConfigureError: Self = .init(title: "configure firebase first", messaage: "firebase configure error")
     public static let noError: Self = .init(title: "noError", messaage: "noError")
     public static let networkNullError: Self = .init(title: "FAIL", messaage: "DATA IS NULL")
+    public static let duplicatedSession: Self = .init(title: "에러 발생", messaage: "세션이 이미 존재합니다.")
 }
