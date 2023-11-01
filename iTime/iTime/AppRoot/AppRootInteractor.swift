@@ -45,5 +45,9 @@ final class AppRootInteractor:
       super.didBecomeActive()
       router?.attachLoggedOut()
   }
+  
+  func detachLoggedOut() {
+    
+  }
 }
 
