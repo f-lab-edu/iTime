@@ -12,7 +12,6 @@ import RxCocoa
 import RxSwift
 import SnapKit
 
-import Platform
 import ProxyPackage
 
 protocol LoggedOutPresentableListener: AnyObject {
@@ -106,7 +105,7 @@ extension LoggedOutViewController {
 
 // MARK: - ASAuthorizationContextProviding
 
-extension LoggedOutViewController: ASAuthorizationContextProviding {
+extension LoggedOutViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         self.view.window ?? .init()
     }

@@ -13,20 +13,22 @@ public protocol LoggedOutRouting: ViewableRouting {}
 
 // MARK: - LoggedOutListener
 
-public protocol LoggedOutListener: AnyObject {}
+public protocol LoggedOutListener: AnyObject {
+  func detachLoggedOut()
+}
 
 // MARK: - LoggedOutBuildDependency
 
 public struct LoggedOutBuildDependency {
-    public let listener: LoggedOutListener
-    
-    public init(listener: LoggedOutListener) {
-        self.listener = listener
-    }
+  public let listener: LoggedOutListener
+  
+  public init(listener: LoggedOutListener) {
+    self.listener = listener
+  }
 }
 
 // MARK: - LoggedOutBuildable
 
 public protocol LoggedOutBuildable: Buildable {
-    func build(with listener: LoggedOutListener) -> LoggedOutRouting
+  func build(with listener: LoggedOutListener) -> LoggedOutRouting
 }

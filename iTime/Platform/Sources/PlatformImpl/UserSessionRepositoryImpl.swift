@@ -66,5 +66,4 @@ final class UserSessionRepositoryImpl: FirestoreRepository, UserSessionRepositor
         this.sessionObservable(with: userID).compactMap { $0 }
       }
   }
-
 }

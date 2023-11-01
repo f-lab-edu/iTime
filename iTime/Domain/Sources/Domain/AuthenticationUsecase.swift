@@ -16,3 +16,7 @@ public protocol AuthenticationUsecase {
     func signOut() -> Observable<Void>
     func deleteUser(_ presentation: ASAuthorizationContextProviding) -> Observable<Void>
 }
+
+// MARK: - ASAuthorizationContextProviding
+
+public protocol ASAuthorizationContextProviding: Platform.ASAuthorizationContextProviding {}
