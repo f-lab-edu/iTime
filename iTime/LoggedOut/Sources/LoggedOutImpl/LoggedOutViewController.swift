@@ -64,8 +64,8 @@ extension LoggedOutViewController {
         appleLoginButton.rx
             .tapWithPreventDuplication()
             .asDriver(onErrorDriveWith: .empty())
-            .drive(with: self) { owner, _ in
-                owner.listener?.requestAppleLogin(owner)
+            .drive(with: self) { this, _ in
+              this.listener?.requestAppleLogin(this)
             }
             .disposed(by: disposeBag)
     }
@@ -86,7 +86,7 @@ extension LoggedOutViewController {
         view.backgroundColor = .white
         view.addSubview(appleLoginButton)
         
-        self.layout()
+        layout()
     }
     
     private func layout() {
@@ -105,8 +105,8 @@ extension LoggedOutViewController {
 
 // MARK: - ASAuthorizationContextProviding
 
-extension LoggedOutViewController: ASAuthorizationControllerPresentationContextProviding {
+extension LoggedOutViewController: ASAuthorizationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        self.view.window ?? .init()
+        view.window ?? .init()
     }
 }

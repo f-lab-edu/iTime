@@ -50,8 +50,8 @@ final class LoggedOutInteractor:
         self.presenter.presentErrorMessage(error.localizedDescription)
         return .empty()
       }
-      .subscribe(with: self) { owner, _ in
-        owner.listener?.detachLoggedOut()
+      .subscribe(with: self) { this, _ in
+        this.listener?.detachLoggedOut()
       }
       .disposeOnDeactivate(interactor: self)
   }

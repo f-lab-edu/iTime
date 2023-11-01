@@ -48,7 +48,7 @@ extension AppRootViewController {
   private func setupUI() {
     view.addSubview(splashImageView)
     
-    self.layout()
+    layout()
   }
   
   private func layout() {

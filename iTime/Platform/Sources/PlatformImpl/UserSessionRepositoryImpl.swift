@@ -33,9 +33,10 @@ final class UserSessionRepositoryImpl: FirestoreRepository, UserSessionRepositor
   
   func createSessionIfNeeded(_ session: UserSession, for userID: String) -> Observable<UserSession> {
     sessionObservable(with: userID)
-      .flatMap { oldSession -> Observable<Void> in
+      .withUnretained(self)
+      .flatMap { this, oldSession -> Observable<Void> in
         if oldSession == nil {
-          return self.update(
+          return this.update(
             reference: DatabaseReference.singleUser(userID: userID),
             with: session.toJson() ?? [:],
             merge: false

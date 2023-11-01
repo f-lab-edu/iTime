@@ -16,9 +16,9 @@ final class AuthenticationUsecaseImplTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        self.firebaseAppleAuthenticationRepository = FirebaseAppleAuthenticationRepositoryMock()
-        self.notificationCenter = NotificationCenterSpy(delaySeconds: 1)
-        self.disposeBag = DisposeBag()
+        firebaseAppleAuthenticationRepository = FirebaseAppleAuthenticationRepositoryMock()
+        notificationCenter = NotificationCenterSpy(delaySeconds: 1)
+        disposeBag = DisposeBag()
         
         sut = AuthenticationUsecaseImpl(
             appleAuthenticationRepository: firebaseAppleAuthenticationRepository,
