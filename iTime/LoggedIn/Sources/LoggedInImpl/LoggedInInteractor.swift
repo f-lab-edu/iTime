@@ -8,8 +8,10 @@
 import RIBs
 import RxSwift
 
+import LoggedIn
+
 protocol LoggedInPresentable: Presentable {
-    var listener: LoggedInPresentableListener? { get set }
+  var listener: LoggedInPresentableListener? { get set }
 }
 
 final class LoggedInInteractor:
@@ -17,24 +19,17 @@ final class LoggedInInteractor:
   LoggedInInteractable,
   LoggedInPresentableListener
 {
-
-    weak var router: LoggedInRouting?
-    weak var listener: LoggedInListener?
-
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
-    // in constructor.
-    override init(presenter: LoggedInPresentable) {
-        super.init(presenter: presenter)
-        presenter.listener = self
-    }
-
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // TODO: Implement business logic here.
-    }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // TODO: Pause any business logic.
-    }
+  
+  weak var router: LoggedInRouting?
+  weak var listener: LoggedInListener?
+  
+  override init(presenter: LoggedInPresentable) {
+    super.init(presenter: presenter)
+    presenter.listener = self
+  }
+  
+  override func didBecomeActive() {
+    super.didBecomeActive()
+    self.router?.attachTabs()
+  }
 }

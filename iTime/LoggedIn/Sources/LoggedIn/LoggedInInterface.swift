@@ -10,6 +10,7 @@ import RIBs
 // MARK: - LoggedInRouting
 
 public protocol LoggedInRouting: ViewableRouting {
+  func attachTabs()
 }
 
 // MARK: - LoggedInListener
@@ -20,5 +21,5 @@ public protocol LoggedInListener: AnyObject {
 // MARK: - LoggedInBuildable
 
 public protocol LoggedInBuildable: Buildable {
-    func build(withListener listener: LoggedInListener) -> LoggedInRouting
+  func build(withListener listener: LoggedInListener) -> LoggedInRouting
 }
