@@ -26,13 +26,13 @@ let package = Package(
         .target(
             name: "LoggedOut",
             dependencies: [
-                "Domain"
+                "Domain",
             ]),
         .target(
             name: "LoggedOutImpl",
             dependencies: [
                 "LoggedOut",
-                "Domain"
+                "Domain",
             ]
         ),
         .testTarget(
