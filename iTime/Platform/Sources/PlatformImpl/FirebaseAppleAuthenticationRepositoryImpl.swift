@@ -86,8 +86,9 @@ extension FirebaseAppleAuthenticationRepositoryImpl: ASAuthorizationControllerDe
         controller: ASAuthorizationController,
         didCompleteWithError error: Error
     ) {
-        postNotificationSignInError()
-        print("Sign in with Apple errored: \(error)")
+      /// 1001 - User cancels the Sign In With Apple flow.
+      /// 1000 - The app entitlement does NOT include the “Sign In With Apple” capability.
+      print("Sign in with Apple errored: \(error)")
     }
     
     private func signIn(with credential: OAuthCredential) {
