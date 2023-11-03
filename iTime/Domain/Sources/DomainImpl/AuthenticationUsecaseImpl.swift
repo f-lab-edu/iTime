@@ -32,7 +32,7 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
         self.notificationCenter = notificationCenter
     }
     
-    public func appleSignUp(_ presentation: Platform.ASAuthorizationContextProviding) -> Observable<Void> {
+    public func appleSignUp(_ presentation: ASAuthorizationContextProviding) -> Observable<Void> {
         Observable.create(with: self) { this, observer in
             this.addSignInObservers { result in
                 switch result {
@@ -64,7 +64,7 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
         }
     }
     
-    public func deleteUser(_ presentation: Platform.ASAuthorizationContextProviding) -> Observable<Void> {
+    public func deleteUser(_ presentation: ASAuthorizationContextProviding) -> Observable<Void> {
         Observable.create(with: self) { this, observer in
             this.addDeleteUserObservers { result in
                 switch result {
