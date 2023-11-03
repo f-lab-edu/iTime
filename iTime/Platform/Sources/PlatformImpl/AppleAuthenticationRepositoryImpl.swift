@@ -11,9 +11,9 @@ import CryptoKit
 
 import Platform
 
-// MARK: - AuthenticationRepositoryImpl
+// MARK: - AppleAuthenticationRepositoryImpl
 
-public final class AuthenticationRepositoryImpl:
+public final class AppleAuthenticationRepositoryImpl:
   NSObject,
   AuthenticationRepository
 {
@@ -55,7 +55,7 @@ public final class AuthenticationRepositoryImpl:
 
 // MARK: - Sign In
 
-extension AuthenticationRepositoryImpl: ASAuthorizationControllerDelegate {
+extension AppleAuthenticationRepositoryImpl: ASAuthorizationControllerDelegate {
   public func authorizationController(
     controller: ASAuthorizationController,
     didCompleteWithAuthorization authorization: ASAuthorization
@@ -109,7 +109,7 @@ extension AuthenticationRepositoryImpl: ASAuthorizationControllerDelegate {
 
 // MARK: - Delete User
 
-extension AuthenticationRepositoryImpl {
+extension AppleAuthenticationRepositoryImpl {
   public func deleteCurrentUser() {
     let user = Auth.auth().currentUser
 
@@ -127,7 +127,7 @@ extension AuthenticationRepositoryImpl {
 
 // MARK: Create Hash Value
 
-extension AuthenticationRepositoryImpl {
+extension AppleAuthenticationRepositoryImpl {
   private func randomNonceString(length: Int = 32) -> String {
     precondition(length > 0)
     var randomBytes = [UInt8](repeating: 0, count: length)
@@ -161,7 +161,7 @@ extension AuthenticationRepositoryImpl {
 
 // MARK: - Error Notification
 
-extension AuthenticationRepositoryImpl {
+extension AppleAuthenticationRepositoryImpl {
   private func postNotificationSignInSuccess() {
     notificationCenter.post(
       name: AuthenticationSuccess.signIn.notificationName,
