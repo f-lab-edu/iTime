@@ -12,7 +12,7 @@ import ProxyPackage
 // MARK: ㅡ AuthenticaitonUsecase
 
 public protocol AuthenticationUsecase {
-  func appleSignUp(_ presentation: ASAuthorizationContextProviding) -> Observable<Void>
+  func signIn(_ components: Any?...) -> Observable<Void>
   func signOut() -> Observable<Void>
-  func deleteUser(_ presentation: ASAuthorizationContextProviding) -> Observable<Void>
+  func deleteCurrentUser() -> Observable<Void>
 }

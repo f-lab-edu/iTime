@@ -7,9 +7,7 @@
 
 import AuthenticationServices
 
-import ProxyPackage
-
-public final class ASAuthrizationContextProviderMock: NSObject, ASAuthorizationContextProviding {
+public final class ASAuthrizationContextProviderMock: NSObject, ASAuthorizationControllerPresentationContextProviding {
     public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return ASPresentationAnchor.init()
     }

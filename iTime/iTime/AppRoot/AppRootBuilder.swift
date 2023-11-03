@@ -24,7 +24,7 @@ final class AppRootComponent:
     var authenticationUsecase: AuthenticationUsecase {
         shared {
             AuthenticationUsecaseImpl(
-                appleAuthenticationRepository: FirebaseAppleAuthenticationRepositoryImpl()
+                appleAuthenticationRepository: AuthenticationRepositoryImpl()
             )
         }
     }

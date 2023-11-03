@@ -10,7 +10,6 @@ import RxSwift
 
 import Domain
 import LoggedOut
-import ProxyPackage
 
 protocol LoggedOutPresentable: Presentable {
   var listener: LoggedOutPresentableListener? { get set }
@@ -41,8 +40,8 @@ final class LoggedOutInteractor:
     super.didBecomeActive()
   }
   
-  func requestAppleLogin(_ presenter: ASAuthorizationContextProviding) {
-    authenticationUsecase.appleSignUp(presenter)
+  func requestAppleLogin(_ provider: Any) {
+    authenticationUsecase.signIn(provider)
       .catch { [weak self] error in
         guard let self else { return .empty() }
         self.presenter.presentErrorMessage(error.localizedDescription)
