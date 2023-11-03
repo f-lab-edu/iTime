@@ -5,11 +5,7 @@
 //  Created by 이상헌 on 2023/10/26.
 //
 
-import AuthenticationServices
-
-// MARK: - ASAuthorizationContextProviding
-
-public protocol ASAuthorizationContextProviding: ASAuthorizationControllerPresentationContextProviding {}
+import ProxyPackage
 
 // MARK: - FirebaseAppleLoginRepository
 

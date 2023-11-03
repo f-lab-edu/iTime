@@ -10,6 +10,7 @@ import FirebaseAuth
 import CryptoKit
 
 import Platform
+import ProxyPackage
 
 // MARK: - FirebaseAppleAuthenticationRepositoryImpl
 

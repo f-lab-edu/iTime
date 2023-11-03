@@ -1,0 +1,51 @@
+//
+//  LoggedInViewController.swift
+//  
+//
+//  Created by 이상헌 on 2023/11/02.
+//
+
+import RIBs
+import UIKit
+import RxSwift
+
+import ProxyPackage
+
+protocol LoggedInPresentableListener: AnyObject {}
+
+final class LoggedInViewController:
+  UITabBarController,
+  LoggedInPresentable,
+  LoggedInViewControllable
+{
+  
+  // MARK: - Properties
+
+  weak var listener: LoggedInPresentableListener?
+  
+  // MARK: - Initialziation & Deinitializaition
+  
+  init() {
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    assertionFailure("init(coder:) has not been implemented")
+  }
+  
+  // MARK: - View Lifecycle
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.backgroundColor = .white
+  }
+  
+  func setViewControllers(_ viewControllers: [ViewControllable], animated: Bool) {
+    self.setViewControllers(
+      viewControllers.map(\.uiviewController),
+      animated: animated
+    )
+  }
+}

@@ -6,6 +6,7 @@
 //
 
 import Platform
+import ProxyPackage
 
 // MARK: - FirebaseAppleAuthenticationRepositoryMock
 
@@ -13,7 +14,7 @@ public final class FirebaseAppleAuthenticationRepositoryMock: FirebaseAppleAuthe
     
     public var signInCallCount = 0
     public var signWithPresentation: ASAuthorizationContextProviding?
-    public func signInWithApple(_ presentation: Platform.ASAuthorizationContextProviding) {
+    public func signInWithApple(_ presentation: ASAuthorizationContextProviding) {
         signInCallCount += 1
         signWithPresentation = presentation
     }
@@ -24,7 +25,7 @@ public final class FirebaseAppleAuthenticationRepositoryMock: FirebaseAppleAuthe
     }
     
     public var deleteCurrentUserCallCount = 0
-    public func deleteCurrentUser(_ presentation: Platform.ASAuthorizationContextProviding) {
+    public func deleteCurrentUser(_ presentation: ASAuthorizationContextProviding) {
         deleteCurrentUserCallCount += 1
     }
     

@@ -10,14 +10,12 @@ import RxSwift
 
 import Domain
 import LoggedOut
+import ProxyPackage
 
 protocol LoggedOutPresentable: Presentable {
   var listener: LoggedOutPresentableListener? { get set }
   func presentErrorMessage(_ message: String)
 }
-
-/// 의존성 감추기 용도
-protocol ASAuthorizationContextProviding: Domain.ASAuthorizationContextProviding {}
 
 final class LoggedOutInteractor:
   PresentableInteractor<LoggedOutPresentable>,
