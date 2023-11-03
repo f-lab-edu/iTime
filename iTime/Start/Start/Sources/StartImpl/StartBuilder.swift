@@ -7,25 +7,22 @@
 
 import RIBs
 
+import Start
+
 protocol StartDependency: Dependency {
     var StartViewController: StartViewControllable { get }
 }
 
 final class StartComponent: Component<StartDependency> {
-
     fileprivate var StartViewController: StartViewControllable {
         return dependency.StartViewController
     }
 }
 
-// MARK: - Builder
-
-protocol StartBuildable: Buildable {
-    func build(withListener listener: StartListener) -> StartRouting
-}
-
-final class StartBuilder: Builder<StartDependency>, StartBuildable {
-
+final class StartBuilder:
+  Builder<StartDependency>,
+  StartBuildable
+{  
     override init(dependency: StartDependency) {
         super.init(dependency: dependency)
     }

@@ -8,16 +8,12 @@
 import RIBs
 import RxSwift
 
-protocol StartRouting: Routing {
-  func cleanupViews()
-  
-}
+import Start
 
-protocol StartListener: AnyObject {
-  
-}
-
-final class StartInteractor: Interactor, StartInteractable {
+final class StartInteractor:
+  Interactor,
+  StartInteractable
+{
   
   weak var router: StartRouting?
   weak var listener: StartListener?

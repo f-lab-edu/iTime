@@ -7,6 +7,8 @@
 
 import RIBs
 
+import Start
+
 protocol StartInteractable: Interactable {
   var router: StartRouting? { get set }
   var listener: StartListener? { get set }

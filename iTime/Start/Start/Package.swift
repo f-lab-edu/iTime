@@ -19,7 +19,11 @@ let package = Package(
         .target(
             name: "Start",
             dependencies: [
-              "StartImpl"
+            ]),
+        .target(
+            name: "StartImpl",
+            dependencies: [
+              "Start"
             ]),
         .testTarget(
             name: "StartTests",
