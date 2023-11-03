@@ -19,9 +19,7 @@ public protocol LoggedOutDependency: Dependency {
 // MARK: - LoggedOutComponent
 
 public final class LoggedOutComponent: Component<LoggedOutDependency> {
-    fileprivate var initialState: LoggedOutPresentableState {
-        LoggedOutPresentableState()
-    }
+    
 }
 
 // MARK: - LoggedOutBuilder
@@ -30,7 +28,7 @@ public final class LoggedOutBuilder:
     Builder<LoggedOutDependency>,
     LoggedOutBuildable
 {
-    
+
     public override init(dependency: LoggedOutDependency) {
         super.init(dependency: dependency)
     }
@@ -41,7 +39,6 @@ public final class LoggedOutBuilder:
         
         let interactor = LoggedOutInteractor(
             presenter: viewController,
-            initialState: componenet.initialState,
             authenticationUsecase: componenet.dependency.authenticationUsecase
         )
         interactor.listener = listener

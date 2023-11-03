@@ -10,14 +10,14 @@ import RIBs
 // MARK: - AppRootRouting
 
 protocol AppRootRouting: ViewableRouting {
-    func attachLoggedOut()
-    func detachLoggedOut()
+  func attachLoggedOut()
+  func detachLoggedOut(_ completion: (() -> Void)?)
 }
 
 // MARK: - AppRootPresentable
 
 protocol AppRootPresentable: Presentable {
-    var listener: AppRootPresentableListener? { get set }
+  var listener: AppRootPresentableListener? { get set }
 }
 
 // MARK: - AppRootListener
@@ -28,22 +28,26 @@ protocol AppRootListener: AnyObject {
 // MARK: - AppRootInteractor
 
 final class AppRootInteractor:
-    PresentableInteractor<AppRootPresentable>,
-    AppRootInteractable,
-    AppRootPresentableListener
+  PresentableInteractor<AppRootPresentable>,
+  AppRootInteractable,
+  AppRootPresentableListener
 {
 
-    weak var router: AppRootRouting?
-    weak var listener: AppRootListener?
+  weak var router: AppRootRouting?
+  weak var listener: AppRootListener?
 
-    override init(presenter: AppRootPresentable) {
-        super.init(presenter: presenter)
-        presenter.listener = self
-    }
+  override init(presenter: AppRootPresentable) {
+      super.init(presenter: presenter)
+      presenter.listener = self
+  }
 
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        router?.attachLoggedOut()
-    }
+  override func didBecomeActive() {
+      super.didBecomeActive()
+      router?.attachLoggedOut()
+  }
+  
+  func detachLoggedOut() {
+    
+  }
 }
 

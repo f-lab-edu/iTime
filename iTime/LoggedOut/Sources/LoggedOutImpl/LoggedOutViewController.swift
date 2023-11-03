@@ -2,19 +2,21 @@
 //  LoggedOutViewController.swift
 //  
 //
-//  Created by 이상헌 on 2023/10/26.
+//  Created by 이상헌 on 2023/10/31.
 //
-
 import UIKit
 import AuthenticationServices
 
 import RIBs
 import RxCocoa
 import RxSwift
+import SnapKit
 
 import ProxyPackage
 
-// MARK: - LoggedOutViewController
+protocol LoggedOutPresentableListener: AnyObject {
+    func requestAppleLogin(_ presenter: ASAuthorizationContextProviding)
+}
 
 final class LoggedOutViewController:
     BaseViewController,
@@ -24,7 +26,7 @@ final class LoggedOutViewController:
     
     // MARK: - Constants
     
-    private enum UI {
+    private enum Metric {
         
     }
     
@@ -32,69 +34,48 @@ final class LoggedOutViewController:
     
     weak var listener: LoggedOutPresentableListener?
     
-    private let actionRelay = PublishRelay<LoggedOutPresentableListener.Action>()
-    
     // MARK: - UI Components
     
-    // MARK: - Initialization & Deinitialization
+    private lazy var appleLoginButton = UIButton().builder
+        .backgroundColor(.blue)
+        .build()
     
-    override init() {
-        super.init()
-    }
-    
-    // MARK: - View Lifecycle
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        bindActions()
         setupUI()
-        bindUI()
-        bind(listener: self.listener)
-    }
-}
-
-
-// MARK: Private methods
-
-extension LoggedOutViewController {}
-
-// MARK: - Bind UI
-
-extension LoggedOutViewController {
-    private func bindUI() {
-        
-    }
-}
-
-// MARK: - Bind listener
-
-extension LoggedOutViewController {
-    private func bind(listener: LoggedOutPresentableListener?) {
-        guard let listener = listener else { return }
     }
     
-    private func bindActionRelay() {
-        self.actionRelay.asObservable()
-          .bind(with: self) { onwer, action in
-            onwer.listener?.sendAction(action)
-          }
-          .disposed(by: disposeBag)
+    deinit {
+        print(type(of: self))
     }
 }
 
-// MARK: - Binding Action
+// MARK: - Bind Action
 
 extension LoggedOutViewController {
     private func bindActions() {
-        
+        appleLoginButtonTapAction()
+    }
+    
+    private func appleLoginButtonTapAction() {
+        appleLoginButton.rx
+            .tapWithPreventDuplication()
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { this, _ in
+              this.listener?.requestAppleLogin(this)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
-// MARK: - Binding State
+// MARK: - LoggedOutPresentable
 
 extension LoggedOutViewController {
-    private func bindState(from listener: LoggedOutPresentableListener) {
-        
+    func presentErrorMessage(_ message: String) {
+        alert(message)
     }
 }
 
@@ -102,36 +83,30 @@ extension LoggedOutViewController {
 
 extension LoggedOutViewController {
     private func setupUI() {
+        view.backgroundColor = .white
+        view.addSubview(appleLoginButton)
         
-        self.layout()
+        layout()
     }
     
     private func layout() {
-        
+      makeAppleLoginButtonLayout()
     }
-}
-
-extension LoggedOutViewController: ASAuthorizationControllerPresentationContextProviding {
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return self.view.window ?? .init()
-    }
-}
-
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-
-struct LoggedOutPreView: PreviewProvider {
-    static var previews: some SwiftUI.View {
-        ForEach(Device.deviceNames, id: \.self) { deviceName in
-            UIViewControllerPreview {
-                let viewController = LoggedOutViewController()
-                
-                return UINavigationController(rootViewController: viewController)
-            }
-            .previewDevice(PreviewDevice(rawValue: deviceName))
-            .previewDisplayName(deviceName)
+    
+    // FIXME: 디자인 나온 후 레이아웃 반영
+    private func makeAppleLoginButtonLayout() {
+        appleLoginButton.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.height.equalTo(80)
+            $0.width.equalTo(200)
         }
     }
 }
 
-#endif
+// MARK: - ASAuthorizationContextProviding
+
+extension LoggedOutViewController: ASAuthorizationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        view.window ?? .init()
+    }
+}

@@ -10,11 +10,11 @@ import Foundation
 // MARK: - DocumentReferenceConvertible
 
 public protocol DocumentReferenceConvertible {
-    var referencePath: String { get }
+  var referencePath: String { get }
 }
 
 // MARK: - DatabaseEndpoint
 
 public enum DatabaseEndpoint: String {
-    case tests = "test_v2"
+  case userSession = "users_v1"
 }

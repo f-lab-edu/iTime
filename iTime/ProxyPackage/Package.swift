@@ -18,7 +18,6 @@ let package = Package(
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", exact: "10.15.0"),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", exact: "6.2.0"),
         .package(url: "https://github.com/uber/RIBs.git", exact: "0.14.1"),
-        .package(url: "https://github.com/ReactorKit/ReactorKit.git", from: "3.0.0"),
         .package(url: "https://github.com/SnapKit/SnapKit.git", from: "5.0.0"),
         .package(url: "https://github.com/RxSwiftCommunity/RxGesture.git", from: "4.0.4")
     ],
@@ -28,7 +27,6 @@ let package = Package(
             dependencies: [
                 .product(name: "SnapKit", package: "SnapKit"),
                 .product(name: "RxGesture", package: "RxGesture"),
-                .product(name: "ReactorKit", package: "ReactorKit"),
                 .product(name: "RIBs", package: "RIBs"),
                 .product(name: "RxSwift", package: "RxSwift"),
                 .product(name: "RxCocoa", package: "RxSwift"),

@@ -73,10 +73,10 @@ extension FirebaseAppleAuthenticationRepositoryImpl: ASAuthorizationControllerDe
             return
         }
         
-        let credential = OAuthProvider.credential(
-            withProviderID: "apple.com",
-            idToken: idTokenString,
-            rawNonce: nonce
+        let credential = OAuthProvider.appleCredential(
+          withIDToken: idTokenString,
+          rawNonce: nonce,
+          fullName: appleIDCredential.fullName
         )
         
         signIn(with: credential)
@@ -86,8 +86,9 @@ extension FirebaseAppleAuthenticationRepositoryImpl: ASAuthorizationControllerDe
         controller: ASAuthorizationController,
         didCompleteWithError error: Error
     ) {
-        postNotificationSignInError()
-        print("Sign in with Apple errored: \(error)")
+      /// 1001 - User cancels the Sign In With Apple flow.
+      /// 1000 - The app entitlement does NOT include the “Sign In With Apple” capability.
+      print("Sign in with Apple errored: \(error)")
     }
     
     private func signIn(with credential: OAuthCredential) {
