@@ -15,7 +15,7 @@ import SnapKit
 import ProxyPackage
 
 protocol LoggedOutPresentableListener: AnyObject {
-    func requestAppleLogin(_ presenter: ASAuthorizationContextProviding)
+    func requestAppleLogin(_ provider: Any)
 }
 
 final class LoggedOutViewController:
@@ -105,7 +105,7 @@ extension LoggedOutViewController {
 
 // MARK: - ASAuthorizationContextProviding
 
-extension LoggedOutViewController: ASAuthorizationContextProviding {
+extension LoggedOutViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         view.window ?? .init()
     }
