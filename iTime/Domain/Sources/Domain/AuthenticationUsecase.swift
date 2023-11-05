@@ -15,4 +15,5 @@ public protocol AuthenticationUsecase {
   func signIn(_ components: Any?...) -> Observable<Void>
   func signOut() -> Observable<Void>
   func deleteCurrentUser() -> Observable<Void>
+  func isLoggedIn() -> Observable<Bool>
 }

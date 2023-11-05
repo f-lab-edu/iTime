@@ -66,7 +66,7 @@ final class AppRootRouter:
     guard let router = loggedOutRouter else { return }
     loggedOutRouter = nil
     detachChild(router)
-    viewController.dismiss(completion: nil)
+    viewController.dismiss(animated: false, completion: completion)
   }
   
   func attachLoggedIn() {
@@ -85,6 +85,10 @@ final class AppRootRouter:
     guard let router = loggedInRouter else { return }
     loggedInRouter = nil
     detachChild(router)
-    viewController.dismiss(completion: nil)
+    viewController.dismiss(
+      router.viewControllable,
+      animated: false,
+      completion: nil
+    )
   }
 }

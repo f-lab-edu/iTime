@@ -52,13 +52,15 @@ public extension ViewControllable {
     
     func presentFullScreen(_ viewControllable: ViewControllable, animated: Bool, completion: (() -> Void)?) {
         viewControllable.uiviewController.modalPresentationStyle = .fullScreen
-        DispatchQueue.main.async {
-            self.uiviewController.present(viewControllable.uiviewController, animated: animated, completion: completion)
+        DispatchQueue.main.async { [weak self] in
+            self?.uiviewController.present(viewControllable.uiviewController, animated: animated, completion: completion)
         }
     }
     
-    func dismiss(completion: (() -> Void)?) {
-        self.uiviewController.dismiss(animated: true, completion: completion)
+    func dismiss(animated: Bool, completion: (() -> Void)?) {
+      DispatchQueue.main.async { [weak self] in
+        self?.uiviewController.dismiss(animated: animated, completion: completion)
+      }
     }
     
     func pushViewController(_ viewControllable: ViewControllable, animated: Bool) {

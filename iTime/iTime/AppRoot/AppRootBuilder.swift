@@ -57,8 +57,11 @@ final class AppRootBuilder:
   
   func build() -> LaunchRouting {
     let viewController = AppRootViewController()
-    let interactor = AppRootInteractor(presenter: viewController)
     let component = AppRootComponent(dependency: dependency)
+    let interactor = AppRootInteractor(
+      presenter: viewController,
+      authenticationUsecase: component.authenticationUsecase
+    )
     let loggedOutBuilder = LoggedOutBuilder(dependency: component)
     let loggedInBuilder = LoggedInBuilder(dependency: component)
     

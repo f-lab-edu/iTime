@@ -77,6 +77,14 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
       return Disposables.create()
     }
   }
+  
+  public func isLoggedIn() -> Observable<Bool> {
+    Observable.create(with: self) { this, observer in
+      let isLoggedIn = this.appleAuthenticationRepository.isLoggedIn()
+      observer.onNext(isLoggedIn)
+      return Disposables.create()
+    }
+  }
 }
 
 // MARK: - Set Authetication Notification
