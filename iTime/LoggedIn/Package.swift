@@ -17,7 +17,7 @@ let package = Package(
             targets: ["LoggedInImpl"]),
     ],
     dependencies: [
-      .package(path: "../Domain")
+      .package(path: "../Domain"),
     ],
     targets: [
         .target(

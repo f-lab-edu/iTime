@@ -14,20 +14,14 @@ protocol StartInteractable: Interactable {
   var listener: StartListener? { get set }
 }
 
-protocol StartViewControllable: ViewControllable {
-}
-
 final class StartRouter:
   Router<StartInteractable>,
   StartRouting
 {
   
-  
-  init(
-    interactor: StartInteractable,
-    viewController: StartViewControllable
+  override init(
+    interactor: StartInteractable
   ) {
-    self.viewController = viewController
     super.init(interactor: interactor)
     interactor.router = self
   }
@@ -36,7 +30,4 @@ final class StartRouter:
     
   }
   
-  // MARK: - Private
-  
-  private let viewController: StartViewControllable
 }

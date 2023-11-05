@@ -11,6 +11,8 @@ import LoggedOut
 import LoggedOutImpl
 import LoggedIn
 import LoggedInImpl
+import Start
+import StartImpl
 import Domain
 import DomainImpl
 import PlatformImpl
@@ -22,7 +24,8 @@ protocol AppRootDependency: Dependency {
 final class AppRootComponent:
   Component<AppRootDependency>,
   LoggedOutDependency,
-  LoggedInDependency
+  LoggedInDependency,
+  StartDependency
 {
   
   var authenticationUsecase: AuthenticationUsecase {
@@ -31,6 +34,10 @@ final class AppRootComponent:
         appleAuthenticationRepository: AppleAuthenticationRepositoryImpl()
       )
     }
+  }
+  
+  var startBuilder: StartBuildable {
+    StartBuilder(dependency: self)
   }
 }
 

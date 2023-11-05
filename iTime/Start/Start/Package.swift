@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "Start",
+    platforms: [
+        .iOS(.v15)
+    ],
     products: [
         .library(
             name: "Start",
@@ -14,16 +17,17 @@ let package = Package(
             targets: ["StartImpl"]),
     ],
     dependencies: [
+      .package(path: "../Domain"),
     ],
     targets: [
         .target(
             name: "Start",
-            dependencies: [
-            ]),
+            dependencies: ["Domain"]),
         .target(
             name: "StartImpl",
             dependencies: [
-              "Start"
+              "Start",
+              "Domain"
             ]),
         .testTarget(
             name: "StartTests",

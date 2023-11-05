@@ -7,12 +7,15 @@
 
 import RIBs
 
+import Start
 import LoggedIn
 
 public protocol LoggedInDependency: Dependency {
+  var startBuilder: StartBuildable { get }
 }
 
 final class LoggedInComponent: Component<LoggedInDependency> {
+  
 }
 
 // MARK: - Builder
@@ -27,10 +30,13 @@ public final class LoggedInBuilder:
   }
   
   public func build(withListener listener: LoggedInListener) -> LoggedInRouting {
-    let component = LoggedInComponent(dependency: dependency)
     let viewController = LoggedInViewController()
     let interactor = LoggedInInteractor(presenter: viewController)
     interactor.listener = listener
-    return LoggedInRouter(interactor: interactor, viewController: viewController)
+    return LoggedInRouter(
+      interactor: interactor,
+      viewController: viewController,
+      startBuilder: dependency.startBuilder
+    )
   }
 }
