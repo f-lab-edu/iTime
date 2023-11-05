@@ -9,52 +9,58 @@ import RIBs
 
 import LoggedOut
 import LoggedOutImpl
+import LoggedIn
+import LoggedInImpl
 import Domain
 import DomainImpl
 import PlatformImpl
 
 protocol AppRootDependency: Dependency {
-    
+  
 }
 
 final class AppRootComponent:
-    Component<AppRootDependency>,
-    LoggedOutDependency
+  Component<AppRootDependency>,
+  LoggedOutDependency,
+  LoggedInDependency
 {
-    var authenticationUsecase: AuthenticationUsecase {
-        shared {
-            AuthenticationUsecaseImpl(
-                appleAuthenticationRepository: AppleAuthenticationRepositoryImpl()
-            )
-        }
+  
+  var authenticationUsecase: AuthenticationUsecase {
+    shared {
+      AuthenticationUsecaseImpl(
+        appleAuthenticationRepository: AppleAuthenticationRepositoryImpl()
+      )
     }
+  }
 }
 
 // MARK: - Builder
 
 protocol AppRootBuildable: Buildable {
-    func build() -> LaunchRouting
+  func build() -> LaunchRouting
 }
 
 final class AppRootBuilder:
-    Builder<AppRootDependency>,
-    AppRootBuildable
+  Builder<AppRootDependency>,
+  AppRootBuildable
 {
-    override init(dependency: AppRootDependency) {
-        super.init(dependency: dependency)
-    }
+  override init(dependency: AppRootDependency) {
+    super.init(dependency: dependency)
+  }
+  
+  func build() -> LaunchRouting {
+    let viewController = AppRootViewController()
+    let interactor = AppRootInteractor(presenter: viewController)
+    let component = AppRootComponent(dependency: dependency)
+    let loggedOutBuilder = LoggedOutBuilder(dependency: component)
+    let loggedInBuilder = LoggedInBuilder(dependency: component)
     
-    func build() -> LaunchRouting {
-        let viewController = AppRootViewController()
-        let interactor = AppRootInteractor(presenter: viewController)
-        let component = AppRootComponent(dependency: dependency)
-        let loggedOutBuilder = LoggedOutBuilder(dependency: component)
-        
-        return AppRootRouter(
-            interactor: interactor,
-            viewController: viewController,
-            loggedOutBuilder: loggedOutBuilder
-        )
-    }
+    return AppRootRouter(
+      interactor: interactor,
+      viewController: viewController,
+      loggedOutBuilder: loggedOutBuilder,
+      loggedInBuilder: loggedInBuilder
+    )
+  }
 }
 

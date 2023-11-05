@@ -8,10 +8,15 @@
 import RIBs
 
 import LoggedOut
+import LoggedIn
 
 // MARK: - AppRootInteractable
 
-protocol AppRootInteractable: Interactable, LoggedOutListener {
+protocol AppRootInteractable:
+  Interactable,
+  LoggedOutListener,
+  LoggedInListener
+{
   var router: AppRootRouting? { get set }
   var listener: AppRootListener? { get set }
 }
@@ -19,7 +24,6 @@ protocol AppRootInteractable: Interactable, LoggedOutListener {
 // MARK: - AppRootViewControllable
 
 protocol AppRootViewControllable: ViewControllable {
-  // TODO: Declare methods the router invokes to manipulate the view hierarchy.
 }
 
 // MARK: - AppRootRouter
@@ -28,16 +32,20 @@ final class AppRootRouter:
   LaunchRouter<AppRootInteractable, AppRootViewControllable>,
   AppRootRouting
 {
-  
   private let loggedOutBuilder: LoggedOutBuildable
   private var loggedOutRouter: LoggedOutRouting?
+  
+  private let loggedInBuilder: LoggedInBuildable
+  private var loggedInRouter: LoggedInRouting?
   
   init(
     interactor: AppRootInteractable,
     viewController: AppRootViewControllable,
-    loggedOutBuilder: LoggedOutBuildable
+    loggedOutBuilder: LoggedOutBuildable,
+    loggedInBuilder: LoggedInBuildable
   ) {
     self.loggedOutBuilder = loggedOutBuilder
+    self.loggedInBuilder = loggedInBuilder
     super.init(interactor: interactor, viewController: viewController)
     interactor.router = self
   }
@@ -47,12 +55,35 @@ final class AppRootRouter:
     let router = loggedOutBuilder.build(with: interactor)
     loggedOutRouter = router
     attachChild(router)
-    viewController.presentFullScreen(router.viewControllable, animated: true, completion: nil)
+    viewController.presentFullScreen(
+      router.viewControllable,
+      animated: true,
+      completion: nil
+    )
   }
   
   func detachLoggedOut(_ completion: (() -> Void)? = nil) {
     guard let router = loggedOutRouter else { return }
     loggedOutRouter = nil
+    detachChild(router)
+    viewController.dismiss(completion: nil)
+  }
+  
+  func attachLoggedIn() {
+    guard loggedInRouter == nil else { return }
+    let router = loggedInBuilder.build(withListener: interactor)
+    loggedInRouter = router
+    attachChild(router)
+    viewController.presentFullScreen(
+      router.viewControllable,
+      animated: true,
+      completion: nil
+    )
+  }
+  
+  func detachLoggedIn() {
+    guard let router = loggedInRouter else { return }
+    loggedInRouter = nil
     detachChild(router)
     viewController.dismiss(completion: nil)
   }

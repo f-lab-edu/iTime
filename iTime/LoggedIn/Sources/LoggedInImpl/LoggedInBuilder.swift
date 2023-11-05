@@ -9,7 +9,7 @@ import RIBs
 
 import LoggedIn
 
-protocol LoggedInDependency: Dependency {
+public protocol LoggedInDependency: Dependency {
 }
 
 final class LoggedInComponent: Component<LoggedInDependency> {
@@ -17,13 +17,16 @@ final class LoggedInComponent: Component<LoggedInDependency> {
 
 // MARK: - Builder
 
-final class LoggedInBuilder: Builder<LoggedInDependency>, LoggedInBuildable {
+public final class LoggedInBuilder:
+  Builder<LoggedInDependency>,
+  LoggedInBuildable
+{
   
-  override init(dependency: LoggedInDependency) {
+  public override init(dependency: LoggedInDependency) {
     super.init(dependency: dependency)
   }
   
-  func build(withListener listener: LoggedInListener) -> LoggedInRouting {
+  public func build(withListener listener: LoggedInListener) -> LoggedInRouting {
     let component = LoggedInComponent(dependency: dependency)
     let viewController = LoggedInViewController()
     let interactor = LoggedInInteractor(presenter: viewController)
