@@ -66,7 +66,10 @@ final class AppRootRouter:
     guard let router = loggedOutRouter else { return }
     loggedOutRouter = nil
     detachChild(router)
-    viewController.dismiss(animated: false, completion: completion)
+    viewController.dismiss(
+      animated: false,
+      completion: completion
+    )
   }
   
   func attachLoggedIn() {
@@ -76,7 +79,7 @@ final class AppRootRouter:
     attachChild(router)
     viewController.presentFullScreen(
       router.viewControllable,
-      animated: true,
+      animated: false,
       completion: nil
     )
   }
