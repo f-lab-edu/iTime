@@ -15,6 +15,12 @@ let package = Package(
         .library(
             name: "StartImpl",
             targets: ["StartImpl"]),
+        .library(
+            name: "LogEntryCreation",
+            targets: ["LogEntryCreation"]),
+        .library(
+            name: "LogEntryCreationImpl",
+            targets: ["LogEntryCreationImpl"]),
     ],
     dependencies: [
       .package(path: "../Domain"),
@@ -29,8 +35,20 @@ let package = Package(
               "Start",
               "Domain"
             ]),
+        .target(
+            name: "LogEntryCreation",
+            dependencies: ["Domain"]),
+        .target(
+            name: "LogEntryCreationImpl",
+            dependencies: [
+              "LogEntryCreation",
+              "Domain"
+            ]),
         .testTarget(
             name: "StartTests",
             dependencies: ["Start"]),
+        .testTarget(
+            name: "LogEntryCreationTests",
+            dependencies: ["LogEntryCreation"]),
     ]
 )
