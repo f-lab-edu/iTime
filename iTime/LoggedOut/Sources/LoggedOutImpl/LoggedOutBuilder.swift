@@ -28,7 +28,6 @@ public final class LoggedOutBuilder:
     Builder<LoggedOutDependency>,
     LoggedOutBuildable
 {
-
     public override init(dependency: LoggedOutDependency) {
         super.init(dependency: dependency)
     }
