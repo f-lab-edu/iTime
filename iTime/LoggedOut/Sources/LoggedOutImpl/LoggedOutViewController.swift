@@ -5,7 +5,6 @@
 //  Created by 이상헌 on 2023/10/31.
 //
 import UIKit
-import AuthenticationServices
 
 import RIBs
 import RxCocoa
@@ -15,7 +14,7 @@ import SnapKit
 import ProxyPackage
 
 protocol LoggedOutPresentableListener: AnyObject {
-  func requestAppleLogin(_ provider: Any)
+  func requestAppleLogin()
 }
 
 final class LoggedOutViewController:
@@ -61,7 +60,7 @@ extension LoggedOutViewController {
       .tapWithPreventDuplication()
       .asDriver(onErrorDriveWith: .empty())
       .drive(with: self) { this, _ in
-        this.listener?.requestAppleLogin(UIApplication.shared) // self를 가져다쓰면 performRequests에서 잠깐 leak 발생
+        this.listener?.requestAppleLogin()
       }
       .disposed(by: disposeBag)
   }
@@ -99,12 +98,4 @@ extension LoggedOutViewController {
   }
 }
 
-// MARK: - ASAuthorizationContextProviding
 
-extension UIApplication: ASAuthorizationControllerPresentationContextProviding {
-  public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-    let scenes = UIApplication.shared.connectedScenes.first as? UIWindowScene
-    let window = scenes?.windows.first ?? .init()
-    return window
-  }
-}

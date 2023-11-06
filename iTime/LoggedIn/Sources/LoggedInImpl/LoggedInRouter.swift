@@ -18,7 +18,7 @@ protocol LoggedInInteractable:
   var listener: LoggedInListener? { get set }
 }
 
-public protocol LoggedInViewControllable: ViewControllable {
+protocol LoggedInViewControllable: ViewControllable {
   func setViewControllers(_ viewControllers: [ViewControllable], animated: Bool)
 }
 
