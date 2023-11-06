@@ -5,6 +5,8 @@
 //  Created by 이상헌 on 2023/10/26.
 //
 
+import UIKit
+
 import RIBs
 
 import LoggedOut
@@ -16,6 +18,7 @@ import StartImpl
 import Domain
 import DomainImpl
 import PlatformImpl
+import ProxyPackage
 
 protocol AppRootDependency: Dependency {
   
@@ -31,13 +34,17 @@ final class AppRootComponent:
   var authenticationUsecase: AuthenticationUsecase {
     shared {
       AuthenticationUsecaseImpl(
-        appleAuthenticationRepository: AppleAuthenticationRepositoryImpl()
+        appleAuthenticationRepository: AppleAuthenticationRepositoryImpl(), authorizationContextProvider: authorizationContextProvider
       )
     }
   }
   
   var startBuilder: StartBuildable {
     StartBuilder(dependency: self)
+  }
+  
+  var authorizationContextProvider: AuthorizationContextProviding {
+    UIApplication.shared
   }
 }
 

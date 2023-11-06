@@ -5,12 +5,13 @@
 //  Created by 이상헌 on 2023/10/27.
 //
 
-import Foundation
+import AuthenticationServices
 
 import RxSwift
 
 import Domain
 import Platform
+import ProxyPackage
 
 // MARK: - AuthenticationUsecaseImpl
 
@@ -19,19 +20,23 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
   // MARK: - Properties
   
   private let appleAuthenticationRepository: AuthenticationRepository
+  private let authorizationContextProvider: AuthorizationContextProviding
+  
   fileprivate var notificationCenter: Addable
   
   // MARK: initialize
   
   public init(
     appleAuthenticationRepository: AuthenticationRepository,
-    notificationCenter: Addable = NotificationCenter.default
+    notificationCenter: Addable = NotificationCenter.default,
+    authorizationContextProvider: AuthorizationContextProviding
   ) {
     self.appleAuthenticationRepository = appleAuthenticationRepository
     self.notificationCenter = notificationCenter
+    self.authorizationContextProvider = authorizationContextProvider
   }
   
-  public func signIn(_ components: Any?...) -> Observable<Void> {
+  public func signIn() -> Observable<Void> {
     Observable.create(with: self) { this, observer in
       this.addSignInObservers { result in
         switch result {
@@ -42,7 +47,7 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
         }
       }
       
-      this.appleAuthenticationRepository.signIn(components)
+      this.appleAuthenticationRepository.signIn(this.authorizationContextProvider)
       return Disposables.create()
     }
   }
