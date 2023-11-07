@@ -57,15 +57,9 @@ final class AppRootInteractor:
   }
   
   private func routeInitalLaunch() {
-    authenticationUsecase.isLoggedIn()
-      .subscribe(with: self) { this, isLoggedIn in
-        if isLoggedIn {
-          this.router?.attachLoggedIn()
-        } else {
-          this.router?.attachLoggedOut()
-        }
-      }
-      .disposeOnDeactivate(interactor: self)
+    authenticationUsecase.isLoggedIn() ?
+    router?.attachLoggedIn() :
+    router?.attachLoggedOut()
   }
   
   func detachLoggedOut() {

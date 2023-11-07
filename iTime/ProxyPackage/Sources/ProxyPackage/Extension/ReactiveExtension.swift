@@ -48,3 +48,13 @@ extension ObservableType {
         }
     }
 }
+
+extension Single {
+  public static func create<Object: AnyObject>(with obj: Object, _ subscribe: @escaping ( (Object, SingleObserver)) -> Disposable) -> Single<Element> {
+      return Single<Element>.create { [weak obj] observer in
+        guard let obj else { return Disposables.create() }
+        
+        return subscribe((obj, observer))
+      }
+    }
+}
