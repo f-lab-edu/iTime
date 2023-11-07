@@ -8,7 +8,7 @@
 import RIBs
 import RxSwift
 
-import LogEntryCreation
+import Start
 
 protocol LogEntryCreationPresentable: Presentable {
     var listener: LogEntryCreationPresentableListener? { get set }

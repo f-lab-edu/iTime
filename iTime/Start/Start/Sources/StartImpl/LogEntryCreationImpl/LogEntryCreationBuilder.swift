@@ -7,7 +7,7 @@
 
 import RIBs
 
-import LogEntryCreation
+import Start
 
 protocol LogEntryCreationDependency: Dependency {
 }

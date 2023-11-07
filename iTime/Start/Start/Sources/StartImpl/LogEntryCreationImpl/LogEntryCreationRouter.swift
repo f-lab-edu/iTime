@@ -7,7 +7,7 @@
 
 import RIBs
 
-import LogEntryCreation
+import Start
 
 protocol LogEntryCreationInteractable: Interactable {
     var router: LogEntryCreationRouting? { get set }
