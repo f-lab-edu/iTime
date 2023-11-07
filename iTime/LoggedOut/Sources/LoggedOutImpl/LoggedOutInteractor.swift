@@ -44,9 +44,9 @@ final class LoggedOutInteractor:
   func requestAppleLogin() {
     authenticationUsecase.signIn()
       .catch { [weak self] error in
-        guard let self else { return .empty() }
+        guard let self else { return .never() }
         self.presenter.presentErrorMessage(error.localizedDescription)
-        return .empty()
+        return .never()
       }
       .subscribe(with: self) { this, _ in
         this.listener?.detachLoggedOut()
