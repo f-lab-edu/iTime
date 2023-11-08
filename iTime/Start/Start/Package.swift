@@ -14,7 +14,7 @@ let package = Package(
             targets: ["Start"]),
         .library(
             name: "StartImpl",
-            targets: ["StartImpl"]),
+            targets: ["StartImpl"])
     ],
     dependencies: [
       .package(path: "../Domain"),
@@ -31,6 +31,6 @@ let package = Package(
             ]),
         .testTarget(
             name: "StartTests",
-            dependencies: ["Start"]),
+            dependencies: ["Start"])
     ]
 )
