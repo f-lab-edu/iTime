@@ -10,6 +10,7 @@ import RxSwift
 
 import Domain
 import LoggedOut
+import ProxyPackage
 
 protocol LoggedOutPresentable: Presentable {
   var listener: LoggedOutPresentableListener? { get set }
@@ -40,16 +41,16 @@ final class LoggedOutInteractor:
     super.didBecomeActive()
   }
   
-  func requestAppleLogin(_ provider: Any) {
-    authenticationUsecase.signIn(provider)
-      .catch { [weak self] error in
-        guard let self else { return .empty() }
-        self.presenter.presentErrorMessage(error.localizedDescription)
-        return .empty()
-      }
-      .subscribe(with: self) { this, _ in
-        this.listener?.detachLoggedOut()
-      }
+  func requestAppleLogin() {
+    authenticationUsecase.signIn()
+      .subscribe(
+        with: self,
+        onSuccess: { this, _ in
+          this.listener?.detachLoggedOut()
+        }, onFailure: { this, error in
+          this.presenter.presentErrorMessage(error.localizedDescription)
+        }
+      )
       .disposeOnDeactivate(interactor: self)
   }
 }

@@ -28,5 +28,11 @@ public final class AuthenticationRepositoryMock: AuthenticationRepository {
     deleteCurrentUserCallCount += 1
   }
   
+  public var isLoggedInCallCount = 0
+  public func isLoggedIn() -> Bool {
+    isLoggedInCallCount += 1
+    return true
+  }
+  
   public init() {}
 }

@@ -7,11 +7,15 @@
 
 import RIBs
 
+import Domain
+
 // MARK: - AppRootRouting
 
 protocol AppRootRouting: ViewableRouting {
   func attachLoggedOut()
   func detachLoggedOut(_ completion: (() -> Void)?)
+  func attachLoggedIn()
+  func detachLoggedIn()
 }
 
 // MARK: - AppRootPresentable
@@ -32,22 +36,36 @@ final class AppRootInteractor:
   AppRootInteractable,
   AppRootPresentableListener
 {
-
+  
   weak var router: AppRootRouting?
   weak var listener: AppRootListener?
-
-  override init(presenter: AppRootPresentable) {
-      super.init(presenter: presenter)
-      presenter.listener = self
+  
+  private let authenticationUsecase: AuthenticationUsecase
+  
+  init(
+    presenter: AppRootPresentable,
+    authenticationUsecase: AuthenticationUsecase
+  ) {
+    self.authenticationUsecase = authenticationUsecase
+    super.init(presenter: presenter)
+    presenter.listener = self
   }
-
+  
   override func didBecomeActive() {
-      super.didBecomeActive()
-      router?.attachLoggedOut()
+    super.didBecomeActive()
+    routeInitalLaunch()
+  }
+  
+  private func routeInitalLaunch() {
+    authenticationUsecase.isLoggedIn() ?
+    router?.attachLoggedIn() :
+    router?.attachLoggedOut()
   }
   
   func detachLoggedOut() {
-    
+    router?.detachLoggedOut { [weak self] in
+      self?.router?.attachLoggedIn()
+    }
   }
 }
 

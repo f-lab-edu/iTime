@@ -12,7 +12,8 @@ import ProxyPackage
 // MARK: ㅡ AuthenticaitonUsecase
 
 public protocol AuthenticationUsecase {
-  func signIn(_ components: Any?...) -> Observable<Void>
-  func signOut() -> Observable<Void>
-  func deleteCurrentUser() -> Observable<Void>
+  func signIn() -> Single<Void>
+  func signOut() -> Single<Void>
+  func deleteCurrentUser() -> Single<Void>
+  func isLoggedIn() -> Bool
 }

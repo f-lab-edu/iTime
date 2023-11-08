@@ -20,6 +20,10 @@
 		DE4E55272AEA65FF00DDD145 /* LoggedOut in Frameworks */ = {isa = PBXBuildFile; productRef = DE4E55262AEA65FF00DDD145 /* LoggedOut */; };
 		DE4E55292AEA65FF00DDD145 /* LoggedOutImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE4E55282AEA65FF00DDD145 /* LoggedOutImpl */; };
 		DE4E552D2AEA92FB00DDD145 /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = DE4E552C2AEA92FB00DDD145 /* Domain */; };
+		DE5D46392AF763D700EDE276 /* LoggedIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE5D46382AF763D700EDE276 /* LoggedIn */; };
+		DE5D463B2AF763D700EDE276 /* LoggedInImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE5D463A2AF763D700EDE276 /* LoggedInImpl */; };
+		DE5D463D2AF763D700EDE276 /* Start in Frameworks */ = {isa = PBXBuildFile; productRef = DE5D463C2AF763D700EDE276 /* Start */; };
+		DE5D463F2AF763D700EDE276 /* StartImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE5D463E2AF763D700EDE276 /* StartImpl */; };
 		DE7D715F2AEBDF8300ECFCBB /* DomainImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE7D715E2AEBDF8300ECFCBB /* DomainImpl */; };
 		DE7D71612AEBDF8300ECFCBB /* PlatformImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE7D71602AEBDF8300ECFCBB /* PlatformImpl */; };
 		DEB54D3C2AE7F33400E940BE /* Platform in Frameworks */ = {isa = PBXBuildFile; productRef = DEB54D3B2AE7F33400E940BE /* Platform */; };
@@ -56,14 +60,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE5D463D2AF763D700EDE276 /* Start in Frameworks */,
 				DE7D715F2AEBDF8300ECFCBB /* DomainImpl in Frameworks */,
 				DE081E3A2AEE2987005B5CC8 /* PlatformTestSupports in Frameworks */,
 				DE4E552D2AEA92FB00DDD145 /* Domain in Frameworks */,
 				DEB54D3E2AE7F33400E940BE /* ProxyPackage in Frameworks */,
+				DE5D463F2AF763D700EDE276 /* StartImpl in Frameworks */,
 				DE4E55292AEA65FF00DDD145 /* LoggedOutImpl in Frameworks */,
+				DE5D463B2AF763D700EDE276 /* LoggedInImpl in Frameworks */,
 				DE7D71612AEBDF8300ECFCBB /* PlatformImpl in Frameworks */,
 				DEB54D3C2AE7F33400E940BE /* Platform in Frameworks */,
 				DE4E55272AEA65FF00DDD145 /* LoggedOut in Frameworks */,
+				DE5D46392AF763D700EDE276 /* LoggedIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +177,10 @@
 				DE7D715E2AEBDF8300ECFCBB /* DomainImpl */,
 				DE7D71602AEBDF8300ECFCBB /* PlatformImpl */,
 				DE081E392AEE2987005B5CC8 /* PlatformTestSupports */,
+				DE5D46382AF763D700EDE276 /* LoggedIn */,
+				DE5D463A2AF763D700EDE276 /* LoggedInImpl */,
+				DE5D463C2AF763D700EDE276 /* Start */,
+				DE5D463E2AF763D700EDE276 /* StartImpl */,
 			);
 			productName = iTime;
 			productReference = DE05709F2AE6735E00669BDF /* iTime.app */;
@@ -463,6 +475,22 @@
 		DE4E552C2AEA92FB00DDD145 /* Domain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Domain;
+		};
+		DE5D46382AF763D700EDE276 /* LoggedIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoggedIn;
+		};
+		DE5D463A2AF763D700EDE276 /* LoggedInImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoggedInImpl;
+		};
+		DE5D463C2AF763D700EDE276 /* Start */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Start;
+		};
+		DE5D463E2AF763D700EDE276 /* StartImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StartImpl;
 		};
 		DE7D715E2AEBDF8300ECFCBB /* DomainImpl */ = {
 			isa = XCSwiftPackageProductDependency;

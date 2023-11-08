@@ -51,6 +51,10 @@ public final class AppleAuthenticationRepositoryImpl:
       postNotificationSignOutError()
     }
   }
+  
+  public func isLoggedIn() -> Bool {
+    Auth.auth().currentUser?.uid != nil ? true : false
+  }
 }
 
 // MARK: - Sign In
@@ -114,7 +118,7 @@ extension AppleAuthenticationRepositoryImpl {
     let user = Auth.auth().currentUser
 
     user?.delete { [weak self] error in
-      if let error = error {
+      if let _ = error {
         // An error happened.
         self?.postNotificationDeleteUserError()
       } else {

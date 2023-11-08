@@ -5,12 +5,13 @@
 //  Created by 이상헌 on 2023/10/27.
 //
 
-import Foundation
+import AuthenticationServices
 
 import RxSwift
 
 import Domain
 import Platform
+import ProxyPackage
 
 // MARK: - AuthenticationUsecaseImpl
 
@@ -19,42 +20,46 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
   // MARK: - Properties
   
   private let appleAuthenticationRepository: AuthenticationRepository
+  private let authorizationContextProvider: AuthorizationContextProviding
+  
   fileprivate var notificationCenter: Addable
   
   // MARK: initialize
   
   public init(
     appleAuthenticationRepository: AuthenticationRepository,
-    notificationCenter: Addable = NotificationCenter.default
+    notificationCenter: Addable = NotificationCenter.default,
+    authorizationContextProvider: AuthorizationContextProviding
   ) {
     self.appleAuthenticationRepository = appleAuthenticationRepository
     self.notificationCenter = notificationCenter
+    self.authorizationContextProvider = authorizationContextProvider
   }
   
-  public func signIn(_ components: Any?...) -> Observable<Void> {
-    Observable.create(with: self) { this, observer in
+  public func signIn() -> Single<Void> {
+    Single<Void>.create(with: self) { this, observer in
       this.addSignInObservers { result in
         switch result {
           case .success(_):
-            observer.onNext(Void())
+            observer(.success(Void()))
           case let .failure(error):
-            observer.onError(error)
+            observer(.failure(error))
         }
       }
       
-      this.appleAuthenticationRepository.signIn(components)
+      this.appleAuthenticationRepository.signIn(this.authorizationContextProvider)
       return Disposables.create()
     }
   }
   
-  public func signOut() -> Observable<Void> {
-    Observable.create(with: self) { this, observer in
+  public func signOut() -> Single<Void> {
+    Single<Void>.create(with: self) { this, observer in
       this.addSignOutObservers { result in
         switch result {
           case .success(_):
-            observer.onNext(Void())
+            observer(.success(Void()))
           case let .failure(error):
-            observer.onError(error)
+            observer(.failure(error))
         }
       }
       
@@ -63,19 +68,23 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
     }
   }
   
-  public func deleteCurrentUser() -> Observable<Void> {
-    Observable.create(with: self) { this, observer in
+  public func deleteCurrentUser() -> Single<Void> {
+    Single<Void>.create(with: self) { this, observer in
       this.addDeleteUserObservers { result in
         switch result {
           case .success(_):
-            observer.onNext(Void())
+            observer(.success(Void()))
           case let .failure(error):
-            observer.onError(error)
+            observer(.failure(error))
         }
       }
       this.appleAuthenticationRepository.deleteCurrentUser()
       return Disposables.create()
     }
+  }
+  
+  public func isLoggedIn() -> Bool {
+    return appleAuthenticationRepository.isLoggedIn()
   }
 }
 
