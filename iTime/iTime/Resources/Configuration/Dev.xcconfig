@@ -1,0 +1,19 @@
+//
+//  Debug.xcconfig
+//  iTime
+//
+//  Created by 이상헌 on 2023/11/08.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Bundle
+X_BUNDLE_DISPLAY_NAME = iTime (Dev)
+X_BUNDLE_ID = com.sangheon.iTime.dev
+
+// Phase
+X_DEPLOY_PHASE = dev
+
+// API
+X_API_SERVER_URL= dev url

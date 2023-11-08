@@ -1,0 +1,39 @@
+app_identifier(ENV["APP_IDENTIFIER"]) # The bundle identifier of your app
+apple_id(ENV["APPLE_ID"]) # Your Apple Developer Portal username
+
+itc_team_id("124053245") # App Store Connect Team ID
+team_id(ENV["TEAM_ID"]) # Developer Portal Team ID
+
+for_platform :ios do
+
+    # deploy
+
+    for_lane :dev_deploy do
+        app_identifier 'com.sangheon.iTime.dev'
+    end
+
+    for_lane :release_deploy do
+        app_identifier 'com.sangheon.iTime'
+    end
+
+    # sync
+
+    for_lane :sync_codesign_dev do
+        app_identifier 'com.sangheon.iTime.dev'
+    end
+
+    for_lane :sync_codesign_release do
+        app_identifier 'com.sangheon.iTime'
+    end
+
+    # renew
+
+    for_lane :renew_codesign_dev do
+        app_identifier 'com.sangheon.iTime.dev'
+    end
+
+    for_lane :renew_codesign_release do
+        app_identifier 'com.sangheon.iTime'
+    end
+
+end
