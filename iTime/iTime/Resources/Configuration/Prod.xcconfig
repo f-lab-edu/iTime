@@ -1,0 +1,19 @@
+//
+//  Prod.xcconfig
+//  iTime
+//
+//  Created by 이상헌 on 2023/11/08.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Bundle
+X_BUNDLE_DISPLAY_NAME = iTime (prod)
+X_BUNDLE_ID = com.sangheon.iTime.prod
+
+// Phase
+X_DEPLOY_PHASE = prod
+
+// API
+X_API_SERVER_URL= prod url

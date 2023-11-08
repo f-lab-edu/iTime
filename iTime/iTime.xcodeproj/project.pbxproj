@@ -20,6 +20,7 @@
 		DE4E55272AEA65FF00DDD145 /* LoggedOut in Frameworks */ = {isa = PBXBuildFile; productRef = DE4E55262AEA65FF00DDD145 /* LoggedOut */; };
 		DE4E55292AEA65FF00DDD145 /* LoggedOutImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE4E55282AEA65FF00DDD145 /* LoggedOutImpl */; };
 		DE4E552D2AEA92FB00DDD145 /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = DE4E552C2AEA92FB00DDD145 /* Domain */; };
+		DE577F2C2AFBA29C006699F2 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE577F2B2AFBA29C006699F2 /* Configuration.swift */; };
 		DE5D46392AF763D700EDE276 /* LoggedIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE5D46382AF763D700EDE276 /* LoggedIn */; };
 		DE5D463B2AF763D700EDE276 /* LoggedInImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE5D463A2AF763D700EDE276 /* LoggedInImpl */; };
 		DE5D463D2AF763D700EDE276 /* Start in Frameworks */ = {isa = PBXBuildFile; productRef = DE5D463C2AF763D700EDE276 /* Start */; };
@@ -47,6 +48,9 @@
 		DE4E55202AEA493100DDD145 /* AppRootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootInteractor.swift; sourceTree = "<group>"; };
 		DE4E55222AEA493900DDD145 /* AppRootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootRouter.swift; sourceTree = "<group>"; };
 		DE4E55242AEA495800DDD145 /* AppRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootViewController.swift; sourceTree = "<group>"; };
+		DE577F2B2AFBA29C006699F2 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		DE589D8D2AFB373700F14A40 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
+		DE589D8E2AFB376600F14A40 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		DE74F0EC2AF31C85005DADE7 /* LoggedIn */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoggedIn; sourceTree = "<group>"; };
 		DEB54D3F2AE7F84600E940BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DED856B82AF5190C0084727B /* Start */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Start; path = Start/Start; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 		DE0570B62AE67ACB00669BDF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DE589D8C2AFB370300F14A40 /* Configuration */,
 				DEB54D3F2AE7F84600E940BE /* GoogleService-Info.plist */,
 				DE0AF00F2AE9EFEF00F65102 /* iTime.entitlements */,
 				DE0570AB2AE6735F00669BDF /* Assets.xcassets */,
@@ -143,6 +148,16 @@
 				DE4E55242AEA495800DDD145 /* AppRootViewController.swift */,
 			);
 			path = AppRoot;
+			sourceTree = "<group>";
+		};
+		DE589D8C2AFB370300F14A40 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				DE589D8D2AFB373700F14A40 /* Dev.xcconfig */,
+				DE589D8E2AFB376600F14A40 /* Prod.xcconfig */,
+				DE577F2B2AFBA29C006699F2 /* Configuration.swift */,
+			);
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 		DEB54D3A2AE7F33400E940BE /* Frameworks */ = {
@@ -244,6 +259,7 @@
 				DE4E55252AEA495800DDD145 /* AppRootViewController.swift in Sources */,
 				DE4E551C2AEA483F00DDD145 /* AppComponent.swift in Sources */,
 				DE4E551F2AEA48FB00DDD145 /* AppRootBuilder.swift in Sources */,
+				DE577F2C2AFBA29C006699F2 /* Configuration.swift in Sources */,
 				DE4E55212AEA493100DDD145 /* AppRootInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,8 +280,9 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		DE0570B12AE6735F00669BDF /* Debug */ = {
+		DE0570B12AE6735F00669BDF /* Debug-prod */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE589D8E2AFB376600F14A40 /* Prod.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -323,10 +340,11 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			name = Debug;
+			name = "Debug-prod";
 		};
-		DE0570B22AE6735F00669BDF /* Release */ = {
+		DE0570B22AE6735F00669BDF /* Release-prod */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE589D8E2AFB376600F14A40 /* Prod.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -378,17 +396,20 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = "Release-prod";
 		};
-		DE0570B42AE6735F00669BDF /* Debug */ = {
+		DE0570B42AE6735F00669BDF /* Debug-prod */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE589D8E2AFB376600F14A40 /* Prod.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iTime/Resources/iTime.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2L2K3UD2LK;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2L2K3UD2LK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iTime/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -400,23 +421,29 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = sangheon.iTime;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sangheon.iTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.sangheon.iTime";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				iTime_Bundle_identifier = com.sangheon.iTime;
 			};
-			name = Debug;
+			name = "Debug-prod";
 		};
-		DE0570B52AE6735F00669BDF /* Release */ = {
+		DE0570B52AE6735F00669BDF /* Release-prod */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE589D8E2AFB376600F14A40 /* Prod.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iTime/Resources/iTime.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2L2K3UD2LK;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2L2K3UD2LK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iTime/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -428,13 +455,202 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = sangheon.iTime;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sangheon.iTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.sangheon.iTime";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				iTime_Bundle_identifier = com.sangheon.iTime;
 			};
-			name = Release;
+			name = "Release-prod";
+		};
+		DE7A160C2AFB2C5D00079BC7 /* Debug-dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE589D8D2AFB373700F14A40 /* Dev.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = "Debug-dev";
+		};
+		DE7A160D2AFB2C5D00079BC7 /* Debug-dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE589D8D2AFB373700F14A40 /* Dev.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iTime/Resources/iTime.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2L2K3UD2LK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iTime/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sangheon.iTime.dev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.sangheon.iTime.dev";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				iTime_Bundle_identifier = com.sangheon.iTime.dev;
+			};
+			name = "Debug-dev";
+		};
+		DE7A160E2AFB2CA200079BC7 /* Release-dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE589D8D2AFB373700F14A40 /* Dev.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-dev";
+		};
+		DE7A160F2AFB2CA200079BC7 /* Release-dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE589D8D2AFB373700F14A40 /* Dev.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iTime/Resources/iTime.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2L2K3UD2LK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iTime/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sangheon.iTime.dev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.sangheon.iTime.dev";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				iTime_Bundle_identifier = com.sangheon.iTime.prod;
+			};
+			name = "Release-dev";
 		};
 /* End XCBuildConfiguration section */
 
@@ -442,20 +658,24 @@
 		DE05709A2AE6735E00669BDF /* Build configuration list for PBXProject "iTime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DE0570B12AE6735F00669BDF /* Debug */,
-				DE0570B22AE6735F00669BDF /* Release */,
+				DE0570B12AE6735F00669BDF /* Debug-prod */,
+				DE7A160C2AFB2C5D00079BC7 /* Debug-dev */,
+				DE0570B22AE6735F00669BDF /* Release-prod */,
+				DE7A160E2AFB2CA200079BC7 /* Release-dev */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release-prod";
 		};
 		DE0570B32AE6735F00669BDF /* Build configuration list for PBXNativeTarget "iTime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DE0570B42AE6735F00669BDF /* Debug */,
-				DE0570B52AE6735F00669BDF /* Release */,
+				DE0570B42AE6735F00669BDF /* Debug-prod */,
+				DE7A160D2AFB2C5D00079BC7 /* Debug-dev */,
+				DE0570B52AE6735F00669BDF /* Release-prod */,
+				DE7A160F2AFB2CA200079BC7 /* Release-dev */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release-prod";
 		};
 /* End XCConfigurationList section */
 

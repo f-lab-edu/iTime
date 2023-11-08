@@ -1,0 +1,100 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+
+  lane :deploy_dev do |options|
+    sync_codesign_dev()
+    bump_build_number()
+    build(configuration: "dev")
+  end
+
+  lane :deploy_release do |options|
+    sync_codesign_release()
+    bump_build_number()
+    build(configuration: "prod")
+
+    # TODO: 2FA 인증용도의 key 값
+    # TODO: upload_to_testflight
+  end
+
+
+  # match 갱신 - git에 push (certificate, profile visioning)
+
+   private_lane :renew_codesign do|options|
+    match(type:options[:type], force_for_new_devices: true)
+  end
+
+  lane :renew_codesign_dev do
+    renew_codesign(type:"development")
+  end
+
+  lane :renew_codesign_release do
+    renew_codesign(type:"development")
+    renew_codesign(type:"appstore")
+  end
+
+  # match 로드 (certificate, profile visioning)
+
+  private_lane :sync_codesign do|options|
+    match(type:options[:type], readonly: true)
+  end
+
+  lane :sync_codesign_dev do 
+    sync_codesign(type:"development")
+  end
+
+  lane :sync_codesign_release do
+    sync_codesign(type:"development")
+    sync_codesign(type:"appstore")
+  end
+
+  # register new device
+  lane :register_new_devices do
+    register_devices(
+      devices_file: "./fastlane/devices.txt",
+      team_id: "2L2K3UD2LK"
+    )
+  end
+
+  private_lane :build do |options|
+    case options[:configuration]
+    when "dev"
+      scheme = "iTime dev"
+      export_type = "ad-hoc"
+    when "prod"
+      scheme = "iTime prod"
+      export_type = "app-store"
+    end
+
+    build_app(
+      scheme: scheme,
+      export_method: export_type,
+      output_directory: "./fastlane/distribute",
+      clean: true
+    )
+  end
+
+  private_lane :bump_build_number do
+    ensure_git_status_clean
+    increment_build_number(xcodeproj: "./iTime.xcodeproj")
+    build_number = get_build_number(xcodeproj: "./iTime.xcodeproj")
+    commit_version_bump(message: "Bump build number to #{build_number} by fastlane", xcodeproj: "./iTime.xcodeproj")
+    push_to_git_remote
+  end
+
+end
