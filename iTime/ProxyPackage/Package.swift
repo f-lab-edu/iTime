@@ -34,7 +34,9 @@ let package = Package(
                 .product(name: "FirebaseDatabase", package: "firebase-ios-sdk"),
                 .product(name: "FirebaseFirestore", package: "firebase-ios-sdk"),
                 .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
-            ]),
+            ],
+            resources: [.process("Resources")]
+        ),
         .testTarget(
             name: "ProxyPackageTests",
             dependencies: ["ProxyPackage"]),
