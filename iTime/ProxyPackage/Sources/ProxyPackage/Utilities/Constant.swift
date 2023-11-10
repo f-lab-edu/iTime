@@ -14,3 +14,7 @@ public enum Device {
     ]
 }
 
+public enum Layout {
+  public static let safeAreaTopHeight =  (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.keyWindow?.safeAreaInsets.top ?? .zero
+  public static let safeAreaBottomHeight =  (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.keyWindow?.safeAreaInsets.bottom ?? .zero
+}

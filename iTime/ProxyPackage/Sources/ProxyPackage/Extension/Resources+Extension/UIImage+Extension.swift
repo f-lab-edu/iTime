@@ -16,6 +16,8 @@ extension UIImage {
   public static let gearFill: UIImage = .init(resource: .gearFill)
   public static let off: UIImage = .init(resource: .off)
   public static let on: UIImage = .init(resource: .on)
+  public static let chevronRight: UIImage = .init(resource: .chevronRight)
+  public static let exitCircleFill: UIImage = .init(resource: .exitCircleFill)
   
   // MARK: - Control
   
@@ -23,4 +25,5 @@ extension UIImage {
   public static let stopButton: UIImage = .init(resource: .btnStop)
   public static let tagFill: UIImage = .init(resource: .tagFill)
   public static let tagLined: UIImage = .init(resource: .tagLined)
+  public static let start: UIImage = .init(resource: .start)
 }

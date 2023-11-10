@@ -7,7 +7,7 @@
 
 import RIBs
 
-// MARK: - Builder
+// MARK: - LogEntryCreationBuildable
 
 public protocol LogEntryCreationBuildable: Buildable {
     func build(withListener listener: LogEntryCreationListener) -> LogEntryCreationRouting
