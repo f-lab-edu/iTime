@@ -14,7 +14,10 @@ import ProxyPackage
 
 // MARK: - LogEntryCreationPresentableListener
 
-protocol LogEntryCreationPresentableListener: AnyObject {
+protocol LogEntryCreationPresentableListener:
+  AnyObject,
+  BookmarkCollectionViewCellDelegate,
+  BookmarkTagsCollectionViewAdapterDataSource {
 }
 
 // MARK: - LogEntryCreationViewController
@@ -41,6 +44,11 @@ final class LogEntryCreationViewController:
   // MARK: - Properties
   
   weak var listener: LogEntryCreationPresentableListener?
+  private lazy var adapter = BookmarkTagsCollectionViewAdapter(
+    collectionView: bookmarkTagsCollectionView,
+    adapterDataSource: listener,
+    delegate: listener
+  )
   
   // MARK: - UI Components
   
@@ -50,15 +58,16 @@ final class LogEntryCreationViewController:
   
   private lazy var encouragingBoxView = EncouragingBoxView()
   
-  private lazy var frameView = UIView().builder
-    .backgroundColor(.blue)
-    .build()
+  private lazy var bookmarkTagsCollectionView = UICollectionView(
+    frame: .zero,
+    collectionViewLayout: .init()
+  )
   
   private lazy var editorRoutingButton = UIButton().builder
     .set(\.layer.cornerRadius, to: Metric.buttonsRadious)
     .backgroundColor(.black90)
     .with {
-      $0.setTitle("내가 지금 할 것은...", for: .normal)
+      $0.setTitle("지금 내가 할 것은...", for: .normal)
       $0.setTitleColor(.black60, for: .normal)
     }
     .build()
@@ -87,7 +96,7 @@ extension LogEntryCreationViewController {
     view.backgroundColor = .black100
     view.addSubview(todayDateBar)
     view.addSubview(encouragingBoxView)
-    view.addSubview(frameView)
+    view.addSubview(bookmarkTagsCollectionView)
     view.addSubview(editorRoutingButton)
     view.addSubview(startButton)
     
@@ -97,7 +106,7 @@ extension LogEntryCreationViewController {
   private func layout() {
     makeTodayDateBarConstraints()
     makeEncouragingBoxViewConstraints()
-    makeFrameViewConstraints()
+    makeBookmarkTagsCollectionViewConstraints()
     makeEditorRoutingButtonConstraints()
     makeStartButtonConstraints()
   }
@@ -118,8 +127,8 @@ extension LogEntryCreationViewController {
     }
   }
   
-  private func makeFrameViewConstraints() {
-    frameView.snp.makeConstraints {
+  private func makeBookmarkTagsCollectionViewConstraints() {
+    bookmarkTagsCollectionView.snp.makeConstraints {
       $0.center.equalToSuperview()
       $0.size.equalTo(200)
     }
@@ -128,7 +137,7 @@ extension LogEntryCreationViewController {
   private func makeEditorRoutingButtonConstraints() {
     editorRoutingButton.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(Metric.buttonsLeadingTrailingMargin)
-      $0.top.equalTo(frameView.snp.bottom).offset(Metric.editorRoutingButtonTopMargin)
+      $0.top.equalTo(bookmarkTagsCollectionView.snp.bottom).offset(Metric.editorRoutingButtonTopMargin)
       $0.height.equalTo(Metric.buttonsHeight)
     }
   }
