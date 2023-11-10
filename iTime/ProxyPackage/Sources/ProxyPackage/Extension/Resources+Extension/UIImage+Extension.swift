@@ -25,4 +25,5 @@ extension UIImage {
   public static let stopButton: UIImage = .init(resource: .btnStop)
   public static let tagFill: UIImage = .init(resource: .tagFill)
   public static let tagLined: UIImage = .init(resource: .tagLined)
+  public static let start: UIImage = .init(resource: .start)
 }

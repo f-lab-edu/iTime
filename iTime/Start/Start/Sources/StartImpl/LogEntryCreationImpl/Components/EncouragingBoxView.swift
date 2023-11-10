@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by 이상헌 on 11/9/23.
 //
@@ -85,7 +85,6 @@ final class EncouragingBoxView: BaseView {
       $0.trailing.equalToSuperview().offset(-Metric.closeButtonTrailingMargin)
     }
   }
-  
 }
 
 #if DEBUG

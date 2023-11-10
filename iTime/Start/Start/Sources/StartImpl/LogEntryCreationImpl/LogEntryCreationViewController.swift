@@ -12,8 +12,12 @@ import RxSwift
 
 import ProxyPackage
 
+// MARK: - LogEntryCreationPresentableListener
+
 protocol LogEntryCreationPresentableListener: AnyObject {
 }
+
+// MARK: - LogEntryCreationViewController
 
 final class LogEntryCreationViewController:
   UIViewController,
@@ -31,6 +35,7 @@ final class LogEntryCreationViewController:
     static let editorRoutingButtonTopMargin: CGFloat = 58
     static let startButtonsTopMargin: CGFloat = 12
     static let startButtonsMinimumBottomMargin: CGFloat = 12
+    static let buttonsRadious: CGFloat = 8
   }
   
   // MARK: - Properties
@@ -50,6 +55,7 @@ final class LogEntryCreationViewController:
     .build()
   
   private lazy var editorRoutingButton = UIButton().builder
+    .set(\.layer.cornerRadius, to: Metric.buttonsRadious)
     .backgroundColor(.black90)
     .with {
       $0.setTitle("내가 지금 할 것은...", for: .normal)
@@ -58,9 +64,10 @@ final class LogEntryCreationViewController:
     .build()
   
   private lazy var startButton = UIButton().builder
+    .set(\.layer.cornerRadius, to: Metric.buttonsRadious)
     .backgroundColor(.pointGreen)
     .with {
-      $0.setImage(.add, for: .normal)
+      $0.setImage(.start, for: .normal)
     }
     .build()
   
@@ -71,19 +78,18 @@ final class LogEntryCreationViewController:
     setupUI()
   }
   
-  
 }
 
 // MARK: - Layout
 
 extension LogEntryCreationViewController {
   private func setupUI() {
+    view.backgroundColor = .black100
     view.addSubview(todayDateBar)
     view.addSubview(encouragingBoxView)
     view.addSubview(frameView)
     view.addSubview(editorRoutingButton)
     view.addSubview(startButton)
-    view.backgroundColor = .black100
     
     layout()
   }
