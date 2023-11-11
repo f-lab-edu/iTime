@@ -10,6 +10,24 @@
       }
     },
     {
+      "identity" : "alignedcollectionviewflowlayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "49330ef67177dba5c9e1a3efdd0df93d83f12ee7"
+      }
+    },
+    {
+      "identity" : "calendarkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/richardtop/CalendarKit.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "2154298df8a31a82309b7369d34bf805201879d3"
+      }
+    },
+    {
       "identity" : "firebase-ios-sdk",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/firebase-ios-sdk.git",

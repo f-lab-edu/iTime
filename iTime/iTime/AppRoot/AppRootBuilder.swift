@@ -18,7 +18,7 @@ import StartImpl
 import Domain
 import DomainImpl
 import PlatformImpl
-import ProxyPackage
+import AppFoundation
 
 protocol AppRootDependency: Dependency {
   

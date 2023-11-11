@@ -11,7 +11,8 @@ import RxSwift
 
 import Domain
 import Platform
-import ProxyPackage
+
+import AppFoundation
 
 // MARK: - AuthenticationUsecaseImpl
 

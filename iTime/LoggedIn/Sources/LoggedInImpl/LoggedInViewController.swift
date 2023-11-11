@@ -9,7 +9,8 @@ import RIBs
 import UIKit
 import RxSwift
 
-import ProxyPackage
+import SharedUI
+import AppFoundation
 
 protocol LoggedInPresentableListener: AnyObject {}
 
