@@ -7,8 +7,6 @@
 
 import RxSwift
 
-import ProxyPackage
-
 // MARK: ㅡ AuthenticaitonUsecase
 
 public protocol AuthenticationUsecase {

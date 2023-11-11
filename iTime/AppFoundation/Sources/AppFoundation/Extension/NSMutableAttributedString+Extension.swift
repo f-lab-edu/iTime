@@ -8,7 +8,7 @@
 import UIKit
 
 extension NSMutableAttributedString {
-    func apply(word: String, attrs: [NSAttributedString.Key: Any]) -> NSMutableAttributedString {
+    public func apply(word: String, attrs: [NSAttributedString.Key: Any]) -> NSMutableAttributedString {
         let range = (self.string as NSString).range(of: word)
         return apply(word: word, attrs: attrs, range: range, last: range)
     }

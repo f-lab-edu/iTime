@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Platform",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v16)
     ],
     products: [
         .library(
@@ -20,7 +20,8 @@ let package = Package(
             targets: ["PlatformTestSupports"]),
     ],
     dependencies: [
-        .package(path: "../ProxyPackage")
+        .package(path: "../ProxyPackage"),
+        .package(path: "../AppFoundation")
     ],
     targets: [
         .target(
@@ -32,6 +33,7 @@ let package = Package(
             name: "PlatformImpl",
             dependencies: [
                 "Platform",
+                "AppFoundation",
                 "ProxyPackage",
             ]),
         .target(

@@ -9,19 +9,6 @@ import Foundation
 import RIBs
 import UIKit
 
-public enum DissmissButtonType {
-    case back, close
-    
-    public var iconSystemName: String {
-        switch self {
-        case .back:
-            return "chevron.backward"
-        case .close:
-            return "xmark"
-        }
-    }
-}
-
 public final class NavigationControllerable: ViewControllable {
     
     public var uiviewController: UIViewController { self.navigationController }

@@ -11,7 +11,8 @@ import RxCocoa
 import RxSwift
 import SnapKit
 
-import ProxyPackage
+import SharedUI
+import AppFoundation
 
 protocol LoggedOutPresentableListener: AnyObject {
   func requestAppleLogin()
