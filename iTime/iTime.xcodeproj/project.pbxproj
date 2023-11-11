@@ -27,6 +27,7 @@
 		DE5D463F2AF763D700EDE276 /* StartImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE5D463E2AF763D700EDE276 /* StartImpl */; };
 		DE7D715F2AEBDF8300ECFCBB /* DomainImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE7D715E2AEBDF8300ECFCBB /* DomainImpl */; };
 		DE7D71612AEBDF8300ECFCBB /* PlatformImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE7D71602AEBDF8300ECFCBB /* PlatformImpl */; };
+		DE9C22A62AFDC19A00F9B436 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DE9C22A52AFDC19A00F9B436 /* Settings.bundle */; };
 		DEB54D3C2AE7F33400E940BE /* Platform in Frameworks */ = {isa = PBXBuildFile; productRef = DEB54D3B2AE7F33400E940BE /* Platform */; };
 		DEB54D3E2AE7F33400E940BE /* ProxyPackage in Frameworks */ = {isa = PBXBuildFile; productRef = DEB54D3D2AE7F33400E940BE /* ProxyPackage */; };
 		DEB54D402AE7F84600E940BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEB54D3F2AE7F84600E940BE /* GoogleService-Info.plist */; };
@@ -52,6 +53,7 @@
 		DE589D8D2AFB373700F14A40 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		DE589D8E2AFB376600F14A40 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		DE74F0EC2AF31C85005DADE7 /* LoggedIn */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoggedIn; sourceTree = "<group>"; };
+		DE9C22A52AFDC19A00F9B436 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		DEB54D3F2AE7F84600E940BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DED856B82AF5190C0084727B /* Start */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Start; path = Start/Start; sourceTree = "<group>"; };
 		DEE3DE742AFF40870061A16B /* AppFoundation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AppFoundation; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				DE0570AB2AE6735F00669BDF /* Assets.xcassets */,
 				DE0570AD2AE6735F00669BDF /* LaunchScreen.storyboard */,
 				DE0570B02AE6735F00669BDF /* Info.plist */,
+				DE9C22A52AFDC19A00F9B436 /* Settings.bundle */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE9C22A62AFDC19A00F9B436 /* Settings.bundle in Resources */,
 				DE0570AF2AE6735F00669BDF /* LaunchScreen.storyboard in Resources */,
 				DE0570AC2AE6735F00669BDF /* Assets.xcassets in Resources */,
 				DEB54D402AE7F84600E940BE /* GoogleService-Info.plist in Resources */,
