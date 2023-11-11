@@ -9,7 +9,8 @@ import UIKit
 
 import SnapKit
 
-import ProxyPackage
+import SharedUI
+import AppFoundation
 
 final class EncouragingBoxView: BaseView {
   

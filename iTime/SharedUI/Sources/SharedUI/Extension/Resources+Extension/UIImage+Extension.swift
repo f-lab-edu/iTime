@@ -11,7 +11,7 @@ extension UIImage {
   
   // MARK: - Common
   
-  public static let calendal: UIImage = .init(resource: .calendar)
+  public static let calendar: UIImage = .init(resource: .calendar)
   public static let exit: UIImage = .init(resource: .exit)
   public static let gearFill: UIImage = .init(resource: .gearFill)
   public static let off: UIImage = .init(resource: .off)
