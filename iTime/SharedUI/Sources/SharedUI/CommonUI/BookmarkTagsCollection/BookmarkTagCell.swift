@@ -9,6 +9,8 @@ import UIKit
 
 import SnapKit
 
+import SharedUI
+
 public protocol BookmarkCollectionViewCellDelegate: AnyObject {
   func didTap()
 }
