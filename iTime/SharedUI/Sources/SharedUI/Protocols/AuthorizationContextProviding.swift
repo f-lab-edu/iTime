@@ -8,9 +8,7 @@
 import UIKit
 import AuthenticationServices
 
-// MARK: - ASAuthorizationContextProviding
-
-public protocol AuthorizationContextProviding: ASAuthorizationControllerPresentationContextProviding {}
+import AppFoundation
 
 extension UIApplication: AuthorizationContextProviding {
   public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {

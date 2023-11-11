@@ -9,9 +9,6 @@ import UIKit
 
 import FirebaseCore
 
-import ProxyPackage
-
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(

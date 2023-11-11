@@ -10,17 +10,6 @@ import UIKit
 import RxSwift
 
 public extension BaseViewController {
-    
-    func setupNavigationItem(with buttonType: DissmissButtonType ,target: Any? ,action: Selector?) {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: buttonType.iconSystemName,
-                           withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)),
-            style: .plain,
-            target: target,
-            action: action
-        )
-    }
-    
     func alert(_ message: String, completion: (()->Void)? = nil) {
         DispatchQueue.main.async { [weak self] in
             let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)

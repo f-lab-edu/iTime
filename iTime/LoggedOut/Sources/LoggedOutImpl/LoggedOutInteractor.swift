@@ -10,7 +10,7 @@ import RxSwift
 
 import Domain
 import LoggedOut
-import ProxyPackage
+import AppFoundation
 
 protocol LoggedOutPresentable: Presentable {
   var listener: LoggedOutPresentableListener? { get set }

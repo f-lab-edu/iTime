@@ -9,7 +9,8 @@ import UIKit
 import RIBs
 import SnapKit
 
-import ProxyPackage
+import SharedUI
+import AppFoundation
 
 // MARK: - AppRootPresentableListener
 

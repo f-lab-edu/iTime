@@ -8,7 +8,7 @@
 import RxSwift
 
 import Platform
-import ProxyPackage
+import AppFoundation
 
 final class UserSessionRepositoryImpl: FirestoreRepository, UserSessionRepository {
   
