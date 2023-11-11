@@ -10,7 +10,8 @@ import UIKit
 import RIBs
 import RxSwift
 
-import ProxyPackage
+import SharedUI
+import AppFoundation
 
 // MARK: - LogEntryCreationPresentableListener
 

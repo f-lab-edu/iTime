@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Domain",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v16)
     ],
     products: [
         .library(
@@ -17,13 +17,17 @@ let package = Package(
             targets: ["DomainImpl"]),
     ],
     dependencies: [
-        .package(path: "../Platform")
+        .package(path: "../Platform"),
+        .package(path: "../SharedUI"),
+        .package(path: "../AppFoundation"),
     ],
     targets: [
         .target(
             name: "Domain",
             dependencies: [
-                "Platform"
+                "Platform",
+                "SharedUI",
+                "AppFoundation"
             ]),
         .target(
             name: "DomainImpl",

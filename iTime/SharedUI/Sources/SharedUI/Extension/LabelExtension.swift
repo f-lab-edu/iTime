@@ -7,6 +7,8 @@
 
 import UIKit
 
+import AppFoundation
+
 extension UILabel {
     func applyAttributedString(totalText: String, keyword: String, font: UIFont) {
         let attributedString = NSMutableAttributedString(string: totalText).apply(word: keyword, attrs:[.foregroundColor: UIColor.blue, .font: font])

@@ -5,9 +5,8 @@
 //  Created by sangheon on 2023/05/28.
 //
 
-#if os(iOS) || os(tvOS)
-
 import UIKit
+
 import RxSwift
 
 extension Reactive where Base: UIViewController {
@@ -22,5 +21,3 @@ extension Reactive where Base: UIViewController {
         }
     }
 }
-
-#endif
