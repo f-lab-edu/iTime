@@ -9,25 +9,30 @@ import UIKit
 
 import SnapKit
 
-import SharedUI
-
 public protocol BookmarkCollectionViewCellDelegate: AnyObject {
   func didTap()
 }
 
-final class BookmarkTagCell:
+public final class BookmarkTagCell:
   BaseCollectionViewCell,
   HasConfigure
 {
   
+  // MARK: - Constants
+  
+  private enum Metric {
+    static let contentViewRadius: CGFloat = 16
+  }
+  
   // MARK: - Properties
   
-  typealias ViewModel = String
+  public typealias ViewModel = String
   
   // MARK: - UI Components
   
-  private lazy var tagLabel = UILabel().builder
-    .text("tagLabel")
+  private let tagLabel = UILabel().builder
+    .text("즐겨찾기")
+    .textColor(.black60)
     .textAlignment(.center)
     .build()
   
@@ -38,14 +43,24 @@ final class BookmarkTagCell:
     setupUI()
   }
   
-  override func updateConstraints() {
+  public override func updateConstraints() {
     super.updateConstraints()
     layout()
   }
   
+  public override func draw(_ rect: CGRect) {
+    super.draw(rect)
+    contentView.clipsToBounds = true
+    contentView.applyRoundedCorners(Metric.contentViewRadius, widthBorder: 1, borderColor: .black60)
+  }
+  
+  public override func layerWillDraw(_ layer: CALayer) {
+    super.layerWillDraw(layer)
+  }
+  
   // MARK: - Internal methods
   
-  func configure(by viewModel: String) {
+  public func configure(by viewModel: String) {
     tagLabel.text = viewModel
   }
   
@@ -61,16 +76,13 @@ final class BookmarkTagCell:
 
 extension BookmarkTagCell {
   private func setupUI() {
-    contentView.layer.cornerRadius = 6
     contentView.addSubview(tagLabel)
-    
-    initUI()
   }
   
   private func layout() {
     tagLabel.snp.makeConstraints {
-      $0.left.right.equalToSuperview().inset(6)
-      $0.top.bottom.equalToSuperview().inset(4)
+      $0.top.bottom.equalToSuperview().inset(6)
+      $0.leading.trailing.equalToSuperview().inset(18)
     }
   }
 }
