@@ -1,6 +1,6 @@
 //
 //  StartViewController.swift
-//  
+//
 //
 //  Created by 이상헌 on 11/11/23.
 //
@@ -38,6 +38,17 @@ final class StartViewController:
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    setTabBarItem()
+  }
+  
+  // MARK: - Private methods
+  
+  private func setTabBarItem() {
+    tabBarItem = UITabBarItem(
+      title: "Start",
+      image: .timer,
+      selectedImage: .timerFill
+    )
   }
   
 }
@@ -68,10 +79,10 @@ extension StartViewController {
   }
   
   func removeChild(_ view: ViewControllable) {
-      let vc = view.uiviewController
-      vc.willMove(toParent: nil)
-      vc.view.removeFromSuperview()
-      vc.removeFromParent()
+    let vc = view.uiviewController
+    vc.willMove(toParent: nil)
+    vc.view.removeFromSuperview()
+    vc.removeFromParent()
   }
 }
 

@@ -11,7 +11,6 @@ extension UIImage {
   
   // MARK: - Common
   
-  public static let calendar: UIImage = .init(resource: .calendar)
   public static let exit: UIImage = .init(resource: .exit)
   public static let gearFill: UIImage = .init(resource: .gearFill)
   public static let off: UIImage = .init(resource: .off)
@@ -23,7 +22,11 @@ extension UIImage {
   
   public static let redStopButton: UIImage = .init(resource: .btnStopRed)
   public static let stopButton: UIImage = .init(resource: .btnStop)
-  public static let tagFill: UIImage = .init(resource: .tagFill)
-  public static let tagLined: UIImage = .init(resource: .tagLined)
   public static let start: UIImage = .init(resource: .start)
+  public static let calendar: UIImage = .init(resource: .calendar)
+  public static let calendarFill: UIImage = .init(resource: .calendarFill)
+  public static let timer: UIImage = .init(resource: .timer)
+  public static let timerFill: UIImage = .init(resource: .timerFill)
+  public static let analysis: UIImage = .init(resource: .analysis)
+  public static let analysisFill: UIImage = .init(resource: .analysisFill)
 }

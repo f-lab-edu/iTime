@@ -40,7 +40,13 @@ final class LoggedInViewController:
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .white
+    setTabBarSettings()
+  }
+  
+  private func setTabBarSettings() {
+    tabBar.backgroundColor = .black90
+    tabBar.tintColor = .pointGreen
+    tabBar.unselectedItemTintColor = .white.withAlphaComponent(0.5)
   }
   
   func setViewControllers(_ viewControllers: [ViewControllable], animated: Bool) {
