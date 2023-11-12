@@ -8,7 +8,7 @@ import UIKit
 
 import RxSwift
 
-class BaseCollectionViewCell:
+public class BaseCollectionViewCell:
   UICollectionViewCell,
   BaseViewable,
   Reusable,
@@ -19,7 +19,7 @@ class BaseCollectionViewCell:
 
   // MARK: - Properties
 
-  var disposeBag = DisposeBag()
+  public var disposeBag = DisposeBag()
   var disposables = CompositeDisposable()
 
   private(set) var didSetupConstrints: Bool = false
@@ -42,14 +42,14 @@ class BaseCollectionViewCell:
 
   // MARK: - Inheritance
 
-  override func prepareForReuse() {
+  public override func prepareForReuse() {
     super.prepareForReuse()
     resetDisposables()
   }
 
   // MARK: - Layout Constraints
 
-  override func updateConstraints() {
+  public override func updateConstraints() {
     self.setupConstraintsIfNeeded()
     super.updateConstraints()
   }

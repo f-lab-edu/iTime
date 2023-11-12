@@ -7,8 +7,6 @@
 
 import UIKit
 
-import AlignedCollectionViewFlowLayout
-
 // MARK: - BookmarkTagsCollectionViewAdapterDataSource
 
 public protocol BookmarkTagsCollectionViewAdapterDataSource: AnyObject {
@@ -23,10 +21,10 @@ public final class BookmarkTagsCollectionViewAdapter: NSObject {
   // MARK: - Constants
   
   private enum Metric {
-    static let itemHorizontalMargin: CGFloat = 8
-    static let itemHorizontalInset: CGFloat = 8
-    static let minimumLineSpacing: CGFloat = 8
-    static let sectionVerticalInset: CGFloat = 16
+    static let itemHorizontalMargin: CGFloat = 6
+    static let itemHorizontalInset: CGFloat = 6
+    static let minimumLineSpacing: CGFloat = 10
+    static let sectionVerticalInset: CGFloat = 10
   }
   
   // MARK: - Properties
@@ -49,7 +47,7 @@ public final class BookmarkTagsCollectionViewAdapter: NSObject {
     delegate: BookmarkCollectionViewCellDelegate?
   ) {
     super.init()
-    let layout = AlignedCollectionViewFlowLayout()
+    let layout = CenterAlignedCollectionViewFlowLayout()
     layout.minimumInteritemSpacing = Metric.itemHorizontalInset
     layout.minimumLineSpacing = Metric.minimumLineSpacing
     collectionView.setCollectionViewLayout(layout, animated: false)
@@ -117,7 +115,7 @@ extension BookmarkTagsCollectionViewAdapter: UICollectionViewDelegateFlowLayout 
       )
     )
     return .init(
-      width: labelWidthSize + 20,
+      width: labelWidthSize + 42,
       height: 32
     )
   }
