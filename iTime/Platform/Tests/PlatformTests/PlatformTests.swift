@@ -1,5 +1,5 @@
 import XCTest
-@testable import Platform
+@testable import NetworkRepository
 
 final class PlatformTests: XCTestCase {
     func testExample() throws {

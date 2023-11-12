@@ -7,7 +7,7 @@
 
 import RIBs
 
-import Domain
+import AuthenticationUsecase
 
 // MARK: - AppRootRouting
 

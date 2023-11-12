@@ -15,9 +15,9 @@ import LoggedIn
 import LoggedInImpl
 import Start
 import StartImpl
-import Domain
-import DomainImpl
-import PlatformImpl
+import AuthenticationUsecase
+import AuthenticationUsecaseImpl
+import AuthenticationRepositoryImpl
 import AppFoundation
 
 protocol AppRootDependency: Dependency {

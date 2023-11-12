@@ -10,40 +10,57 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Platform",
-            targets: ["Platform"]),
+            name: "AuthenticationRepository",
+            targets: ["AuthenticationRepository"]),
         .library(
-            name: "PlatformImpl",
-            targets: ["PlatformImpl"]),
+            name: "AuthenticationRepositoryImpl",
+            targets: ["AuthenticationRepositoryImpl"]),
         .library(
-            name: "PlatformTestSupports",
-            targets: ["PlatformTestSupports"]),
+            name: "NetworkRepository",
+            targets: ["NetworkRepository"]),
+        .library(
+            name: "NetworkRepositoryImpl",
+            targets: ["NetworkRepositoryImpl"]),
+        .library(
+            name: "RepositoryTestSupports",
+            targets: ["RepositoryTestSupports"]),
     ],
     dependencies: [
         .package(path: "../ProxyPackage"),
-        .package(path: "../AppFoundation")
     ],
     targets: [
         .target(
-            name: "Platform",
+            name: "AuthenticationRepository",
+            dependencies: [
+                "NetworkRepository",
+            ]),
+        .target(
+            name: "AuthenticationRepositoryImpl",
+            dependencies: [
+                "AuthenticationRepository",
+                "NetworkRepositoryImpl",
+                .product(name: "AppFoundation", package: "ProxyPackage"),
+            ]),
+        .target(
+            name: "NetworkRepository",
             dependencies: [
                 "ProxyPackage"
             ]),
         .target(
-            name: "PlatformImpl",
+            name: "NetworkRepositoryImpl",
             dependencies: [
-                "Platform",
-                "AppFoundation",
+                "NetworkRepository",
                 "ProxyPackage",
+                .product(name: "AppFoundation", package: "ProxyPackage"),
             ]),
         .target(
-            name: "PlatformTestSupports",
+            name: "RepositoryTestSupports",
             dependencies: [
-                "Platform",
+                "AuthenticationRepository",
                 "ProxyPackage",
             ]),
         .testTarget(
             name: "PlatformTests",
-            dependencies: ["Platform"]),
+            dependencies: ["NetworkRepository"]),
     ]
 )
