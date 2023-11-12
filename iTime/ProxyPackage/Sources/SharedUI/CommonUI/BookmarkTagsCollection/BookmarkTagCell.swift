@@ -9,10 +9,6 @@ import UIKit
 
 import SnapKit
 
-public protocol BookmarkCollectionViewCellDelegate: AnyObject {
-  func didTap()
-}
-
 public final class BookmarkTagCell:
   BaseCollectionViewCell,
   HasConfigure

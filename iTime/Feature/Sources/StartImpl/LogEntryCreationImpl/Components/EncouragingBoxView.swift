@@ -24,16 +24,16 @@ final class EncouragingBoxView: BaseView {
   
   // MARK: - UI Components
   
-  private let guideLabel = UILabel().builder
+  let guideLabel = UILabel().builder
     .text("비워있는 활동 기록을 채워보세요.")
     .textColor(.black40)
     .build()
   
-  private let rightAccessoryImageView = UIImageView().builder
+  let rightAccessoryImageView = UIImageView().builder
     .image(.chevronRight)
     .build()
   
-  private let closeButton = UIButton().builder
+  let closeButton = UIButton().builder
     .with {
       $0.setImage(.exitCircleFill, for: .normal)
     }

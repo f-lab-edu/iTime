@@ -20,16 +20,6 @@ final class LogEntryCreationInteractor:
   LogEntryCreationPresentableListener
 {
   
-  func didTap() {
-    
-  }
-  
-  var numberOfItems: Int { 10 }
-  
-  func fetchData(at index: Int) -> String {
-    "진짜"
-  }
-  
   weak var router: LogEntryCreationRouting?
   weak var listener: LogEntryCreationListener?
   
@@ -42,7 +32,34 @@ final class LogEntryCreationInteractor:
     super.didBecomeActive()
   }
   
-  override func willResignActive() {
-    super.willResignActive()
+  // MARK: - Mutation
+  
+  func attachHistoryRIB() {
+    
+  }
+  
+  func attachBookmarkTagEdtorRIB() {
+    
+  }
+  
+  func attachLogEntryEditorRIB() {
+    
+  }
+  
+  func attachSettingRIB() {
+    
+  }
+  
+  func tagCellDidTap() {
+    
+  }
+  
+  // BookmarkTagCoollectionView DataSources
+  // TODO: init data
+  var numberOfItems: Int { 10 }
+  
+  func fetchData(at index: Int) -> String {
+   ""
   }
 }
+

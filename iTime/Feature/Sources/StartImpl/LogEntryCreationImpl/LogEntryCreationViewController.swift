@@ -19,12 +19,16 @@ protocol LogEntryCreationPresentableListener:
   AnyObject,
   BookmarkCollectionViewCellDelegate,
   BookmarkTagsCollectionViewAdapterDataSource {
+  func attachSettingRIB()
+  func attachHistoryRIB()
+  func attachBookmarkTagEdtorRIB()
+  func attachLogEntryEditorRIB()
 }
 
 // MARK: - LogEntryCreationViewController
 
 final class LogEntryCreationViewController:
-  UIViewController,
+  BaseViewController,
   LogEntryCreationPresentable,
   LogEntryCreationViewControllable
 {
@@ -80,8 +84,72 @@ final class LogEntryCreationViewController:
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    bindActions()
   }
   
+}
+
+// MARK: Bind Actions
+
+extension LogEntryCreationViewController {
+  private func bindActions() {
+    bindSettingButtonTapAction()
+    bindEncouragingBoxTapAction()
+    bindEncouragingBoxCloseButtonTapAction()
+    bindBookmarkTagsEditButtonTapAction()
+    bindEdtiorRoutingButtonTapAction()
+    bindStartButtonTapAction()
+  }
+  
+  private func bindSettingButtonTapAction() {
+    todayDateBar.settingButton.rx.tap
+      .preventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in owner.listener?.attachSettingRIB() }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindEncouragingBoxTapAction() {
+    Observable.merge(
+      encouragingBoxView.guideLabel.rx.tapGestureWithPreventDuplication(),
+      encouragingBoxView.rightAccessoryImageView.rx.tapGestureWithPreventDuplication()
+    )
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in owner.listener?.attachHistoryRIB() }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindEncouragingBoxCloseButtonTapAction() {
+    encouragingBoxView.closeButton.rx.tap
+      .preventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in print("close") }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindBookmarkTagsEditButtonTapAction() {
+    bookmarkTagsView.bookmarkEditorButtonLabel.rx
+      .tapGestureWithPreventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in owner.listener?.attachBookmarkTagEdtorRIB() }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindEdtiorRoutingButtonTapAction() {
+    editorRoutingButton.rx.tap
+      .preventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in owner.listener?.attachBookmarkTagEdtorRIB() }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindStartButtonTapAction() {
+    startButton.rx.tap
+      .preventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in owner.listener?.attachLogEntryEditorRIB() }
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Layout
