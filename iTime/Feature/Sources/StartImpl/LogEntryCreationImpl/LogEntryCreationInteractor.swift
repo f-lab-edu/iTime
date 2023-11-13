@@ -43,7 +43,7 @@ final class LogEntryCreationInteractor:
   }
   
   func attachLogEntryEditorRIB() {
-    
+    router?.attachLogEntryEditorRIB()
   }
   
   func attachSettingRIB() {

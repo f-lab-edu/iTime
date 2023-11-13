@@ -16,7 +16,7 @@ public protocol LogEntryCreationBuildable: Buildable {
 // MARK: - LogEntryCreationRouting
 
 public protocol LogEntryCreationRouting: ViewableRouting {
-  
+  func attachLogEntryEditorRIB()
 }
 
 // MARK: - LogEntryCreationListener
