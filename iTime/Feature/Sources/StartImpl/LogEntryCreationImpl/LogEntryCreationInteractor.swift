@@ -19,7 +19,7 @@ final class LogEntryCreationInteractor:
   LogEntryCreationInteractable,
   LogEntryCreationPresentableListener
 {
-  
+    
   weak var router: LogEntryCreationRouting?
   weak var listener: LogEntryCreationListener?
   
@@ -34,23 +34,27 @@ final class LogEntryCreationInteractor:
   
   // MARK: - Mutation
   
-  func attachHistoryRIB() {
+  func encouragingBoxTapAction() {
     
   }
   
-  func attachBookmarkTagEdtorRIB() {
+  func settingButtonTapAction() {
+  
+  }
+  
+  func bookmarkTagEditorTapAction() {
     
   }
   
-  func attachLogEntryEditorRIB() {
+  func editorRoutingButtonTapAction() {
     
   }
   
-  func attachSettingRIB() {
+  func startButtonTapAction() {
     
   }
   
-  func tagCellDidTap() {
+  func tagCellDidTapAction() {
     
   }
   
