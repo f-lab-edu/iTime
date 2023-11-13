@@ -1,13 +1,13 @@
 //
-//  File.swift
+//  StartInterface.swift
 //  
 //
-//  Created by 이상헌 on 2023/11/03.
+//  Created by 이상헌 on 11/11/23.
 //
 
 import RIBs
 
-// MARK: - Builder
+// MARK: - StartBuildable
 
 public protocol StartBuildable: Buildable {
     func build(withListener listener: StartListener) -> StartRouting
@@ -15,12 +15,13 @@ public protocol StartBuildable: Buildable {
 
 // MARK: - StartRouting
 
-public protocol StartRouting: Routing {
-  func cleanupViews()
+public protocol StartRouting: ViewableRouting {
+  func attachLogEntryCreationRIB()
+  func detachLogEntryCreationRIB()
 }
 
 // MARK: - StartListener
 
 public protocol StartListener: AnyObject {
-  
 }
+

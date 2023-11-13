@@ -2,7 +2,7 @@
 //  StartInteractor.swift
 //  
 //
-//  Created by 이상헌 on 2023/11/03.
+//  Created by 이상헌 on 11/11/23.
 //
 
 import RIBs
@@ -10,23 +10,36 @@ import RxSwift
 
 import Start
 
-final class StartInteractor:
-  Interactor,
-  StartInteractable
+// MARK: - StartPresentable
+
+protocol StartPresentable: Presentable {
+  var listener: StartPresentableListener? { get set }
+}
+
+// MARK: - StartInteractor
+
+final class StartInteractor: 
+  PresentableInteractor<StartPresentable>,
+  StartInteractable,
+  StartPresentableListener
 {
+  
+  // MARK: - Properties
   
   weak var router: StartRouting?
   weak var listener: StartListener?
   
-  override init() {}
+  // MARK: - Initialization & DeInitialization
+  
+  override init(presenter: StartPresentable) {
+    super.init(presenter: presenter)
+    presenter.listener = self
+  }
+  
+  // MARK: - LifeCycle
   
   override func didBecomeActive() {
     super.didBecomeActive()
-  }
-  
-  override func willResignActive() {
-    super.willResignActive()
-    
-    router?.cleanupViews()
+    router?.attachLogEntryCreationRIB()
   }
 }
