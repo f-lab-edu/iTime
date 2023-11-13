@@ -24,7 +24,9 @@ final class LogEntryEditorViewController:
   BaseViewController,
   LogEntryEditorPresentable,
   LogEntryEditorViewControllable,
-  KeyboardAddable
+  KeyboardAddable,
+  HasCloseButtonHeaderView,
+  CloseButtonBindable
 {
   
   // MARK: - Constants
@@ -43,6 +45,8 @@ final class LogEntryEditorViewController:
   weak var listener: LogEntryEditorPresentableListener?
   
   // MARK: - UI Components
+  
+  var headerView = CloseButtonHeaderView()
   
   private let editorRoutingTextField = UITextField().builder
     .placeholder("지금 내가 할 것은...")
@@ -81,12 +85,21 @@ final class LogEntryEditorViewController:
 
 extension LogEntryEditorViewController {
   private func bindActions() {
+    bindCloseButtonTapAction()
     bindStartButtonTapAction()
+    bindDetachAction()
   }
   
   private func bindStartButtonTapAction() {
     startButton.rx.tap
       .preventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in print("tap") }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindDetachAction() {
+    detachAction
       .asDriver(onErrorDriveWith: .empty())
       .drive(with: self) { owner, _ in print("tap") }
       .disposed(by: disposeBag)
@@ -99,6 +112,7 @@ extension LogEntryEditorViewController {
   private func setupUI() {
     view.addSubview(editorRoutingTextField)
     view.addSubview(startButton)
+    addHeaderViewIfNeeded(to: view)
     
     layout()
   }
@@ -106,6 +120,7 @@ extension LogEntryEditorViewController {
   private func layout() {
     makeEditorRoutingTextFieldConstraints()
     makeStartButtonConstraints()
+    makeHeaderViewConstraintsIfNeeded()
   }
   
   private func makeEditorRoutingTextFieldConstraints() {
