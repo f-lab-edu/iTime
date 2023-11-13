@@ -23,18 +23,18 @@ final class TodayDateBar: BaseView {
   
   // MARK: - UI Components
   
-  private lazy var largeTitle = UILabel().builder
+  private let largeTitle = UILabel().builder
     .font(.systemFont(ofSize: 22, weight: .regular))
     .text("TODAY")
     .textColor(.white)
     .build()
   
-  private lazy var dateLabel = UILabel().builder
+  private let dateLabel = UILabel().builder
     .text("10월 10일, 화요일") // FIXME: need to fix
     .textColor(.pointGreen)
     .build()
   
-  private lazy var settingButton = UIButton().builder
+  private let settingButton = UIButton().builder
     .with {
       $0.setImage(.gearFill, for: .normal)
     }

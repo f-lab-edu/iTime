@@ -15,7 +15,10 @@ import AppFoundation
 
 // MARK: - LogEntryCreationPresentableListener
 
-protocol LogEntryCreationPresentableListener: AnyObject {
+protocol LogEntryCreationPresentableListener:
+  AnyObject,
+  BookmarkCollectionViewCellDelegate,
+  BookmarkTagsCollectionViewAdapterDataSource {
 }
 
 // MARK: - LogEntryCreationViewController
@@ -35,8 +38,10 @@ final class LogEntryCreationViewController:
     static let buttonsHeight: CGFloat = 52
     static let editorRoutingButtonTopMargin: CGFloat = 58
     static let startButtonsTopMargin: CGFloat = 12
-    static let startButtonsMinimumBottomMargin: CGFloat = 12
+    static let startButtonsBottomMargin: CGFloat = 100
     static let buttonsRadious: CGFloat = 8
+    static let bookmarkTagsTopMargin: CGFloat = 70
+    static let bookmarkTagsViewLeadingTrailingInset: CGFloat = 24
   }
   
   // MARK: - Properties
@@ -45,26 +50,24 @@ final class LogEntryCreationViewController:
   
   // MARK: - UI Components
   
-  private lazy var todayDateBar = TodayDateBar().builder
+  private let todayDateBar = TodayDateBar().builder
     .backgroundColor(.clear)
     .build()
   
-  private lazy var encouragingBoxView = EncouragingBoxView()
+  private let encouragingBoxView = EncouragingBoxView()
   
-  private lazy var frameView = UIView().builder
-    .backgroundColor(.blue)
-    .build()
+  private lazy var bookmarkTagsView = BookmarkTagsView(listener: listener)
   
-  private lazy var editorRoutingButton = UIButton().builder
+  private let editorRoutingButton = UIButton().builder
     .set(\.layer.cornerRadius, to: Metric.buttonsRadious)
     .backgroundColor(.black90)
     .with {
-      $0.setTitle("내가 지금 할 것은...", for: .normal)
+      $0.setTitle("지금 내가 할 것은...", for: .normal)
       $0.setTitleColor(.black60, for: .normal)
     }
     .build()
   
-  private lazy var startButton = UIButton().builder
+  private let startButton = UIButton().builder
     .set(\.layer.cornerRadius, to: Metric.buttonsRadious)
     .backgroundColor(.pointGreen)
     .with {
@@ -88,7 +91,7 @@ extension LogEntryCreationViewController {
     view.backgroundColor = .black100
     view.addSubview(todayDateBar)
     view.addSubview(encouragingBoxView)
-    view.addSubview(frameView)
+    view.addSubview(bookmarkTagsView)
     view.addSubview(editorRoutingButton)
     view.addSubview(startButton)
     
@@ -98,7 +101,7 @@ extension LogEntryCreationViewController {
   private func layout() {
     makeTodayDateBarConstraints()
     makeEncouragingBoxViewConstraints()
-    makeFrameViewConstraints()
+    makeBookmarkTagsViewConstraints()
     makeEditorRoutingButtonConstraints()
     makeStartButtonConstraints()
   }
@@ -119,17 +122,10 @@ extension LogEntryCreationViewController {
     }
   }
   
-  private func makeFrameViewConstraints() {
-    frameView.snp.makeConstraints {
-      $0.center.equalToSuperview()
-      $0.size.equalTo(200)
-    }
-  }
-  
   private func makeEditorRoutingButtonConstraints() {
     editorRoutingButton.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(Metric.buttonsLeadingTrailingMargin)
-      $0.top.equalTo(frameView.snp.bottom).offset(Metric.editorRoutingButtonTopMargin)
+      $0.top.equalTo(bookmarkTagsView.snp.bottom).offset(Metric.editorRoutingButtonTopMargin)
       $0.height.equalTo(Metric.buttonsHeight)
     }
   }
@@ -138,9 +134,17 @@ extension LogEntryCreationViewController {
     startButton.snp.makeConstraints {
       $0.height.leading.trailing.equalTo(editorRoutingButton)
       $0.top.equalTo(editorRoutingButton.snp.bottom).offset(Metric.startButtonsTopMargin)
-      $0.bottom.greaterThanOrEqualToSuperview().offset(-Metric.startButtonsMinimumBottomMargin).priority(.high)
+      $0.bottom.greaterThanOrEqualToSuperview().offset(-Metric.startButtonsBottomMargin).priority(.high)
     }
   }
+  
+  private func makeBookmarkTagsViewConstraints() {
+    bookmarkTagsView.snp.makeConstraints {
+      $0.bottom.equalTo(editorRoutingButton.snp.top).offset(-Metric.bookmarkTagsTopMargin).priority(.required)
+      $0.leading.trailing.equalToSuperview().inset(Metric.bookmarkTagsViewLeadingTrailingInset)
+    }
+  }
+  
 }
 
 #if DEBUG
