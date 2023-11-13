@@ -10,15 +10,6 @@
       }
     },
     {
-      "identity" : "alignedcollectionviewflowlayout",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "49330ef67177dba5c9e1a3efdd0df93d83f12ee7"
-      }
-    },
-    {
       "identity" : "calendarkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/richardtop/CalendarKit.git",

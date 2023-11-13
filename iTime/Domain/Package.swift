@@ -4,43 +4,43 @@
 import PackageDescription
 
 let package = Package(
-    name: "Domain",
-    platforms: [
-        .iOS(.v16)
-    ],
-    products: [
-        .library(
-            name: "Domain",
-            targets: ["Domain"]),
-        .library(
-            name: "DomainImpl",
-            targets: ["DomainImpl"]),
-    ],
-    dependencies: [
-        .package(path: "../Platform"),
-        .package(path: "../SharedUI"),
-        .package(path: "../AppFoundation"),
-    ],
-    targets: [
-        .target(
-            name: "Domain",
-            dependencies: [
-                "Platform",
-                "SharedUI",
-                "AppFoundation"
-            ]),
-        .target(
-            name: "DomainImpl",
-            dependencies: [
-                "Domain",
-                "Platform"
-            ]),
-        .testTarget(
-            name: "DomainTests",
-            dependencies: [
-                "DomainImpl",
-                "Platform",
-                .product(name: "PlatformTestSupports", package: "Platform"),
-            ]),
-    ]
+  name: "Domain",
+  platforms: [
+    .iOS(.v16)
+  ],
+  products: [
+    .library(
+      name: "AuthenticationUsecase",
+      targets: ["AuthenticationUsecase"]),
+    .library(
+      name: "AuthenticationUsecaseImpl",
+      targets: ["AuthenticationUsecaseImpl"]),
+  ],
+  dependencies: [
+    .package(path: "../Platform"),
+    .package(path: "../ProxyPackage"),
+  ],
+  targets: [
+    .target(
+      name: "AuthenticationUsecase",
+      dependencies: [
+        .product(name: "AuthenticationRepository", package: "Platform"),
+        "ProxyPackage",
+      ]),
+    .target(
+      name: "AuthenticationUsecaseImpl",
+      dependencies: [
+        "AuthenticationUsecase",
+        .product(name: "AuthenticationRepository", package: "Platform"),
+        .product(name: "AppFoundation", package: "ProxyPackage")
+      ]),
+    .testTarget(
+      name: "AuthenticationUsecaseImplTests",
+      dependencies: [
+        "AuthenticationUsecase",
+        "AuthenticationUsecaseImpl",
+        .product(name: "AuthenticationRepository", package: "Platform"),
+        .product(name: "RepositoryTestSupports", package: "Platform"),
+      ]),
+  ]
 )
