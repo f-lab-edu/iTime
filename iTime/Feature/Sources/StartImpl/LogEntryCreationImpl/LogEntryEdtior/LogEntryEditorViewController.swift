@@ -23,7 +23,8 @@ protocol LogEntryEditorPresentableListener: AnyObject {
 final class LogEntryEditorViewController:
   BaseViewController,
   LogEntryEditorPresentable,
-  LogEntryEditorViewControllable
+  LogEntryEditorViewControllable,
+  KeyboardAddable
 {
   
   // MARK: - Constants
@@ -34,7 +35,7 @@ final class LogEntryEditorViewController:
     static let buttonsLeadingTrailingMargin: CGFloat = 24
     static let editorRoutingButtonTopMargin: CGFloat = 58
     static let startButtonsTopMargin: CGFloat = 12
-    static let startButtonsBottomMargin: CGFloat = 20
+    static let startButtonsBottomMargin: CGFloat = 32
   }
   
   // MARK: - Properties
@@ -64,12 +65,12 @@ final class LogEntryEditorViewController:
     super.viewDidLoad()
     setupUI()
     bindActions()
-    addNotificationObserver()
+    addKeyboardObserver()
     editorRoutingTextField.becomeFirstResponder()
   }
   
   deinit {
-    removeNotificationObserver()
+    removeKeyboardObserver()
   }
   
   // MARK: - Private methods
@@ -96,7 +97,6 @@ extension LogEntryEditorViewController {
 
 extension LogEntryEditorViewController {
   private func setupUI() {
-    view.backgroundColor = .darkGray
     view.addSubview(editorRoutingTextField)
     view.addSubview(startButton)
     
@@ -119,7 +119,7 @@ extension LogEntryEditorViewController {
     startButton.snp.makeConstraints {
       $0.height.leading.trailing.equalTo(editorRoutingTextField)
       $0.top.equalTo(editorRoutingTextField.snp.bottom).offset(Metric.startButtonsTopMargin)
-      bottomConstraint = $0.bottom.equalToSuperview().offset(-10).constraint
+      bottomConstraint = $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-Metric.startButtonsBottomMargin).constraint
     }
   }
 }

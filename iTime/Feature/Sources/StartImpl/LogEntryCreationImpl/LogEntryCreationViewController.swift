@@ -156,7 +156,6 @@ extension LogEntryCreationViewController {
 
 extension LogEntryCreationViewController {
   private func setupUI() {
-    view.backgroundColor = .black100
     view.addSubview(todayDateBar)
     view.addSubview(encouragingBoxView)
     view.addSubview(bookmarkTagsView)
