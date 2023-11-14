@@ -63,6 +63,10 @@ final class LogEntryCreationViewController:
   
   private lazy var bookmarkTagsView = BookmarkTagsView(listener: listener)
   
+  private lazy var bookmarkEmptyView = BookmarkEmptyView().builder
+    .isHidden(false)
+    .build()
+  
   private let editorRoutingButton = UIButton().builder
     .set(\.layer.cornerRadius, to: Metric.buttonsRadious)
     .backgroundColor(.black90)
@@ -84,6 +88,7 @@ final class LogEntryCreationViewController:
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    bookmarkTagsView.isHidden = true 
     setupUI()
     bindActions()
   }
@@ -160,6 +165,7 @@ extension LogEntryCreationViewController {
     view.addSubview(todayDateBar)
     view.addSubview(encouragingBoxView)
     view.addSubview(bookmarkTagsView)
+    view.addSubview(bookmarkEmptyView)
     view.addSubview(editorRoutingButton)
     view.addSubview(startButton)
     
@@ -170,6 +176,7 @@ extension LogEntryCreationViewController {
     makeTodayDateBarConstraints()
     makeEncouragingBoxViewConstraints()
     makeBookmarkTagsViewConstraints()
+    makeBookmarkEmptyViewConstraints()
     makeEditorRoutingButtonConstraints()
     makeStartButtonConstraints()
   }
@@ -211,6 +218,12 @@ extension LogEntryCreationViewController {
       $0.top.greaterThanOrEqualTo(encouragingBoxView.snp.bottom).offset(Metric.bookmarkTagsTopMargin).priority(.low)
       $0.centerY.equalToSuperview()
       $0.leading.trailing.equalToSuperview().inset(Metric.bookmarkTagsViewLeadingTrailingInset)
+    }
+  }
+  
+  private func makeBookmarkEmptyViewConstraints() {
+    bookmarkEmptyView.snp.makeConstraints {
+      $0.center.equalTo(bookmarkTagsView)
     }
   }
   
