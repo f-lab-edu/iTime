@@ -40,19 +40,29 @@ final class LoggedInRouter:
   }
   
   func attachTabs() {
+    attachTabChildsRIB()
+    guard let startViewControllable = startViewControllable() else { return }
     let tabs: [ViewControllable] = [
-      attachStartRIB()
+      startViewControllable
     ]
     
     viewController.setViewControllers(tabs, animated: false)
   }
   
-  private func attachStartRIB() -> ViewControllable {
+  private func attachTabChildsRIB() {
+    attachStartRIB()
+  }
+  
+  private func attachStartRIB() {
     let router = startBuilder.build(
       withListener: interactor
     )
     startRouter = router
     attachChild(router)
+  }
+  
+  private func startViewControllable() -> ViewControllable? {
+    guard let router = startRouter else { return nil }
     return router.viewControllable
   }
   
