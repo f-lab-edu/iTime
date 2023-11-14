@@ -27,7 +27,7 @@ final class BookmarkEmptyView: BaseView {
     .build()
   
   private let guideLabel = UILabel().builder
-    .text("즐겨찾기를 등록\n빠른 활동 시작을 해보세요")
+    .text("즐겨찾기를 등록해\n빠른 활동 시작을 해보세요")
     .numberOfLines(2)
     .textAlignment(.center)
     .build()
