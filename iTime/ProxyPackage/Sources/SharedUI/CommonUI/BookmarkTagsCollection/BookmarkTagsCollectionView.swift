@@ -52,7 +52,7 @@ public final class BookmarkTagsCollectionViewAdapter: NSObject {
     alignedCollectionViewFlowLayout: UICollectionViewFlowLayout
   ) {
     super.init()
-    var layout = alignedCollectionViewFlowLayout
+    let layout = alignedCollectionViewFlowLayout
     layout.minimumInteritemSpacing = Metric.itemHorizontalInset
     layout.minimumLineSpacing = Metric.minimumLineSpacing
     collectionView.setCollectionViewLayout(layout, animated: false)
