@@ -46,7 +46,13 @@ final class LogEntryEditorViewController:
   
   // MARK: - UI Components
   
-  var headerView = CloseButtonHeaderView()
+  let headerView = CloseButtonHeaderView()
+  
+  private let noCategoryView = CategoryStateView().builder
+    .with {
+      $0.configure(by: (color: .black60, text: "No Category"))
+    }
+    .build()
   
   private let editorRoutingTextField = UITextField().builder
     .placeholder("지금 내가 할 것은...")
@@ -113,6 +119,7 @@ extension LogEntryEditorViewController {
     view.addSubview(editorRoutingTextField)
     view.addSubview(startButton)
     addHeaderViewIfNeeded(to: view)
+    view.addSubview(noCategoryView)
     
     layout()
   }
@@ -121,6 +128,7 @@ extension LogEntryEditorViewController {
     makeEditorRoutingTextFieldConstraints()
     makeStartButtonConstraints()
     makeHeaderViewConstraintsIfNeeded()
+    makeNoCategoryViewConstraints()
   }
   
   private func makeEditorRoutingTextFieldConstraints() {
@@ -135,6 +143,13 @@ extension LogEntryEditorViewController {
       $0.height.leading.trailing.equalTo(editorRoutingTextField)
       $0.top.equalTo(editorRoutingTextField.snp.bottom).offset(Metric.startButtonsTopMargin)
       bottomConstraint = $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-Metric.startButtonsBottomMargin).constraint
+    }
+  }
+  
+  private func makeNoCategoryViewConstraints() {
+    noCategoryView.snp.makeConstraints {
+      $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
+      $0.centerX.equalToSuperview()
     }
   }
 }
