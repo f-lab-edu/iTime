@@ -14,40 +14,48 @@ public final class CloseButtonHeaderView: BaseView {
   // MARK: - Constants
   
   private enum Metric {
-    static let buttonHeight: CGFloat = 30
+    static let buttonSize: CGFloat = 44
+    static let separatedViewHeight: CGFloat = 1
   }
   
   let closeButton = UIButton().builder
-    .contentEdgeInsets(UIEdgeInsets(
-      top: 10,
-      left: 15,
-      bottom: 10,
-      right: 15
-      )
-    )
-    .backgroundColor(.black)
+    .with {
+      $0.setImage(.exit, for: .normal)
+    }
+    .build()
+  
+  private let separatedView = UIView().builder
+    .backgroundColor(.black90)
     .build()
   
   public override func initialize() {
     super.initialize()
-    backgroundColor = .red
-    addSubview(self.closeButton)
+    backgroundColor = .clear
+    addSubview(closeButton)
+    addSubview(separatedView)
   }
   
   public override func setupConstraints() {
     super.setupConstraints()
-    self.makeCloseButtonConstraints()
+    makeCloseButtonConstraints()
+    makeSeparatedViewConstraints()
   }
   
   private func makeCloseButtonConstraints() {
     let safeArea = safeAreaLayoutGuide.snp
     
     closeButton.snp.makeConstraints {
-      $0.height.equalTo(Metric.buttonHeight)
+      $0.size.equalTo(Metric.buttonSize)
       $0.centerY.equalToSuperview()
-      $0.top.bottom.equalToSuperview().inset(4)
-      $0.trailing.greaterThanOrEqualTo(safeArea.leading).offset(15)
+      $0.top.bottom.greaterThanOrEqualToSuperview().inset(4)
       $0.leading.equalTo(safeArea.leading).offset(8)
+    }
+  }
+  
+  private func makeSeparatedViewConstraints() {
+    separatedView.snp.makeConstraints {
+      $0.leading.trailing.bottom.equalToSuperview()
+      $0.height.equalTo(Metric.separatedViewHeight)
     }
   }
 }

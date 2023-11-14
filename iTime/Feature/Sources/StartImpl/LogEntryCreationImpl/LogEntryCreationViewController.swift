@@ -40,11 +40,11 @@ final class LogEntryCreationViewController:
     static let encouragingBoxViewHeight: CGFloat = 60
     static let buttonsLeadingTrailingMargin: CGFloat = 24
     static let buttonsHeight: CGFloat = 52
-    static let editorRoutingButtonTopMargin: CGFloat = 58
     static let startButtonsTopMargin: CGFloat = 12
     static let startButtonsBottomMargin: CGFloat = 100
     static let buttonsRadious: CGFloat = 8
-    static let bookmarkTagsTopMargin: CGFloat = 70
+    static let bookmarkTagsTopMargin: CGFloat = 48
+    static let bookmarkTagsBottomMargin: CGFloat = 48
     static let bookmarkTagsViewLeadingTrailingInset: CGFloat = 24
   }
   
@@ -192,7 +192,6 @@ extension LogEntryCreationViewController {
   private func makeEditorRoutingButtonConstraints() {
     editorRoutingButton.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(Metric.buttonsLeadingTrailingMargin)
-      $0.top.equalTo(bookmarkTagsView.snp.bottom).offset(Metric.editorRoutingButtonTopMargin)
       $0.height.equalTo(Metric.buttonsHeight)
     }
   }
@@ -207,7 +206,9 @@ extension LogEntryCreationViewController {
   
   private func makeBookmarkTagsViewConstraints() {
     bookmarkTagsView.snp.makeConstraints {
-      $0.bottom.equalTo(editorRoutingButton.snp.top).offset(-Metric.bookmarkTagsTopMargin).priority(.required)
+      $0.bottom.greaterThanOrEqualTo(editorRoutingButton.snp.top).offset(-Metric.bookmarkTagsBottomMargin).priority(.low)
+      $0.top.greaterThanOrEqualTo(encouragingBoxView.snp.bottom).offset(Metric.bookmarkTagsTopMargin).priority(.low)
+      $0.centerY.equalToSuperview()
       $0.leading.trailing.equalToSuperview().inset(Metric.bookmarkTagsViewLeadingTrailingInset)
     }
   }
