@@ -19,11 +19,12 @@ protocol LogEntryCreationPresentableListener:
   AnyObject,
   BookmarkCollectionViewCellDelegate,
   BookmarkTagsCollectionViewAdapterDataSource {
-  func settingButtonTapAction()
-  func encouragingBoxTapAction()
-  func bookmarkTagEditorTapAction()
-  func editorRoutingButtonTapAction()
-  func startButtonTapAction()
+  func didTapEncouragingBox()
+  func didTapSettingButton()
+  func didTapBookmarkTagEditor()
+  func didTapEditorRoutingButton()
+  func didTapStartButton()
+  func didTapTagCell()
 }
 
 // MARK: - LogEntryCreationViewController
@@ -41,11 +42,11 @@ final class LogEntryCreationViewController:
     static let encouragingBoxViewHeight: CGFloat = 60
     static let buttonsLeadingTrailingMargin: CGFloat = 24
     static let buttonsHeight: CGFloat = 52
+    static let editorRoutingButtonTopMargin: CGFloat = 58
     static let startButtonsTopMargin: CGFloat = 12
     static let startButtonsBottomMargin: CGFloat = 100
     static let buttonsRadious: CGFloat = 8
-    static let bookmarkTagsTopMargin: CGFloat = 48
-    static let bookmarkTagsBottomMargin: CGFloat = 48
+    static let bookmarkTagsTopMargin: CGFloat = 70
     static let bookmarkTagsViewLeadingTrailingInset: CGFloat = 24
   }
   
@@ -106,7 +107,7 @@ extension LogEntryCreationViewController {
     todayDateBar.settingButton.rx.tap
       .preventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in owner.listener?.settingButtonTapAction() }
+      .drive(with: self) { owner, _ in owner.listener?.didTapSettingButton() }
       .disposed(by: disposeBag)
   }
   
@@ -116,7 +117,7 @@ extension LogEntryCreationViewController {
       encouragingBoxView.rightAccessoryImageView.rx.tapGestureWithPreventDuplication()
     )
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in owner.listener?.encouragingBoxTapAction() }
+      .drive(with: self) { owner, _ in owner.listener?.didTapEncouragingBox() }
       .disposed(by: disposeBag)
   }
   
@@ -132,7 +133,7 @@ extension LogEntryCreationViewController {
     bookmarkTagsView.bookmarkEditorButtonLabel.rx
       .tapGestureWithPreventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in owner.listener?.bookmarkTagEditorTapAction() }
+      .drive(with: self) { owner, _ in owner.listener?.didTapBookmarkTagEditor() }
       .disposed(by: disposeBag)
   }
   
@@ -140,7 +141,7 @@ extension LogEntryCreationViewController {
     editorRoutingButton.rx.tap
       .preventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in owner.listener?.editorRoutingButtonTapAction() }
+      .drive(with: self) { owner, _ in owner.listener?.didTapEditorRoutingButton() }
       .disposed(by: disposeBag)
   }
   
@@ -148,7 +149,7 @@ extension LogEntryCreationViewController {
     startButton.rx.tap
       .preventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in owner.listener?.startButtonTapAction() }
+      .drive(with: self) { owner, _ in owner.listener?.didTapStartButton() }
       .disposed(by: disposeBag)
   }
 }
@@ -157,6 +158,7 @@ extension LogEntryCreationViewController {
 
 extension LogEntryCreationViewController {
   private func setupUI() {
+    view.backgroundColor = .black100
     view.addSubview(todayDateBar)
     view.addSubview(encouragingBoxView)
     view.addSubview(bookmarkTagsView)
@@ -193,6 +195,7 @@ extension LogEntryCreationViewController {
   private func makeEditorRoutingButtonConstraints() {
     editorRoutingButton.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(Metric.buttonsLeadingTrailingMargin)
+      $0.top.equalTo(bookmarkTagsView.snp.bottom).offset(Metric.editorRoutingButtonTopMargin)
       $0.height.equalTo(Metric.buttonsHeight)
     }
   }
@@ -207,9 +210,7 @@ extension LogEntryCreationViewController {
   
   private func makeBookmarkTagsViewConstraints() {
     bookmarkTagsView.snp.makeConstraints {
-      $0.bottom.greaterThanOrEqualTo(editorRoutingButton.snp.top).offset(-Metric.bookmarkTagsBottomMargin).priority(.low)
-      $0.top.greaterThanOrEqualTo(encouragingBoxView.snp.bottom).offset(Metric.bookmarkTagsTopMargin).priority(.low)
-      $0.centerY.equalToSuperview()
+      $0.bottom.equalTo(editorRoutingButton.snp.top).offset(-Metric.bookmarkTagsTopMargin).priority(.required)
       $0.leading.trailing.equalToSuperview().inset(Metric.bookmarkTagsViewLeadingTrailingInset)
     }
   }
