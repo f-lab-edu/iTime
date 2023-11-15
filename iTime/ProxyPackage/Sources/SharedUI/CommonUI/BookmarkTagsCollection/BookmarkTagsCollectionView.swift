@@ -15,7 +15,7 @@ public protocol BookmarkTagsCollectionViewAdapterDataSource: AnyObject {
 }
 
 public protocol BookmarkCollectionViewCellDelegate: AnyObject {
-  func tagCellDidTapAction()
+  func didTapTagCell()
 }
 
 // MARK: - BookmarkTagsCollectionViewAdapter
@@ -98,7 +98,7 @@ extension BookmarkTagsCollectionViewAdapter: UICollectionViewDelegate {
     _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath
   ) {
-    delegate?.tagCellDidTapAction()
+    delegate?.didTapTagCell()
   }
 }
 

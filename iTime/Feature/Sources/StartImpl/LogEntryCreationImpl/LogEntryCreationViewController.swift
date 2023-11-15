@@ -19,11 +19,12 @@ protocol LogEntryCreationPresentableListener:
   AnyObject,
   BookmarkCollectionViewCellDelegate,
   BookmarkTagsCollectionViewAdapterDataSource {
-  func settingButtonTapAction()
-  func encouragingBoxTapAction()
-  func bookmarkTagEditorTapAction()
-  func editorRoutingButtonTapAction()
-  func startButtonTapAction()
+  func didTapEncouragingBox()
+  func didTapSettingButton()
+  func didTapBookmarkTagEditor()
+  func didTapEditorRoutingButton()
+  func didTapStartButton()
+  func didTapTagCell()
 }
 
 // MARK: - LogEntryCreationViewController
@@ -106,7 +107,7 @@ extension LogEntryCreationViewController {
     todayDateBar.settingButton.rx.tap
       .preventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in owner.listener?.settingButtonTapAction() }
+      .drive(with: self) { owner, _ in owner.listener?.didTapSettingButton() }
       .disposed(by: disposeBag)
   }
   
@@ -116,7 +117,7 @@ extension LogEntryCreationViewController {
       encouragingBoxView.rightAccessoryImageView.rx.tapGestureWithPreventDuplication()
     )
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in owner.listener?.encouragingBoxTapAction() }
+      .drive(with: self) { owner, _ in owner.listener?.didTapEncouragingBox() }
       .disposed(by: disposeBag)
   }
   
@@ -132,7 +133,7 @@ extension LogEntryCreationViewController {
     bookmarkTagsView.bookmarkEditorButtonLabel.rx
       .tapGestureWithPreventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in owner.listener?.bookmarkTagEditorTapAction() }
+      .drive(with: self) { owner, _ in owner.listener?.didTapBookmarkTagEditor() }
       .disposed(by: disposeBag)
   }
   
@@ -140,7 +141,7 @@ extension LogEntryCreationViewController {
     editorRoutingButton.rx.tap
       .preventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in owner.listener?.editorRoutingButtonTapAction() }
+      .drive(with: self) { owner, _ in owner.listener?.didTapEditorRoutingButton() }
       .disposed(by: disposeBag)
   }
   
@@ -148,7 +149,7 @@ extension LogEntryCreationViewController {
     startButton.rx.tap
       .preventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in owner.listener?.startButtonTapAction() }
+      .drive(with: self) { owner, _ in owner.listener?.didTapStartButton() }
       .disposed(by: disposeBag)
   }
 }
