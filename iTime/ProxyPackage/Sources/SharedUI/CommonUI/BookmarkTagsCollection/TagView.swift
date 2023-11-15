@@ -9,7 +9,7 @@ import UIKit
 
 public final class TagView: 
   BaseView,
-  HasConfigure
+  Configurable
 {
   
   public typealias ViewModel = String

@@ -11,7 +11,7 @@ import SnapKit
 
 public final class BookmarkTagCell:
   BaseCollectionViewCell,
-  HasConfigure
+  Configurable
 {
   
   // MARK: - Constants
