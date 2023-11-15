@@ -31,7 +31,7 @@ final class BookmarkTagsView: BaseView {
     .backgroundColor(.clear)
     .build()
   
-  private let bookmarkEditorButtonLabel = UILabel().builder
+  let bookmarkEditorButtonLabel = UILabel().builder
     .textColor(.black60)
     .with {
       let attr = NSAttributedString(

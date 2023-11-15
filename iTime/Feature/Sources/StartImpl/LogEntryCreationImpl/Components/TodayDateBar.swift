@@ -34,7 +34,7 @@ final class TodayDateBar: BaseView {
     .textColor(.pointGreen)
     .build()
   
-  private let settingButton = UIButton().builder
+  let settingButton = UIButton().builder
     .with {
       $0.setImage(.gearFill, for: .normal)
     }
