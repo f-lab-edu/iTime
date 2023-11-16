@@ -23,7 +23,7 @@ final class CustomNavigationBar: BaseView {
   
   private let backButton = UIButton().builder
     .with {
-      $0.setImage(.left, for: .normal)
+      $0.setImage(.remove, for: .normal)
     }
     .build()
   

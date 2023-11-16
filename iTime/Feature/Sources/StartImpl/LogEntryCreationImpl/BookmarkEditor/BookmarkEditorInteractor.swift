@@ -29,6 +29,8 @@ final class BookmarkEditorInteractor:
   weak var router: BookmarkEditorRouting?
   weak var listener: BookmarkEditorListener?
   
+  var numberOfItems: Int = 3
+  
   // MARK: - Initialization & DeInitialization
   
   override init(presenter: BookmarkEditorPresentable) {
@@ -40,5 +42,13 @@ final class BookmarkEditorInteractor:
   
   override func didBecomeActive() {
     super.didBecomeActive()
+  }
+  
+  func fetchData(at index: Int) -> String {
+    ""
+  }
+  
+  func didTapTagCell() {
+    
   }
 }
