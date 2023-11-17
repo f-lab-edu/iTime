@@ -24,13 +24,14 @@ final class TodayDateBar: BaseView {
   // MARK: - UI Components
   
   private let largeTitle = UILabel().builder
-    .font(.systemFont(ofSize: 22, weight: .regular))
     .text("TODAY")
+    .font(.custom(.medium, 22))
     .textColor(.white)
     .build()
   
   private let dateLabel = UILabel().builder
     .text("10월 10일, 화요일") // FIXME: need to fix
+    .font(.custom(.bold, 16))
     .textColor(.pointGreen)
     .build()
   

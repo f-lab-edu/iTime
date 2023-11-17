@@ -27,7 +27,7 @@ public final class BookmarkTagCell:
   // MARK: - UI Components
   
   private let tagLabel = UILabel().builder
-    .text("즐겨찾기")
+    .font(.custom(.regular, 15))
     .textColor(.black60)
     .textAlignment(.center)
     .build()

@@ -25,12 +25,13 @@ final class CurrentSavedItemsSectionView: BaseView {
   
   private let sectionHeaderTitleLabel = UILabel().builder
     .text("현재 저장된 활동")
-    .font(.systemFont(ofSize: 16, weight: .bold))
+    .font(.custom(.bold, 16))
     .textColor(.black40)
     .build()
   
   private let emptyGuideLabel = UILabel().builder
     .text("자주 하시는 활동으로 저장해보세요!")
+    .font(.custom(.regular, 12))
     .textColor(.black60)
     .build()
   

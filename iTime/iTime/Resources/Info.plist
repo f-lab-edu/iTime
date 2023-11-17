@@ -4,8 +4,21 @@
 <dict>
 	<key>ApiServerUrl</key>
 	<string>$(X_API_SERVER_URL)</string>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
 	<key>DeployPhase</key>
 	<string>$(X_DEPLOY_PHASE)</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SUIT-Thin.otf</string>
+		<string>SUIT-SemiBold.otf</string>
+		<string>SUIT-Regular.otf</string>
+		<string>SUIT-Medium.otf</string>
+		<string>SUIT-Light.otf</string>
+		<string>SUIT-Heavy.otf</string>
+		<string>SUIT-ExtraLight.otf</string>
+		<string>SUIT-Bold.otf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

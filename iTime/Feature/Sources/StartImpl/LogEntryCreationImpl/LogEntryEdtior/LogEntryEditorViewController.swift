@@ -56,6 +56,7 @@ final class LogEntryEditorViewController:
   
   private let editorRoutingTextField = UITextField().builder
     .placeholder("지금 내가 할 것은...")
+    .font(.custom(.regular, 16))
     .textAlignment(.center)
     .set(\.layer.cornerRadius, to: Metric.buttonsRadious)
     .backgroundColor(.black90)

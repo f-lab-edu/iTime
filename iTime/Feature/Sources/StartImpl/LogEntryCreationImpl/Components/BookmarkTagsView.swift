@@ -38,12 +38,11 @@ final class BookmarkTagsView: BaseView {
           string: "수정하기",
           attributes: [
               NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue,
-              .font: UIFont.systemFont(ofSize: 14),
-              .foregroundColor: UIColor.black40,
+              .font: UIFont.custom(.regular, 15),
+              .foregroundColor: UIColor.black60,
           ])
       $0.attributedText = attr
     }
-    .text("수정하기")
     .build()
   
   // MARK: - Properties

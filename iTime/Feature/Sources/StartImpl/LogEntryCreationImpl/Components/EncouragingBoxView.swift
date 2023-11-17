@@ -25,7 +25,8 @@ final class EncouragingBoxView: BaseView {
   // MARK: - UI Components
   
   let guideLabel = UILabel().builder
-    .text("비워있는 활동 기록을 채워보세요.")
+    .text("비어있는 활동 기록을 채워보세요.")
+    .font(.custom(.regular, 16))
     .textColor(.black40)
     .build()
   

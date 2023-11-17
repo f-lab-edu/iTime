@@ -55,7 +55,8 @@ let package = Package(
       dependencies: [
         "ProxyPackage",
         "AppFoundation"
-      ]
+      ],
+      resources: [.process("Resources")]
     ),
     .testTarget(
       name: "ProxyPackageTests",
