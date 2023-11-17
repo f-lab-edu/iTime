@@ -14,12 +14,12 @@ protocol Localizable {}
 extension Localizable {
     func localizedText() -> String {
         let key = String(describing: self)
-        return String(NSLocalizedString(key, comment: "\(key)_comment"))
+      return String(NSLocalizedString(key, bundle: Bundle.module, comment: "\(key)_comment"))
     }
     
     func localizedText(with arguments: [CVarArg]) -> String {
         let key = String(describing: self)
-        return String(format: NSLocalizedString(key, comment: "\(key)_comment"),
+        return String(format: NSLocalizedString(key, bundle: Bundle.module, comment: "\(key)_comment"),
                       arguments: arguments)
     }
 }

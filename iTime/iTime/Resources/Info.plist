@@ -4,6 +4,8 @@
 <dict>
 	<key>ApiServerUrl</key>
 	<string>$(X_API_SERVER_URL)</string>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
 	<key>DeployPhase</key>
 	<string>$(X_DEPLOY_PHASE)</string>
 	<key>UIApplicationSceneManifest</key>
