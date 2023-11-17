@@ -51,7 +51,8 @@ final class BookmarkTagsView: BaseView {
   private lazy var adapter = BookmarkTagsCollectionViewAdapter(
     collectionView: bookmarkTagsCollectionView,
     adapterDataSource: listener,
-    delegate: listener
+    delegate: listener,
+    alignedCollectionViewFlowLayout: CenterAlignedCollectionViewFlowLayout()
   )
   
   private var listener: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?
