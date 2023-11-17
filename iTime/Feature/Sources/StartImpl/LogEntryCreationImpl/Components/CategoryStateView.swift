@@ -11,7 +11,7 @@ import SharedUI
 
 final class CategoryStateView: 
   BaseView,
-  HasConfigure
+  Configurable
 {
   typealias ViewModel = (color: UIColor, text: String)
   

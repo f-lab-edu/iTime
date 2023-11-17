@@ -34,27 +34,27 @@ final class LogEntryCreationInteractor:
   
   // MARK: - Mutation
   
-  func encouragingBoxTapAction() {
+  func didTapEncouragingBox() {
     
   }
   
-  func settingButtonTapAction() {
-  
+  func didTapSettingButton() {
+      
   }
   
-  func bookmarkTagEditorTapAction() {
+  func didTapBookmarkTagEditor() {
     
   }
   
-  func editorRoutingButtonTapAction() {
+  func didTapEditorRoutingButton() {
     
   }
   
-  func startButtonTapAction() {
+  func didTapStartButton() {
     
   }
   
-  func tagCellDidTapAction() {
+  func didTapTagCell() {
     
   }
   
