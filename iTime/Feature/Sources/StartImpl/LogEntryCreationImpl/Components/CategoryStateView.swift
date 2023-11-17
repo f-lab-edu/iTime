@@ -29,7 +29,9 @@ final class CategoryStateView:
     .set(\.layer.cornerRadius, to: Metric.circleDotViewRadius)
     .build()
   
-  private let titleLabel = UILabel()
+  private let titleLabel = UILabel().builder
+    .font(.custom(.regular, 15))
+    .build()
   
   // MARK: - Initialization & Deinitialization
   

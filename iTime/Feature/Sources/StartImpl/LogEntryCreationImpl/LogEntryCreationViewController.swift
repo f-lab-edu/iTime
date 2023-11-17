@@ -70,6 +70,7 @@ final class LogEntryCreationViewController:
     .with {
       $0.setTitle("지금 내가 할 것은...", for: .normal)
       $0.setTitleColor(.black60, for: .normal)
+      $0.titleLabel?.font = .custom(.regular, 16)
     }
     .build()
   

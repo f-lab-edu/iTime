@@ -25,6 +25,7 @@
 		DE1A18F42B00B273009E1672 /* ProxyPackage in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18F32B00B273009E1672 /* ProxyPackage */; };
 		DE3449FC2B00AC8300C3E3F4 /* AuthenticationUsecase in Frameworks */ = {isa = PBXBuildFile; productRef = DE3449FB2B00AC8300C3E3F4 /* AuthenticationUsecase */; };
 		DE3449FE2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE3449FD2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl */; };
+		DE44DF4A2B07AE9E000A4865 /* SharedUI in Frameworks */ = {isa = PBXBuildFile; productRef = DE44DF492B07AE9E000A4865 /* SharedUI */; };
 		DE4E551C2AEA483F00DDD145 /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E551B2AEA483F00DDD145 /* AppComponent.swift */; };
 		DE4E551F2AEA48FB00DDD145 /* AppRootBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E551E2AEA48FB00DDD145 /* AppRootBuilder.swift */; };
 		DE4E55212AEA493100DDD145 /* AppRootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E55202AEA493100DDD145 /* AppRootInteractor.swift */; };
@@ -72,6 +73,7 @@
 				DE3449FE2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl in Frameworks */,
 				DE1A18E62B00B26A009E1672 /* StartImpl in Frameworks */,
 				DE1A18E42B00B26A009E1672 /* Start in Frameworks */,
+				DE44DF4A2B07AE9E000A4865 /* SharedUI in Frameworks */,
 				DE1A18EE2B00B273009E1672 /* NetworkRepositoryImpl in Frameworks */,
 				DE1A18E22B00B26A009E1672 /* LoggedOutImpl in Frameworks */,
 				DE1A18EC2B00B273009E1672 /* NetworkRepository in Frameworks */,
@@ -201,6 +203,7 @@
 				DE1A18ED2B00B273009E1672 /* NetworkRepositoryImpl */,
 				DE1A18F12B00B273009E1672 /* AppFoundation */,
 				DE1A18F32B00B273009E1672 /* ProxyPackage */,
+				DE44DF492B07AE9E000A4865 /* SharedUI */,
 			);
 			productName = iTime;
 			productReference = DE05709F2AE6735E00669BDF /* iTime.app */;
@@ -753,6 +756,10 @@
 		DE3449FD2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AuthenticationUsecaseImpl;
+		};
+		DE44DF492B07AE9E000A4865 /* SharedUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

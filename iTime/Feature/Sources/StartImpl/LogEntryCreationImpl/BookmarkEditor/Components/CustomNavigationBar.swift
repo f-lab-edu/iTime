@@ -29,6 +29,7 @@ final class CustomNavigationBar: BaseView {
   
   private let titleLabel = UILabel().builder
     .text("즐겨찾기 설정")
+    .font(.custom(.bold, 16))
     .textColor(.white)
     .build()
   

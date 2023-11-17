@@ -28,12 +28,14 @@ final class BookmarkEmptyView: BaseView {
   
   private let guideLabel = UILabel().builder
     .text("즐겨찾기를 등록해\n빠른 활동 시작을 해보세요")
+    .font(.custom(.regular, 15))
     .numberOfLines(2)
     .textAlignment(.center)
     .build()
   
   private let bookmarkRouteLabel = UILabel().builder
     .text("즐겨찾기 이동")
+    .font(.custom(.regular, 15))
     .textAlignment(.center)
     .textColor(.pointGreen)
     .build()
