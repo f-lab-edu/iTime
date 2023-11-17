@@ -32,7 +32,7 @@ final class BookmarkEditorViewController:
   // MARK: - Constants
   
   private enum Metric {
-    
+    static let separatedViewHeight: CGFloat = 9
   }
   
   // MARK: - Properties
@@ -42,12 +42,6 @@ final class BookmarkEditorViewController:
   // MARK: - UI Components
   
   private let customNavigationBar = CustomNavigationBar()
-  
-  private let scrollView = UIScrollView()
-  
-  private let guideView = UIView()
-  
-  private let contentStackView = UIStackView()
   
   private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(listener: listener)
   
@@ -84,12 +78,47 @@ extension BookmarkEditorViewController {
 
 extension BookmarkEditorViewController {
   private func setupUI() {
+    view.addSubview(currentSavedItemsSectionView)
+    view.addSubview(separatedView)
+    view.addSubview(itemHistorySectionView)
+    view.addSubview(saveBookmarkButtonSectionView)
     
     layout()
   }
   
   private func layout() {
-    
+    makeCurrentSavedItemSectionViewConstraints()
+    makeSeparatedViewConstraints()
+    makeItemHistorySectionViewConstraints()
+    makeSaveBookmarkButtonSectionViewConstraints()
+  }
+  
+  private func makeCurrentSavedItemSectionViewConstraints() {
+    currentSavedItemsSectionView.snp.makeConstraints {
+      $0.leading.top.trailing.equalToSuperview()
+    }
+  }
+  
+  private func makeSeparatedViewConstraints() {
+    separatedView.snp.makeConstraints {
+      $0.top.equalTo(currentSavedItemsSectionView.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(Metric.separatedViewHeight)
+    }
+  }
+  
+  private func makeItemHistorySectionViewConstraints() {
+    itemHistorySectionView.snp.makeConstraints {
+      $0.top.equalTo(separatedView.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+      $0.bottom.equalTo(saveBookmarkButtonSectionView.snp.top)
+    }
+  }
+  
+  private func makeSaveBookmarkButtonSectionViewConstraints() {
+    saveBookmarkButtonSectionView.snp.makeConstraints {
+      $0.leading.trailing.bottom.equalToSuperview()
+    }
   }
 }
 
