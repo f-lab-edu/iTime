@@ -7,6 +7,8 @@
 
 import UIKit
 
+import AppFoundation
+
 public final class TagView: 
   BaseView,
   Configurable
@@ -23,7 +25,7 @@ public final class TagView:
   // MARK: - UI Components
   
   private let tagLabel = UILabel().builder
-    .text("즐겨찾기")
+    .text(TextType.bookmark.localizedText())
     .textColor(.black40)
     .textAlignment(.center)
     .build()
