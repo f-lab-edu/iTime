@@ -15,7 +15,7 @@ public protocol BookmarkTagsCollectionViewAdapterDataSource: AnyObject {
 }
 
 public protocol BookmarkCollectionViewCellDelegate: AnyObject {
-  func tagCellDidTapAction()
+  func didTapTagCell()
 }
 
 // MARK: - BookmarkTagsCollectionViewAdapter
@@ -48,11 +48,10 @@ public final class BookmarkTagsCollectionViewAdapter: NSObject {
   public init(
     collectionView: UICollectionView,
     adapterDataSource: BookmarkTagsCollectionViewAdapterDataSource?,
-    delegate: BookmarkCollectionViewCellDelegate?,
-    alignedCollectionViewFlowLayout: UICollectionViewFlowLayout
+    delegate: BookmarkCollectionViewCellDelegate?
   ) {
     super.init()
-    let layout = alignedCollectionViewFlowLayout
+    let layout = CenterAlignedCollectionViewFlowLayout()
     layout.minimumInteritemSpacing = Metric.itemHorizontalInset
     layout.minimumLineSpacing = Metric.minimumLineSpacing
     collectionView.setCollectionViewLayout(layout, animated: false)
@@ -99,7 +98,7 @@ extension BookmarkTagsCollectionViewAdapter: UICollectionViewDelegate {
     _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath
   ) {
-    delegate?.tagCellDidTapAction()
+    delegate?.didTapTagCell()
   }
 }
 
