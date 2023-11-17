@@ -12,7 +12,13 @@ import Start
 protocol LogEntryCreationDependency: Dependency {
 }
 
-final class LogEntryCreationComponent: Component<LogEntryCreationDependency> {
+final class LogEntryCreationComponent: 
+  Component<LogEntryCreationDependency>,
+  LogEntryEditorDependency
+{
+  fileprivate var logEntryEditorBuilder: LogEntryEditorBuildable {
+    LogEntryEditorBuilder(dependency: self)
+  }
 }
 
 final class LogEntryCreationBuilder:
@@ -29,6 +35,10 @@ final class LogEntryCreationBuilder:
         let viewController = LogEntryCreationViewController()
         let interactor = LogEntryCreationInteractor(presenter: viewController)
         interactor.listener = listener
-        return LogEntryCreationRouter(interactor: interactor, viewController: viewController)
+        return LogEntryCreationRouter(
+          interactor: interactor,
+          viewController: viewController,
+          logEntryEditorBuilder: component.logEntryEditorBuilder
+        )
     }
 }

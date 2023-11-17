@@ -18,5 +18,6 @@ extension UIColor {
   public static let black80: UIColor = .init(resource: .black80)
   public static let black90: UIColor = .init(resource: .black90)
   public static let black100: UIColor = .init(resource: .black100)
+  public static let black200: UIColor = .init(resource: .black200)
   public static let pointGreen: UIColor = .init(resource: .pointGreen)
 }

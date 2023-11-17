@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol HasConfigure {
+public protocol Configurable {
     associatedtype ViewModel
     func configure(by viewModel: ViewModel)
 }
