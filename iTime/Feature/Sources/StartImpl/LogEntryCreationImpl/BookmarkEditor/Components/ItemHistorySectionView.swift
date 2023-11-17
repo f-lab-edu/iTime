@@ -39,7 +39,8 @@ final class ItemHistorySectionView: BaseView {
   private lazy var adapter = BookmarkTagsCollectionViewAdapter(
     collectionView: ItemHistoryCollectionView,
     adapterDataSource: listener,
-    delegate: listener
+    delegate: listener, 
+    alignedCollectionViewFlowLayout: LeadingAlignedCollectionViewFlowLayout()
   )
   
   // MARK: - properties
