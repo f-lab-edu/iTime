@@ -39,7 +39,8 @@ final class CurrentSavedItemsSectionView: BaseView {
   private lazy var adapter = BookmarkTagsCollectionViewAdapter(
     collectionView: savedItemCollectionView,
     adapterDataSource: listener,
-    delegate: listener
+    delegate: listener,
+    alignedCollectionViewFlowLayout: LeadingAlignedCollectionViewFlowLayout()
   )
   
   // MARK: - properties

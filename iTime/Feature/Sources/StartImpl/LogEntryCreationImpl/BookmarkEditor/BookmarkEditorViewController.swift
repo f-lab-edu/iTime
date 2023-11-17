@@ -49,8 +49,6 @@ final class BookmarkEditorViewController:
   
   private let contentStackView = UIStackView()
   
-  private let selectedItemCountTrackingBar = SelectedItemCountTrackingBar()
-  
   private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(listener: listener)
   
   private let separatedView = UIView().builder

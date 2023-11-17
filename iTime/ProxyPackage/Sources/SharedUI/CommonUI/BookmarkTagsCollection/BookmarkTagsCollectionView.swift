@@ -48,10 +48,11 @@ public final class BookmarkTagsCollectionViewAdapter: NSObject {
   public init(
     collectionView: UICollectionView,
     adapterDataSource: BookmarkTagsCollectionViewAdapterDataSource?,
-    delegate: BookmarkCollectionViewCellDelegate?
+    delegate: BookmarkCollectionViewCellDelegate?,
+    alignedCollectionViewFlowLayout: UICollectionViewFlowLayout
   ) {
     super.init()
-    let layout = CenterAlignedCollectionViewFlowLayout()
+    let layout = alignedCollectionViewFlowLayout
     layout.minimumInteritemSpacing = Metric.itemHorizontalInset
     layout.minimumLineSpacing = Metric.minimumLineSpacing
     collectionView.setCollectionViewLayout(layout, animated: false)
