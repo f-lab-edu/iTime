@@ -29,7 +29,10 @@ final class BookmarkEditorInteractor:
   weak var router: BookmarkEditorRouting?
   weak var listener: BookmarkEditorListener?
   
-  var numberOfItems: Int = 3
+  // TODO: Init Data
+  func numberOfItems() -> Int {
+    3
+  }
   
   // MARK: - Initialization & DeInitialization
   
@@ -44,7 +47,7 @@ final class BookmarkEditorInteractor:
     super.didBecomeActive()
   }
   
-  func fetchData(at index: Int) -> String {
+  func configurationData(at index: Int) -> String {
     ""
   }
   

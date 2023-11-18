@@ -10,8 +10,8 @@ import UIKit
 // MARK: - BookmarkTagsCollectionViewAdapterDataSource
 
 public protocol BookmarkTagsCollectionViewAdapterDataSource: AnyObject {
-  var numberOfItems: Int { get }
-  func fetchData(at index: Int) -> String
+  func numberOfItems() -> Int
+  func configurationData(at index: Int) -> String
 }
 
 public protocol BookmarkCollectionViewCellDelegate: AnyObject {
@@ -73,7 +73,7 @@ extension BookmarkTagsCollectionViewAdapter: UICollectionViewDataSource {
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
   ) -> Int {
-    return adapterDataSource?.numberOfItems ?? 0
+    return adapterDataSource?.numberOfItems() ?? 0
   }
   
   public func collectionView(
@@ -111,7 +111,7 @@ extension BookmarkTagsCollectionViewAdapter: UICollectionViewDelegateFlowLayout 
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAt indexPath: IndexPath
   ) -> CGSize {
-    guard let data = adapterDataSource?.fetchData(at: indexPath.row) else { return .zero }
+    guard let data = adapterDataSource?.configurationData(at: indexPath.row) else { return .zero }
     let labelWidthSize = data.width(
       withConstrainedHeight: 20.0,
       font: UIFont.systemFont(
