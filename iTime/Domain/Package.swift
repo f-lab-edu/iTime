@@ -15,6 +15,13 @@ let package = Package(
     .library(
       name: "AuthenticationUsecaseImpl",
       targets: ["AuthenticationUsecaseImpl"]),
+    .library(
+      name: "BookmarkUsecase",
+      targets: ["BookmarkUsecase"]),
+    .library(
+      name: "BookmarkUsecaseImpl",
+      targets: ["BookmarkUsecaseImpl"]),
+    
   ],
   dependencies: [
     .package(path: "../Platform"),
@@ -34,12 +41,30 @@ let package = Package(
         .product(name: "AuthenticationRepository", package: "Platform"),
         .product(name: "AppFoundation", package: "ProxyPackage")
       ]),
+    .target(
+      name: "BookmarkUsecase",
+      dependencies: [
+        "ProxyPackage",
+      ]),
+    .target(
+      name: "BookmarkUsecaseImpl",
+      dependencies: [
+        "BookmarkUsecase",
+        .product(name: "AppFoundation", package: "ProxyPackage")
+      ]),
     .testTarget(
       name: "AuthenticationUsecaseImplTests",
       dependencies: [
         "AuthenticationUsecase",
         "AuthenticationUsecaseImpl",
         .product(name: "AuthenticationRepository", package: "Platform"),
+        .product(name: "RepositoryTestSupports", package: "Platform"),
+      ]),
+    .testTarget(
+      name: "BookmarkUsecaseImplTests",
+      dependencies: [
+        "BookmarkUsecase",
+        "BookmarkUsecaseImpl",
         .product(name: "RepositoryTestSupports", package: "Platform"),
       ]),
   ]
