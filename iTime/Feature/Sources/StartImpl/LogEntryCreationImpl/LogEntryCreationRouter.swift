@@ -67,7 +67,7 @@ final class LogEntryCreationRouter:
     guard let router = logEntryEditorRouter else { return }
     detachChild(router)
     logEntryEditorRouter = nil
-    viewController.dismiss(router.viewControllable)
+    viewController.dismiss(animated: true, completion: nil)
   }
   
   func attachBookmarkEditorRIB() {
@@ -86,6 +86,6 @@ final class LogEntryCreationRouter:
     guard let router = bookmarkEditorRouter else { return }
     detachChild(router)
     bookmarkEditorRouter = nil
-    viewController.dismiss(router.viewControllable)
+    viewController.dismiss(animated: true, completion: nil)
   }
 }

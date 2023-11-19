@@ -75,13 +75,17 @@ let package = Package(
         .product(name: "SharedUI", package: "ProxyPackage"),
       ]),
     .testTarget(
-      name: "LoggedInTests",
+      name: "LoggedInImplTests",
       dependencies: ["LoggedIn"]),
     .testTarget(
-      name: "LoggedOutTests",
+      name: "LoggedOutImplTests",
       dependencies: ["LoggedOut"]),
     .testTarget(
-      name: "StartTests",
-      dependencies: ["Start"])
+      name: "StartImplTests",
+      dependencies: [
+        "StartImpl",
+        .product(name: "RIBsTestSupport", package: "ProxyPackage")
+      ]
+    )
   ]
 )

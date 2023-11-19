@@ -19,6 +19,9 @@ let package = Package(
     .library(
       name: "SharedUI",
       targets: ["SharedUI"]),
+    .library(
+      name: "RIBsTestSupport",
+      targets: ["RIBsTestSupport"]),
   ],
   dependencies: [
     .package(url: "https://github.com/firebase/firebase-ios-sdk.git", exact: "10.15.0"),
@@ -45,6 +48,12 @@ let package = Package(
       ]
     ),
     .target(
+      name: "RIBsTestSupport",
+      dependencies: [
+        "ProxyPackage"
+      ]
+    ),
+    .target(
       name: "AppFoundation",
       dependencies: [
         "ProxyPackage"
@@ -60,6 +69,9 @@ let package = Package(
     ),
     .testTarget(
       name: "ProxyPackageTests",
-      dependencies: ["ProxyPackage"]),
+      dependencies: [
+        "ProxyPackage"
+      ]
+    ),
   ]
 )
