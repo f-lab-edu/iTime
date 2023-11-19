@@ -33,7 +33,7 @@ public final class BookmarkEditorBuilder:
   }
   
   public func build(withListener listener: BookmarkEditorListener) -> BookmarkEditorRouting {
-    let component = BookmarkEditorComponent(dependency: dependency)
+    let _ = BookmarkEditorComponent(dependency: dependency)
     let viewController = BookmarkEditorViewController()
     let interactor = BookmarkEditorInteractor(presenter: viewController)
     interactor.listener = listener
