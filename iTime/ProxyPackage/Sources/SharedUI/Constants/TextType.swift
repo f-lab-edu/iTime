@@ -9,4 +9,6 @@ import Foundation
 
 public enum TextType: Localizable {
   case bookmark
+  case save
+  case saveGuideLabel
 }

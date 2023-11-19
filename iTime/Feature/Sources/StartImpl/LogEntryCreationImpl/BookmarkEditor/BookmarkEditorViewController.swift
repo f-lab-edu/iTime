@@ -1,6 +1,6 @@
 //
 //  BookmarkEditorViewController.swift
-//  
+//
 //
 //  Created by 이상헌 on 11/14/23.
 //
@@ -14,11 +14,14 @@ import SharedUI
 
 // MARK: - BookmarkEditorPresentableListener
 
-protocol BookmarkEditorPresentableListener: 
+protocol BookmarkEditorPresentableListener:
   AnyObject,
   BookmarkTagsCollectionViewAdapterDataSource,
   BookmarkCollectionViewCellDelegate
 {
+  func didTapSaveButton()
+  func didTapAddButton()
+  func didTapBackButton()
 }
 
 // MARK: - BookmarkEditorViewController
@@ -49,15 +52,16 @@ final class BookmarkEditorViewController:
     .backgroundColor(.black90)
     .build()
   
-  private let itemHistorySectionView = UIView()
+  private lazy var itemHistorySectionView = ItemHistorySectionView(listener: listener)
   
-  private let saveBookmarkButtonSectionView = UIView()
+  private let saveBookmarkButtonSectionView = SaveBookmarkButtonSectionView()
   
   // MARK: - View LifeCycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    bindActions()
   }
   
 }
@@ -65,6 +69,35 @@ final class BookmarkEditorViewController:
 // MARK: - Bind Action
 
 extension BookmarkEditorViewController {
+  private func bindActions() {
+    bindSaveButtonTapAction()
+    bindAddButtonTapAction()
+    bindBackButtonTapAction()
+  }
+  
+  private func bindSaveButtonTapAction() {
+    saveBookmarkButtonSectionView.saveButton.rx
+      .tapWithPreventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in print("tap") }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindAddButtonTapAction() {
+    customNavigationBar.addButton.rx
+      .tapWithPreventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in print("tap") }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindBackButtonTapAction() {
+    customNavigationBar.backButton.rx
+      .tapWithPreventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in print("tap") }
+      .disposed(by: disposeBag)
+  }
   
 }
 
@@ -78,6 +111,7 @@ extension BookmarkEditorViewController {
 
 extension BookmarkEditorViewController {
   private func setupUI() {
+    view.addSubview(customNavigationBar)
     view.addSubview(currentSavedItemsSectionView)
     view.addSubview(separatedView)
     view.addSubview(itemHistorySectionView)
@@ -87,15 +121,24 @@ extension BookmarkEditorViewController {
   }
   
   private func layout() {
+    makeCustomNavigationBarConstraints()
     makeCurrentSavedItemSectionViewConstraints()
     makeSeparatedViewConstraints()
     makeItemHistorySectionViewConstraints()
     makeSaveBookmarkButtonSectionViewConstraints()
   }
   
+  private func makeCustomNavigationBarConstraints() {
+    customNavigationBar.snp.makeConstraints {
+      $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      $0.leading.trailing.equalToSuperview()
+    }
+  }
+  
   private func makeCurrentSavedItemSectionViewConstraints() {
     currentSavedItemsSectionView.snp.makeConstraints {
-      $0.leading.top.trailing.equalToSuperview()
+      $0.top.equalTo(customNavigationBar.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
     }
   }
   
@@ -117,7 +160,8 @@ extension BookmarkEditorViewController {
   
   private func makeSaveBookmarkButtonSectionViewConstraints() {
     saveBookmarkButtonSectionView.snp.makeConstraints {
-      $0.leading.trailing.bottom.equalToSuperview()
+      $0.leading.trailing.equalToSuperview()
+      $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
     }
   }
 }
@@ -125,6 +169,7 @@ extension BookmarkEditorViewController {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview("UIKit Portrait") {
-  BookmarkEditorViewController()
+  let vc = BookmarkEditorViewController()
+  return vc
 }
 #endif

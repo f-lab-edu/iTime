@@ -17,11 +17,12 @@ final class CustomNavigationBar: BaseView {
     static let backButtonLeadingMargin: CGFloat = 8
     static let backButtonTopBottomMargin: CGFloat = 4
     static let backButtonSize: CGFloat = 44
+    static let addButtonTrailingMargin: CGFloat = 16
   }
   
   // MARK: - UI Components
   
-  private let backButton = UIButton().builder
+  let backButton = UIButton().builder
     .with {
       $0.setImage(.remove, for: .normal)
     }
@@ -31,6 +32,13 @@ final class CustomNavigationBar: BaseView {
     .text("즐겨찾기 설정")
     .font(.custom(.bold, 16))
     .textColor(.white)
+    .build()
+  
+  let addButton = UIButton().builder
+    .with {
+      $0.setImage(.add, for: .normal)
+      $0.setTitleColor(.pointGreen, for: .normal)
+    }
     .build()
   
   // MARK: - Initialization & Deinitialization
@@ -49,11 +57,13 @@ final class CustomNavigationBar: BaseView {
     backgroundColor = .clear
     addSubview(backButton)
     addSubview(titleLabel)
+    addSubview(addButton)
   }
   
   private func layout() {
     makeBackButtonCostraints()
     makeTitleLabelConstraints()
+    makeAddButtonConstraints()
   }
   
   private func makeBackButtonCostraints() {
@@ -66,6 +76,13 @@ final class CustomNavigationBar: BaseView {
   private func makeTitleLabelConstraints() {
     titleLabel.snp.makeConstraints {
       $0.center.equalToSuperview()
+    }
+  }
+  
+  private func makeAddButtonConstraints() {
+    addButton.snp.makeConstraints {
+      $0.centerY.equalTo(backButton)
+      $0.trailing.equalToSuperview().offset(-Metric.addButtonTrailingMargin)
     }
   }
   
