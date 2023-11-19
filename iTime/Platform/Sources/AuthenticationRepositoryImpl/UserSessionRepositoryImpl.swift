@@ -15,6 +15,7 @@ import AppFoundation
 final class UserSessionRepositoryImpl: FirestoreRepository, UserSessionRepository {
   
   // MARK: - DatabaseReference
+  
   enum DatabaseReference: DocumentReferenceConvertible {
     case singleUser(userID: String)
     
