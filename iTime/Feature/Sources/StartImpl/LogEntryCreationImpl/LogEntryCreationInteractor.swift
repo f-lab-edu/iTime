@@ -60,9 +60,11 @@ final class LogEntryCreationInteractor:
   
   // BookmarkTagCoollectionView DataSources
   // TODO: init data
-  var numberOfItems: Int { 10 }
+  func numberOfItems() -> Int {
+    10
+  }
   
-  func fetchData(at index: Int) -> String {
+  func configurationData(at index: Int) -> String {
    ""
   }
 }
