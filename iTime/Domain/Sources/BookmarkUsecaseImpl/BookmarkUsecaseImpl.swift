@@ -10,6 +10,7 @@ import RxSwift
 import BookmarkUsecase
 
 final class BookmarkUsecaseImpl: BookmarkUsecase {
+  typealias Item = Bookmark
   
   // TODO: Repository 개발 후 반영
   private let bookmarkRepository: Any
@@ -18,19 +19,19 @@ final class BookmarkUsecaseImpl: BookmarkUsecase {
     self.bookmarkRepository = bookmarkRepository
   }
   
-  func updateBookmarks() -> Single<Void> {
+  func update(by bookmarks: [Item]) -> Single<Void> {
     .never()
   }
   
-  func appendBookmark() -> Single<Void> {
+  func append(by bookmark: Item) -> Single<Void> {
     .never()
   }
   
-  func removeBookmark() -> Single<Void> {
+  func remove(by bookmark: Item) -> Single<Void> {
     .never()
   }
   
-  func bookmarks() -> Single<[Bookmark]> {
+  func bookmarks() -> Single<[Item]> {
     .never()
   }
 }
