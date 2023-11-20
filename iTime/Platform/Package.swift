@@ -4,63 +4,81 @@
 import PackageDescription
 
 let package = Package(
-    name: "Platform",
-    platforms: [
-        .iOS(.v16)
-    ],
-    products: [
-        .library(
-            name: "AuthenticationRepository",
-            targets: ["AuthenticationRepository"]),
-        .library(
-            name: "AuthenticationRepositoryImpl",
-            targets: ["AuthenticationRepositoryImpl"]),
-        .library(
-            name: "NetworkRepository",
-            targets: ["NetworkRepository"]),
-        .library(
-            name: "NetworkRepositoryImpl",
-            targets: ["NetworkRepositoryImpl"]),
-        .library(
-            name: "RepositoryTestSupports",
-            targets: ["RepositoryTestSupports"]),
-    ],
-    dependencies: [
-        .package(path: "../ProxyPackage"),
-    ],
-    targets: [
-        .target(
-            name: "AuthenticationRepository",
-            dependencies: [
-                "NetworkRepository",
-            ]),
-        .target(
-            name: "AuthenticationRepositoryImpl",
-            dependencies: [
-                "AuthenticationRepository",
-                "NetworkRepositoryImpl",
-                .product(name: "AppFoundation", package: "ProxyPackage"),
-            ]),
-        .target(
-            name: "NetworkRepository",
-            dependencies: [
-                "ProxyPackage"
-            ]),
-        .target(
-            name: "NetworkRepositoryImpl",
-            dependencies: [
-                "NetworkRepository",
-                "ProxyPackage",
-                .product(name: "AppFoundation", package: "ProxyPackage"),
-            ]),
-        .target(
-            name: "RepositoryTestSupports",
-            dependencies: [
-                "AuthenticationRepository",
-                "ProxyPackage",
-            ]),
-        .testTarget(
-            name: "PlatformTests",
-            dependencies: ["NetworkRepository"]),
-    ]
+  name: "Platform",
+  platforms: [
+    .iOS(.v16)
+  ],
+  products: [
+    .library(
+      name: "AuthenticationRepository",
+      targets: ["AuthenticationRepository"]),
+    .library(
+      name: "AuthenticationRepositoryImpl",
+      targets: ["AuthenticationRepositoryImpl"]),
+    .library(
+      name: "NetworkRepository",
+      targets: ["NetworkRepository"]),
+    .library(
+      name: "NetworkRepositoryImpl",
+      targets: ["NetworkRepositoryImpl"]),
+    .library(
+      name: "LocalDataBaseRepository",
+      targets: ["NetworkRepository"]),
+    .library(
+      name: "LocalDataBaseRepositoryImpl",
+      targets: ["NetworkRepositoryImpl"]),
+    .library(
+      name: "RepositoryTestSupports",
+      targets: ["RepositoryTestSupports"]),
+  ],
+  dependencies: [
+    .package(path: "../ProxyPackage"),
+  ],
+  targets: [
+    .target(
+      name: "AuthenticationRepository",
+      dependencies: [
+        "NetworkRepository",
+      ]),
+    .target(
+      name: "AuthenticationRepositoryImpl",
+      dependencies: [
+        "AuthenticationRepository",
+        "NetworkRepositoryImpl",
+        .product(name: "AppFoundation", package: "ProxyPackage"),
+      ]),
+    .target(
+      name: "NetworkRepository",
+      dependencies: [
+        "ProxyPackage"
+      ]),
+    .target(
+      name: "NetworkRepositoryImpl",
+      dependencies: [
+        "NetworkRepository",
+        "ProxyPackage",
+        .product(name: "AppFoundation", package: "ProxyPackage"),
+      ]),
+    .target(
+      name: "LocalDataBaseRepository",
+      dependencies: [
+        "ProxyPackage"
+      ]),
+    .target(
+      name: "LocalDataBaseRepositoryImpl",
+      dependencies: [
+        "LocalDataBaseRepository",
+        "ProxyPackage",
+        .product(name: "AppFoundation", package: "ProxyPackage"),
+      ]),
+    .target(
+      name: "RepositoryTestSupports",
+      dependencies: [
+        "AuthenticationRepository",
+        "ProxyPackage",
+      ]),
+    .testTarget(
+      name: "PlatformTests",
+      dependencies: ["NetworkRepository"]),
+  ]
 )
