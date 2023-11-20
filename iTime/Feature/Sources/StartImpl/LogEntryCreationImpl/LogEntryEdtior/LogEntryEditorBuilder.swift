@@ -33,7 +33,7 @@ public final class LogEntryEditorBuilder:
   }
   
   public func build(withListener listener: LogEntryEditorListener) -> LogEntryEditorRouting {
-    let component = LogEntryEditorComponent(dependency: dependency)
+    let _ = LogEntryEditorComponent(dependency: dependency)
     let viewController = LogEntryEditorViewController()
     let interactor = LogEntryEditorInteractor(presenter: viewController)
     interactor.listener = listener

@@ -211,7 +211,7 @@ extension LogEntryCreationViewController {
   
   private func makeBookmarkTagsViewConstraints() {
     bookmarkTagsView.snp.makeConstraints {
-      $0.bottom.equalTo(editorRoutingButton.snp.top).offset(-Metric.bookmarkTagsTopMargin).priority(.required)
+      $0.bottom.equalTo(editorRoutingButton.snp.top).offset(-Metric.bookmarkTagsTopMargin).priority(.low)
       $0.leading.trailing.equalToSuperview().inset(Metric.bookmarkTagsViewLeadingTrailingInset)
     }
   }
