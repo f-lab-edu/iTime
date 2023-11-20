@@ -25,16 +25,20 @@ final class ItemHistorySectionView: BaseView {
   
   private let sectionHeaderTitleLabel = UILabel().builder
     .text("현재 기록")
-    .font(.systemFont(ofSize: 16, weight: .bold))
+    .font(.custom(.bold, 16))
     .textColor(.black40)
     .build()
   
   private let guideLabel = UILabel().builder
     .text("자주 했던 활동을 모아 보았어요")
+    .font(.custom(.regular, 12))
     .textColor(.black60)
     .build()
   
-  private let ItemHistoryCollectionView = DynamicHeightCollectionView()
+  private let ItemHistoryCollectionView = UICollectionView(
+    frame: .zero,
+    collectionViewLayout: .init()
+  )
   
   private lazy var adapter = BookmarkTagsCollectionViewAdapter(
     collectionView: ItemHistoryCollectionView,
@@ -51,7 +55,7 @@ final class ItemHistorySectionView: BaseView {
   
   init(listener: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?) {
     self.listener = listener
-    super.init()
+    super.init(frame: .zero)
   }
   
   override func initialize() {

@@ -23,7 +23,7 @@ final class BookmarkEditorInteractor:
   BookmarkEditorInteractable,
   BookmarkEditorPresentableListener
 {
-  
+
   // MARK: - Properties
   
   weak var router: BookmarkEditorRouting?
@@ -31,7 +31,7 @@ final class BookmarkEditorInteractor:
   
   // TODO: Init Data
   func numberOfItems() -> Int {
-    3
+    6
   }
   
   // MARK: - Initialization & DeInitialization
@@ -47,8 +47,22 @@ final class BookmarkEditorInteractor:
     super.didBecomeActive()
   }
   
+  // MARK: - Mutation
+  
+  func didTapSaveButton() {
+    
+  }
+  
+  func didTapAddButton() {
+   
+  }
+  
+  func didTapBackButton() {
+   
+  }
+  
   func configurationData(at index: Int) -> String {
-    ""
+    "222"
   }
   
   func didTapTagCell() {
