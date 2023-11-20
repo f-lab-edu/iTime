@@ -9,6 +9,7 @@ import RIBs
 import RxSwift
 
 import Start
+import BookmarkUsecase
 
 // MARK: - BookmarkEditorPresentable
 
@@ -28,15 +29,15 @@ final class BookmarkEditorInteractor:
   
   weak var router: BookmarkEditorRouting?
   weak var listener: BookmarkEditorListener?
-  
-  // TODO: Init Data
-  func numberOfItems() -> Int {
-    6
-  }
+  private let bookmarkUsecase: BookmarkUsecase
   
   // MARK: - Initialization & DeInitialization
   
-  override init(presenter: BookmarkEditorPresentable) {
+  init(
+    presenter: BookmarkEditorPresentable,
+    bookmarkUsecase: BookmarkUsecase
+  ) {
+    self.bookmarkUsecase = bookmarkUsecase
     super.init(presenter: presenter)
     presenter.listener = self
   }
@@ -45,6 +46,7 @@ final class BookmarkEditorInteractor:
   
   override func didBecomeActive() {
     super.didBecomeActive()
+
   }
   
   // MARK: - Mutation
@@ -63,6 +65,11 @@ final class BookmarkEditorInteractor:
   
   func configurationData(at index: Int) -> String {
     "222"
+  }
+  
+  // TODO: Init Data
+  func numberOfItems() -> Int {
+    3
   }
   
   func didTapTagCell() {
