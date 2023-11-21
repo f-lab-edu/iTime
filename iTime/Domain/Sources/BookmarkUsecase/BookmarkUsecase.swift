@@ -10,8 +10,8 @@ import RxSwift
 // MARK: - BookmarkUsecase
 
 public protocol BookmarkUsecase {
-  func updateBookmarks(with bookmarks: [Bookmark]) -> Single<Void>
-  func appendBookmark(_ bookmark: Bookmark) -> Single<Void>
-  func removeBookmark(_ bookmark: Bookmark) -> Single<Void>
+  func update(with bookmarks: [Bookmark]) -> Single<Void>
+  func append(_ bookmark: Bookmark) -> Single<Void>
+  func remove(_ bookmark: Bookmark) -> Single<Void>
   func bookmarks() -> Single<[Bookmark]>
 }
