@@ -9,16 +9,23 @@ import RIBs
 
 import Start
 
-protocol LogEntryCreationInteractable: 
+// MARK: - LogEntryCreationInteractable
+
+protocol LogEntryCreationInteractable:
   Interactable,
-  LogEntryEditorListener
+  LogEntryEditorListener,
+  BookmarkEditorListener
 {
   var router: LogEntryCreationRouting? { get set }
   var listener: LogEntryCreationListener? { get set }
 }
 
+// MARK: - LogEntryCreationViewControllable
+
 protocol LogEntryCreationViewControllable: ViewControllable {
 }
+
+// MARK: - LogEntryCreationRouter
 
 final class LogEntryCreationRouter:
   ViewableRouter<LogEntryCreationInteractable,
@@ -29,12 +36,17 @@ final class LogEntryCreationRouter:
   private let logEntryEditorBuilder: LogEntryEditorBuildable
   private var logEntryEditorRouter: LogEntryEditorRouting?
   
+  private let bookmarkEditorBuilder: BookmarkEditorBuildable
+  private var bookmarkEditorRouter: BookmarkEditorRouting?
+  
   init(
     interactor: LogEntryCreationInteractable,
     viewController: LogEntryCreationViewControllable,
-    logEntryEditorBuilder: LogEntryEditorBuildable
+    logEntryEditorBuilder: LogEntryEditorBuildable,
+    bookmarkEditorBuilder: BookmarkEditorBuildable
   ) {
     self.logEntryEditorBuilder = logEntryEditorBuilder
+    self.bookmarkEditorBuilder = bookmarkEditorBuilder
     super.init(interactor: interactor, viewController: viewController)
     interactor.router = self
   }
@@ -42,8 +54,8 @@ final class LogEntryCreationRouter:
   func attachLogEntryEditorRIB() {
     guard logEntryEditorRouter == nil else { return }
     let router = logEntryEditorBuilder.build(withListener: interactor)
-    attachChild(router)
     logEntryEditorRouter = router
+    attachChild(router)
     viewController.presentFullScreen(
       router.viewControllable,
       animated: true,
@@ -51,4 +63,29 @@ final class LogEntryCreationRouter:
     )
   }
   
+  func detachLogEntryEditorRIB() {
+    guard let router = logEntryEditorRouter else { return }
+    logEntryEditorRouter = nil
+    detachChild(router)
+    viewController.dismiss(animated: true, completion: nil)
+  }
+  
+  func attachBookmarkEditorRIB() {
+    guard bookmarkEditorRouter == nil else { return }
+    let router = bookmarkEditorBuilder.build(withListener: interactor)
+    bookmarkEditorRouter = router
+    attachChild(router)
+    viewController.presentFullScreen(
+      router.viewControllable,
+      animated: true,
+      completion: nil
+    )
+  }
+  
+  func detachBookmarkEditorRIB() {
+    guard let router = bookmarkEditorRouter else { return }
+    bookmarkEditorRouter = nil
+    detachChild(router)
+    viewController.dismiss(animated: true, completion: nil)
+  }
 }

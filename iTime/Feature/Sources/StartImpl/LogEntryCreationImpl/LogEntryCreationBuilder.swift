@@ -9,17 +9,28 @@ import RIBs
 
 import Start
 
+// MARK: - LogEntryCreationDependency
+
 protocol LogEntryCreationDependency: Dependency {
 }
 
+// MARK: - LogEntryCreationComponent
+
 final class LogEntryCreationComponent: 
   Component<LogEntryCreationDependency>,
-  LogEntryEditorDependency
+  LogEntryEditorDependency,
+  BookmarkEditorDependency
 {
   fileprivate var logEntryEditorBuilder: LogEntryEditorBuildable {
     LogEntryEditorBuilder(dependency: self)
   }
+  
+  fileprivate var bookmarkEditorBuilder: BookmarkEditorBuildable {
+    BookmarkEditorBuilder(dependency: self)
+  }
 }
+
+// MARK: - LogEntryCreationBuilder
 
 final class LogEntryCreationBuilder:
   Builder<LogEntryCreationDependency>,
@@ -38,7 +49,8 @@ final class LogEntryCreationBuilder:
         return LogEntryCreationRouter(
           interactor: interactor,
           viewController: viewController,
-          logEntryEditorBuilder: component.logEntryEditorBuilder
+          logEntryEditorBuilder: component.logEntryEditorBuilder, 
+          bookmarkEditorBuilder: component.bookmarkEditorBuilder
         )
     }
 }

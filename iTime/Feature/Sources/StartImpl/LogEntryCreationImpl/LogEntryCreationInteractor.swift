@@ -43,15 +43,14 @@ final class LogEntryCreationInteractor:
   }
   
   func didTapBookmarkTagEditor() {
-    
+    router?.attachBookmarkEditorRIB()
   }
   
   func didTapEditorRoutingButton() {
-    
+    router?.attachLogEntryEditorRIB()
   }
   
   func didTapStartButton() {
-    
   }
   
   func didTapTagCell() {
