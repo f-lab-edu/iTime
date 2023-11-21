@@ -18,15 +18,15 @@ public final class BookmarkUsecaseImpl: BookmarkUsecase {
     self.bookmarkRepository = bookmarkRepository
   }
   
-  public func updateBookmarks(with bookmarks: [Bookmark]) -> Single<Void> {
+  public func update(with bookmarks: [Bookmark]) -> Single<Void> {
     .never()
   }
   
-  public func appendBookmark(_ bookmark: Bookmark) -> Single<Void> {
+  public func append(_ bookmark: Bookmark) -> Single<Void> {
     .never()
   }
   
-  public func removeBookmark(_ bookmark: Bookmark) -> Single<Void> {
+  public func remove(_ bookmark: Bookmark) -> Single<Void> {
     .never()
   }
   
