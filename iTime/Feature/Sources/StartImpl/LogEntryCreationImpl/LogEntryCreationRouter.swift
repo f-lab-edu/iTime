@@ -54,8 +54,8 @@ final class LogEntryCreationRouter:
   func attachLogEntryEditorRIB() {
     guard logEntryEditorRouter == nil else { return }
     let router = logEntryEditorBuilder.build(withListener: interactor)
-    attachChild(router)
     logEntryEditorRouter = router
+    attachChild(router)
     viewController.presentFullScreen(
       router.viewControllable,
       animated: true,
@@ -65,16 +65,16 @@ final class LogEntryCreationRouter:
   
   func detachLogEntryEditorRIB() {
     guard let router = logEntryEditorRouter else { return }
-    detachChild(router)
     logEntryEditorRouter = nil
+    detachChild(router)
     viewController.dismiss(animated: true, completion: nil)
   }
   
   func attachBookmarkEditorRIB() {
     guard bookmarkEditorRouter == nil else { return }
     let router = bookmarkEditorBuilder.build(withListener: interactor)
-    attachChild(router)
     bookmarkEditorRouter = router
+    attachChild(router)
     viewController.presentFullScreen(
       router.viewControllable,
       animated: true,
@@ -84,8 +84,8 @@ final class LogEntryCreationRouter:
   
   func detachBookmarkEditorRIB() {
     guard let router = bookmarkEditorRouter else { return }
-    detachChild(router)
     bookmarkEditorRouter = nil
+    detachChild(router)
     viewController.dismiss(animated: true, completion: nil)
   }
 }

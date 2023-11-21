@@ -56,15 +56,15 @@ final class StartRouter:
   func attachLogEntryCreationRIB() {
     guard logEntryCreationRouter == nil else { return }
     let router = logEntryCreationBuilder.build(withListener: interactor)
-    attachChild(router)
     logEntryCreationRouter = router
+    attachChild(router)
     viewController.addChildView(router.viewControllable)
   }
   
   func detachLogEntryCreationRIB() {
     guard let router = logEntryCreationRouter else { return }
-    logEntryCreationRouter = nil
     detachChild(router)
+    logEntryCreationRouter = nil
     viewController.removeChild(router.viewControllable)
   }
 }
