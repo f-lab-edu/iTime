@@ -7,14 +7,21 @@
 
 import Foundation
 
-// MARK: - UserDefaultRepository
+// MARK: - ReadOnlyUserDefaultRepository
 
-public protocol UserDefaultRepository: AnyObject {
-  var userID: String { get set }
-  var isAppBackground: Bool { get set }
+public protocol ReadOnlyUserDefaultRepository {
+  func userID() -> String
+  func isAppBackground() -> Bool
 }
 
-// MARK: - Key
+// MARK: - WriteUserDefaultRepository
+
+public protocol WriteUserDefaultRepository {
+  func updateUserID(with userID: String)
+  func updateIsAppBackground(with isAppBackground: Bool)
+}
+
+// MARK: - UserDefaultKey
 
 public enum UserDefaultKey: String {
   case userID
