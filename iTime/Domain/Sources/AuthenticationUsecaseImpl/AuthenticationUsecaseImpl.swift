@@ -10,7 +10,7 @@ import AuthenticationServices
 import RxSwift
 
 import AuthenticationUsecase
-import AuthenticationRepository
+import NetworkRepository
 import AppFoundation
 
 // MARK: - AuthenticationUsecaseImpl

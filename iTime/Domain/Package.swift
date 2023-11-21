@@ -31,14 +31,14 @@ let package = Package(
     .target(
       name: "AuthenticationUsecase",
       dependencies: [
-        .product(name: "AuthenticationRepository", package: "Platform"),
+        .product(name: "NetworkRepository", package: "Platform"),
         "ProxyPackage",
       ]),
     .target(
       name: "AuthenticationUsecaseImpl",
       dependencies: [
         "AuthenticationUsecase",
-        .product(name: "AuthenticationRepository", package: "Platform"),
+        .product(name: "NetworkRepository", package: "Platform"),
         .product(name: "AppFoundation", package: "ProxyPackage")
       ]),
     .target(
@@ -57,7 +57,7 @@ let package = Package(
       dependencies: [
         "AuthenticationUsecase",
         "AuthenticationUsecaseImpl",
-        .product(name: "AuthenticationRepository", package: "Platform"),
+        .product(name: "NetworkRepository", package: "Platform"),
         .product(name: "RepositoryTestSupports", package: "Platform"),
       ]),
     .testTarget(

@@ -17,9 +17,7 @@ import Start
 import StartImpl
 import AuthenticationUsecase
 import AuthenticationUsecaseImpl
-import AuthenticationRepositoryImpl
-import BookmarkUsecase
-import BookmarkUsecaseImpl
+import NetworkRepositoryImpl
 import AppFoundation
 
 protocol AppRootDependency: Dependency {

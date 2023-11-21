@@ -9,7 +9,6 @@ import RxSwift
 
 import NetworkRepository
 import NetworkRepositoryImpl
-import AuthenticationRepository
 import AppFoundation
 
 final class UserSessionRepositoryImpl: FirestoreRepository, UserSessionRepository {

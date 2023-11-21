@@ -17,8 +17,6 @@
 		DE1A18E22B00B26A009E1672 /* LoggedOutImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18E12B00B26A009E1672 /* LoggedOutImpl */; };
 		DE1A18E42B00B26A009E1672 /* Start in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18E32B00B26A009E1672 /* Start */; };
 		DE1A18E62B00B26A009E1672 /* StartImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18E52B00B26A009E1672 /* StartImpl */; };
-		DE1A18E82B00B273009E1672 /* AuthenticationRepository in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18E72B00B273009E1672 /* AuthenticationRepository */; };
-		DE1A18EA2B00B273009E1672 /* AuthenticationRepositoryImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18E92B00B273009E1672 /* AuthenticationRepositoryImpl */; };
 		DE1A18EC2B00B273009E1672 /* NetworkRepository in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18EB2B00B273009E1672 /* NetworkRepository */; };
 		DE1A18EE2B00B273009E1672 /* NetworkRepositoryImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18ED2B00B273009E1672 /* NetworkRepositoryImpl */; };
 		DE1A18F22B00B273009E1672 /* AppFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18F12B00B273009E1672 /* AppFoundation */; };
@@ -69,9 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE1A18EA2B00B273009E1672 /* AuthenticationRepositoryImpl in Frameworks */,
 				DE1A18F22B00B273009E1672 /* AppFoundation in Frameworks */,
-				DE1A18E82B00B273009E1672 /* AuthenticationRepository in Frameworks */,
 				DE3449FE2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl in Frameworks */,
 				DE1A18E62B00B26A009E1672 /* StartImpl in Frameworks */,
 				DE1A18E42B00B26A009E1672 /* Start in Frameworks */,
@@ -201,8 +197,6 @@
 				DE1A18E12B00B26A009E1672 /* LoggedOutImpl */,
 				DE1A18E32B00B26A009E1672 /* Start */,
 				DE1A18E52B00B26A009E1672 /* StartImpl */,
-				DE1A18E72B00B273009E1672 /* AuthenticationRepository */,
-				DE1A18E92B00B273009E1672 /* AuthenticationRepositoryImpl */,
 				DE1A18EB2B00B273009E1672 /* NetworkRepository */,
 				DE1A18ED2B00B273009E1672 /* NetworkRepositoryImpl */,
 				DE1A18F12B00B273009E1672 /* AppFoundation */,
@@ -730,14 +724,6 @@
 		DE1A18E52B00B26A009E1672 /* StartImpl */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = StartImpl;
-		};
-		DE1A18E72B00B273009E1672 /* AuthenticationRepository */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AuthenticationRepository;
-		};
-		DE1A18E92B00B273009E1672 /* AuthenticationRepositoryImpl */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AuthenticationRepositoryImpl;
 		};
 		DE1A18EB2B00B273009E1672 /* NetworkRepository */ = {
 			isa = XCSwiftPackageProductDependency;
