@@ -13,7 +13,7 @@ import BookmarkUsecase
 // MARK: - BookmarkEditorDependency
 
 public protocol BookmarkEditorDependency: Dependency {
-  var bookmarkUsecase: any BookmarkUsecase { get }
+  var bookmarkUsecase: BookmarkUsecase { get }
 }
 
 // MARK: - BookmarkEditorComponent

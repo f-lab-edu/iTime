@@ -33,7 +33,7 @@ final class AppRootComponent:
   StartDependency,
   BookmarkEditorDependency
 {
-  var bookmarkUsecase: any BookmarkUsecase {
+  var bookmarkUsecase: BookmarkUsecase {
     shared {
       BookmarkUsecaseImpl(bookmarkRepository: 2)
     }
