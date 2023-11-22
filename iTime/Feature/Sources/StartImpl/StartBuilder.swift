@@ -12,7 +12,7 @@ import Start
 // MARK: - StartDependency
 
 public protocol StartDependency: Dependency {
-  
+  var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
 }
 
 // MARK: - StartComponent
@@ -21,6 +21,10 @@ final class StartComponent:
   Component<StartDependency>,
   LogEntryCreationDependency
 {
+  var bookmarkEditorBuilder: BookmarkEditorBuildable {
+    dependency.bookmarkEditorBuilder
+  }
+  
   fileprivate var logEntryCreationBuilder: LogEntryCreationBuildable {
     LogEntryCreationBuilder(dependency: self)
   }

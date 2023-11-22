@@ -54,6 +54,10 @@ final class AppRootComponent:
   var authorizationContextProvider: AuthorizationContextProviding {
     UIApplication.shared
   }
+  
+  var bookmarkEditorBuilder: BookmarkEditorBuildable {
+    BookmarkEditorBuilder(dependency: self)
+  }
 }
 
 // MARK: - Builder
