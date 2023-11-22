@@ -9,18 +9,6 @@ let package = Package(
         .iOS(.v16)
     ],
     products: [
-//        .library(
-//            name: "AuthenticationRepository",
-//            targets: ["AuthenticationRepository"]),
-//        .library(
-//            name: "AuthenticationRepositoryImpl",
-//            targets: ["AuthenticationRepositoryImpl"]),
-//        .library(
-//            name: "BookmarkRepository",
-//            targets: ["BookmarkRepository"]),
-//        .library(
-//            name: "BookmarkRepositoryImpl",
-//            targets: ["BookmarkRepositoryImpl"]),
         .library(
             name: "NetworkRepository",
             targets: ["NetworkRepository"]),
@@ -35,30 +23,6 @@ let package = Package(
         .package(path: "../ProxyPackage"),
     ],
     targets: [
-//        .target(
-//            name: "AuthenticationRepository",
-//            dependencies: [
-//                "NetworkRepository",
-//            ]),
-//        .target(
-//            name: "AuthenticationRepositoryImpl",
-//            dependencies: [
-//                "AuthenticationRepository",
-//                "NetworkRepositoryImpl",
-//                .product(name: "AppFoundation", package: "ProxyPackage"),
-//            ]),
-//        .target(
-//            name: "BookmarkRepository",
-//            dependencies: [
-//                "NetworkRepository",
-//            ]),
-//        .target(
-//            name: "BookmarkRepositoryImpl",
-//            dependencies: [
-//                "BookmarkRepository",
-//                "NetworkRepositoryImpl",
-//                .product(name: "AppFoundation", package: "ProxyPackage"),
-//            ]),
         .target(
             name: "NetworkRepository",
             dependencies: [
@@ -78,7 +42,12 @@ let package = Package(
                 "ProxyPackage",
             ]),
         .testTarget(
-            name: "PlatformTests",
-            dependencies: ["NetworkRepository"]),
+            name: "NetworkRepositoryImplTests",
+            dependencies: [
+              "NetworkRepository",
+              "NetworkRepositoryImpl",
+              "RepositoryTestSupports",
+            ]
+        ),
     ]
 )

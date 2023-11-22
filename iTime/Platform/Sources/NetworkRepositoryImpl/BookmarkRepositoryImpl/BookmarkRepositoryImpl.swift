@@ -8,10 +8,10 @@
 import RxSwift
 
 import NetworkRepository
-import NetworkRepositoryImpl
+
 import AppFoundation
 
-public final class BookmarkRepositoryImpl: FirestoreRepository, BookmarkRepository {
+public final class BookmarkRepositoryImpl: BookmarkRepository {
   
   // MARK: - DocumentReferenceConvertible
   
@@ -26,10 +26,20 @@ public final class BookmarkRepositoryImpl: FirestoreRepository, BookmarkReposito
     }
   }
   
+  // MARK: - Properties
+  
+  private let firestoreRepository: FirestoreRepository
+  
+  // MARK: - Initialization
+  
+  public init(firestoreRepository: FirestoreRepository) {
+    self.firestoreRepository = firestoreRepository
+  }
+  
   // MARK: - Methods
   
   public func updateBookmarks(with bookmarks: [Bookmark], for userID: String) -> Single<Void> {
-    update(
+    firestoreRepository.update(
       reference: DatabaseReference.bookmarkSession(userID: userID),
       with: BookmarkList(bookmarks).toJson() ?? [:] ,
       merge: false
@@ -59,17 +69,15 @@ public final class BookmarkRepositoryImpl: FirestoreRepository, BookmarkReposito
   
   public func bookmarks(for userID: String) -> Single<[Bookmark]> {
     let bookmarkList: Single<BookmarkList> =
-    documentObservable(
+    firestoreRepository.documentObservable(
       for: DatabaseReference.bookmarkSession(userID: userID),
       includeMetadata: false
     )
+    .compactMap { try $0.decode() }
     .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
     .asSingle()
-    .map { try! $0.decode()! }
     
     return bookmarkList.map(\.bookmarks)
   }
-  
-  public init() {}
   
 }

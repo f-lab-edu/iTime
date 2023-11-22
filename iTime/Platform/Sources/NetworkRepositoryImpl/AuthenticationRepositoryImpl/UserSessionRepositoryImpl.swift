@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by 이상헌 on 2023/10/31.
 //
@@ -8,10 +8,9 @@
 import RxSwift
 
 import NetworkRepository
-import NetworkRepositoryImpl
 import AppFoundation
 
-final class UserSessionRepositoryImpl: FirestoreRepository, UserSessionRepository {
+final class UserSessionRepositoryImpl: UserSessionRepository {
   
   // MARK: - DatabaseReference
   
@@ -20,16 +19,26 @@ final class UserSessionRepositoryImpl: FirestoreRepository, UserSessionRepositor
     
     var referencePath: String {
       switch self {
-        case let .singleUser(userID):
-          return "\(DatabaseEndpoint.userSession.rawValue)/\(userID)"
+      case let .singleUser(userID):
+        return "\(DatabaseEndpoint.userSession.rawValue)/\(userID)"
       }
     }
+  }
+  
+  // MARK: - Properties
+  
+  private let firestoreRepository: FirestoreRepository
+  
+  // MARK: - Initialization
+  
+  public init(firestoreRepository: FirestoreRepository) {
+    self.firestoreRepository = firestoreRepository
   }
   
   // MARK: - Methods
   
   func sessionObservable(with userID: String) -> Observable<UserSession?> {
-    documentObservable(for: DatabaseReference.singleUser(userID: userID), includeMetadata: true)
+    firestoreRepository.documentObservable(for: DatabaseReference.singleUser(userID: userID), includeMetadata: true)
       .compactMap { try? $0.decode() }
   }
   
@@ -38,7 +47,7 @@ final class UserSessionRepositoryImpl: FirestoreRepository, UserSessionRepositor
       .withUnretained(self)
       .flatMap { this, oldSession -> Observable<Void> in
         if oldSession == nil {
-          return this.update(
+          return this.firestoreRepository.update(
             reference: DatabaseReference.singleUser(userID: userID),
             with: session.toJson() ?? [:],
             merge: false
@@ -58,7 +67,7 @@ final class UserSessionRepositoryImpl: FirestoreRepository, UserSessionRepositor
     sessionObservable(with: userID)
       .withUnretained(self)
       .flatMap { this, _ in
-        this.update(
+        this.firestoreRepository.update(
           reference: DatabaseReference.singleUser(userID: userID),
           with: session.toJson() ?? [:],
           merge: true
