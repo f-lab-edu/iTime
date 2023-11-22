@@ -17,6 +17,8 @@ import Start
 import StartImpl
 import AuthenticationUsecase
 import AuthenticationUsecaseImpl
+import BookmarkUsecase
+import BookmarkUsecaseImpl
 import NetworkRepositoryImpl
 import AppFoundation
 
