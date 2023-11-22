@@ -18,6 +18,8 @@ import StartImpl
 import AuthenticationUsecase
 import AuthenticationUsecaseImpl
 import AuthenticationRepositoryImpl
+import BookmarkUsecase
+import BookmarkUsecaseImpl
 import AppFoundation
 
 protocol AppRootDependency: Dependency {
@@ -28,8 +30,14 @@ final class AppRootComponent:
   Component<AppRootDependency>,
   LoggedOutDependency,
   LoggedInDependency,
-  StartDependency
+  StartDependency,
+  BookmarkEditorDependency
 {
+  var bookmarkUsecase: BookmarkUsecase {
+    shared {
+      BookmarkUsecaseImpl(bookmarkRepository: 2)
+    }
+  }
   
   var authenticationUsecase: AuthenticationUsecase {
     shared {
@@ -45,6 +53,10 @@ final class AppRootComponent:
   
   var authorizationContextProvider: AuthorizationContextProviding {
     UIApplication.shared
+  }
+  
+  var bookmarkEditorBuilder: BookmarkEditorBuildable {
+    BookmarkEditorBuilder(dependency: self)
   }
 }
 

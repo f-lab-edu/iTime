@@ -32,6 +32,8 @@
 		DE4E55232AEA493900DDD145 /* AppRootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E55222AEA493900DDD145 /* AppRootRouter.swift */; };
 		DE4E55252AEA495800DDD145 /* AppRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E55242AEA495800DDD145 /* AppRootViewController.swift */; };
 		DE577F2C2AFBA29C006699F2 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE577F2B2AFBA29C006699F2 /* Configuration.swift */; };
+		DE7CDBFF2B0B5A96009824D1 /* BookmarkUsecase in Frameworks */ = {isa = PBXBuildFile; productRef = DE7CDBFE2B0B5A96009824D1 /* BookmarkUsecase */; };
+		DE7CDC012B0B5A96009824D1 /* BookmarkUsecaseImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE7CDC002B0B5A96009824D1 /* BookmarkUsecaseImpl */; };
 		DE9C22A62AFDC19A00F9B436 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DE9C22A52AFDC19A00F9B436 /* Settings.bundle */; };
 		DEB54D402AE7F84600E940BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEB54D3F2AE7F84600E940BE /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -80,7 +82,9 @@
 				DE1A18F42B00B273009E1672 /* ProxyPackage in Frameworks */,
 				DE3449FC2B00AC8300C3E3F4 /* AuthenticationUsecase in Frameworks */,
 				DE1A18E02B00B26A009E1672 /* LoggedOut in Frameworks */,
+				DE7CDC012B0B5A96009824D1 /* BookmarkUsecaseImpl in Frameworks */,
 				DE1A18DC2B00B26A009E1672 /* LoggedIn in Frameworks */,
+				DE7CDBFF2B0B5A96009824D1 /* BookmarkUsecase in Frameworks */,
 				DE1A18DE2B00B26A009E1672 /* LoggedInImpl in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -204,6 +208,8 @@
 				DE1A18F12B00B273009E1672 /* AppFoundation */,
 				DE1A18F32B00B273009E1672 /* ProxyPackage */,
 				DE44DF492B07AE9E000A4865 /* SharedUI */,
+				DE7CDBFE2B0B5A96009824D1 /* BookmarkUsecase */,
+				DE7CDC002B0B5A96009824D1 /* BookmarkUsecaseImpl */,
 			);
 			productName = iTime;
 			productReference = DE05709F2AE6735E00669BDF /* iTime.app */;
@@ -760,6 +766,14 @@
 		DE44DF492B07AE9E000A4865 /* SharedUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SharedUI;
+		};
+		DE7CDBFE2B0B5A96009824D1 /* BookmarkUsecase */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BookmarkUsecase;
+		};
+		DE7CDC002B0B5A96009824D1 /* BookmarkUsecaseImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BookmarkUsecaseImpl;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

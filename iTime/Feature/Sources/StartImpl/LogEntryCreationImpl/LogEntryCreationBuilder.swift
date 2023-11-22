@@ -12,21 +12,18 @@ import Start
 // MARK: - LogEntryCreationDependency
 
 protocol LogEntryCreationDependency: Dependency {
+  var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
 }
 
 // MARK: - LogEntryCreationComponent
 
 final class LogEntryCreationComponent: 
   Component<LogEntryCreationDependency>,
-  LogEntryEditorDependency,
-  BookmarkEditorDependency
+  LogEntryEditorDependency
 {
+    
   fileprivate var logEntryEditorBuilder: LogEntryEditorBuildable {
     LogEntryEditorBuilder(dependency: self)
-  }
-  
-  fileprivate var bookmarkEditorBuilder: BookmarkEditorBuildable {
-    BookmarkEditorBuilder(dependency: self)
   }
 }
 
@@ -50,7 +47,7 @@ final class LogEntryCreationBuilder:
           interactor: interactor,
           viewController: viewController,
           logEntryEditorBuilder: component.logEntryEditorBuilder, 
-          bookmarkEditorBuilder: component.bookmarkEditorBuilder
+          bookmarkEditorBuilder: dependency.bookmarkEditorBuilder
         )
     }
 }

@@ -70,6 +70,7 @@ let package = Package(
       name: "StartImpl",
       dependencies: [
         "Start",
+        .product(name: "BookmarkUsecase", package: "Domain"),
         .product(name: "AuthenticationUsecase", package: "Domain"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),
