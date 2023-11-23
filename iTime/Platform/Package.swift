@@ -58,7 +58,8 @@ let package = Package(
             name: "RepositoryTestSupports",
             dependencies: [
                 "NetworkRepository",
-                "ProxyPackage",
+                "LocalDataBaseRepository",
+                .product(name: "AppFoundation", package: "ProxyPackage"),
             ]),
         .testTarget(
             name: "NetworkRepositoryImplTests",
@@ -68,6 +69,7 @@ let package = Package(
               "LocalDataBaseRepository",
               "LocalDataBaseRepositoryImpl",
               "RepositoryTestSupports",
+              .product(name: "ProxyTestSupport", package: "ProxyPackage"),
             ]
         ),
     ]

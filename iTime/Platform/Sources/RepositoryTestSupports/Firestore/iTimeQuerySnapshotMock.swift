@@ -13,7 +13,7 @@ final class iTimeDocumentSnapshotMock: iTimeDocumentSnapshot {
   var documentID: String = "TestDocumentID"
   
   func data() -> Dictionary<String, Any>? {
-    return [:]
+    return DummyData.DummyBookmark.dummyBookmarkList.toJson()
   }
 }
 

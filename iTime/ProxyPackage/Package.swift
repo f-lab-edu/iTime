@@ -20,6 +20,9 @@ let package = Package(
       name: "SharedUI",
       targets: ["SharedUI"]),
     .library(
+      name: "ProxyTestSupport",
+      targets: ["ProxyTestSupport"]),
+    .library(
       name: "RIBsTestSupport",
       targets: ["RIBsTestSupport"]),
   ],
@@ -51,6 +54,13 @@ let package = Package(
       name: "RIBsTestSupport",
       dependencies: [
         "ProxyPackage"
+      ]
+    ),
+    .target(
+      name: "ProxyTestSupport",
+      dependencies: [
+        .product(name: "RxTest", package: "RxSwift"),
+        .product(name: "RxBlocking", package: "RxSwift"),
       ]
     ),
     .target(

@@ -35,4 +35,6 @@ public final class UserDefaultRepositoryMock: WriteUserDefaultRepository, ReadOn
     isAppBackgroundCallCount += 1
     return dummyIsAppBackground
   }
+  
+  public init() {}
 }

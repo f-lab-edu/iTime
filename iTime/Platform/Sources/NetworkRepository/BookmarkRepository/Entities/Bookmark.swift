@@ -9,13 +9,17 @@ import Foundation
 
 // MARK: - Bookmark
 
-public struct Bookmark: Codable {
+public struct Bookmark: Codable, Equatable {
   public let title: String
   public let category: Category
   
   public init(title: String, category: Category) {
     self.title = title
     self.category = category
+  }
+  
+  public static func == (lhs: Bookmark, rhs: Bookmark) -> Bool {
+    lhs.title == rhs.title
   }
 }
 

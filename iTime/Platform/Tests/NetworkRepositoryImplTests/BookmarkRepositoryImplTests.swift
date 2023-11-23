@@ -1,6 +1,7 @@
 import XCTest
 
 import RxSwift
+import RxBlocking
 
 import RepositoryTestSupports
 import NetworkRepository
@@ -12,6 +13,7 @@ final class BookmarkRepositoryImplTests: XCTestCase {
   
   private var sut: BookmarkRepository!
   private var firestoreRepository: FirestoreRepositoryMock!
+  private var userDefaultRepository: UserDefaultRepositoryMock!
   
   private var disposeBag: DisposeBag!
   
@@ -21,103 +23,84 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     super.setUp()
     
     firestoreRepository = FirestoreRepositoryMock()
+    userDefaultRepository = UserDefaultRepositoryMock()
     disposeBag = DisposeBag()
     
-    sut = BookmarkRepositoryImpl(firestoreRepository: firestoreRepository)
+    sut = BookmarkRepositoryImpl(
+      firestoreRepository: firestoreRepository,
+      userDefaultRepository: userDefaultRepository
+    )
   }
   
-  func test_updateBookMark() {
+  func test_updateBookmark() {
     // Given
     let dummyBookmarks = DummyData.DummyBookmark.dummyBookmarks
-    let userID = DummyData.DummyID.userID
-    let expectation = XCTestExpectation()
     
     // When & Then
-    sut.updateBookmarks(with: dummyBookmarks)
-      .subscribe { [weak self] result in
-        switch result {
-        case let .success(success):
-          XCTAssertNoThrow(success)
-          XCTAssertEqual(self?.firestoreRepository.updateCallCount, 1)
-        case let .failure(error):
-          XCTAssertNotNil(error)
-        }
-        expectation.fulfill()
-      }
-      .disposed(by: disposeBag)
-    
-    wait(for: [expectation], timeout: 1.5)
+    do {
+      let result = try sut.updateBookmarks(with: dummyBookmarks)
+        .toBlocking()
+        .first()
+        .map { true }
+      XCTAssertEqual(result, true)
+      XCTAssertEqual(firestoreRepository.updateCallCount, 1)
+      XCTAssertEqual(userDefaultRepository.userIDCallCount, 1)
+    } catch {
+      XCTFail(error.localizedDescription)
+    }
   }
   
   func test_appendBookmark() {
     // Given
     let dummyBookmark = DummyData.DummyBookmark.dummyBookmark
-    let userID = DummyData.DummyID.userID
-    let expectation = XCTestExpectation()
     
     // When & Then
-    sut.appendBookmark(dummyBookmark)
-      .subscribe { [weak self] result in
-        switch result {
-        case let .success(success):
-          XCTAssertNoThrow(success)
-          XCTAssertEqual(self?.firestoreRepository.documentObservableCallCount, 1)
-          XCTAssertEqual(self?.firestoreRepository.updateCallCount, 1)
-        case let .failure(error):
-          XCTAssertNotNil(error)
-        }
-        
-        expectation.fulfill()
-      }
-      .disposed(by: disposeBag)
-    
-    wait(for: [expectation], timeout: 1.5)
+    do {
+      let result = try sut.appendBookmark(dummyBookmark)
+        .toBlocking()
+        .first()
+        .map { true }
+      XCTAssertEqual(result, true)
+      XCTAssertEqual(firestoreRepository.updateCallCount, 1)
+      XCTAssertEqual(firestoreRepository.documentObservableCallCount, 1)
+      XCTAssertEqual(userDefaultRepository.userIDCallCount, 2)
+  } catch {
+    XCTFail(error.localizedDescription)
+    }
   }
   
   func test_removeBookmark() {
     // Given
     let dummyBookmark = DummyData.DummyBookmark.dummyBookmark
-    let userID = DummyData.DummyID.userID
-    let expectation = XCTestExpectation()
     
     // When & Then
-    sut.removeBookmark(dummyBookmark)
-      .subscribe { [weak self] result in
-        switch result {
-        case let .success(success):
-          XCTAssertNoThrow(success)
-          XCTAssertEqual(self?.firestoreRepository.updateCallCount, 1)
-          XCTAssertEqual(self?.firestoreRepository.documentObservableCallCount, 1)
-        case let .failure(error):
-          XCTAssertNotNil(error)
-        }
-        expectation.fulfill()
-      }
-      .disposed(by: disposeBag)
-    
-    wait(for: [expectation], timeout: 1.5)
+    do {
+      let result = try sut.removeBookmark(dummyBookmark)
+        .toBlocking()
+        .first()
+        .map { true }
+      XCTAssertEqual(result, true)
+      XCTAssertEqual(firestoreRepository.updateCallCount, 1)
+      XCTAssertEqual(firestoreRepository.documentObservableCallCount, 1)
+      XCTAssertEqual(userDefaultRepository.userIDCallCount, 2)
+  } catch {
+    XCTFail(error.localizedDescription)
+    }
   }
   
   func test_Bookmarks() {
-    // Given
-    let userID = DummyData.DummyID.userID
-    let expectation = XCTestExpectation()
-    
     // When & Then
-    sut.bookmarks()
-      .subscribe { [weak self] result in
-        switch result {
-        case let .success(success):
-          XCTAssertNoThrow(success)
-          XCTAssertEqual(self?.firestoreRepository.documentObservableCallCount, 1)
-        case let .failure(error):
-          XCTAssertNotNil(error)
-        }
-        expectation.fulfill()
-      }
-      .disposed(by: disposeBag)
-    
-    wait(for: [expectation], timeout: 1.5)
+    do {
+      let result = try sut.bookmarks()
+        .toBlocking()
+        .first()
+      
+      XCTAssertEqual(result, DummyData.DummyBookmark.dummyBookmarks)
+      XCTAssertEqual(firestoreRepository.documentObservableCallCount, 1)
+      XCTAssertEqual(userDefaultRepository.userIDCallCount, 1)
+  } catch {
+    XCTFail(error.localizedDescription)
+    }
   }
   
 }
