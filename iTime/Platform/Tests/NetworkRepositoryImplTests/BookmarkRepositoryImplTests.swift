@@ -33,7 +33,7 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     let expectation = XCTestExpectation()
     
     // When & Then
-    sut.updateBookmarks(with: dummyBookmarks, for: userID)
+    sut.updateBookmarks(with: dummyBookmarks)
       .subscribe { [weak self] result in
         switch result {
         case let .success(success):
@@ -56,7 +56,7 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     let expectation = XCTestExpectation()
     
     // When & Then
-    sut.appendBookmark(dummyBookmark, for: userID)
+    sut.appendBookmark(dummyBookmark)
       .subscribe { [weak self] result in
         switch result {
         case let .success(success):
@@ -81,7 +81,7 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     let expectation = XCTestExpectation()
     
     // When & Then
-    sut.removeBookmark(dummyBookmark, for: userID)
+    sut.removeBookmark(dummyBookmark)
       .subscribe { [weak self] result in
         switch result {
         case let .success(success):
@@ -104,7 +104,7 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     let expectation = XCTestExpectation()
     
     // When & Then
-    sut.bookmarks(for: userID)
+    sut.bookmarks()
       .subscribe { [weak self] result in
         switch result {
         case let .success(success):

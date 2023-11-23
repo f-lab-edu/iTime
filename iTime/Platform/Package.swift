@@ -65,6 +65,8 @@ let package = Package(
             dependencies: [
               "NetworkRepository",
               "NetworkRepositoryImpl",
+              "LocalDataBaseRepository",
+              "LocalDataBaseRepositoryImpl",
               "RepositoryTestSupports",
             ]
         ),
