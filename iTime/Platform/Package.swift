@@ -16,6 +16,12 @@ let package = Package(
             name: "NetworkRepositoryImpl",
             targets: ["NetworkRepositoryImpl"]),
         .library(
+            name: "LocalDataBaseRepository",
+            targets: ["LocalDataBaseRepository"]),
+        .library(
+            name: "LocalDataBaseRepositoryImpl",
+            targets: ["LocalDataBaseRepositoryImpl"]),
+        .library(
             name: "RepositoryTestSupports",
             targets: ["RepositoryTestSupports"]),
     ],
@@ -32,6 +38,19 @@ let package = Package(
             name: "NetworkRepositoryImpl",
             dependencies: [
                 "NetworkRepository",
+                "LocalDataBaseRepository",
+                "ProxyPackage",
+                .product(name: "AppFoundation", package: "ProxyPackage"),
+            ]),
+        .target(
+            name: "LocalDataBaseRepository",
+            dependencies: [
+                "ProxyPackage"
+            ]),
+        .target(
+            name: "LocalDataBaseRepositoryImpl",
+            dependencies: [
+                "LocalDataBaseRepository",
                 "ProxyPackage",
                 .product(name: "AppFoundation", package: "ProxyPackage"),
             ]),

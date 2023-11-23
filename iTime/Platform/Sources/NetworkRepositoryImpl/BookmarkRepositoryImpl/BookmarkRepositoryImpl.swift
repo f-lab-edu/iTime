@@ -8,6 +8,7 @@
 import RxSwift
 
 import NetworkRepository
+import LocalDataBaseRepository
 
 import AppFoundation
 
@@ -29,18 +30,23 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
   // MARK: - Properties
   
   private let firestoreRepository: FirestoreRepository
+  private let userDefaultRepository: ReadOnlyUserDefaultRepository
   
   // MARK: - Initialization
   
-  public init(firestoreRepository: FirestoreRepository) {
+  public init(
+    firestoreRepository: FirestoreRepository,
+    userDefaultRepository: ReadOnlyUserDefaultRepository
+  ) {
     self.firestoreRepository = firestoreRepository
+    self.userDefaultRepository = userDefaultRepository
   }
   
   // MARK: - Methods
   
-  public func updateBookmarks(with bookmarks: [Bookmark], for userID: String) -> Single<Void> {
+  public func updateBookmarks(with bookmarks: [Bookmark]) -> Single<Void> {
     firestoreRepository.update(
-      reference: DatabaseReference.bookmarkSession(userID: userID),
+      reference: DatabaseReference.bookmarkSession(userID: userDefaultRepository.userID()),
       with: BookmarkList(bookmarks).toJson() ?? [:] ,
       merge: false
     )
@@ -49,28 +55,28 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
     .map { _ in Void() }
   }
   
-  public func appendBookmark(_ bookmark: Bookmark, for userID: String) -> Single<Void> {
-    bookmarks(for: userID)
+  public func appendBookmark(_ bookmark: Bookmark) -> Single<Void> {
+    bookmarks()
       .map { $0 + [bookmark] }
       .flatMap { [weak self] bookmarks in
         guard let self else { return .error(MyError.networkNullError)}
-        return self.updateBookmarks(with: bookmarks, for: userID)
+        return self.updateBookmarks(with: bookmarks)
       }
   }
   
-  public func removeBookmark(_ bookmark: Bookmark, for userID: String) -> Single<Void> {
-    bookmarks(for: userID)
+  public func removeBookmark(_ bookmark: Bookmark) -> Single<Void> {
+    bookmarks()
       .map {  $0.filter { $0.title != bookmark.title } }
       .flatMap { [weak self] bookmarks in
         guard let self else { return .error(MyError.networkNullError)}
-        return self.updateBookmarks(with: bookmarks, for: userID)
+        return self.updateBookmarks(with: bookmarks)
       }
   }
   
-  public func bookmarks(for userID: String) -> Single<[Bookmark]> {
+  public func bookmarks() -> Single<[Bookmark]> {
     let bookmarkList: Single<BookmarkList> =
     firestoreRepository.documentObservable(
-      for: DatabaseReference.bookmarkSession(userID: userID),
+      for: DatabaseReference.bookmarkSession(userID: userDefaultRepository.userID()),
       includeMetadata: false
     )
     .compactMap { try $0.decode() }
