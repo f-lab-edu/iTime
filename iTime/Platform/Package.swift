@@ -10,75 +10,42 @@ let package = Package(
   ],
   products: [
     .library(
-      name: "AuthenticationRepository",
-      targets: ["AuthenticationRepository"]),
-    .library(
-      name: "AuthenticationRepositoryImpl",
-      targets: ["AuthenticationRepositoryImpl"]),
-    .library(
-      name: "NetworkRepository",
-      targets: ["NetworkRepository"]),
+      name: "LocalDataBaseRepositoryImpl",
+      targets: ["LocalDataBaseRepositoryImpl"]),
     .library(
       name: "NetworkRepositoryImpl",
       targets: ["NetworkRepositoryImpl"]),
-    .library(
-      name: "LocalDataBaseRepository",
-      targets: ["NetworkRepository"]),
-    .library(
-      name: "LocalDataBaseRepositoryImpl",
-      targets: ["NetworkRepositoryImpl"]),
-    .library(
-      name: "RepositoryTestSupports",
-      targets: ["RepositoryTestSupports"]),
   ],
   dependencies: [
     .package(path: "../ProxyPackage"),
+    .package(path: "../Domain"),
   ],
   targets: [
     .target(
-      name: "AuthenticationRepository",
+      name: "LocalDataBaseRepositoryImpl",
       dependencies: [
-        "NetworkRepository",
-      ]),
-    .target(
-      name: "AuthenticationRepositoryImpl",
-      dependencies: [
-        "AuthenticationRepository",
-        "NetworkRepositoryImpl",
+        .product(name: "LocalDataBaseRepository", package: "Domain"),
+        "ProxyPackage",
         .product(name: "AppFoundation", package: "ProxyPackage"),
-      ]),
-    .target(
-      name: "NetworkRepository",
-      dependencies: [
-        "ProxyPackage"
       ]),
     .target(
       name: "NetworkRepositoryImpl",
       dependencies: [
-        "NetworkRepository",
+        .product(name: "NetworkRepository", package: "Domain"),
+        .product(name: "LocalDataBaseRepository", package: "Domain"),
         "ProxyPackage",
         .product(name: "AppFoundation", package: "ProxyPackage"),
-      ]),
-    .target(
-      name: "LocalDataBaseRepository",
-      dependencies: [
-        "ProxyPackage"
-      ]),
-    .target(
-      name: "LocalDataBaseRepositoryImpl",
-      dependencies: [
-        "LocalDataBaseRepository",
-        "ProxyPackage",
-        .product(name: "AppFoundation", package: "ProxyPackage"),
-      ]),
-    .target(
-      name: "RepositoryTestSupports",
-      dependencies: [
-        "AuthenticationRepository",
-        "ProxyPackage",
       ]),
     .testTarget(
-      name: "PlatformTests",
-      dependencies: ["NetworkRepository"]),
+      name: "NetworkRepositoryImplTests",
+      dependencies: [
+        .product(name: "NetworkRepository", package: "Domain"),
+        "NetworkRepositoryImpl",
+        .product(name: "LocalDataBaseRepository", package: "Domain"),
+        "LocalDataBaseRepositoryImpl",
+        .product(name: "RepositoryTestSupports", package: "Domain"),
+        .product(name: "ProxyTestSupport", package: "ProxyPackage"),
+      ]
+    ),
   ]
 )

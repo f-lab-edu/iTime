@@ -11,7 +11,12 @@ import LocalDataBaseRepository
 
 // MARK: - UserDefaultRepositoryImpl
 
-final class UserDefaultRepositoryImpl: WriteUserDefaultRepository, ReadOnlyUserDefaultRepository  {
+final class UserDefaultRepositoryImpl:
+    WriteUserIDRepository,
+    WriteIsAppBackgroundRepository,
+    ReadOnlyUserIDRepository,
+    ReadOnlyIsAppBackgroundRepository
+{
   func updateUserID(with userID: String) {
     UserDefaults.standard.setValue(isAppBackground, forKey: UserDefaultKey.isAppBackground.rawValue)
   }

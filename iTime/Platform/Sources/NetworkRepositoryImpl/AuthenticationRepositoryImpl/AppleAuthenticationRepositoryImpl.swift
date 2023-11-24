@@ -9,7 +9,7 @@ import AuthenticationServices
 import FirebaseAuth
 import CryptoKit
 
-import AuthenticationRepository
+import NetworkRepository
 
 // MARK: - AppleAuthenticationRepositoryImpl
 

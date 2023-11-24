@@ -21,24 +21,31 @@ let package = Package(
     .library(
       name: "BookmarkUsecaseImpl",
       targets: ["BookmarkUsecaseImpl"]),
-    
+    .library(
+        name: "LocalDataBaseRepository",
+        targets: ["LocalDataBaseRepository"]),
+    .library(
+      name: "NetworkRepository",
+      targets: ["NetworkRepository"]),
+    .library(
+      name: "RepositoryTestSupports",
+      targets: ["RepositoryTestSupports"]),
   ],
   dependencies: [
-    .package(path: "../Platform"),
     .package(path: "../ProxyPackage"),
   ],
   targets: [
     .target(
       name: "AuthenticationUsecase",
       dependencies: [
-        .product(name: "AuthenticationRepository", package: "Platform"),
+        "NetworkRepository",
         "ProxyPackage",
       ]),
     .target(
       name: "AuthenticationUsecaseImpl",
       dependencies: [
         "AuthenticationUsecase",
-        .product(name: "AuthenticationRepository", package: "Platform"),
+        "NetworkRepository",
         .product(name: "AppFoundation", package: "ProxyPackage")
       ]),
     .target(
@@ -57,15 +64,32 @@ let package = Package(
       dependencies: [
         "AuthenticationUsecase",
         "AuthenticationUsecaseImpl",
-        .product(name: "AuthenticationRepository", package: "Platform"),
-        .product(name: "RepositoryTestSupports", package: "Platform"),
+        "NetworkRepository",
+        "RepositoryTestSupports",
       ]),
     .testTarget(
       name: "BookmarkUsecaseImplTests",
       dependencies: [
         "BookmarkUsecase",
         "BookmarkUsecaseImpl",
-        .product(name: "RepositoryTestSupports", package: "Platform"),
+        "RepositoryTestSupports",
+      ]),
+    .target(
+        name: "LocalDataBaseRepository",
+        dependencies: [
+            "ProxyPackage"
+        ]),
+    .target(
+        name: "NetworkRepository",
+        dependencies: [
+            "ProxyPackage"
+        ]),
+    .target(
+      name: "RepositoryTestSupports",
+      dependencies: [
+        "NetworkRepository",
+        "LocalDataBaseRepository",
+        .product(name: "AppFoundation", package: "ProxyPackage"),
       ]),
   ]
 )

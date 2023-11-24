@@ -1,6 +1,7 @@
 import XCTest
 import RepositoryTestSupports
-import AuthenticationRepository
+import NetworkRepository
+import AppFoundation
 @testable import AuthenticationUsecaseImpl
 
 import RxSwift
@@ -23,7 +24,7 @@ final class AuthenticationUsecaseImplTests: XCTestCase {
         sut = AuthenticationUsecaseImpl(
             appleAuthenticationRepository: firebaseAppleAuthenticationRepository,
             notificationCenter: notificationCenter,
-            authorizationContextProvider: ASAuthrizationContextProviderMock()
+            authorizationContextProvider: ASAuthrizationContextProviderMock() as! AuthorizationContextProviding
         )
     }
 }
