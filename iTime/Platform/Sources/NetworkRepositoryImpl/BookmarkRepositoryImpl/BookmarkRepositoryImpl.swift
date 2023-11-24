@@ -30,13 +30,13 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
   // MARK: - Properties
   
   private let firestoreRepository: FirestoreRepository
-  private let userDefaultRepository: ReadOnlyUserDefaultRepository
+  private let userDefaultRepository: ReadOnlyUserIDRepository
   
   // MARK: - Initialization
   
   public init(
     firestoreRepository: FirestoreRepository,
-    userDefaultRepository: ReadOnlyUserDefaultRepository
+    userDefaultRepository: ReadOnlyUserIDRepository
   ) {
     self.firestoreRepository = firestoreRepository
     self.userDefaultRepository = userDefaultRepository

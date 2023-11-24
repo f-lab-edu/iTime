@@ -9,16 +9,22 @@ import Foundation
 
 // MARK: - ReadOnlyUserDefaultRepository
 
-public protocol ReadOnlyUserDefaultRepository {
+public protocol ReadOnlyUserIDRepository {
   func userID() -> String
+}
+
+public protocol ReadOnlyIsAppBackgroundRepository {
   func isAppBackground() -> Bool
 }
 
 // MARK: - WriteUserDefaultRepository
 
-public protocol WriteUserDefaultRepository {
-  func updateUserID(with userID: String)
-  func updateIsAppBackground(with isAppBackground: Bool)
+public protocol WriteUserIDRepository {
+    func updateUserID(with userID: String)
+}
+
+public protocol WriteIsAppBackgroundRepository {
+    func updateIsAppBackground(with isAppBackground: Bool)
 }
 
 // MARK: - UserDefaultKey

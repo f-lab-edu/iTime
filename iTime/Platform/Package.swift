@@ -4,73 +4,48 @@
 import PackageDescription
 
 let package = Package(
-    name: "Platform",
-    platforms: [
-        .iOS(.v16)
-    ],
-    products: [
-        .library(
-            name: "NetworkRepository",
-            targets: ["NetworkRepository"]),
-        .library(
-            name: "NetworkRepositoryImpl",
-            targets: ["NetworkRepositoryImpl"]),
-        .library(
-            name: "LocalDataBaseRepository",
-            targets: ["LocalDataBaseRepository"]),
-        .library(
-            name: "LocalDataBaseRepositoryImpl",
-            targets: ["LocalDataBaseRepositoryImpl"]),
-        .library(
-            name: "RepositoryTestSupports",
-            targets: ["RepositoryTestSupports"]),
-    ],
-    dependencies: [
-        .package(path: "../ProxyPackage"),
-    ],
-    targets: [
-        .target(
-            name: "NetworkRepository",
-            dependencies: [
-                "ProxyPackage"
-            ]),
-        .target(
-            name: "NetworkRepositoryImpl",
-            dependencies: [
-                "NetworkRepository",
-                "LocalDataBaseRepository",
-                "ProxyPackage",
-                .product(name: "AppFoundation", package: "ProxyPackage"),
-            ]),
-        .target(
-            name: "LocalDataBaseRepository",
-            dependencies: [
-                "ProxyPackage"
-            ]),
-        .target(
-            name: "LocalDataBaseRepositoryImpl",
-            dependencies: [
-                "LocalDataBaseRepository",
-                "ProxyPackage",
-                .product(name: "AppFoundation", package: "ProxyPackage"),
-            ]),
-        .target(
-            name: "RepositoryTestSupports",
-            dependencies: [
-                "NetworkRepository",
-                "LocalDataBaseRepository",
-                .product(name: "AppFoundation", package: "ProxyPackage"),
-            ]),
-        .testTarget(
-            name: "NetworkRepositoryImplTests",
-            dependencies: [
-              "NetworkRepository",
-              "NetworkRepositoryImpl",
-              "LocalDataBaseRepository",
-              "LocalDataBaseRepositoryImpl",
-              "RepositoryTestSupports",
-              .product(name: "ProxyTestSupport", package: "ProxyPackage"),
-            ]
-        ),
-    ]
+  name: "Platform",
+  platforms: [
+    .iOS(.v16)
+  ],
+  products: [
+    .library(
+      name: "LocalDataBaseRepositoryImpl",
+      targets: ["LocalDataBaseRepositoryImpl"]),
+    .library(
+      name: "NetworkRepositoryImpl",
+      targets: ["NetworkRepositoryImpl"]),
+  ],
+  dependencies: [
+    .package(path: "../ProxyPackage"),
+    .package(path: "../Domain"),
+  ],
+  targets: [
+    .target(
+      name: "LocalDataBaseRepositoryImpl",
+      dependencies: [
+        .product(name: "LocalDataBaseRepository", package: "Domain"),
+        "ProxyPackage",
+        .product(name: "AppFoundation", package: "ProxyPackage"),
+      ]),
+    .target(
+      name: "NetworkRepositoryImpl",
+      dependencies: [
+        .product(name: "NetworkRepository", package: "Domain"),
+        .product(name: "LocalDataBaseRepository", package: "Domain"),
+        "ProxyPackage",
+        .product(name: "AppFoundation", package: "ProxyPackage"),
+      ]),
+    .testTarget(
+      name: "NetworkRepositoryImplTests",
+      dependencies: [
+        .product(name: "NetworkRepository", package: "Domain"),
+        "NetworkRepositoryImpl",
+        .product(name: "LocalDataBaseRepository", package: "Domain"),
+        "LocalDataBaseRepositoryImpl",
+        .product(name: "RepositoryTestSupports", package: "Domain"),
+        .product(name: "ProxyTestSupport", package: "ProxyPackage"),
+      ]
+    ),
+  ]
 )
