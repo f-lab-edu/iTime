@@ -19,6 +19,7 @@ final class ItemHistorySectionView: BaseView {
     static let guideLabelTopMargin: CGFloat = 4
     static let itemHistoryCollectionViewTopMargin: CGFloat = 4
     static let itemHistoryCollectionViewBottomMargin: CGFloat = 20
+    static let itemHistoryCollectionViewLeadingTrailingMargin: CGFloat = 24
   }
   
   // MARK: - UI Components
@@ -35,7 +36,7 @@ final class ItemHistorySectionView: BaseView {
     .textColor(.black60)
     .build()
   
-  private let ItemHistoryCollectionView = UICollectionView(
+  private let ItemHistoryCollectionView = DynamicHeightCollectionView(
     frame: .zero,
     collectionViewLayout: .init()
   )
@@ -72,6 +73,7 @@ final class ItemHistorySectionView: BaseView {
     addSubview(sectionHeaderTitleLabel)
     addSubview(guideLabel)
     addSubview(ItemHistoryCollectionView)
+    _ = adapter
   }
   
   private func layout() {
@@ -96,8 +98,8 @@ final class ItemHistorySectionView: BaseView {
   
   private func makeItemHistoryCollectionViewConstraints() {
     ItemHistoryCollectionView.snp.makeConstraints {
-      $0.leading.equalTo(sectionHeaderTitleLabel)
-      $0.top.equalTo(sectionHeaderTitleLabel.snp.bottom).offset(Metric.itemHistoryCollectionViewTopMargin)
+      $0.leading.trailing.equalToSuperview().inset(Metric.itemHistoryCollectionViewLeadingTrailingMargin)
+      $0.top.equalTo(guideLabel.snp.bottom).offset(Metric.itemHistoryCollectionViewTopMargin)
       $0.bottom.equalToSuperview().offset(-Metric.itemHistoryCollectionViewBottomMargin)
     }
   }

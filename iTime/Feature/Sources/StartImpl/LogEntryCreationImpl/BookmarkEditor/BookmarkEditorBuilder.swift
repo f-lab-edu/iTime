@@ -9,6 +9,7 @@ import RIBs
 
 import Start
 import BookmarkUsecase
+import SharedUI
 
 // MARK: - BookmarkEditorDependency
 
@@ -19,7 +20,6 @@ public protocol BookmarkEditorDependency: Dependency {
 // MARK: - BookmarkEditorComponent
 
 final class BookmarkEditorComponent: Component<BookmarkEditorDependency> {
-  
 }
 
 // MARK: - BookmarkEditorBuilder
@@ -40,6 +40,13 @@ public final class BookmarkEditorBuilder:
       presenter: viewController,
       bookmarkUsecase: dependency.bookmarkUsecase
     )
+    let savedItemSectionDelegateDataSource = ItemHistorySectionDelegateDataSource()
+    savedItemSectionDelegateDataSource.listener = interactor
+    let itemHistorySectionDelegateDataSource = SavedItemSectionDelegateDataSource()
+    itemHistorySectionDelegateDataSource.listener = interactor
+    viewController.savedItemSectionListener = savedItemSectionDelegateDataSource
+    viewController.itemHistorySectionListener = itemHistorySectionDelegateDataSource
+
     interactor.listener = listener
     return BookmarkEditorRouter(
       interactor: interactor,

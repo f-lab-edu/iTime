@@ -14,11 +14,7 @@ import SharedUI
 
 // MARK: - BookmarkEditorPresentableListener
 
-protocol BookmarkEditorPresentableListener:
-  AnyObject,
-  BookmarkTagsCollectionViewAdapterDataSource,
-  BookmarkCollectionViewCellDelegate
-{
+protocol BookmarkEditorPresentableListener: AnyObject {
   func didTapSaveButton()
   func didTapAddButton()
   func didTapBackButton()
@@ -41,18 +37,20 @@ final class BookmarkEditorViewController:
   // MARK: - Properties
   
   weak var listener: BookmarkEditorPresentableListener?
+  var savedItemSectionListener: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?
+  var itemHistorySectionListener: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?
   
   // MARK: - UI Components
   
   private let customNavigationBar = CustomNavigationBar()
   
-  private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(listener: listener)
+  private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(listener: savedItemSectionListener)
   
   private let separatedView = UIView().builder
     .backgroundColor(.black90)
     .build()
   
-  private lazy var itemHistorySectionView = ItemHistorySectionView(listener: listener)
+  private lazy var itemHistorySectionView = ItemHistorySectionView(listener: itemHistorySectionListener)
   
   private let saveBookmarkButtonSectionView = SaveBookmarkButtonSectionView()
   
@@ -154,7 +152,7 @@ extension BookmarkEditorViewController {
     itemHistorySectionView.snp.makeConstraints {
       $0.top.equalTo(separatedView.snp.bottom)
       $0.leading.trailing.equalToSuperview()
-      $0.bottom.equalTo(saveBookmarkButtonSectionView.snp.top)
+      $0.bottom.equalTo(saveBookmarkButtonSectionView.snp.top).priority(.low)
     }
   }
   

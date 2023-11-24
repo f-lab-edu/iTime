@@ -27,7 +27,7 @@ public final class BookmarkTagCell:
   // MARK: - UI Components
   
   private let tagLabel = UILabel().builder
-    .font(.custom(.regular, 15))
+    .font(.custom(.regular, 16))
     .textColor(.black60)
     .textAlignment(.center)
     .build()
@@ -78,7 +78,7 @@ extension BookmarkTagCell {
   private func layout() {
     tagLabel.snp.makeConstraints {
       $0.top.bottom.equalToSuperview().inset(6)
-      $0.leading.trailing.equalToSuperview().inset(18)
+      $0.leading.trailing.equalToSuperview().inset(16)
     }
   }
 }

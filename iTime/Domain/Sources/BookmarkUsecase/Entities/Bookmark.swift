@@ -8,6 +8,6 @@
 import Foundation
 
 public struct Bookmark {
-  let title: String
+  public let title: String
   let category: Category
 }

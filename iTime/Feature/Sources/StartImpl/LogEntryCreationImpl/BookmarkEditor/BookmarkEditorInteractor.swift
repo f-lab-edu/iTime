@@ -24,7 +24,7 @@ final class BookmarkEditorInteractor:
   BookmarkEditorInteractable,
   BookmarkEditorPresentableListener
 {
-
+  
   // MARK: - Properties
   
   weak var router: BookmarkEditorRouting?
@@ -52,7 +52,7 @@ final class BookmarkEditorInteractor:
   // MARK: - Mutation
   
   func didTapSaveButton() {
-    
+      
   }
   
   func didTapAddButton() {
@@ -63,16 +63,43 @@ final class BookmarkEditorInteractor:
    
   }
   
-  func configurationData(at index: Int) -> String {
-    "222"
-  }
+   // MARK: - Private
   
-  // TODO: Init Data
-  func numberOfItems() -> Int {
+  private func presentError(error: Error) {
+    
+  }
+
+}
+
+// MARK: - SavedItemSection
+
+extension BookmarkEditorInteractor {
+  func numberOfSavedItems() -> Int {
     3
   }
   
-  func didTapTagCell() {
-    
+  func configurationSavedItem() -> String {
+    "SavedItem"
+  }
+  
+  func didTapSaveItemSectionCell() {
+    print("didTapSaveItemSectionCell")
+  }
+}
+
+// MARK: - ItemHistorySection
+
+extension BookmarkEditorInteractor {
+  
+  func numberOfHistoryItems() -> Int {
+    3
+  }
+  
+  func configurationHistoryItem() -> String {
+    "HistoryItem"
+  }
+  
+  func didTapItemHistorySectionCell() {
+    print("didTapItemHistorySectionCell")
   }
 }

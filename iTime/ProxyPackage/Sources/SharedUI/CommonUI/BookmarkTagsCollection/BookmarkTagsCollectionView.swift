@@ -80,13 +80,8 @@ extension BookmarkTagsCollectionViewAdapter: UICollectionViewDataSource {
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(
-      withReuseIdentifier: BookmarkTagCell.identifier,
-      for: indexPath
-    ) as? BookmarkTagCell else {
-      return UICollectionViewCell()
-    }
-    cell.configure(by: "dog")
+    let cell = collectionView.dequeue(BookmarkTagCell.self, indexPath: indexPath)
+    cell.configure(by: adapterDataSource?.configurationData(at: indexPath.row) ?? "")
     
     return cell
   }
@@ -113,14 +108,11 @@ extension BookmarkTagsCollectionViewAdapter: UICollectionViewDelegateFlowLayout 
   ) -> CGSize {
     guard let data = adapterDataSource?.configurationData(at: indexPath.row) else { return .zero }
     let labelWidthSize = data.width(
-      withConstrainedHeight: 20.0,
-      font: UIFont.systemFont(
-        ofSize: 14,
-        weight: .regular
-      )
+      withConstrainedHeight: 24.0,
+      font: UIFont.custom(.regular, 16)
     )
     return .init(
-      width: labelWidthSize + 42,
+      width: labelWidthSize + 36,
       height: 32
     )
   }

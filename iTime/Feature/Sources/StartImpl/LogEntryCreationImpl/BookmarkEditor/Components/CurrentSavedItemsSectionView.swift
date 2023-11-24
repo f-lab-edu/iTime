@@ -21,6 +21,7 @@ final class CurrentSavedItemsSectionView: BaseView {
     static let emptyGuideLabelBottomMargin: CGFloat = 24
     static let savedItemCollectionViewTopMargin: CGFloat = 4
     static let savedItemCollectionViewBottomMargin: CGFloat = 20
+    static let savedItemCollectionViewLeadingTrailingMargin: CGFloat = 24
   }
   
   // MARK: - UI Components
@@ -87,7 +88,7 @@ final class CurrentSavedItemsSectionView: BaseView {
   private func layout() {
     makeSectionHeaderTitleLabelConstraints()
     makeCurrentCountIndexLabelConstraints()
-    makeEmptyGuideLabelConstraints()
+  //  makeEmptyGuideLabelConstraints()
     makeSavedItemCollectionViewConstraints()
   }
   
@@ -115,7 +116,7 @@ final class CurrentSavedItemsSectionView: BaseView {
   
   private func makeSavedItemCollectionViewConstraints() {
     savedItemCollectionView.snp.makeConstraints {
-      $0.leading.equalTo(sectionHeaderTitleLabel)
+      $0.leading.trailing.equalToSuperview().inset(Metric.savedItemCollectionViewLeadingTrailingMargin)
       $0.top.equalTo(sectionHeaderTitleLabel.snp.bottom).offset(Metric.savedItemCollectionViewTopMargin)
       $0.bottom.equalToSuperview().offset(-Metric.savedItemCollectionViewBottomMargin)
     }

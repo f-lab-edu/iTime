@@ -11,7 +11,11 @@ import Start
 
 // MARK: - BookmarkEditorInteractable
 
-protocol BookmarkEditorInteractable: Interactable {
+protocol BookmarkEditorInteractable: 
+  Interactable,
+  SavedItemSectionListener,
+  ItemHistorySectionListener
+{
   var router: BookmarkEditorRouting? { get set }
   var listener: BookmarkEditorListener? { get set }
 }
@@ -42,5 +46,8 @@ final class BookmarkEditorRouter:
   }
   
   // MARK: Route methods
+  
+  func detachBookmarkEdtiorRIB() {
+  }
   
 }
