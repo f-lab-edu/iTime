@@ -19,7 +19,7 @@ final class LogEntryCreationInteractor:
   LogEntryCreationInteractable,
   LogEntryCreationPresentableListener
 {
-    
+  
   weak var router: LogEntryCreationRouting?
   weak var listener: LogEntryCreationListener?
   
@@ -65,6 +65,14 @@ final class LogEntryCreationInteractor:
   
   func configurationData(at index: Int) -> String {
    ""
+  }
+  
+  func detachLocationEntryEditorRIB() {
+    print("detachLocationEntryEditorRIB")
+  }
+  
+  func attachTimeLogRunningRIB() {
+    print("attachTimeLogRunningRIB")
   }
 }
 

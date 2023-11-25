@@ -8,11 +8,13 @@
 import RIBs
 
 import Start
+import Editor
 
 // MARK: - StartDependency
 
 public protocol StartDependency: Dependency {
   var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
+  var logEntryEditorBuilder: LogEntryEditorBuildable { get }
 }
 
 // MARK: - StartComponent
@@ -24,6 +26,11 @@ final class StartComponent:
   var bookmarkEditorBuilder: BookmarkEditorBuildable {
     dependency.bookmarkEditorBuilder
   }
+  
+  var logEntryEditorBuilder: LogEntryEditorBuildable {
+    dependency.logEntryEditorBuilder
+  }
+  
   
   fileprivate var logEntryCreationBuilder: LogEntryCreationBuildable {
     LogEntryCreationBuilder(dependency: self)

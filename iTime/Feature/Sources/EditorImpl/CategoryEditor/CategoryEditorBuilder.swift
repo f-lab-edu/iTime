@@ -7,7 +7,7 @@
 
 import RIBs
 
-import Start
+import Editor
 
 // MARK: - CategoryEditorDependency
 
