@@ -51,6 +51,7 @@ final class LogEntryCreationInteractor:
   }
   
   func didTapStartButton() {
+    router?.attachTimeLogRunningRIB()
   }
   
   func didTapTagCell() {
