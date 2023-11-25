@@ -8,24 +8,21 @@
 import RIBs
 
 import Start
+import Editor
 
 // MARK: - LogEntryCreationDependency
 
 protocol LogEntryCreationDependency: Dependency {
   var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
+  var logEntryEditorBuilder: LogEntryEditorBuildable { get }
 }
 
 // MARK: - LogEntryCreationComponent
 
-final class LogEntryCreationComponent: 
+final class LogEntryCreationComponent:
   Component<LogEntryCreationDependency>,
-  LogEntryEditorDependency,
   TimeLogRunningDependency
 {
-    
-  fileprivate var logEntryEditorBuilder: LogEntryEditorBuildable {
-    LogEntryEditorBuilder(dependency: self)
-  }
   
   fileprivate var timeLogRunningBuilder: TimeLogRunningBuildable {
     TimeLogRunningBuilder(dependency: self)
@@ -51,7 +48,7 @@ final class LogEntryCreationBuilder:
         return LogEntryCreationRouter(
           interactor: interactor,
           viewController: viewController,
-          logEntryEditorBuilder: component.logEntryEditorBuilder, 
+          logEntryEditorBuilder: dependency.logEntryEditorBuilder,
           bookmarkEditorBuilder: dependency.bookmarkEditorBuilder,
           timeLogRunningBuilder: component.timeLogRunningBuilder
         )

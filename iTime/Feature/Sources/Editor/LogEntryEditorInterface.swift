@@ -16,10 +16,13 @@ public protocol LogEntryEditorBuildable: Buildable {
 // MARK: - LogEntryEditorRouting
 
 public protocol LogEntryEditorRouting: ViewableRouting {
+  func attachCategoryEditorRIB()
 }
 
 // MARK: - LogEntryEditorListener
 
 public protocol LogEntryEditorListener: AnyObject {
+  func detachLocationEntryEditorRIB()
+  func attachTimeLogRunningRIB()
 }
 

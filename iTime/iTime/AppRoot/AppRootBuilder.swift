@@ -15,6 +15,8 @@ import LoggedIn
 import LoggedInImpl
 import Start
 import StartImpl
+import Editor
+import EditorImpl
 import AuthenticationUsecase
 import AuthenticationUsecaseImpl
 import BookmarkUsecase
@@ -31,8 +33,18 @@ final class AppRootComponent:
   LoggedOutDependency,
   LoggedInDependency,
   StartDependency,
-  BookmarkEditorDependency
+  BookmarkEditorDependency,
+  LogEntryEditorDependency,
+  CategoryEditorDependency
 {
+  var categoryEditorBuilder: CategoryEditorBuildable {
+    CategoryEditorBuilder(dependency: self)
+  }
+  
+  var logEntryEditorBuilder: LogEntryEditorBuildable {
+    LogEntryEditorBuilder(dependency: self)
+  }
+  
   var bookmarkUsecase: BookmarkUsecase {
     shared {
       BookmarkUsecaseImpl(bookmarkRepository: 2)
@@ -51,13 +63,14 @@ final class AppRootComponent:
     StartBuilder(dependency: self)
   }
   
+  var bookmarkEditorBuilder: BookmarkEditorBuildable {
+    BookmarkEditorBuilder(dependency: self)
+  }
+  
   var authorizationContextProvider: AuthorizationContextProviding {
     UIApplication.shared
   }
   
-  var bookmarkEditorBuilder: BookmarkEditorBuildable {
-    BookmarkEditorBuilder(dependency: self)
-  }
 }
 
 // MARK: - Builder

@@ -32,6 +32,8 @@
 		DE577F2C2AFBA29C006699F2 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE577F2B2AFBA29C006699F2 /* Configuration.swift */; };
 		DE7CDBFF2B0B5A96009824D1 /* BookmarkUsecase in Frameworks */ = {isa = PBXBuildFile; productRef = DE7CDBFE2B0B5A96009824D1 /* BookmarkUsecase */; };
 		DE7CDC012B0B5A96009824D1 /* BookmarkUsecaseImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE7CDC002B0B5A96009824D1 /* BookmarkUsecaseImpl */; };
+		DE8AF0682B11B63C00D71721 /* Editor in Frameworks */ = {isa = PBXBuildFile; productRef = DE8AF0672B11B63C00D71721 /* Editor */; };
+		DE8AF06A2B11B63C00D71721 /* EditorImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE8AF0692B11B63C00D71721 /* EditorImpl */; };
 		DE9C22A62AFDC19A00F9B436 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DE9C22A52AFDC19A00F9B436 /* Settings.bundle */; };
 		DEB54D402AE7F84600E940BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEB54D3F2AE7F84600E940BE /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -78,8 +80,10 @@
 				DE1A18F42B00B273009E1672 /* ProxyPackage in Frameworks */,
 				DE3449FC2B00AC8300C3E3F4 /* AuthenticationUsecase in Frameworks */,
 				DE1A18E02B00B26A009E1672 /* LoggedOut in Frameworks */,
+				DE8AF06A2B11B63C00D71721 /* EditorImpl in Frameworks */,
 				DE7CDC012B0B5A96009824D1 /* BookmarkUsecaseImpl in Frameworks */,
 				DE1A18DC2B00B26A009E1672 /* LoggedIn in Frameworks */,
+				DE8AF0682B11B63C00D71721 /* Editor in Frameworks */,
 				DE7CDBFF2B0B5A96009824D1 /* BookmarkUsecase in Frameworks */,
 				DE1A18DE2B00B26A009E1672 /* LoggedInImpl in Frameworks */,
 			);
@@ -204,6 +208,8 @@
 				DE44DF492B07AE9E000A4865 /* SharedUI */,
 				DE7CDBFE2B0B5A96009824D1 /* BookmarkUsecase */,
 				DE7CDC002B0B5A96009824D1 /* BookmarkUsecaseImpl */,
+				DE8AF0672B11B63C00D71721 /* Editor */,
+				DE8AF0692B11B63C00D71721 /* EditorImpl */,
 			);
 			productName = iTime;
 			productReference = DE05709F2AE6735E00669BDF /* iTime.app */;
@@ -760,6 +766,14 @@
 		DE7CDC002B0B5A96009824D1 /* BookmarkUsecaseImpl */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BookmarkUsecaseImpl;
+		};
+		DE8AF0672B11B63C00D71721 /* Editor */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Editor;
+		};
+		DE8AF0692B11B63C00D71721 /* EditorImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EditorImpl;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

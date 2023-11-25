@@ -7,12 +7,12 @@
 
 import RIBs
 
-import Start
+import Editor
 
 // MARK: - LogEntryEditorDependency
 
 public protocol LogEntryEditorDependency: Dependency {
-  
+  var categoryEditorBuilder: CategoryEditorBuildable { get }
 }
 
 // MARK: - LogEntryEditorComponent
@@ -39,7 +39,8 @@ public final class LogEntryEditorBuilder:
     interactor.listener = listener
     return LogEntryEditorRouter(
       interactor: interactor,
-      viewController: viewController
+      viewController: viewController,
+      categoryEditorBuilder: dependency.categoryEditorBuilder
     )
   }
 }

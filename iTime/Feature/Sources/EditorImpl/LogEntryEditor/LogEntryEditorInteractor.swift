@@ -8,7 +8,7 @@
 import RIBs
 import RxSwift
 
-import Start
+import Editor
 
 // MARK: - LogEntryEditorPresentable
 
@@ -40,5 +40,24 @@ final class LogEntryEditorInteractor:
   
   override func didBecomeActive() {
     super.didBecomeActive()
+  }
+  
+  // MARK: - Mutation
+  
+  func didTapStartButton() {
+    listener?.attachTimeLogRunningRIB()
+    listener?.detachLocationEntryEditorRIB()
+  }
+  
+  func didTapCategoryStateView() {
+    router?.attachCategoryEditorRIB()
+  }
+  
+  func didTapCloseButton() {
+    listener?.detachLocationEntryEditorRIB()
+  }
+  
+  func detachCategoryEditorRIB() {
+    listener?.detachLocationEntryEditorRIB()
   }
 }
