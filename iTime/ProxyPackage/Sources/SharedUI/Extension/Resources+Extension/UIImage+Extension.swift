@@ -20,8 +20,8 @@ extension UIImage {
   
   // MARK: - Control
   
-  public static let redStopButton: UIImage = .init(resource: .btnStopRed)
-  public static let stopButton: UIImage = .init(resource: .btnStop)
+  public static let stop: UIImage = .init(resource: .stop)
+  public static let pause: UIImage = .init(resource: .pause)
   public static let start: UIImage = .init(resource: .start)
   public static let calendar: UIImage = .init(resource: .calendar)
   public static let calendarFill: UIImage = .init(resource: .calendarFill)

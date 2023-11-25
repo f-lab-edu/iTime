@@ -14,15 +14,17 @@ final class BookmarkTagsView: BaseView {
   // MARK: - Constants
   
   private enum Metric {
-    static let tagViewHeight: CGFloat = 36
-    static let tagViewWidth: CGFloat = 82
     static let bookmarkTagsCollectionViewTopMargin: CGFloat = 16
     static let bookmarkEditorButtonLabelTopMargin: CGFloat = 16
   }
   
   // MARK: - UI Components
   
-  private let tagView = TagView()
+  private let tagView = TagView().builder
+    .with {
+      $0.configure(by: "즐겨찾기")
+    }
+    .build()
   
   private lazy var bookmarkTagsCollectionView = DynamicHeightCollectionView(
     frame: .zero,
@@ -91,8 +93,6 @@ final class BookmarkTagsView: BaseView {
   private func makeTagViewConstraints() {
     tagView.snp.makeConstraints {
       $0.top.centerX.equalToSuperview()
-      $0.width.equalTo(Metric.tagViewWidth)
-      $0.height.equalTo(Metric.tagViewHeight)
     }
   }
   
