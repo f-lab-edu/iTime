@@ -37,20 +37,20 @@ final class BookmarkEditorViewController:
   // MARK: - Properties
   
   weak var listener: BookmarkEditorPresentableListener?
-  var savedItemSectionListener: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?
-  var itemHistorySectionListener: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?
+  var savedItemSectionDelegateDataSource: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?
+  var itemHistorySectionDelegateDataSource: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?
   
   // MARK: - UI Components
   
   private let customNavigationBar = CustomNavigationBar()
   
-  private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(listener: savedItemSectionListener)
+  private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(listener: savedItemSectionDelegateDataSource)
   
   private let separatedView = UIView().builder
     .backgroundColor(.black90)
     .build()
   
-  private lazy var itemHistorySectionView = ItemHistorySectionView(listener: itemHistorySectionListener)
+  private lazy var itemHistorySectionView = ItemHistorySectionView(listener: itemHistorySectionDelegateDataSource)
   
   private let saveBookmarkButtonSectionView = SaveBookmarkButtonSectionView()
   
