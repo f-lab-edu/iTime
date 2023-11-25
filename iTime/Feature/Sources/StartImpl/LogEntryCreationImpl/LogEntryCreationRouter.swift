@@ -100,6 +100,7 @@ final class LogEntryCreationRouter:
     let router = timeLogRunningBuilder.build(withListener: interactor)
     timeLogRunningRouter = router
     attachChild(router)
+    router.viewControllable.uiviewController.hidesBottomBarWhenPushed = true
     viewController.pushViewController(router.viewControllable, animated: true)
   }
   
