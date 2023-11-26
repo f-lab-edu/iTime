@@ -57,7 +57,7 @@ final class TimeLogRunningViewController:
   private let datePickerSectionView = DatePickerSectionView()
   
   private let timeOperatorButtonsView = TimeOperatorButtonsView()
-
+  
   // MARK: - View LifeCycle
   
   override func viewDidLoad() {

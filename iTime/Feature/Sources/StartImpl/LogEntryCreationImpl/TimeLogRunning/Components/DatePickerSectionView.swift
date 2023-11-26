@@ -109,8 +109,8 @@ final class DatePickerSectionView: BaseView {
     layout()
   }
   
-  override func layoutSubviews() {
-    super.layoutSubviews()
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
     drawDotLine()
   }
   
