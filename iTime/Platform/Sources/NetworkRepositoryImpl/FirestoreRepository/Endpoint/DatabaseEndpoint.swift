@@ -17,8 +17,7 @@ public protocol DocumentReferenceConvertible {
 
 public enum DatabaseEndpoint: String {
   case userSession = "users"
-  case activitySession = "activity_session"
   case bookmarkSession = "bookmark_session"
   case categorySession = "category_session"
-  case logSession = "log_session"
+  case timeLogHistorySession = "log_session"
 }

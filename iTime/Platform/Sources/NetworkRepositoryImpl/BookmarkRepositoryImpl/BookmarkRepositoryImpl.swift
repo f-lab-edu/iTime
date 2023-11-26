@@ -44,7 +44,7 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
   
   // MARK: - Methods
   
-  public func updateBookmarks(with bookmarks: [Bookmark]) -> Single<Void> {
+  public func updateBookmarks(with bookmarks: [Activity]) -> Single<Void> {
     firestoreRepository.update(
       reference: DatabaseReference.bookmarkSession(userID: userDefaultRepository.userID()),
       with: BookmarkList(bookmarks).toJson() ?? [:] ,
@@ -55,7 +55,7 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
     .map { _ in Void() }
   }
   
-  public func appendBookmark(_ bookmark: Bookmark) -> Single<Void> {
+  public func appendBookmark(_ bookmark: Activity) -> Single<Void> {
     bookmarks()
       .map { $0 + [bookmark] }
       .flatMap { [weak self] bookmarks in
@@ -64,7 +64,7 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
       }
   }
   
-  public func removeBookmark(_ bookmark: Bookmark) -> Single<Void> {
+  public func removeBookmark(_ bookmark: Activity) -> Single<Void> {
     bookmarks()
       .map {  $0.filter { $0.title != bookmark.title } }
       .flatMap { [weak self] bookmarks in
@@ -73,7 +73,7 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
       }
   }
   
-  public func bookmarks() -> Single<[Bookmark]> {
+  public func bookmarks() -> Single<[Activity]> {
     let bookmarkList: Single<BookmarkList> =
     firestoreRepository.documentObservable(
       for: DatabaseReference.bookmarkSession(userID: userDefaultRepository.userID()),
