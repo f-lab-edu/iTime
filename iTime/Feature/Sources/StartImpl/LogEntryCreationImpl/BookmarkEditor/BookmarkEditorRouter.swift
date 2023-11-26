@@ -11,11 +11,7 @@ import Start
 
 // MARK: - BookmarkEditorInteractable
 
-protocol BookmarkEditorInteractable: 
-  Interactable,
-  SavedItemSectionListener,
-  ItemHistorySectionListener
-{
+protocol BookmarkEditorInteractable: Interactable {
   var router: BookmarkEditorRouting? { get set }
   var listener: BookmarkEditorListener? { get set }
 }

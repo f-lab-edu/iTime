@@ -10,33 +10,8 @@ import BookmarkUsecase
 
 // MARK: - SavedItemSectionListener
 
-protocol SavedItemSectionListener: AnyObject {
+protocol SavedItemSectionDelegateDataSource: AnyObject {
   func didTapSaveItemSectionCell()
   func numberOfSavedItems() -> Int
-  func configurationSavedItem() -> String
-}
-
-// MARK: - SavedItemSectionDelegateDatasoruce
-
-final class SavedItemSectionDelegateDataSource:
-  BookmarkTagsCollectionViewAdapterDataSource,
-  BookmarkCollectionViewCellDelegate
-{
-  
-  weak var listener: SavedItemSectionListener?
-  
-  func numberOfItems() -> Int {
-    guard let listener = listener else { return  -1 }
-    return listener.numberOfSavedItems()
-  }
-  
-  func configurationData(at index: Int) -> String {
-    guard let listener = listener else { return String() }
-    return listener.configurationSavedItem()
-  }
-  
-  func didTapTagCell() {
-    guard let listener = listener else { return }
-    listener.didTapSaveItemSectionCell()
-  }
+  func configurationSavedItem(at index: Int) -> String
 }

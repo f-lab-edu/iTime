@@ -40,13 +40,6 @@ public final class BookmarkEditorBuilder:
       presenter: viewController,
       bookmarkUsecase: dependency.bookmarkUsecase
     )
-    let savedItemSectionDelegateDataSource = ItemHistorySectionDelegateDataSource()
-    savedItemSectionDelegateDataSource.listener = interactor
-    let itemHistorySectionDelegateDataSource = SavedItemSectionDelegateDataSource()
-    itemHistorySectionDelegateDataSource.listener = interactor
-    viewController.savedItemSectionDelegateDataSource = savedItemSectionDelegateDataSource
-    viewController.itemHistorySectionDelegateDataSource = itemHistorySectionDelegateDataSource
-
     interactor.listener = listener
     return BookmarkEditorRouter(
       interactor: interactor,

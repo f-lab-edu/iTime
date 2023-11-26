@@ -14,7 +14,11 @@ import SharedUI
 
 // MARK: - BookmarkEditorPresentableListener
 
-protocol BookmarkEditorPresentableListener: AnyObject {
+protocol BookmarkEditorPresentableListener:
+  AnyObject,
+  SavedItemSectionDelegateDataSource,
+  ItemHistorySectionDelegateDataSource
+{
   func didTapSaveButton()
   func didTapAddButton()
   func didTapBackButton()
@@ -27,7 +31,7 @@ final class BookmarkEditorViewController:
   BookmarkEditorPresentable,
   BookmarkEditorViewControllable
 {
-  
+
   // MARK: - Constants
   
   private enum Metric {
@@ -37,20 +41,18 @@ final class BookmarkEditorViewController:
   // MARK: - Properties
   
   weak var listener: BookmarkEditorPresentableListener?
-  var savedItemSectionDelegateDataSource: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?
-  var itemHistorySectionDelegateDataSource: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?
   
   // MARK: - UI Components
   
   private let customNavigationBar = CustomNavigationBar()
   
-  private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(listener: savedItemSectionDelegateDataSource)
+  private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(listener: listener)
   
   private let separatedView = UIView().builder
     .backgroundColor(.black90)
     .build()
   
-  private lazy var itemHistorySectionView = ItemHistorySectionView(listener: itemHistorySectionDelegateDataSource)
+  private lazy var itemHistorySectionView = ItemHistorySectionView(listener: listener)
   
   private let saveBookmarkButtonSectionView = SaveBookmarkButtonSectionView()
   
@@ -100,6 +102,10 @@ extension BookmarkEditorViewController {
 }
 
 // MARK: - Bind State
+
+extension BookmarkEditorViewController {
+  
+}
 
 extension BookmarkEditorViewController {
   

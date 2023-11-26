@@ -46,7 +46,6 @@ final class BookmarkEditorInteractor:
   
   override func didBecomeActive() {
     super.didBecomeActive()
-
   }
   
   // MARK: - Mutation
@@ -78,7 +77,7 @@ extension BookmarkEditorInteractor {
     3
   }
   
-  func configurationSavedItem() -> String {
+  func configurationSavedItem(at index: Int) -> String {
     "SavedItem"
   }
   
@@ -95,7 +94,7 @@ extension BookmarkEditorInteractor {
     3
   }
   
-  func configurationHistoryItem() -> String {
+  func configurationHistoryItem(at index: Int) -> String {
     "HistoryItem"
   }
   

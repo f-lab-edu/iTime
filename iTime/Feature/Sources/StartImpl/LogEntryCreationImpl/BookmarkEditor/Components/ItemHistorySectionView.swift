@@ -9,7 +9,11 @@ import UIKit
 
 import SharedUI
 
-final class ItemHistorySectionView: BaseView {
+final class ItemHistorySectionView: 
+  BaseView,
+  BookmarkCollectionViewCellDelegate,
+  BookmarkTagsCollectionViewAdapterDataSource
+{
   
   // MARK: - Constants
   
@@ -43,22 +47,22 @@ final class ItemHistorySectionView: BaseView {
   
   private lazy var adapter = BookmarkTagsCollectionViewAdapter(
     collectionView: ItemHistoryCollectionView,
-    adapterDataSource: listener,
-    delegate: listener, 
+    adapterDataSource: self,
+    delegate: self,
     alignedCollectionViewFlowLayout: LeadingAlignedCollectionViewFlowLayout()
   )
   
   // MARK: - properties
   
-  private let listener: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?
+  private let listener: ItemHistorySectionDelegateDataSource?
   
   // MARK: - Initialization & Deinitialization
   
-  init(listener: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?) {
+  init(listener: (ItemHistorySectionDelegateDataSource)?) {
     self.listener = listener
     super.init(frame: .zero)
   }
-  
+
   override func initialize() {
     super.initialize()
     setupUI()
@@ -68,6 +72,25 @@ final class ItemHistorySectionView: BaseView {
     super.setupConstraints()
     layout()
   }
+  
+  // MARK: Delegate & DataSource
+  
+  func didTapTagCell() {
+    guard let listener = listener else { return }
+    listener.didTapItemHistorySectionCell()
+  }
+  
+  func numberOfItems() -> Int {
+    guard let listener = listener else { return  -1 }
+    return listener.numberOfHistoryItems()
+  }
+  
+  func configurationData(at index: Int) -> String {
+    guard let listener = listener else { return String() }
+    return listener.configurationHistoryItem(at: index)
+  }
+  
+  // MARK: - Layout
   
   private func setupUI() {
     addSubview(sectionHeaderTitleLabel)

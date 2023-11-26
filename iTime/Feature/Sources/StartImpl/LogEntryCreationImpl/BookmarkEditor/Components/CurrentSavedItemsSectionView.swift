@@ -9,7 +9,11 @@ import UIKit
 
 import SharedUI
 
-final class CurrentSavedItemsSectionView: BaseView {
+final class CurrentSavedItemsSectionView: 
+  BaseView,
+  BookmarkCollectionViewCellDelegate,
+  BookmarkTagsCollectionViewAdapterDataSource
+{
   
   // MARK: - Constants
   
@@ -51,21 +55,40 @@ final class CurrentSavedItemsSectionView: BaseView {
   
   private lazy var adapter = BookmarkTagsCollectionViewAdapter(
     collectionView: savedItemCollectionView,
-    adapterDataSource: listener,
-    delegate: listener,
+    adapterDataSource: self,
+    delegate: self,
     alignedCollectionViewFlowLayout: LeadingAlignedCollectionViewFlowLayout()
   )
   
   // MARK: - properties
   
-  private let listener: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?
+  private let listener: SavedItemSectionDelegateDataSource?
   
   // MARK: - Initialization & Deinitialization
   
-  init(listener: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?) {
+  init(listener: SavedItemSectionDelegateDataSource?) {
     self.listener = listener
     super.init(frame: .zero)
   }
+  
+  // MARK: Delegate & DataSource
+  
+  func didTapTagCell() {
+    guard let listener = listener else { return }
+    listener.didTapSaveItemSectionCell()
+  }
+  
+  func numberOfItems() -> Int {
+    guard let listener = listener else { return  -1 }
+    return listener.numberOfSavedItems()
+  }
+  
+  func configurationData(at index: Int) -> String {
+    guard let listener = listener else { return String() }
+    return listener.configurationSavedItem(at: index)
+  }
+  
+  // MARK: - Layout
   
   override func initialize() {
     super.initialize()
