@@ -35,7 +35,7 @@ public final class TimeLogRunningBuilder:
   }
   
   public func build(withListener listener: TimeLogRunningListener) -> TimeLogRunningRouting {
-    let component = TimeLogRunningComponent(dependency: dependency)
+    let _ = TimeLogRunningComponent(dependency: dependency)
     let viewController = TimeLogRunningViewController()
     let interactor = TimeLogRunningInteractor(presenter: viewController)
     interactor.listener = listener

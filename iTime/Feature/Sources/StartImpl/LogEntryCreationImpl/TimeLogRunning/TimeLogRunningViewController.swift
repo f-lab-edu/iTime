@@ -54,11 +54,9 @@ final class TimeLogRunningViewController:
     .textColor(.white)
     .build()
   
-  private let datePickerSectionView = UIView()
-  
+  private let datePickerSectionView = DatePickerSectionView()
   
   private let timeOperatorButtonsView = TimeOperatorButtonsView()
-  
   
   // MARK: - View LifeCycle
   
@@ -98,6 +96,7 @@ extension TimeLogRunningViewController {
     makeCustomNavigationBarConstraints()
     makeTagViewConstraints()
     makeMainCurrentTimeLabelConstraints()
+    makeDatePickerSectionViewConstraints()
     makeTimeOperatorButtonsViewConstraints()
   }
   
@@ -124,8 +123,8 @@ extension TimeLogRunningViewController {
   
   private func makeDatePickerSectionViewConstraints() {
     datePickerSectionView.snp.makeConstraints {
-      $0.top.equalTo(mainCurrentTimeLabel).offset(Metric.datePickerSectionViewTopMargin)
-      $0.leading.trailing.greaterThanOrEqualToSuperview()
+      $0.top.equalTo(mainCurrentTimeLabel.snp.bottom).offset(Metric.datePickerSectionViewTopMargin)
+      $0.leading.trailing.greaterThanOrEqualToSuperview().priority(.low)
       $0.centerX.equalToSuperview()
     }
   }
