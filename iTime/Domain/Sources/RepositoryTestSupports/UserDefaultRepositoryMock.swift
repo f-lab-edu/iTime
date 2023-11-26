@@ -7,7 +7,12 @@
 
 import LocalDataBaseRepository
 
-public final class UserDefaultRepositoryMock: WriteUserDefaultRepository, ReadOnlyUserDefaultRepository {
+public final class UserDefaultRepositoryMock:
+  WriteUserIDRepository,
+  WriteIsAppBackgroundRepository,
+  ReadOnlyUserIDRepository,
+  ReadOnlyIsAppBackgroundRepository
+{
   
   public var dummyUserID: String = String()
   public var dummyIsAppBackground: Bool = false

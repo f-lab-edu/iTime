@@ -44,8 +44,8 @@ public enum DummyData {
     public static let documentID = "TestDocumentID"
   }
   public enum DummyBookmark {
-    public static let dummyBookmark: Bookmark = .init(title: "테스트", category: .init(title: "테스트", color: "테스트"))
-    public static let dummyBookmarks: [Bookmark] = [dummyBookmark, dummyBookmark, dummyBookmark, dummyBookmark]
+    public static let dummyBookmark: Activity = .init(title: "테스트", category: .init(title: "테스트", color: "테스트"))
+    public static let dummyBookmarks: [Activity] = [dummyBookmark, dummyBookmark, dummyBookmark, dummyBookmark]
     public static let dummyBookmarkList: BookmarkList = BookmarkList(dummyBookmarks)
   }
 

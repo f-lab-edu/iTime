@@ -9,7 +9,10 @@ import Foundation
 
 // MARK: - Activity
 
-public struct Activity: Codable {
+public struct Activity:
+  Codable,
+  Equatable
+{
   public let title: String
   public let category: Category
   
