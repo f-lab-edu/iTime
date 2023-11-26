@@ -11,42 +11,51 @@ import NetworkRepository
 
 public final class FirestoreRepositoryMock: FirestoreRepository {
   
+  private let documentSnapshotMock: iTimeDocumentSnapshot
+  private let querySnapshotMock: iTimeQuerySnapshot
+  
+  public init(
+    documentSnapshotMock: iTimeDocumentSnapshot,
+    querySnapShotMock: iTimeQuerySnapshot
+  ) {
+    self.documentSnapshotMock = documentSnapshotMock
+    self.querySnapshotMock = querySnapShotMock
+  }
+  
   public var createCallcount: Int = 0
-  public func create(reference: DocumentReferenceConvertible, with data: [String : Any]) -> Observable<String> {
+  public func create(
+    reference: DocumentReferenceConvertible,
+    with data: [String : Any]
+  ) -> Observable<String> {
     createCallcount += 1
     return .just(DummyData.DummyID.documentID)
   }
   
   public var updateCallCount: Int = 0
-  public func update(reference: DocumentReferenceConvertible, with data: [String : Any], merge: Bool) -> Observable<String> {
+  public func update(
+    reference: DocumentReferenceConvertible,
+    with data: [String : Any],
+    merge: Bool
+  ) -> Observable<String> {
     updateCallCount += 1
     return .just(DummyData.DummyID.documentID)
   }
   
   public var collectionObservableCallCount: Int = 0
-  public func collectionObservable(for reference: DocumentReferenceConvertible, includeMetadata: Bool) -> Observable<iTimeQuerySnapshot> {
+  public func collectionObservable(
+    for reference: DocumentReferenceConvertible,
+    includeMetadata: Bool
+  ) -> Observable<iTimeQuerySnapshot> {
     collectionObservableCallCount += 1
-    return .just(iTimeQuerySnapshotMock())
+    return .just(querySnapshotMock)
   }
   
   public var documentObservableCallCount: Int = 0
-  public func documentObservable(for reference: DocumentReferenceConvertible, includeMetadata: Bool) -> Observable<iTimeDocumentSnapshot> {
+  public func documentObservable(
+    for reference: DocumentReferenceConvertible,
+    includeMetadata: Bool
+  ) -> Observable<iTimeDocumentSnapshot> {
     documentObservableCallCount += 1
-    return .just(iTimeDocumentSnapshotMock())
+    return .just(documentSnapshotMock)
   }
-  
-  public init() {}
-}
-
-public enum DummyData {
-  public enum DummyID {
-    public static let userID = "TestUserID"
-    public static let documentID = "TestDocumentID"
-  }
-  public enum DummyBookmark {
-    public static let dummyBookmark: Activity = .init(title: "테스트", category: .init(title: "테스트", color: "테스트"))
-    public static let dummyBookmarks: [Activity] = [dummyBookmark, dummyBookmark, dummyBookmark, dummyBookmark]
-    public static let dummyBookmarkList: BookmarkList = BookmarkList(dummyBookmarks)
-  }
-
 }

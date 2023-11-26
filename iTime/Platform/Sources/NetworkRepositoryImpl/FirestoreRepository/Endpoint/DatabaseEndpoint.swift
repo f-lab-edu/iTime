@@ -19,5 +19,5 @@ public enum DatabaseEndpoint: String {
   case userSession = "users"
   case bookmarkSession = "bookmark_session"
   case categorySession = "category_session"
-  case timeLogHistorySession = "log_session"
+  case timeLogHistorySession = "timeloghistory_session"
 }

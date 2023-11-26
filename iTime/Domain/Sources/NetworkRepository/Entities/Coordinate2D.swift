@@ -13,5 +13,5 @@ public struct Coordinate2D: Codable {
 }
 
 extension Coordinate2D {
-  static let empty: Coordinate2D = .init(latitude: 0.0, longitude: 0.0)
+  public static let empty: Coordinate2D = .init(latitude: 0.0, longitude: 0.0)
 }

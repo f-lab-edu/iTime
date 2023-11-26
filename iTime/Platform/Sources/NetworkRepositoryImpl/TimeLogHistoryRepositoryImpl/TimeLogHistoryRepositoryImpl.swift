@@ -44,6 +44,7 @@ public final class TimeLogHistoryRepositoryImpl: TimeLogHistoryRepository {
 
   public func append(_ history: TimeLogHistory) -> Single<Void> {
     timeLogHistories()
+      .debug("shlee")
       .map { $0 + [history] }
       .flatMap { [weak self] histories in
         guard let self else { return .error(MyError.networkNullError)}
@@ -52,7 +53,13 @@ public final class TimeLogHistoryRepositoryImpl: TimeLogHistoryRepository {
   }
   
   public func remove(with logID: String) -> Single<Void> {
-    return .never()
+    timeLogHistories()
+      .debug("shlee")
+      .map {  $0.filter { $0.id != logID } }
+      .flatMap { [weak self] histories in
+        guard let self else { return .error(MyError.networkNullError)}
+        return self.update(with: histories)
+      }
   }
   
   public func timeLogHistories() -> Single<[TimeLogHistory]> {
@@ -61,6 +68,7 @@ public final class TimeLogHistoryRepositoryImpl: TimeLogHistoryRepository {
       for: DatabaseReference.timeLogHistorySession(userID: userDefaultRepository.userID()),
       includeMetadata: false
     )
+    .debug("shlee")
     .compactMap { try $0.decode() }
     .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
     .asSingle()
@@ -76,6 +84,7 @@ public final class TimeLogHistoryRepositoryImpl: TimeLogHistoryRepository {
       with: TimeLogHistoryList(histories).toJson() ?? [:],
       merge: false
     )
+    .debug("shlee")
     .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
     .asSingle()
     .map { _ in Void() }

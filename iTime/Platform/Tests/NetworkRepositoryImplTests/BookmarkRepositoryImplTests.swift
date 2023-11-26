@@ -2,7 +2,6 @@ import XCTest
 
 import RxSwift
 import RxTest
-import RxBlocking
 
 import RepositoryTestSupports
 import NetworkRepository
@@ -24,7 +23,10 @@ final class BookmarkRepositoryImplTests: XCTestCase {
   override func setUp() {
     super.setUp()
     
-    firestoreRepository = FirestoreRepositoryMock()
+    firestoreRepository = FirestoreRepositoryMock(
+      documentSnapshotMock: BookmarkDocumentSnapshotMock(),
+      querySnapShotMock: BookmarkQuerySnapshotMock()
+    )
     userDefaultRepository = UserDefaultRepositoryMock()
     disposeBag = DisposeBag()
     
@@ -52,6 +54,7 @@ final class BookmarkRepositoryImplTests: XCTestCase {
             resultSubject.onNext(false)
           }
         }
+        .disposed(by: disposeBag)
     }
     
     let observer = scheduler.record(
@@ -87,6 +90,7 @@ final class BookmarkRepositoryImplTests: XCTestCase {
             resultSubject.onNext(false)
           }
         }
+        .disposed(by: disposeBag)
     }
     
     let observer = scheduler.record(
@@ -123,6 +127,7 @@ final class BookmarkRepositoryImplTests: XCTestCase {
             resultSubject.onNext(false)
           }
         }
+        .disposed(by: disposeBag)
     }
     
     let observer = scheduler.record(
@@ -158,6 +163,7 @@ final class BookmarkRepositoryImplTests: XCTestCase {
             resultSubject.onNext([])
           }
         }
+        .disposed(by: disposeBag)
     }
     
     let observer = scheduler.record(
