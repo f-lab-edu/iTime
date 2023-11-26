@@ -58,6 +58,7 @@ let package = Package(
         "LoggedIn",
         "LoggedOut",
         .product(name: "AuthenticationUsecase", package: "Domain"),
+        .product(name: "SharedUI", package: "ProxyPackage"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
       ]),
     .target(
