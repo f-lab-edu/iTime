@@ -9,6 +9,9 @@ import UIKit
 
 import RIBs
 
+import AppRoot
+import AppRootImpl
+
 // MARK: - SceneDelegate
 
 class SceneDelegate:

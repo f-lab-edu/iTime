@@ -11,6 +11,12 @@ let package = Package(
   ],
   products: [
     .library(
+      name: "AppRoot",
+      targets: ["AppRoot"]),
+    .library(
+      name: "AppRootImpl",
+      targets: ["AppRootImpl"]),
+    .library(
       name: "Editor",
       targets: ["Editor"]),
     .library(
@@ -40,6 +46,20 @@ let package = Package(
     .package(path: "../ProxyPackage")
   ],
   targets: [
+    .target(
+      name: "AppRoot",
+      dependencies: [
+        "ProxyPackage"
+      ]),
+    .target(
+      name: "AppRootImpl",
+      dependencies: [
+        "AppRoot",
+        "LoggedIn",
+        "LoggedOut",
+        .product(name: "AuthenticationUsecase", package: "Domain"),
+        .product(name: "AppFoundation", package: "ProxyPackage"),
+      ]),
     .target(
       name: "Editor",
       dependencies: [
