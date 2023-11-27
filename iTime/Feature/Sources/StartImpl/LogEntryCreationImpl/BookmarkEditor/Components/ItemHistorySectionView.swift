@@ -54,12 +54,12 @@ final class ItemHistorySectionView:
   
   // MARK: - properties
   
-  private let listener: ItemHistorySectionDelegateDataSource?
+  private weak var delegateDataSource: ItemHistorySectionDelegateDataSource?
   
   // MARK: - Initialization & Deinitialization
   
-  init(listener: (ItemHistorySectionDelegateDataSource)?) {
-    self.listener = listener
+  init(delegateDataSource: (ItemHistorySectionDelegateDataSource)?) {
+    self.delegateDataSource = delegateDataSource
     super.init(frame: .zero)
   }
 
@@ -76,18 +76,18 @@ final class ItemHistorySectionView:
   // MARK: Delegate & DataSource
   
   func didTapTagCell() {
-    guard let listener = listener else { return }
-    listener.didTapItemHistorySectionCell()
+    guard let delegateDataSource = delegateDataSource else { return }
+    delegateDataSource.didTapItemHistorySectionCell()
   }
   
   func numberOfItems() -> Int {
-    guard let listener = listener else { return  -1 }
-    return listener.numberOfHistoryItems()
+    guard let delegateDataSource = delegateDataSource else { return  -1 }
+    return delegateDataSource.numberOfHistoryItems()
   }
   
   func configurationData(at index: Int) -> String {
-    guard let listener = listener else { return String() }
-    return listener.configurationHistoryItem(at: index)
+    guard let delegateDataSource = delegateDataSource else { return String() }
+    return delegateDataSource.configurationHistoryItem(at: index)
   }
   
   // MARK: - Layout

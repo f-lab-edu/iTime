@@ -46,13 +46,13 @@ final class BookmarkEditorViewController:
   
   private let customNavigationBar = CustomNavigationBar()
   
-  private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(listener: listener)
+  private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(delegateDataSource: listener)
   
   private let separatedView = UIView().builder
     .backgroundColor(.black90)
     .build()
   
-  private lazy var itemHistorySectionView = ItemHistorySectionView(listener: listener)
+  private lazy var itemHistorySectionView = ItemHistorySectionView(delegateDataSource: listener)
   
   private let saveBookmarkButtonSectionView = SaveBookmarkButtonSectionView()
   

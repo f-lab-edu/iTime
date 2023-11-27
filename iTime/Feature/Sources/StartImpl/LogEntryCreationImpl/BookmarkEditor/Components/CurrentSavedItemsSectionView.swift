@@ -62,30 +62,30 @@ final class CurrentSavedItemsSectionView:
   
   // MARK: - properties
   
-  private let listener: SavedItemSectionDelegateDataSource?
+  private weak var delegateDataSource: SavedItemSectionDelegateDataSource?
   
   // MARK: - Initialization & Deinitialization
   
-  init(listener: SavedItemSectionDelegateDataSource?) {
-    self.listener = listener
+  init(delegateDataSource: SavedItemSectionDelegateDataSource?) {
+    self.delegateDataSource = delegateDataSource
     super.init(frame: .zero)
   }
   
   // MARK: Delegate & DataSource
   
   func didTapTagCell() {
-    guard let listener = listener else { return }
-    listener.didTapSaveItemSectionCell()
+    guard let delegateDataSource = delegateDataSource else { return }
+    delegateDataSource.didTapSaveItemSectionCell()
   }
   
   func numberOfItems() -> Int {
-    guard let listener = listener else { return  -1 }
-    return listener.numberOfSavedItems()
+    guard let delegateDataSource = delegateDataSource else { return  -1 }
+    return delegateDataSource.numberOfSavedItems()
   }
   
   func configurationData(at index: Int) -> String {
-    guard let listener = listener else { return String() }
-    return listener.configurationSavedItem(at: index)
+    guard let delegateDataSource = delegateDataSource else { return String() }
+    return delegateDataSource.configurationSavedItem(at: index)
   }
   
   // MARK: - Layout
