@@ -16,8 +16,8 @@ import SharedUI
 
 protocol BookmarkEditorPresentableListener:
   AnyObject,
-  BookmarkTagsCollectionViewAdapterDataSource,
-  BookmarkCollectionViewCellDelegate
+  SavedItemSectionDelegateDataSource,
+  ItemHistorySectionDelegateDataSource
 {
   func didTapSaveButton()
   func didTapAddButton()
@@ -31,7 +31,7 @@ final class BookmarkEditorViewController:
   BookmarkEditorPresentable,
   BookmarkEditorViewControllable
 {
-  
+
   // MARK: - Constants
   
   private enum Metric {
@@ -46,13 +46,13 @@ final class BookmarkEditorViewController:
   
   private let customNavigationBar = CustomNavigationBar()
   
-  private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(listener: listener)
+  private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(delegateDataSource: listener)
   
   private let separatedView = UIView().builder
     .backgroundColor(.black90)
     .build()
   
-  private lazy var itemHistorySectionView = ItemHistorySectionView(listener: listener)
+  private lazy var itemHistorySectionView = ItemHistorySectionView(delegateDataSource: listener)
   
   private let saveBookmarkButtonSectionView = SaveBookmarkButtonSectionView()
   
@@ -107,6 +107,10 @@ extension BookmarkEditorViewController {
   
 }
 
+extension BookmarkEditorViewController {
+  
+}
+
 // MARK: - Layout
 
 extension BookmarkEditorViewController {
@@ -154,7 +158,7 @@ extension BookmarkEditorViewController {
     itemHistorySectionView.snp.makeConstraints {
       $0.top.equalTo(separatedView.snp.bottom)
       $0.leading.trailing.equalToSuperview()
-      $0.bottom.equalTo(saveBookmarkButtonSectionView.snp.top)
+      $0.bottom.equalTo(saveBookmarkButtonSectionView.snp.top).priority(.low)
     }
   }
   

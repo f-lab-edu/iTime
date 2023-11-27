@@ -9,7 +9,11 @@ import UIKit
 
 import SharedUI
 
-final class ItemHistorySectionView: BaseView {
+final class ItemHistorySectionView: 
+  BaseView,
+  BookmarkCollectionViewCellDelegate,
+  BookmarkTagsCollectionViewAdapterDataSource
+{
   
   // MARK: - Constants
   
@@ -19,6 +23,7 @@ final class ItemHistorySectionView: BaseView {
     static let guideLabelTopMargin: CGFloat = 4
     static let itemHistoryCollectionViewTopMargin: CGFloat = 4
     static let itemHistoryCollectionViewBottomMargin: CGFloat = 20
+    static let itemHistoryCollectionViewLeadingTrailingMargin: CGFloat = 24
   }
   
   // MARK: - UI Components
@@ -35,29 +40,29 @@ final class ItemHistorySectionView: BaseView {
     .textColor(.black60)
     .build()
   
-  private let ItemHistoryCollectionView = UICollectionView(
+  private let ItemHistoryCollectionView = DynamicHeightCollectionView(
     frame: .zero,
     collectionViewLayout: .init()
   )
   
   private lazy var adapter = BookmarkTagsCollectionViewAdapter(
     collectionView: ItemHistoryCollectionView,
-    adapterDataSource: listener,
-    delegate: listener, 
+    adapterDataSource: self,
+    delegate: self,
     alignedCollectionViewFlowLayout: LeadingAlignedCollectionViewFlowLayout()
   )
   
   // MARK: - properties
   
-  private let listener: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?
+  private weak var delegateDataSource: ItemHistorySectionDelegateDataSource?
   
   // MARK: - Initialization & Deinitialization
   
-  init(listener: (BookmarkTagsCollectionViewAdapterDataSource & BookmarkCollectionViewCellDelegate)?) {
-    self.listener = listener
+  init(delegateDataSource: (ItemHistorySectionDelegateDataSource)?) {
+    self.delegateDataSource = delegateDataSource
     super.init(frame: .zero)
   }
-  
+
   override func initialize() {
     super.initialize()
     setupUI()
@@ -68,10 +73,30 @@ final class ItemHistorySectionView: BaseView {
     layout()
   }
   
+  // MARK: Delegate & DataSource
+  
+  func didTapTagCell() {
+    guard let delegateDataSource = delegateDataSource else { return }
+    delegateDataSource.didTapItemHistorySectionCell()
+  }
+  
+  func numberOfItems() -> Int {
+    guard let delegateDataSource = delegateDataSource else { return  -1 }
+    return delegateDataSource.numberOfHistoryItems()
+  }
+  
+  func configurationData(at index: Int) -> String {
+    guard let delegateDataSource = delegateDataSource else { return String() }
+    return delegateDataSource.configurationHistoryItem(at: index)
+  }
+  
+  // MARK: - Layout
+  
   private func setupUI() {
     addSubview(sectionHeaderTitleLabel)
     addSubview(guideLabel)
     addSubview(ItemHistoryCollectionView)
+    _ = adapter
   }
   
   private func layout() {
@@ -96,8 +121,8 @@ final class ItemHistorySectionView: BaseView {
   
   private func makeItemHistoryCollectionViewConstraints() {
     ItemHistoryCollectionView.snp.makeConstraints {
-      $0.leading.equalTo(sectionHeaderTitleLabel)
-      $0.top.equalTo(sectionHeaderTitleLabel.snp.bottom).offset(Metric.itemHistoryCollectionViewTopMargin)
+      $0.leading.trailing.equalToSuperview().inset(Metric.itemHistoryCollectionViewLeadingTrailingMargin)
+      $0.top.equalTo(guideLabel.snp.bottom).offset(Metric.itemHistoryCollectionViewTopMargin)
       $0.bottom.equalToSuperview().offset(-Metric.itemHistoryCollectionViewBottomMargin)
     }
   }

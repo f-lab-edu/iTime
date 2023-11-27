@@ -64,7 +64,7 @@ final class LogEntryCreationInteractor:
   }
   
   func configurationData(at index: Int) -> String {
-   ""
+   "즐겨찾기"
   }
 }
 

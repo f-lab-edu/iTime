@@ -17,6 +17,8 @@ extension UIImage {
   public static let on: UIImage = .init(resource: .on)
   public static let chevronRight: UIImage = .init(resource: .chevronRight)
   public static let exitCircleFill: UIImage = .init(resource: .exitCircleFill)
+  public static let iconAdd: UIImage = .init(resource: .iconAdd)
+  public static let iconArrowLeft: UIImage = .init(resource: .iconArrowLeft)
   
   // MARK: - Control
   

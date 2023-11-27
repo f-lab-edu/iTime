@@ -9,6 +9,7 @@ import RIBs
 
 import Start
 import BookmarkUsecase
+import SharedUI
 
 // MARK: - BookmarkEditorDependency
 
@@ -19,7 +20,6 @@ public protocol BookmarkEditorDependency: Dependency {
 // MARK: - BookmarkEditorComponent
 
 final class BookmarkEditorComponent: Component<BookmarkEditorDependency> {
-  
 }
 
 // MARK: - BookmarkEditorBuilder

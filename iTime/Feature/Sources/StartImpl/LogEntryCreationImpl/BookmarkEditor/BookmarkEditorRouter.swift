@@ -43,4 +43,7 @@ final class BookmarkEditorRouter:
   
   // MARK: Route methods
   
+  func detachBookmarkEdtiorRIB() {
+  }
+  
 }

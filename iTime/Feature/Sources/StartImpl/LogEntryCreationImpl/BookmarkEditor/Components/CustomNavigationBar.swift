@@ -24,7 +24,7 @@ final class CustomNavigationBar: BaseView {
   
   let backButton = UIButton().builder
     .with {
-      $0.setImage(.remove, for: .normal)
+      $0.setImage(.iconArrowLeft, for: .normal)
     }
     .build()
   
@@ -36,8 +36,7 @@ final class CustomNavigationBar: BaseView {
   
   let addButton = UIButton().builder
     .with {
-      $0.setImage(.add, for: .normal)
-      $0.setTitleColor(.pointGreen, for: .normal)
+      $0.setImage(.iconAdd, for: .normal)
     }
     .build()
   
