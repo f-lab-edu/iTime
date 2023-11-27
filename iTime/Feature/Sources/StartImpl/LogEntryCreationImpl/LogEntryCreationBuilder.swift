@@ -19,11 +19,16 @@ protocol LogEntryCreationDependency: Dependency {
 
 final class LogEntryCreationComponent: 
   Component<LogEntryCreationDependency>,
-  LogEntryEditorDependency
+  LogEntryEditorDependency,
+  TimeLogRunningDependency
 {
     
   fileprivate var logEntryEditorBuilder: LogEntryEditorBuildable {
     LogEntryEditorBuilder(dependency: self)
+  }
+  
+  fileprivate var timeLogRunningBuilder: TimeLogRunningBuildable {
+    TimeLogRunningBuilder(dependency: self)
   }
 }
 
@@ -47,7 +52,8 @@ final class LogEntryCreationBuilder:
           interactor: interactor,
           viewController: viewController,
           logEntryEditorBuilder: component.logEntryEditorBuilder, 
-          bookmarkEditorBuilder: dependency.bookmarkEditorBuilder
+          bookmarkEditorBuilder: dependency.bookmarkEditorBuilder,
+          timeLogRunningBuilder: component.timeLogRunningBuilder
         )
     }
 }

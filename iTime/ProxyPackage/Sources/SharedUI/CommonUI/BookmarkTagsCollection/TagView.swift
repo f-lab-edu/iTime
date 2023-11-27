@@ -20,6 +20,8 @@ public final class TagView:
   
   private enum Metric {
     static let contentViewRadius: CGFloat = 16
+    static let tagLabelTopBottmMargin: CGFloat = 10
+    static let tagLabelLeadingTrailing: CGFloat = 20
   }
   
   // MARK: - UI Components
@@ -61,13 +63,14 @@ public final class TagView:
   
   private func layout() {
     tagLabel.snp.makeConstraints {
-      $0.center.equalToSuperview()
+      $0.center.equalToSuperview().priority(.low)
     }
   }
   
   private func remakeConstraints() {
     tagLabel.snp.remakeConstraints {
-      $0.center.equalToSuperview()
+      $0.top.bottom.equalToSuperview().inset(Metric.tagLabelTopBottmMargin).priority(.high)
+      $0.left.trailing.equalToSuperview().inset(Metric.tagLabelLeadingTrailing).priority(.high)
     }
     
     layoutIfNeeded()

@@ -14,7 +14,8 @@ import Start
 protocol LogEntryCreationInteractable:
   Interactable,
   LogEntryEditorListener,
-  BookmarkEditorListener
+  BookmarkEditorListener,
+  TimeLogRunningListener
 {
   var router: LogEntryCreationRouting? { get set }
   var listener: LogEntryCreationListener? { get set }
@@ -39,14 +40,19 @@ final class LogEntryCreationRouter:
   private let bookmarkEditorBuilder: BookmarkEditorBuildable
   private var bookmarkEditorRouter: BookmarkEditorRouting?
   
+  private let timeLogRunningBuilder: TimeLogRunningBuildable
+  private var timeLogRunningRouter: TimeLogRunningRouting?
+  
   init(
     interactor: LogEntryCreationInteractable,
     viewController: LogEntryCreationViewControllable,
     logEntryEditorBuilder: LogEntryEditorBuildable,
-    bookmarkEditorBuilder: BookmarkEditorBuildable
+    bookmarkEditorBuilder: BookmarkEditorBuildable,
+    timeLogRunningBuilder: TimeLogRunningBuildable
   ) {
     self.logEntryEditorBuilder = logEntryEditorBuilder
     self.bookmarkEditorBuilder = bookmarkEditorBuilder
+    self.timeLogRunningBuilder = timeLogRunningBuilder
     super.init(interactor: interactor, viewController: viewController)
     interactor.router = self
   }
@@ -87,5 +93,21 @@ final class LogEntryCreationRouter:
     bookmarkEditorRouter = nil
     detachChild(router)
     viewController.dismiss(animated: true, completion: nil)
+  }
+  
+  func attachTimeLogRunningRIB() {
+    guard timeLogRunningRouter == nil else { return }
+    let router = timeLogRunningBuilder.build(withListener: interactor)
+    timeLogRunningRouter = router
+    attachChild(router)
+    router.viewControllable.uiviewController.hidesBottomBarWhenPushed = true
+    viewController.pushViewController(router.viewControllable, animated: true)
+  }
+  
+  func detachTimeLogRunningRIB() {
+    guard let router = timeLogRunningRouter else { return }
+    timeLogRunningRouter = nil
+    detachChild(router)
+    viewController.popViewController(animated: true, completion: nil)
   }
 }

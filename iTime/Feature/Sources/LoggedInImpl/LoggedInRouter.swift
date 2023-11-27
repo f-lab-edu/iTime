@@ -10,6 +10,8 @@ import RIBs
 import Start
 import LoggedIn
 
+import SharedUI
+
 protocol LoggedInInteractable:
   Interactable,
   StartListener
@@ -43,7 +45,7 @@ final class LoggedInRouter:
     attachTabChildsRIB()
     guard let startViewControllable = startViewControllable() else { return }
     let tabs: [ViewControllable] = [
-      startViewControllable
+      NavigationControllerable(root: startViewControllable)
     ]
     
     viewController.setViewControllers(tabs, animated: false)
