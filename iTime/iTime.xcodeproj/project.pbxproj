@@ -25,13 +25,13 @@
 		DE3449FE2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE3449FD2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl */; };
 		DE44DF4A2B07AE9E000A4865 /* SharedUI in Frameworks */ = {isa = PBXBuildFile; productRef = DE44DF492B07AE9E000A4865 /* SharedUI */; };
 		DE4E551C2AEA483F00DDD145 /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E551B2AEA483F00DDD145 /* AppComponent.swift */; };
-		DE4E551F2AEA48FB00DDD145 /* AppRootBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E551E2AEA48FB00DDD145 /* AppRootBuilder.swift */; };
-		DE4E55212AEA493100DDD145 /* AppRootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E55202AEA493100DDD145 /* AppRootInteractor.swift */; };
-		DE4E55232AEA493900DDD145 /* AppRootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E55222AEA493900DDD145 /* AppRootRouter.swift */; };
-		DE4E55252AEA495800DDD145 /* AppRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E55242AEA495800DDD145 /* AppRootViewController.swift */; };
 		DE577F2C2AFBA29C006699F2 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE577F2B2AFBA29C006699F2 /* Configuration.swift */; };
 		DE7CDBFF2B0B5A96009824D1 /* BookmarkUsecase in Frameworks */ = {isa = PBXBuildFile; productRef = DE7CDBFE2B0B5A96009824D1 /* BookmarkUsecase */; };
 		DE7CDC012B0B5A96009824D1 /* BookmarkUsecaseImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE7CDC002B0B5A96009824D1 /* BookmarkUsecaseImpl */; };
+		DE8AF0682B11B63C00D71721 /* Editor in Frameworks */ = {isa = PBXBuildFile; productRef = DE8AF0672B11B63C00D71721 /* Editor */; };
+		DE8AF06A2B11B63C00D71721 /* EditorImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE8AF0692B11B63C00D71721 /* EditorImpl */; };
+		DE8AF06C2B12EA6200D71721 /* AppRoot in Frameworks */ = {isa = PBXBuildFile; productRef = DE8AF06B2B12EA6200D71721 /* AppRoot */; };
+		DE8AF06E2B12EA6200D71721 /* AppRootImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE8AF06D2B12EA6200D71721 /* AppRootImpl */; };
 		DE9C22A62AFDC19A00F9B436 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DE9C22A52AFDC19A00F9B436 /* Settings.bundle */; };
 		DEB54D402AE7F84600E940BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEB54D3F2AE7F84600E940BE /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -47,10 +47,6 @@
 		DE0570BA2AE6B6E900669BDF /* ProxyPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ProxyPackage; sourceTree = "<group>"; };
 		DE0AF00F2AE9EFEF00F65102 /* iTime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iTime.entitlements; sourceTree = "<group>"; };
 		DE4E551B2AEA483F00DDD145 /* AppComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppComponent.swift; sourceTree = "<group>"; };
-		DE4E551E2AEA48FB00DDD145 /* AppRootBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootBuilder.swift; sourceTree = "<group>"; };
-		DE4E55202AEA493100DDD145 /* AppRootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootInteractor.swift; sourceTree = "<group>"; };
-		DE4E55222AEA493900DDD145 /* AppRootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootRouter.swift; sourceTree = "<group>"; };
-		DE4E55242AEA495800DDD145 /* AppRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootViewController.swift; sourceTree = "<group>"; };
 		DE577F2B2AFBA29C006699F2 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		DE589D8D2AFB373700F14A40 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		DE589D8E2AFB376600F14A40 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
@@ -67,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE8AF06C2B12EA6200D71721 /* AppRoot in Frameworks */,
 				DE1A18F22B00B273009E1672 /* AppFoundation in Frameworks */,
 				DE3449FE2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl in Frameworks */,
 				DE1A18E62B00B26A009E1672 /* StartImpl in Frameworks */,
@@ -78,8 +75,11 @@
 				DE1A18F42B00B273009E1672 /* ProxyPackage in Frameworks */,
 				DE3449FC2B00AC8300C3E3F4 /* AuthenticationUsecase in Frameworks */,
 				DE1A18E02B00B26A009E1672 /* LoggedOut in Frameworks */,
+				DE8AF06E2B12EA6200D71721 /* AppRootImpl in Frameworks */,
+				DE8AF06A2B11B63C00D71721 /* EditorImpl in Frameworks */,
 				DE7CDC012B0B5A96009824D1 /* BookmarkUsecaseImpl in Frameworks */,
 				DE1A18DC2B00B26A009E1672 /* LoggedIn in Frameworks */,
+				DE8AF0682B11B63C00D71721 /* Editor in Frameworks */,
 				DE7CDBFF2B0B5A96009824D1 /* BookmarkUsecase in Frameworks */,
 				DE1A18DE2B00B26A009E1672 /* LoggedInImpl in Frameworks */,
 			);
@@ -114,7 +114,6 @@
 			isa = PBXGroup;
 			children = (
 				DE0570B72AE67B2800669BDF /* AppStart */,
-				DE4E551D2AEA487C00DDD145 /* AppRoot */,
 				DE0570B62AE67ACB00669BDF /* Resources */,
 			);
 			path = iTime;
@@ -142,17 +141,6 @@
 				DE0570A42AE6735E00669BDF /* SceneDelegate.swift */,
 			);
 			path = AppStart;
-			sourceTree = "<group>";
-		};
-		DE4E551D2AEA487C00DDD145 /* AppRoot */ = {
-			isa = PBXGroup;
-			children = (
-				DE4E551E2AEA48FB00DDD145 /* AppRootBuilder.swift */,
-				DE4E55202AEA493100DDD145 /* AppRootInteractor.swift */,
-				DE4E55222AEA493900DDD145 /* AppRootRouter.swift */,
-				DE4E55242AEA495800DDD145 /* AppRootViewController.swift */,
-			);
-			path = AppRoot;
 			sourceTree = "<group>";
 		};
 		DE589D8C2AFB370300F14A40 /* Configuration */ = {
@@ -204,6 +192,10 @@
 				DE44DF492B07AE9E000A4865 /* SharedUI */,
 				DE7CDBFE2B0B5A96009824D1 /* BookmarkUsecase */,
 				DE7CDC002B0B5A96009824D1 /* BookmarkUsecaseImpl */,
+				DE8AF0672B11B63C00D71721 /* Editor */,
+				DE8AF0692B11B63C00D71721 /* EditorImpl */,
+				DE8AF06B2B12EA6200D71721 /* AppRoot */,
+				DE8AF06D2B12EA6200D71721 /* AppRootImpl */,
 			);
 			productName = iTime;
 			productReference = DE05709F2AE6735E00669BDF /* iTime.app */;
@@ -264,12 +256,8 @@
 			files = (
 				DE0570A32AE6735E00669BDF /* AppDelegate.swift in Sources */,
 				DE0570A52AE6735E00669BDF /* SceneDelegate.swift in Sources */,
-				DE4E55232AEA493900DDD145 /* AppRootRouter.swift in Sources */,
-				DE4E55252AEA495800DDD145 /* AppRootViewController.swift in Sources */,
 				DE4E551C2AEA483F00DDD145 /* AppComponent.swift in Sources */,
-				DE4E551F2AEA48FB00DDD145 /* AppRootBuilder.swift in Sources */,
 				DE577F2C2AFBA29C006699F2 /* Configuration.swift in Sources */,
-				DE4E55212AEA493100DDD145 /* AppRootInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -760,6 +748,22 @@
 		DE7CDC002B0B5A96009824D1 /* BookmarkUsecaseImpl */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BookmarkUsecaseImpl;
+		};
+		DE8AF0672B11B63C00D71721 /* Editor */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Editor;
+		};
+		DE8AF0692B11B63C00D71721 /* EditorImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EditorImpl;
+		};
+		DE8AF06B2B12EA6200D71721 /* AppRoot */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppRoot;
+		};
+		DE8AF06D2B12EA6200D71721 /* AppRootImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppRootImpl;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

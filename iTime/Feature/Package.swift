@@ -11,6 +11,18 @@ let package = Package(
   ],
   products: [
     .library(
+      name: "AppRoot",
+      targets: ["AppRoot"]),
+    .library(
+      name: "AppRootImpl",
+      targets: ["AppRootImpl"]),
+    .library(
+      name: "Editor",
+      targets: ["Editor"]),
+    .library(
+      name: "EditorImpl",
+      targets: ["EditorImpl"]),
+    .library(
       name: "LoggedIn",
       targets: ["LoggedIn"]),
     .library(
@@ -35,9 +47,37 @@ let package = Package(
   ],
   targets: [
     .target(
+      name: "AppRoot",
+      dependencies: [
+        "ProxyPackage"
+      ]),
+    .target(
+      name: "AppRootImpl",
+      dependencies: [
+        "AppRoot",
+        "LoggedIn",
+        "LoggedOut",
+        .product(name: "AuthenticationUsecase", package: "Domain"),
+        .product(name: "SharedUI", package: "ProxyPackage"),
+        .product(name: "AppFoundation", package: "ProxyPackage"),
+      ]),
+    .target(
+      name: "Editor",
+      dependencies: [
+        "ProxyPackage"
+      ]),
+    .target(
+      name: "EditorImpl",
+      dependencies: [
+        "Editor",
+        .product(name: "BookmarkUsecase", package: "Domain"),
+        .product(name: "AppFoundation", package: "ProxyPackage"),
+        .product(name: "SharedUI", package: "ProxyPackage"),
+      ]),
+    .target(
       name: "LoggedIn",
       dependencies: [
-        .product(name: "AuthenticationUsecase", package: "Domain")
+        "ProxyPackage"
       ]),
     .target(
       name: "LoggedInImpl",
@@ -50,7 +90,7 @@ let package = Package(
     .target(
       name: "LoggedOut",
       dependencies: [
-        .product(name: "AuthenticationUsecase", package: "Domain"),
+        "ProxyPackage"
       ]),
     .target(
       name: "LoggedOutImpl",
@@ -64,13 +104,13 @@ let package = Package(
     .target(
       name: "Start",
       dependencies: [
-        .product(name: "AuthenticationUsecase", package: "Domain")
+        "ProxyPackage"
       ]),
     .target(
       name: "StartImpl",
       dependencies: [
         "Start",
-        .product(name: "BookmarkUsecase", package: "Domain"),
+        "Editor",
         .product(name: "AuthenticationUsecase", package: "Domain"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),

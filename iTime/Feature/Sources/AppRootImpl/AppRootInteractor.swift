@@ -7,26 +7,13 @@
 
 import RIBs
 
+import AppRoot
 import AuthenticationUsecase
-
-// MARK: - AppRootRouting
-
-protocol AppRootRouting: ViewableRouting {
-  func attachLoggedOut()
-  func detachLoggedOut(_ completion: (() -> Void)?)
-  func attachLoggedIn()
-  func detachLoggedIn()
-}
 
 // MARK: - AppRootPresentable
 
 protocol AppRootPresentable: Presentable {
   var listener: AppRootPresentableListener? { get set }
-}
-
-// MARK: - AppRootListener
-
-protocol AppRootListener: AnyObject {
 }
 
 // MARK: - AppRootInteractor

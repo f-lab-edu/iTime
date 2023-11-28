@@ -6,8 +6,8 @@
 //
 
 import UIKit
+
 import RIBs
-import SnapKit
 
 import SharedUI
 import AppFoundation

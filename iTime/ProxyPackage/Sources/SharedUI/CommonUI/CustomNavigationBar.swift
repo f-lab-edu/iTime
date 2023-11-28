@@ -7,9 +7,7 @@
 
 import UIKit
 
-import SharedUI
-
-final class CustomNavigationBar: BaseView {
+public final class CustomNavigationBar: BaseView {
   
   // MARK: - Constants
   
@@ -22,7 +20,7 @@ final class CustomNavigationBar: BaseView {
   
   // MARK: - UI Components
   
-  let backButton = UIButton().builder
+  public let backButton = UIButton().builder
     .with {
       $0.setImage(.iconArrowLeft, for: .normal)
     }
@@ -34,7 +32,7 @@ final class CustomNavigationBar: BaseView {
     .textColor(.white)
     .build()
   
-  let addButton = UIButton().builder
+  public let addButton = UIButton().builder
     .with {
       $0.setImage(.iconAdd, for: .normal)
     }
@@ -42,12 +40,12 @@ final class CustomNavigationBar: BaseView {
   
   // MARK: - Initialization & Deinitialization
   
-  override func initialize() {
+  public override func initialize() {
     super.initialize()
     setupUI()
   }
   
-  override func setupConstraints() {
+  public override func setupConstraints() {
     super.setupConstraints()
     layout()
   }

@@ -16,6 +16,9 @@ import SharedUI
 // MARK: - LogEntryEditorPresentableListener
 
 protocol LogEntryEditorPresentableListener: AnyObject {
+  func didTapStartButton()
+  func didTapCategoryStateView()
+  func didTapCloseButton()
 }
 
 // MARK: - LogEntryEditorViewController
@@ -48,7 +51,7 @@ final class LogEntryEditorViewController:
   
   let headerView = CloseButtonHeaderView()
   
-  private let noCategoryView = CategoryStateView().builder
+  private let categoryStateView = CategoryStateView().builder
     .with {
       $0.configure(by: (color: .black60, text: "No Category"))
     }
@@ -101,14 +104,22 @@ extension LogEntryEditorViewController {
     startButton.rx.tap
       .preventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in print("tap") }
+      .drive(with: self) { owner, _ in owner.listener?.didTapStartButton() }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindCategoryStateViewTapAction() {
+    categoryStateView.rx
+      .tapGestureWithPreventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in owner.listener?.didTapCategoryStateView() }
       .disposed(by: disposeBag)
   }
   
   private func bindDetachAction() {
     detachAction
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in print("tap") }
+      .drive(with: self) { owner, _ in owner.listener?.didTapCloseButton() }
       .disposed(by: disposeBag)
   }
 }
@@ -120,7 +131,7 @@ extension LogEntryEditorViewController {
     view.addSubview(editorRoutingTextField)
     view.addSubview(startButton)
     addHeaderViewIfNeeded(to: view)
-    view.addSubview(noCategoryView)
+    view.addSubview(categoryStateView)
     
     layout()
   }
@@ -148,7 +159,7 @@ extension LogEntryEditorViewController {
   }
   
   private func makeNoCategoryViewConstraints() {
-    noCategoryView.snp.makeConstraints {
+    categoryStateView.snp.makeConstraints {
       $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
       $0.centerX.equalToSuperview()
     }
