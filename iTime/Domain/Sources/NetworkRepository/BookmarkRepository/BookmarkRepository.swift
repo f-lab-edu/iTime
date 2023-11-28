@@ -10,8 +10,8 @@ import RxSwift
 // MARK: - BookmarkRepository
 
 public protocol BookmarkRepository {
-  func updateBookmarks(with bookmarks: [Activity]) -> Single<Void>
-  func appendBookmark(_ bookmark: Activity) -> Single<Void>
-  func removeBookmark(_ bookmark: Activity) -> Single<Void>
+  func update(with bookmarks: [Activity]) -> Single<[Activity]>
+  func append(_ bookmark: Activity) -> Single<[Activity]>
+  func remove(_ bookmark: Activity) -> Single<[Activity]>
   func bookmarks() -> Single<[Activity]>
 }

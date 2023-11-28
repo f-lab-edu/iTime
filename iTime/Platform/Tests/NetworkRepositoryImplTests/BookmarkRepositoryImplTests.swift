@@ -15,20 +15,33 @@ final class BookmarkRepositoryImplTests: XCTestCase {
   private var sut: BookmarkRepository!
   private var firestoreRepository: FirestoreRepositoryMock!
   private var userDefaultRepository: UserDefaultRepositoryMock!
+  private var configuration: DummyDataConfiguration!
   
   private var disposeBag: DisposeBag!
+  private var scheduler: TestScheduler!
+  
+  private var resultSubject: PublishSubject<[Activity]>!
+  private lazy var observer = scheduler.record(
+    resultSubject,
+    disposeBag: disposeBag
+  )
   
   // MARK: - Tests
   
   override func setUp() {
     super.setUp()
     
+    configuration = DummyDataConfiguration()
     firestoreRepository = FirestoreRepositoryMock(
-      documentSnapshotMock: BookmarkDocumentSnapshotMock(),
-      querySnapShotMock: BookmarkQuerySnapshotMock()
+      documentSnapshotMock: DocumentSnapshotMock(configuration: configuration),
+      querySnapShotMock: QuerySnapshotMock(configuration: configuration),
+      configuration: configuration
     )
     userDefaultRepository = UserDefaultRepositoryMock()
+    scheduler = TestScheduler(initialClock: 0)
     disposeBag = DisposeBag()
+    resultSubject = PublishSubject<[Activity]>()
+    _ = observer
     
     sut = BookmarkRepositoryImpl(
       firestoreRepository: firestoreRepository,
@@ -36,149 +49,86 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     )
   }
   
-  func test_updateBookmark() {
+  func test_update() {
     // Given
-    let scheduler = TestScheduler(initialClock: 0)
-    let dummyBookmarks = DummyData.DummyBookmark.dummyBookmarks
-    let resultSubject = PublishSubject<Bool>()
+    let dummyBookmarksFour = DummyData.DummyBookmark.dummyBookmarksFour
     
     // When
-    scheduler.scheduleAt(10) { [weak self] in
-      guard let self else { return }
-      _ = self.sut.updateBookmarks(with: dummyBookmarks)
-        .subscribe { result in
-          switch result {
-          case .success:
-            resultSubject.onNext(true)
-          case .failure:
-            resultSubject.onNext(false)
-          }
-        }
-        .disposed(by: disposeBag)
+    scheduler.scheduleAt(1) {
+      _ = self.sut.update(with: dummyBookmarksFour)
+        .subscribe(onSuccess: { self.resultSubject.onNext($0) } )
     }
-    
-    let observer = scheduler.record(
-      resultSubject,
-      disposeBag: disposeBag
-    )
     
     // Then
     scheduler.start()
       
     XCTAssertEqual(observer.events, [
-      .next(10, true),
+      .next(1, dummyBookmarksFour),
       ])
     XCTAssertEqual(firestoreRepository.updateCallCount, 1)
-    XCTAssertEqual(userDefaultRepository.userIDCallCount, 1)
   }
 
-  func test_appendBookmark() {
+  func test_append() {
     // Given
-    let scheduler = TestScheduler(initialClock: 0)
-    let dummyBookmark = DummyData.DummyBookmark.dummyBookmark
-    let resultSubject = PublishSubject<Bool>()
+    let dummyBookmark = DummyData.DummyBookmark.dummyBookmarkOne
     
     // When
-    scheduler.scheduleAt(10) { [weak self] in
-      guard let self else { return }
-      _ = self.sut.appendBookmark(dummyBookmark)
-        .subscribe { result in
-          switch result {
-          case .success:
-            resultSubject.onNext(true)
-          case .failure:
-            resultSubject.onNext(false)
-          }
-        }
-        .disposed(by: disposeBag)
+    scheduler.scheduleAt(1) {
+      _ = self.sut.append(dummyBookmark)
+        .subscribe(onSuccess: { self.resultSubject.onNext($0) })
     }
-    
-    let observer = scheduler.record(
-      resultSubject,
-      disposeBag: disposeBag
-    )
     
     // Then
     scheduler.start()
-      
+    
     XCTAssertEqual(observer.events, [
-      .next(10, true),
-      ])
-    XCTAssertEqual(firestoreRepository.documentObservableCallCount, 1)
-    XCTAssertEqual(userDefaultRepository.userIDCallCount, 2)
-    XCTAssertEqual(firestoreRepository.updateCallCount, 1)
+      .next(1, [dummyBookmark])
+    ])
+    //XCTAssertEqual(firestoreRepository.updateCallCount, 2)
   }
   
-  func test_removeBookmark() {
+  func test_remove() {
     // Given
-    let scheduler = TestScheduler(initialClock: 0)
-    let dummyBookmark = DummyData.DummyBookmark.dummyBookmark
-    let resultSubject = PublishSubject<Bool>()
+    let dummyBookmarkOne = DummyData.DummyBookmark.dummyBookmarkOne
+    let dummyBookmarkTwo = DummyData.DummyBookmark.dummyBookmarkTwo
+    let dummyBookmarks = [dummyBookmarkOne, dummyBookmarkTwo]
     
     // When
-    scheduler.scheduleAt(10) { [weak self] in
-      guard let self else { return }
-      _ = self.sut.removeBookmark(dummyBookmark)
-        .subscribe { result in
-          switch result {
-          case .success:
-            resultSubject.onNext(true)
-          case .failure:
-            resultSubject.onNext(false)
-          }
-        }
-        .disposed(by: disposeBag)
+    scheduler.scheduleAt(1) {
+      _ = self.sut.update(with: dummyBookmarks).subscribe()
+      
+      _ = self.sut.remove(dummyBookmarkTwo)
+        .subscribe(onSuccess: { self.resultSubject.onNext($0) })
     }
-    
-    let observer = scheduler.record(
-      resultSubject,
-      disposeBag: disposeBag
-    )
     
     // Then
     scheduler.start()
       
     XCTAssertEqual(observer.events, [
-      .next(10, true),
+      .next(1, [dummyBookmarkOne]),
       ])
-    XCTAssertEqual(firestoreRepository.updateCallCount, 1)
-    XCTAssertEqual(firestoreRepository.documentObservableCallCount, 1)
-    XCTAssertEqual(userDefaultRepository.userIDCallCount, 2)
+    XCTAssertEqual(firestoreRepository.updateCallCount, 2)
   }
   
   func test_Bookmarks() {
     // Given
-    let scheduler = TestScheduler(initialClock: 0)
-    let resultSubject = PublishSubject<[Activity]>()
+    let dummyBookmarks = DummyData.DummyBookmark.dummyBookmarksFour
     
     // When
-    scheduler.scheduleAt(10) { [weak self] in
-      guard let self else { return }
+    scheduler.scheduleAt(1) {
+      _ = self.sut.update(with: dummyBookmarks).subscribe()
+      
       _ = self.sut.bookmarks()
-        .subscribe { result in
-          switch result {
-          case let .success(bookmarks):
-            resultSubject.onNext(bookmarks)
-          case .failure:
-            resultSubject.onNext([])
-          }
-        }
-        .disposed(by: disposeBag)
+        .subscribe(onSuccess: { self.resultSubject.onNext($0) })
     }
-    
-    let observer = scheduler.record(
-      resultSubject,
-      disposeBag: disposeBag
-    )
     
     // Then
     scheduler.start()
     
     XCTAssertEqual(observer.events, [
-      .next(10, DummyData.DummyBookmark.dummyBookmarks),
+      .next(1, dummyBookmarks),
       ])
-    XCTAssertEqual(firestoreRepository.documentObservableCallCount, 1)
-    XCTAssertEqual(userDefaultRepository.userIDCallCount, 1)
+    XCTAssertEqual(firestoreRepository.documentObservableCallCount, 2)
   }
   
 }

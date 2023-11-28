@@ -7,6 +7,7 @@
 
 import RxSwift
 
+import BaseRepository
 import NetworkRepository
 import LocalDataBaseRepository
 
@@ -42,7 +43,7 @@ public final class TimeLogHistoryRepositoryImpl: TimeLogHistoryRepository {
     self.userDefaultRepository = userDefaultRepository
   }
 
-  public func append(_ history: TimeLogHistory) -> Single<Void> {
+  public func append(_ history: TimeLogHistory) -> Single<[TimeLogHistory]> {
     timeLogHistories()
       .map { $0 + [history] }
       .flatMap { [weak self] histories in
@@ -51,7 +52,7 @@ public final class TimeLogHistoryRepositoryImpl: TimeLogHistoryRepository {
       }
   }
   
-  public func remove(with logID: String) -> Single<Void> {
+  public func remove(with logID: String) -> Single<[TimeLogHistory]> {
     timeLogHistories()
       .map {  $0.filter { $0.id != logID } }
       .flatMap { [weak self] histories in
@@ -67,6 +68,7 @@ public final class TimeLogHistoryRepositoryImpl: TimeLogHistoryRepository {
       includeMetadata: false
     )
     .compactMap { try $0.decode() }
+    .ifEmpty(default: TimeLogHistoryList([]))
     .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
     .asSingle()
     
@@ -75,14 +77,15 @@ public final class TimeLogHistoryRepositoryImpl: TimeLogHistoryRepository {
   
   // MARK: - Private
   
-  private func update(with histories: [TimeLogHistory]) -> Single<Void> {
+  private func update(with histories: [TimeLogHistory]) -> Single<[TimeLogHistory]> {
     firestoreRepository.update(
       reference: DatabaseReference.timeLogHistorySession(userID: userDefaultRepository.userID()),
       with: TimeLogHistoryList(histories).toJson() ?? [:],
       merge: false
     )
+    .withUnretained(self)
+    .flatMap { owner, _ in owner.timeLogHistories() }
     .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
     .asSingle()
-    .map { _ in Void() }
   }
 }

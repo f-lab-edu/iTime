@@ -28,6 +28,7 @@ extension iTimeDocumentSnapshot {
   }
   
   public func decode<T: Decodable>() throws -> T? {
+    guard let dataValue = data(), !dataValue.isEmpty else { return nil }
     let json = try data()
       .flatMap { try JSONSerialization.data(withJSONObject: $0, options: .sortedKeys) } ?? Data()
     let decoder = JSONDecoder()

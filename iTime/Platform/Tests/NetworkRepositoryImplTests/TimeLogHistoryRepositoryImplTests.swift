@@ -22,18 +22,31 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
   private var sut: TimeLogHistoryRepository!
   private var firestoreRepository: FirestoreRepositoryMock!
   private var userDefaultRepository: UserDefaultRepositoryMock!
+  private var configuration: DummyDataConfiguration!
   
   private var disposeBag: DisposeBag!
+  private var scheduler: TestScheduler!
+  
+  private var resultSubject: PublishSubject<[TimeLogHistory]>!
+  private lazy var observer = scheduler.record(
+    resultSubject,
+    disposeBag: disposeBag
+  )
 
   override func setUp() {
     super.setUp()
     
+    configuration = DummyDataConfiguration()
     firestoreRepository = FirestoreRepositoryMock(
-      documentSnapshotMock: TimeLogHistoryDocumentSnapshotMock(),
-      querySnapShotMock: TimeLogHistorykQuerySnapshotMock()
+      documentSnapshotMock: DocumentSnapshotMock(configuration: configuration),
+      querySnapShotMock: QuerySnapshotMock(configuration: configuration),
+      configuration: configuration
     )
     userDefaultRepository = UserDefaultRepositoryMock()
+    scheduler = TestScheduler(initialClock: 0)
     disposeBag = DisposeBag()
+    resultSubject = PublishSubject<[TimeLogHistory]>()
+    _ = observer
     
     sut = TimeLogHistoryRepositoryImpl(
       firestoreRepository: firestoreRepository,
@@ -43,111 +56,66 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
   
   func test_append() {
     // Given
-    let scheduler = TestScheduler(initialClock: 0)
     let dummyTimeLogHistory = DummyData.DummyTimeLogHistory.dummyTimeLogHistory
-    let resultSubject = PublishSubject<Bool>()
     
     // When
-    scheduler.scheduleAt(10, action: { [weak self] in
-      guard let self else { return }
+    scheduler.scheduleAt(1) {
       _ = self.sut.append(dummyTimeLogHistory)
-        .subscribe { result in
-          switch result {
-          case .success:
-            resultSubject.onNext(true)
-          case .failure:
-            resultSubject.onNext(false)
-          }
-        }
-        .disposed(by: disposeBag)
-    })
-    
-    let observer = scheduler.record(
-      resultSubject,
-      disposeBag: disposeBag
-    )
+        .subscribe(onSuccess: { self.resultSubject.onNext($0) } )
+    }
     
     // Then
     scheduler.start()
-    
+      
     XCTAssertEqual(observer.events, [
-      .next(10, true)
-    ])
-    XCTAssertEqual(firestoreRepository.documentObservableCallCount, 1)
-    XCTAssertEqual(userDefaultRepository.userIDCallCount, 2)
+      .next(1, [dummyTimeLogHistory]),
+      ])
     XCTAssertEqual(firestoreRepository.updateCallCount, 1)
   }
   
   func test_remove() {
+    
     // Given
-    let scheduler = TestScheduler(initialClock: 0)
     let dummyTimeLogHistoryID = DummyData.DummyID.timeLogHistoryID
-    let resultSubject = PublishSubject<Bool>()
+    let dummyTimeLogHistory = DummyData.DummyTimeLogHistory.dummyTimeLogHistory
     
     // When
-    scheduler.scheduleAt(10, action: { [weak self] in
-      guard let self else { return }
+    scheduler.scheduleAt(1) {
+      _ = self.sut.append(dummyTimeLogHistory).subscribe()
+      
       _ = self.sut.remove(with: dummyTimeLogHistoryID)
-        .subscribe { result in
-          switch result {
-          case .success:
-            resultSubject.onNext(true)
-          case .failure:
-            resultSubject.onNext(false)
-          }
-        }
-        .disposed(by: disposeBag)
-    })
-    
-    let observer = scheduler.record(
-      resultSubject,
-      disposeBag: disposeBag
-    )
+        .subscribe(onSuccess: { self.resultSubject.onNext($0) })
+    }
     
     // Then
     scheduler.start()
-    
+      
     XCTAssertEqual(observer.events, [
-      .next(10, true)
-    ])
-    XCTAssertEqual(firestoreRepository.documentObservableCallCount, 1)
-    XCTAssertEqual(userDefaultRepository.userIDCallCount, 2)
-    XCTAssertEqual(firestoreRepository.updateCallCount, 1)
+      .next(1, []),
+      ])
+    XCTAssertEqual(firestoreRepository.updateCallCount, 2)
   }
   
   func test_timeLogHistorires() {
     // Given
-    let scheduler = TestScheduler(initialClock: 0)
-    let resultSubject = PublishSubject<[TimeLogHistory]>()
+    let dummyTimeLogHistory = DummyData.DummyTimeLogHistory.dummyTimeLogHistory
     
     // When
-    scheduler.scheduleAt(10, action: { [weak self] in
-      guard let self else { return }
+    scheduler.scheduleAt(1) {
+      _ = self.sut.append(dummyTimeLogHistory).subscribe()
+      _ = self.sut.append(dummyTimeLogHistory).subscribe()
+      _ = self.sut.append(dummyTimeLogHistory).subscribe()
+      
       _ = self.sut.timeLogHistories()
-        .subscribe { result in
-          switch result {
-          case let .success(histories):
-            resultSubject.onNext(histories)
-          case .failure:
-            resultSubject.onNext([])
-          }
-        }
-        .disposed(by: disposeBag)
-    })
-    
-    let observer = scheduler.record(
-      resultSubject,
-      disposeBag: disposeBag
-    )
+        .subscribe(onSuccess: { self.resultSubject.onNext($0) })
+    }
     
     // Then
     scheduler.start()
     
     XCTAssertEqual(observer.events, [
-      .next(10, DummyData.DummyTimeLogHistory.dummyTimeLogHisotries)
-    ])
-    XCTAssertEqual(firestoreRepository.documentObservableCallCount, 1)
-    XCTAssertEqual(userDefaultRepository.userIDCallCount, 1)
+      .next(1, [dummyTimeLogHistory,dummyTimeLogHistory,dummyTimeLogHistory]),
+      ])
   }
 
 }

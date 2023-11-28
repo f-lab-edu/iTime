@@ -77,18 +77,19 @@ let package = Package(
     .target(
         name: "LocalDataBaseRepository",
         dependencies: [
-            "ProxyPackage"
+            .product(name: "BaseRepository", package: "ProxyPackage"),
         ]),
     .target(
         name: "NetworkRepository",
         dependencies: [
-            "ProxyPackage"
+            .product(name: "BaseRepository", package: "ProxyPackage"),
         ]),
     .target(
       name: "RepositoryTestSupports",
       dependencies: [
         "NetworkRepository",
         "LocalDataBaseRepository",
+        .product(name: "BaseRepository", package: "ProxyPackage"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
       ]),
   ]

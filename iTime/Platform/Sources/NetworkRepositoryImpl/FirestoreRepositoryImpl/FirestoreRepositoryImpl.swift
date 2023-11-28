@@ -8,6 +8,7 @@
 import FirebaseFirestore
 import RxSwift
 
+import BaseRepository
 import NetworkRepository
 
 // MARK: - DocumentSnapshot & QuerySnapshot

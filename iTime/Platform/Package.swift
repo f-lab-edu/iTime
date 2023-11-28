@@ -33,17 +33,17 @@ let package = Package(
       dependencies: [
         .product(name: "NetworkRepository", package: "Domain"),
         .product(name: "LocalDataBaseRepository", package: "Domain"),
-        "ProxyPackage",
         .product(name: "AppFoundation", package: "ProxyPackage"),
       ]),
     .testTarget(
       name: "NetworkRepositoryImplTests",
       dependencies: [
-        .product(name: "NetworkRepository", package: "Domain"),
         "NetworkRepositoryImpl",
-        .product(name: "LocalDataBaseRepository", package: "Domain"),
         "LocalDataBaseRepositoryImpl",
+        .product(name: "NetworkRepository", package: "Domain"),
+        .product(name: "LocalDataBaseRepository", package: "Domain"),
         .product(name: "RepositoryTestSupports", package: "Domain"),
+        .product(name: "BaseRepository", package: "ProxyPackage"),
         .product(name: "ProxyTestSupport", package: "ProxyPackage"),
       ]
     ),

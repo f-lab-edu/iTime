@@ -7,19 +7,23 @@
 
 import RxSwift
 
+import BaseRepository
 import NetworkRepository
 
 public final class FirestoreRepositoryMock: FirestoreRepository {
   
   private let documentSnapshotMock: iTimeDocumentSnapshot
   private let querySnapshotMock: iTimeQuerySnapshot
+  private let configuration: DummyDataConfiguration
   
   public init(
     documentSnapshotMock: iTimeDocumentSnapshot,
-    querySnapShotMock: iTimeQuerySnapshot
+    querySnapShotMock: iTimeQuerySnapshot,
+    configuration: DummyDataConfiguration
   ) {
     self.documentSnapshotMock = documentSnapshotMock
     self.querySnapshotMock = querySnapShotMock
+    self.configuration = configuration
   }
   
   public var createCallcount: Int = 0
@@ -38,6 +42,7 @@ public final class FirestoreRepositoryMock: FirestoreRepository {
     merge: Bool
   ) -> Observable<String> {
     updateCallCount += 1
+    configuration.update(with: data)
     return .just(DummyData.DummyID.documentID)
   }
   

@@ -7,6 +7,7 @@
 
 import RxSwift
 
+import BaseRepository
 import NetworkRepository
 import LocalDataBaseRepository
 
@@ -44,32 +45,34 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
   
   // MARK: - Methods
   
-  public func updateBookmarks(with bookmarks: [Activity]) -> Single<Void> {
+  public func update(with bookmarks: [Activity]) -> Single<[Activity]> {
     firestoreRepository.update(
       reference: DatabaseReference.bookmarkSession(userID: userDefaultRepository.userID()),
       with: BookmarkList(bookmarks).toJson() ?? [:] ,
       merge: false
     )
+    .withUnretained(self)
+    .flatMap { owner, _ in owner.bookmarks() }
     .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
     .asSingle()
-    .map { _ in Void() }
   }
   
-  public func appendBookmark(_ bookmark: Activity) -> Single<Void> {
+  public func append(_ bookmark: Activity) -> Single<[Activity]> {
     bookmarks()
+      .debug("shlee@@")
       .map { $0 + [bookmark] }
       .flatMap { [weak self] bookmarks in
         guard let self else { return .error(MyError.networkNullError)}
-        return self.updateBookmarks(with: bookmarks)
+        return self.update(with: bookmarks)
       }
   }
   
-  public func removeBookmark(_ bookmark: Activity) -> Single<Void> {
+  public func remove(_ bookmark: Activity) -> Single<[Activity]> {
     bookmarks()
-      .map {  $0.filter { $0.title != bookmark.title } }
+      .map { $0.filter { $0 != bookmark } }
       .flatMap { [weak self] bookmarks in
         guard let self else { return .error(MyError.networkNullError)}
-        return self.updateBookmarks(with: bookmarks)
+        return self.update(with: bookmarks)
       }
   }
   
@@ -80,6 +83,7 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
       includeMetadata: false
     )
     .compactMap { try $0.decode() }
+    .ifEmpty(default: BookmarkList([]))
     .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
     .asSingle()
     
