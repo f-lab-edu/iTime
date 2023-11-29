@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Bookmark {
+public struct Category {
   public let title: String
-  let category: Category
+  public let color: String
 }

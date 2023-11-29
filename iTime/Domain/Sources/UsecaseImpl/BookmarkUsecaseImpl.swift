@@ -7,7 +7,8 @@
 
 import RxSwift
 
-import BookmarkUsecase
+import Usecase
+import Entities
 
 public final class BookmarkUsecaseImpl: BookmarkUsecase {
   

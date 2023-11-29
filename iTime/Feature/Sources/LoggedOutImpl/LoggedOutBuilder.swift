@@ -7,7 +7,7 @@
 
 import RIBs
 
-import AuthenticationUsecase
+import Usecase
 import LoggedOut
 
 // MARK: - LoggedOutDependency

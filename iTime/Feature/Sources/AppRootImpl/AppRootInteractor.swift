@@ -8,7 +8,7 @@
 import RIBs
 
 import AppRoot
-import AuthenticationUsecase
+import Usecase
 
 // MARK: - AppRootPresentable
 

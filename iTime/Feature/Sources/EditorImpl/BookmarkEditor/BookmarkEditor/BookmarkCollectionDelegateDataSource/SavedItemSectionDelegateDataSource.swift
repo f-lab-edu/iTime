@@ -6,7 +6,7 @@
 //
 
 import SharedUI
-import BookmarkUsecase
+import Usecase
 
 // MARK: - SavedItemSectionListener
 

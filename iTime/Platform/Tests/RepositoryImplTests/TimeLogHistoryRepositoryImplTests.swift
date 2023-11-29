@@ -1,3 +1,10 @@
+//
+//  TimeLogHistoryRepositoryImplTests.swift
+//  
+//
+//  Created by 이상헌 on 11/26/23.
+//
+
 import XCTest
 
 import RxSwift
@@ -8,11 +15,11 @@ import NetworkRepository
 import ProxyTestSupport
 @testable import NetworkRepositoryImpl
 
-final class BookmarkRepositoryImplTests: XCTestCase {
+final class TimeLogHistoryRepositoryImplTests: XCTestCase {
   
   // MARK: - Properties
   
-  private var sut: BookmarkRepository!
+  private var sut: TimeLogHistoryRepository!
   private var firestoreRepository: FirestoreRepositoryMock!
   private var userDefaultRepository: UserDefaultRepositoryMock!
   private var configuration: DummyDataConfiguration!
@@ -20,14 +27,12 @@ final class BookmarkRepositoryImplTests: XCTestCase {
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
   
-  private var resultSubject: PublishSubject<[Activity]>!
+  private var resultSubject: PublishSubject<[TimeLogHistory]>!
   private lazy var observer = scheduler.record(
     resultSubject,
     disposeBag: disposeBag
   )
-  
-  // MARK: - Tests
-  
+
   override func setUp() {
     super.setUp()
     
@@ -40,22 +45,22 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     userDefaultRepository = UserDefaultRepositoryMock()
     scheduler = TestScheduler(initialClock: 0)
     disposeBag = DisposeBag()
-    resultSubject = PublishSubject<[Activity]>()
+    resultSubject = PublishSubject<[TimeLogHistory]>()
     _ = observer
     
-    sut = BookmarkRepositoryImpl(
+    sut = TimeLogHistoryRepositoryImpl(
       firestoreRepository: firestoreRepository,
       userDefaultRepository: userDefaultRepository
     )
   }
   
-  func test_update() {
+  func test_append() {
     // Given
-    let dummyBookmarksFour = DummyData.DummyBookmark.dummyBookmarksFour
+    let dummyTimeLogHistory = DummyData.DummyTimeLogHistory.dummyTimeLogHistory
     
     // When
     scheduler.scheduleAt(1) {
-      _ = self.sut.update(with: dummyBookmarksFour)
+      _ = self.sut.append(dummyTimeLogHistory)
         .subscribe(onSuccess: { self.resultSubject.onNext($0) } )
     }
     
@@ -63,41 +68,23 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     scheduler.start()
       
     XCTAssertEqual(observer.events, [
-      .next(1, dummyBookmarksFour),
+      .next(1, [dummyTimeLogHistory]),
       ])
     XCTAssertEqual(firestoreRepository.updateCallCount, 1)
   }
-
-  func test_append() {
-    // Given
-    let dummyBookmark = DummyData.DummyBookmark.dummyBookmarkOne
-    
-    // When
-    scheduler.scheduleAt(1) {
-      _ = self.sut.append(dummyBookmark)
-        .subscribe(onSuccess: { self.resultSubject.onNext($0) })
-    }
-    
-    // Then
-    scheduler.start()
-    
-    XCTAssertEqual(observer.events, [
-      .next(1, [dummyBookmark])
-    ])
-    //XCTAssertEqual(firestoreRepository.updateCallCount, 2)
-  }
   
   func test_remove() {
+    
     // Given
-    let dummyBookmarkOne = DummyData.DummyBookmark.dummyBookmarkOne
-    let dummyBookmarkTwo = DummyData.DummyBookmark.dummyBookmarkTwo
-    let dummyBookmarks = [dummyBookmarkOne, dummyBookmarkTwo]
+    let dummyTimeLogHistoryID = DummyData.DummyID.timeLogHistoryID
+    let dummyTimeLogHistory = DummyData.DummyTimeLogHistory.dummyTimeLogHistory
     
     // When
     scheduler.scheduleAt(1) {
-      _ = self.sut.update(with: dummyBookmarks).subscribe()
-      
-      _ = self.sut.remove(dummyBookmarkTwo)
+      _ = self.sut.append(dummyTimeLogHistory).subscribe()
+    }
+    scheduler.scheduleAt(2) {
+      _ = self.sut.remove(with: dummyTimeLogHistoryID)
         .subscribe(onSuccess: { self.resultSubject.onNext($0) })
     }
     
@@ -105,20 +92,24 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     scheduler.start()
       
     XCTAssertEqual(observer.events, [
-      .next(1, [dummyBookmarkOne]),
+      .next(2, []),
       ])
     XCTAssertEqual(firestoreRepository.updateCallCount, 2)
   }
   
-  func test_Bookmarks() {
+  func test_timeLogHistorires() {
     // Given
-    let dummyBookmarks = DummyData.DummyBookmark.dummyBookmarksFour
+    let dummyTimeLogHistory = DummyData.DummyTimeLogHistory.dummyTimeLogHistory
     
     // When
     scheduler.scheduleAt(1) {
-      _ = self.sut.update(with: dummyBookmarks).subscribe()
-      
-      _ = self.sut.bookmarks()
+      _ = self.sut.append(dummyTimeLogHistory).subscribe()
+      _ = self.sut.append(dummyTimeLogHistory).subscribe()
+      _ = self.sut.append(dummyTimeLogHistory).subscribe()
+    }
+    
+    scheduler.scheduleAt(2) {
+      _ = self.sut.timeLogHistories()
         .subscribe(onSuccess: { self.resultSubject.onNext($0) })
     }
     
@@ -126,9 +117,8 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     scheduler.start()
     
     XCTAssertEqual(observer.events, [
-      .next(1, dummyBookmarks),
+      .next(2, [dummyTimeLogHistory,dummyTimeLogHistory,dummyTimeLogHistory]),
       ])
-    XCTAssertEqual(firestoreRepository.documentObservableCallCount, 2)
   }
-  
+
 }

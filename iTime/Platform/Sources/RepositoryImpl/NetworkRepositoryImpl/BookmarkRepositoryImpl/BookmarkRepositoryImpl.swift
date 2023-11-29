@@ -8,8 +8,7 @@
 import RxSwift
 
 import BaseRepository
-import NetworkRepository
-import LocalDataBaseRepository
+import Repository
 
 import AppFoundation
 

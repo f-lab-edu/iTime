@@ -9,7 +9,7 @@ import RIBs
 import RxSwift
 
 import Editor
-import BookmarkUsecase
+import Usecase
 
 // MARK: - BookmarkEditorPresentable
 

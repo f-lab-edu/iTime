@@ -10,11 +10,8 @@ let package = Package(
   ],
   products: [
     .library(
-      name: "LocalDataBaseRepositoryImpl",
-      targets: ["LocalDataBaseRepositoryImpl"]),
-    .library(
-      name: "NetworkRepositoryImpl",
-      targets: ["NetworkRepositoryImpl"]),
+      name: "RepositoryImpl",
+      targets: ["RepositoryImpl"]),
   ],
   dependencies: [
     .package(path: "../ProxyPackage"),
@@ -22,26 +19,18 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "LocalDataBaseRepositoryImpl",
+      name: "RepositoryImpl",
       dependencies: [
-        .product(name: "LocalDataBaseRepository", package: "Domain"),
+        .product(name: "Repository", package: "Domain"),
         "ProxyPackage",
-        .product(name: "AppFoundation", package: "ProxyPackage"),
-      ]),
-    .target(
-      name: "NetworkRepositoryImpl",
-      dependencies: [
-        .product(name: "NetworkRepository", package: "Domain"),
-        .product(name: "LocalDataBaseRepository", package: "Domain"),
+        .product(name: "BaseRepository", package: "ProxyPackage"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
       ]),
     .testTarget(
-      name: "NetworkRepositoryImplTests",
+      name: "RepositoryImplTests",
       dependencies: [
-        "NetworkRepositoryImpl",
-        "LocalDataBaseRepositoryImpl",
-        .product(name: "NetworkRepository", package: "Domain"),
-        .product(name: "LocalDataBaseRepository", package: "Domain"),
+        "RepositoryImpl",
+        .product(name: "Repository", package: "Domain"),
         .product(name: "RepositoryTestSupports", package: "Domain"),
         .product(name: "BaseRepository", package: "ProxyPackage"),
         .product(name: "ProxyTestSupport", package: "ProxyPackage"),

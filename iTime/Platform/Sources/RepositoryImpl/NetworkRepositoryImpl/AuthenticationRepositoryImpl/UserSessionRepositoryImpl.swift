@@ -8,7 +8,7 @@
 import RxSwift
 
 import BaseRepository
-import NetworkRepository
+import Repository
 import AppFoundation
 
 final class UserSessionRepositoryImpl: UserSessionRepository {

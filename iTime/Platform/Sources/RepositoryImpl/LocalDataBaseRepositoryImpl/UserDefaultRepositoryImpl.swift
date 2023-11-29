@@ -7,7 +7,7 @@
 
 import Foundation
 
-import LocalDataBaseRepository
+import Repository
 
 // MARK: - UserDefaultRepositoryImpl
 

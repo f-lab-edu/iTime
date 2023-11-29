@@ -19,11 +19,10 @@ import Start
 import StartImpl
 import Editor
 import EditorImpl
-import AuthenticationUsecase
-import AuthenticationUsecaseImpl
-import BookmarkUsecase
-import BookmarkUsecaseImpl
-import NetworkRepositoryImpl
+import Usecase
+import UsecaseImpl
+import Repository
+import RepositoryImpl
 import AppFoundation
 
 // MARK: - AppComponent

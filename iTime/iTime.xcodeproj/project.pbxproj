@@ -17,23 +17,21 @@
 		DE1A18E22B00B26A009E1672 /* LoggedOutImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18E12B00B26A009E1672 /* LoggedOutImpl */; };
 		DE1A18E42B00B26A009E1672 /* Start in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18E32B00B26A009E1672 /* Start */; };
 		DE1A18E62B00B26A009E1672 /* StartImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18E52B00B26A009E1672 /* StartImpl */; };
-		DE1A18EC2B00B273009E1672 /* NetworkRepository in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18EB2B00B273009E1672 /* NetworkRepository */; };
-		DE1A18EE2B00B273009E1672 /* NetworkRepositoryImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18ED2B00B273009E1672 /* NetworkRepositoryImpl */; };
 		DE1A18F22B00B273009E1672 /* AppFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18F12B00B273009E1672 /* AppFoundation */; };
 		DE1A18F42B00B273009E1672 /* ProxyPackage in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18F32B00B273009E1672 /* ProxyPackage */; };
-		DE3449FC2B00AC8300C3E3F4 /* AuthenticationUsecase in Frameworks */ = {isa = PBXBuildFile; productRef = DE3449FB2B00AC8300C3E3F4 /* AuthenticationUsecase */; };
-		DE3449FE2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE3449FD2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl */; };
 		DE44DF4A2B07AE9E000A4865 /* SharedUI in Frameworks */ = {isa = PBXBuildFile; productRef = DE44DF492B07AE9E000A4865 /* SharedUI */; };
 		DE4E551C2AEA483F00DDD145 /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E551B2AEA483F00DDD145 /* AppComponent.swift */; };
 		DE577F2C2AFBA29C006699F2 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE577F2B2AFBA29C006699F2 /* Configuration.swift */; };
-		DE7CDBFF2B0B5A96009824D1 /* BookmarkUsecase in Frameworks */ = {isa = PBXBuildFile; productRef = DE7CDBFE2B0B5A96009824D1 /* BookmarkUsecase */; };
-		DE7CDC012B0B5A96009824D1 /* BookmarkUsecaseImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE7CDC002B0B5A96009824D1 /* BookmarkUsecaseImpl */; };
 		DE8AF0682B11B63C00D71721 /* Editor in Frameworks */ = {isa = PBXBuildFile; productRef = DE8AF0672B11B63C00D71721 /* Editor */; };
 		DE8AF06A2B11B63C00D71721 /* EditorImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE8AF0692B11B63C00D71721 /* EditorImpl */; };
 		DE8AF06C2B12EA6200D71721 /* AppRoot in Frameworks */ = {isa = PBXBuildFile; productRef = DE8AF06B2B12EA6200D71721 /* AppRoot */; };
 		DE8AF06E2B12EA6200D71721 /* AppRootImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE8AF06D2B12EA6200D71721 /* AppRootImpl */; };
 		DE9C22A62AFDC19A00F9B436 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DE9C22A52AFDC19A00F9B436 /* Settings.bundle */; };
 		DEB54D402AE7F84600E940BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEB54D3F2AE7F84600E940BE /* GoogleService-Info.plist */; };
+		DEB9EF412B16BE9F0030820D /* Repository in Frameworks */ = {isa = PBXBuildFile; productRef = DEB9EF402B16BE9F0030820D /* Repository */; };
+		DEB9EF432B16BE9F0030820D /* Usecase in Frameworks */ = {isa = PBXBuildFile; productRef = DEB9EF422B16BE9F0030820D /* Usecase */; };
+		DEB9EF452B16BE9F0030820D /* UsecaseImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DEB9EF442B16BE9F0030820D /* UsecaseImpl */; };
+		DEB9EF472B16BEA70030820D /* RepositoryImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DEB9EF462B16BEA70030820D /* RepositoryImpl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,22 +63,20 @@
 			files = (
 				DE8AF06C2B12EA6200D71721 /* AppRoot in Frameworks */,
 				DE1A18F22B00B273009E1672 /* AppFoundation in Frameworks */,
-				DE3449FE2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl in Frameworks */,
 				DE1A18E62B00B26A009E1672 /* StartImpl in Frameworks */,
+				DEB9EF432B16BE9F0030820D /* Usecase in Frameworks */,
 				DE1A18E42B00B26A009E1672 /* Start in Frameworks */,
+				DEB9EF412B16BE9F0030820D /* Repository in Frameworks */,
+				DEB9EF452B16BE9F0030820D /* UsecaseImpl in Frameworks */,
 				DE44DF4A2B07AE9E000A4865 /* SharedUI in Frameworks */,
-				DE1A18EE2B00B273009E1672 /* NetworkRepositoryImpl in Frameworks */,
 				DE1A18E22B00B26A009E1672 /* LoggedOutImpl in Frameworks */,
-				DE1A18EC2B00B273009E1672 /* NetworkRepository in Frameworks */,
 				DE1A18F42B00B273009E1672 /* ProxyPackage in Frameworks */,
-				DE3449FC2B00AC8300C3E3F4 /* AuthenticationUsecase in Frameworks */,
 				DE1A18E02B00B26A009E1672 /* LoggedOut in Frameworks */,
+				DEB9EF472B16BEA70030820D /* RepositoryImpl in Frameworks */,
 				DE8AF06E2B12EA6200D71721 /* AppRootImpl in Frameworks */,
 				DE8AF06A2B11B63C00D71721 /* EditorImpl in Frameworks */,
-				DE7CDC012B0B5A96009824D1 /* BookmarkUsecaseImpl in Frameworks */,
 				DE1A18DC2B00B26A009E1672 /* LoggedIn in Frameworks */,
 				DE8AF0682B11B63C00D71721 /* Editor in Frameworks */,
-				DE7CDBFF2B0B5A96009824D1 /* BookmarkUsecase in Frameworks */,
 				DE1A18DE2B00B26A009E1672 /* LoggedInImpl in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,25 +173,23 @@
 			);
 			name = iTime;
 			packageProductDependencies = (
-				DE3449FB2B00AC8300C3E3F4 /* AuthenticationUsecase */,
-				DE3449FD2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl */,
 				DE1A18DB2B00B26A009E1672 /* LoggedIn */,
 				DE1A18DD2B00B26A009E1672 /* LoggedInImpl */,
 				DE1A18DF2B00B26A009E1672 /* LoggedOut */,
 				DE1A18E12B00B26A009E1672 /* LoggedOutImpl */,
 				DE1A18E32B00B26A009E1672 /* Start */,
 				DE1A18E52B00B26A009E1672 /* StartImpl */,
-				DE1A18EB2B00B273009E1672 /* NetworkRepository */,
-				DE1A18ED2B00B273009E1672 /* NetworkRepositoryImpl */,
 				DE1A18F12B00B273009E1672 /* AppFoundation */,
 				DE1A18F32B00B273009E1672 /* ProxyPackage */,
 				DE44DF492B07AE9E000A4865 /* SharedUI */,
-				DE7CDBFE2B0B5A96009824D1 /* BookmarkUsecase */,
-				DE7CDC002B0B5A96009824D1 /* BookmarkUsecaseImpl */,
 				DE8AF0672B11B63C00D71721 /* Editor */,
 				DE8AF0692B11B63C00D71721 /* EditorImpl */,
 				DE8AF06B2B12EA6200D71721 /* AppRoot */,
 				DE8AF06D2B12EA6200D71721 /* AppRootImpl */,
+				DEB9EF402B16BE9F0030820D /* Repository */,
+				DEB9EF422B16BE9F0030820D /* Usecase */,
+				DEB9EF442B16BE9F0030820D /* UsecaseImpl */,
+				DEB9EF462B16BEA70030820D /* RepositoryImpl */,
 			);
 			productName = iTime;
 			productReference = DE05709F2AE6735E00669BDF /* iTime.app */;
@@ -715,14 +709,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = StartImpl;
 		};
-		DE1A18EB2B00B273009E1672 /* NetworkRepository */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NetworkRepository;
-		};
-		DE1A18ED2B00B273009E1672 /* NetworkRepositoryImpl */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NetworkRepositoryImpl;
-		};
 		DE1A18F12B00B273009E1672 /* AppFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppFoundation;
@@ -731,25 +717,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ProxyPackage;
 		};
-		DE3449FB2B00AC8300C3E3F4 /* AuthenticationUsecase */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AuthenticationUsecase;
-		};
-		DE3449FD2B00AC8300C3E3F4 /* AuthenticationUsecaseImpl */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AuthenticationUsecaseImpl;
-		};
 		DE44DF492B07AE9E000A4865 /* SharedUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SharedUI;
-		};
-		DE7CDBFE2B0B5A96009824D1 /* BookmarkUsecase */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BookmarkUsecase;
-		};
-		DE7CDC002B0B5A96009824D1 /* BookmarkUsecaseImpl */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BookmarkUsecaseImpl;
 		};
 		DE8AF0672B11B63C00D71721 /* Editor */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -766,6 +736,22 @@
 		DE8AF06D2B12EA6200D71721 /* AppRootImpl */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppRootImpl;
+		};
+		DEB9EF402B16BE9F0030820D /* Repository */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Repository;
+		};
+		DEB9EF422B16BE9F0030820D /* Usecase */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Usecase;
+		};
+		DEB9EF442B16BE9F0030820D /* UsecaseImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UsecaseImpl;
+		};
+		DEB9EF462B16BEA70030820D /* RepositoryImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RepositoryImpl;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

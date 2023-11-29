@@ -7,6 +7,8 @@
 
 import RxSwift
 
+import Entities
+
 // MARK: - BookmarkUsecase
 
 public protocol BookmarkUsecase {

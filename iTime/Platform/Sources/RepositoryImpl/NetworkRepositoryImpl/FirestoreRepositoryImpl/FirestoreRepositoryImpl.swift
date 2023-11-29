@@ -9,7 +9,7 @@ import FirebaseFirestore
 import RxSwift
 
 import BaseRepository
-import NetworkRepository
+import Repository
 
 // MARK: - DocumentSnapshot & QuerySnapshot
 
