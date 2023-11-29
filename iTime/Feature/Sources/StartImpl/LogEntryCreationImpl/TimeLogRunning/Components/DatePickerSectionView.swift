@@ -7,19 +7,25 @@
 
 import UIKit
 
+import RxSwift
+
+import AppFoundation
 import SharedUI
 
-final class DatePickerSectionView: BaseView {
+final class DatePickerSectionView:
+  BaseView,
+  EndEditingDelegate
+{
   
   // MARK: - Constants
   
   private enum Metric {
-    static let buttonRadius: CGFloat = 8
-    static let buttonHeight: CGFloat = 44
-    static let buttonWidth: CGFloat = 70
-    static let buttonTopMargin: CGFloat = 4
-    static let eachButtonMargin: CGFloat = 6
-    static let buttonSectionMargin: CGFloat = 20
+    static let textFieldRadius: CGFloat = 8
+    static let textFieldHeight: CGFloat = 44
+    static let textFieldWidth: CGFloat = 70
+    static let textFieldTopMargin: CGFloat = 4
+    static let eachTextFieldMargin: CGFloat = 6
+    static let textFieldSectionMargin: CGFloat = 20
     static let separationViewHeight: CGFloat = 4
   }
   
@@ -31,24 +37,28 @@ final class DatePickerSectionView: BaseView {
     .font(.custom(.regular, 14))
     .build()
   
-  private let startMonthAndDayButton = UIButton().builder
+  private lazy var startDateTextField = UITextField().builder
     .backgroundColor(.black100)
-    .with {
-      $0.setTitle("10/10", for: .normal)
-      $0.setTitleColor(.black40, for: .normal)
-      $0.titleLabel?.font = .custom(.regular, 20)
+    .text("10/10")
+    .textColor(.black40)
+    .font(.custom(.regular, 20))
+    .textAlignment(.center)
+    .with { [weak self] textField in
+      self?.datePickerFactory.makeStartDateToolBar(textField)
     }
-    .set(\.layer.cornerRadius, to: Metric.buttonRadius)
+    .set(\.layer.cornerRadius, to: Metric.textFieldRadius)
     .build()
   
-  private let startHourAndMinuteButton = UIButton().builder
+  private lazy var startTimeTextField = UITextField().builder
     .backgroundColor(.black100)
-    .with {
-      $0.setTitle("10/10", for: .normal)
-      $0.setTitleColor(.black40, for: .normal)
-      $0.titleLabel?.font = .custom(.regular, 20)
+    .text("10/10")
+    .textColor(.black40)
+    .font(.custom(.regular, 20))
+    .textAlignment(.center)
+    .with { [weak self] textField in
+      self?.datePickerFactory.makeStartTimeToolbar(textField)
     }
-    .set(\.layer.cornerRadius, to: Metric.buttonRadius)
+    .set(\.layer.cornerRadius, to: Metric.textFieldRadius)
     .build()
   
   private let separationView = UIView()
@@ -59,29 +69,61 @@ final class DatePickerSectionView: BaseView {
     .font(.custom(.regular, 14))
     .build()
   
-  private let endMonthAndDayButton = UIButton().builder
+  private lazy var endDateTextField = UITextField().builder
     .backgroundColor(.black100)
-    .with {
-      $0.setTitle("10 : 19", for: .normal)
-      $0.setTitleColor(.black80, for: .normal)
-      $0.titleLabel?.font = .custom(.regular, 20)
+    .text("10/10")
+    .font(.custom(.regular, 20))
+    .textColor(.black80)
+    .textAlignment(.center)
+    .with { [weak self] textField in
+      self?.datePickerFactory.makeEndDateToolBar(textField)
     }
-    .set(\.layer.cornerRadius, to: Metric.buttonRadius)
+    .set(\.layer.cornerRadius, to: Metric.textFieldRadius)
     .build()
   
-  private let endHourAndMinuteButton = UIButton().builder
+  private lazy var endTimeTextField = UITextField().builder
     .backgroundColor(.black100)
-    .with {
-      $0.setTitle("10/10", for: .normal)
-      $0.setTitleColor(.black80, for: .normal)
-      $0.titleLabel?.font = .custom(.regular, 20)
+    .text("10/10")
+    .textColor(.black80)
+    .font(.custom(.regular, 20))
+    .textAlignment(.center)
+    .with { [weak self] textField in
+      self?.datePickerFactory.makeEndTimeToolbar(textField)
     }
-    .set(\.layer.cornerRadius, to: Metric.buttonRadius)
+    .set(\.layer.cornerRadius, to: Metric.textFieldRadius)
     .build()
+  
+  // MARK: - Properties
+  
+  private let timeFormatter: TimeFormatter
+  private lazy var datePickerFactory = DatePickerFactory(timeFormatter: timeFormatter)
+  
+  // MARK: - Initialization & Deinitialization
+  
+  init(timeFormatter: TimeFormatter) {
+    self.timeFormatter = timeFormatter
+    super.init(frame: .zero)
+    datePickerFactory.delegate = self
+  }
+  
+  override func initialize() {
+    super.initialize()
+    setupUI()
+  }
+  
+  override func setupConstraints() {
+    super.setupConstraints()
+    layout()
+  }
+  
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    drawDotLine()
+  }
   
   // MARK: - Private
   
-  func drawDotLine() {
+  private func drawDotLine() {
     let layer = CAShapeLayer()
     layer.strokeColor = UIColor.pointGreen.cgColor
     layer.lineDashPattern = [2, 2]
@@ -97,41 +139,32 @@ final class DatePickerSectionView: BaseView {
     separationView.layer.addSublayer(layer)
   }
   
-  // MARK: - Initialization & Deinitialization
+  // MARK: - Delegate
   
-  override func initialize() {
-    super.initialize()
-    setupUI()
+  func endEditing() {
+    endEditing(true)
   }
   
-  override func setupConstraints() {
-    super.setupConstraints()
-    layout()
-  }
-  
-  override func draw(_ rect: CGRect) {
-    super.draw(rect)
-    drawDotLine()
-  }
+  // MARK: - Layout
   
   private func setupUI() {
     addSubview(startTitleLabel)
-    addSubview(startMonthAndDayButton)
-    addSubview(startHourAndMinuteButton)
+    addSubview(startDateTextField)
+    addSubview(startTimeTextField)
     addSubview(endTitleLabel)
     addSubview(separationView)
-    addSubview(endMonthAndDayButton)
-    addSubview(endHourAndMinuteButton)
+    addSubview(endDateTextField)
+    addSubview(endTimeTextField)
   }
   
   private func layout() {
     makeStartTitleLabelConstraints()
-    makeStartMonthAndDayButtonConstraints()
-    makeStartHourAndMinuteButtonConstraints()
+    makeStartDateTextFieldConstraints()
+    makeStartTimeTextFieldConstraints()
     makeSeparationViewConstraints()
     makeEndTitleLabelConstraints()
-    makeEndMonthAndDayButtonConstraints()
-    makeEndHourAndMinuteButtonConstraints()
+    makeEndDateTextFieldConstraints()
+    makeEndTimeTextFieldConstraints()
   }
   
   private func makeStartTitleLabelConstraints() {
@@ -140,54 +173,55 @@ final class DatePickerSectionView: BaseView {
     }
   }
   
-  private func makeStartMonthAndDayButtonConstraints() {
-    startMonthAndDayButton.snp.makeConstraints {
-      $0.top.equalTo(startTitleLabel.snp.bottom).offset(Metric.buttonTopMargin)
+  private func makeStartDateTextFieldConstraints() {
+    startDateTextField.snp.makeConstraints {
+      $0.top.equalTo(startTitleLabel.snp.bottom).offset(Metric.textFieldTopMargin)
       $0.leading.bottom.equalToSuperview()
-      $0.width.equalTo(Metric.buttonWidth)
-      $0.height.equalTo(Metric.buttonHeight)
+      $0.width.equalTo(Metric.textFieldWidth)
+      $0.height.equalTo(Metric.textFieldHeight)
     }
   }
   
-  private func makeStartHourAndMinuteButtonConstraints() {
-    startHourAndMinuteButton.snp.makeConstraints {
-      $0.top.bottom.equalTo(startMonthAndDayButton)
-      $0.leading.equalTo(startMonthAndDayButton.snp.trailing).offset(Metric.eachButtonMargin)
-      $0.size.equalTo(startMonthAndDayButton)
+  private func makeStartTimeTextFieldConstraints() {
+    startTimeTextField.snp.makeConstraints {
+      $0.top.bottom.equalTo(startDateTextField)
+      $0.leading.equalTo(startDateTextField.snp.trailing).offset(Metric.eachTextFieldMargin)
+      $0.size.equalTo(startDateTextField)
     }
   }
   
   private func makeSeparationViewConstraints() {
     separationView.snp.makeConstraints {
       $0.height.equalTo(Metric.separationViewHeight)
-      $0.leading.equalTo(startHourAndMinuteButton.snp.trailing)
-      $0.trailing.equalTo(endMonthAndDayButton.snp.leading)
-      $0.centerY.equalTo(startMonthAndDayButton)
+      $0.leading.equalTo(startTimeTextField.snp.trailing)
+      $0.trailing.equalTo(endDateTextField.snp.leading)
+      $0.centerY.equalTo(startDateTextField)
     }
   }
   
   private func makeEndTitleLabelConstraints() {
     endTitleLabel.snp.makeConstraints {
       $0.top.equalToSuperview()
-      $0.leading.equalTo(endMonthAndDayButton)
+      $0.leading.equalTo(endDateTextField)
     }
   }
   
-  private func makeEndMonthAndDayButtonConstraints() {
-    endMonthAndDayButton.snp.makeConstraints {
-      $0.top.bottom.equalTo(startMonthAndDayButton)
-      $0.leading.equalTo(startHourAndMinuteButton.snp.trailing).offset(Metric.buttonSectionMargin).priority(.high)
-      $0.size.equalTo(startMonthAndDayButton)
+  private func makeEndDateTextFieldConstraints() {
+    endDateTextField.snp.makeConstraints {
+      $0.top.bottom.equalTo(startDateTextField)
+      $0.leading.equalTo(startTimeTextField.snp.trailing).offset(Metric.textFieldSectionMargin).priority(.high)
+      $0.size.equalTo(startDateTextField)
     }
   }
   
-  private func makeEndHourAndMinuteButtonConstraints() {
-    endHourAndMinuteButton.snp.makeConstraints {
-      $0.top.bottom.equalTo(startMonthAndDayButton)
+  private func makeEndTimeTextFieldConstraints() {
+    endTimeTextField.snp.makeConstraints {
+      $0.top.bottom.equalTo(startDateTextField)
       $0.trailing.equalToSuperview()
-      $0.leading.equalTo(endMonthAndDayButton.snp.trailing).offset(Metric.eachButtonMargin)
-      $0.size.equalTo(startMonthAndDayButton)
+      $0.leading.equalTo(endDateTextField.snp.trailing).offset(Metric.eachTextFieldMargin)
+      $0.size.equalTo(startDateTextField)
     }
   }
   
 }
+

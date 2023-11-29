@@ -37,6 +37,9 @@ final class AppComponent:
   LogEntryEditorDependency,
   CategoryEditorDependency
 {
+  var timeFormatter: TimeFormatter {
+    TimeFormatterImpl()
+  }
   
   init() {
     super.init(dependency: EmptyComponent())

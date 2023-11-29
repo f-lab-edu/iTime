@@ -9,12 +9,14 @@ import RIBs
 
 import Start
 import Editor
+import AppFoundation
 
 // MARK: - LogEntryCreationDependency
 
 protocol LogEntryCreationDependency: Dependency {
   var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
   var logEntryEditorBuilder: LogEntryEditorBuildable { get }
+  var timeFormatter: TimeFormatter { get }
 }
 
 // MARK: - LogEntryCreationComponent
@@ -23,6 +25,13 @@ final class LogEntryCreationComponent:
   Component<LogEntryCreationDependency>,
   TimeLogRunningDependency
 {
+  var timeFormatter: TimeFormatter {
+    dependency.timeFormatter
+  }
+  
+  fileprivate var logEntryEditorBuilder: LogEntryEditorBuildable {
+      dependency.logEntryEditorBuilder
+  }
   
   fileprivate var timeLogRunningBuilder: TimeLogRunningBuildable {
     TimeLogRunningBuilder(dependency: self)
