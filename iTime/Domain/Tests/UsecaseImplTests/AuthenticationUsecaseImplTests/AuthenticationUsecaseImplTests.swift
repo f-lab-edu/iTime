@@ -1,6 +1,5 @@
 import XCTest
-import RepositoryTestSupports
-import NetworkRepository
+import Repository
 import AppFoundation
 @testable import AuthenticationUsecaseImpl
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-import NetworkRepository
+import Repository
 
 // MARK: - NotificationCenterSpy
 

@@ -6,7 +6,7 @@
 //
 
 import BaseRepository
-import NetworkRepository
+import Repository
 
 // MARK: - BookmarkDocumentSnapshotMock
 

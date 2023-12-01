@@ -5,7 +5,7 @@
 //  Created by 이상헌 on 11/28/23.
 //
 
-import NetworkRepository
+import Repository
 
 // MARK: - DummDataConfiguration
 

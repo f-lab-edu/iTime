@@ -12,6 +12,12 @@ let package = Package(
     .library(
       name: "RepositoryImpl",
       targets: ["RepositoryImpl"]),
+    .library(
+      name: "Models",
+      targets: ["Models"]),
+    .library(
+      name: "Translator",
+      targets: ["Translator"]),
   ],
   dependencies: [
     .package(path: "../ProxyPackage"),
@@ -19,17 +25,31 @@ let package = Package(
   ],
   targets: [
     .target(
+      name: "Models",
+      dependencies: [
+      ]),
+    .target(
       name: "RepositoryImpl",
       dependencies: [
         .product(name: "Repository", package: "Domain"),
         "ProxyPackage",
+        "Models",
+        "Translator",
         .product(name: "BaseRepository", package: "ProxyPackage"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
+      ]),
+    .target(
+      name: "Translator",
+      dependencies: [
+        "Models",
+        .product(name: "Entities", package: "Domain"),
       ]),
     .testTarget(
       name: "RepositoryImplTests",
       dependencies: [
         "RepositoryImpl",
+        "Translator",
+        .product(name: "Entities", package: "Domain"),
         .product(name: "Repository", package: "Domain"),
         .product(name: "RepositoryTestSupports", package: "Domain"),
         .product(name: "BaseRepository", package: "ProxyPackage"),

@@ -11,15 +11,17 @@ import RxSwift
 import RxTest
 
 import RepositoryTestSupports
-import NetworkRepository
+import Repository
+import Entities
+import Translator
 import ProxyTestSupport
-@testable import NetworkRepositoryImpl
+@testable import RepositoryImpl
 
 final class TimeLogHistoryRepositoryImplTests: XCTestCase {
   
   // MARK: - Properties
   
-  private var sut: TimeLogHistoryRepository!
+  private var sut: TimeLogRecordRepository!
   private var firestoreRepository: FirestoreRepositoryMock!
   private var userDefaultRepository: UserDefaultRepositoryMock!
   private var configuration: DummyDataConfiguration!
@@ -27,7 +29,7 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
   
-  private var resultSubject: PublishSubject<[TimeLogHistory]>!
+  private var resultSubject: PublishSubject<[TimeLogRecord]>!
   private lazy var observer = scheduler.record(
     resultSubject,
     disposeBag: disposeBag
@@ -45,22 +47,23 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
     userDefaultRepository = UserDefaultRepositoryMock()
     scheduler = TestScheduler(initialClock: 0)
     disposeBag = DisposeBag()
-    resultSubject = PublishSubject<[TimeLogHistory]>()
+    resultSubject = PublishSubject<[TimeLogRecord]>()
     _ = observer
     
-    sut = TimeLogHistoryRepositoryImpl(
+    sut = TimeLogRecordRepositoryImpl(
       firestoreRepository: firestoreRepository,
-      userDefaultRepository: userDefaultRepository
+      userDefaultRepository: userDefaultRepository,
+      translator: TimeLogRecordTranslatorImpl()
     )
   }
   
   func test_append() {
     // Given
-    let dummyTimeLogHistory = DummyData.DummyTimeLogHistory.dummyTimeLogHistory
+    let dummyTimeLogRecord = DummyData.DummyTimeLogHistory.dummyTimeLogRecord
     
     // When
     scheduler.scheduleAt(1) {
-      _ = self.sut.append(dummyTimeLogHistory)
+      _ = self.sut.append(dummyTimeLogRecord)
         .subscribe(onSuccess: { self.resultSubject.onNext($0) } )
     }
     
@@ -68,7 +71,7 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
     scheduler.start()
       
     XCTAssertEqual(observer.events, [
-      .next(1, [dummyTimeLogHistory]),
+      .next(1, [dummyTimeLogRecord]),
       ])
     XCTAssertEqual(firestoreRepository.updateCallCount, 1)
   }
@@ -76,15 +79,15 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
   func test_remove() {
     
     // Given
-    let dummyTimeLogHistoryID = DummyData.DummyID.timeLogHistoryID
-    let dummyTimeLogHistory = DummyData.DummyTimeLogHistory.dummyTimeLogHistory
+    let dummyTimeLogRecordID = DummyData.DummyID.timeLogHistoryID
+    let dummyTimeLogRecord = DummyData.DummyTimeLogHistory.dummyTimeLogRecord
     
     // When
     scheduler.scheduleAt(1) {
-      _ = self.sut.append(dummyTimeLogHistory).subscribe()
+      _ = self.sut.append(dummyTimeLogRecord).subscribe()
     }
     scheduler.scheduleAt(2) {
-      _ = self.sut.remove(with: dummyTimeLogHistoryID)
+      _ = self.sut.remove(with: dummyTimeLogRecordID)
         .subscribe(onSuccess: { self.resultSubject.onNext($0) })
     }
     
@@ -99,13 +102,13 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
   
   func test_timeLogHistorires() {
     // Given
-    let dummyTimeLogHistory = DummyData.DummyTimeLogHistory.dummyTimeLogHistory
+    let dummyTimeLogRecord = DummyData.DummyTimeLogHistory.dummyTimeLogRecord
     
     // When
     scheduler.scheduleAt(1) {
-      _ = self.sut.append(dummyTimeLogHistory).subscribe()
-      _ = self.sut.append(dummyTimeLogHistory).subscribe()
-      _ = self.sut.append(dummyTimeLogHistory).subscribe()
+      _ = self.sut.append(dummyTimeLogRecord).subscribe()
+      _ = self.sut.append(dummyTimeLogRecord).subscribe()
+      _ = self.sut.append(dummyTimeLogRecord).subscribe()
     }
     
     scheduler.scheduleAt(2) {
@@ -117,7 +120,7 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
     scheduler.start()
     
     XCTAssertEqual(observer.events, [
-      .next(2, [dummyTimeLogHistory,dummyTimeLogHistory,dummyTimeLogHistory]),
+      .next(2, [dummyTimeLogRecord,dummyTimeLogRecord,dummyTimeLogRecord]),
       ])
   }
 
