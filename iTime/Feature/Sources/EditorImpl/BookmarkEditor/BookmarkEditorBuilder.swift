@@ -8,7 +8,7 @@
 import RIBs
 
 import Editor
-import BookmarkUsecase
+import Usecase
 import SharedUI
 
 // MARK: - BookmarkEditorDependency

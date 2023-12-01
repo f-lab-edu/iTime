@@ -10,11 +10,14 @@ let package = Package(
   ],
   products: [
     .library(
-      name: "LocalDataBaseRepositoryImpl",
-      targets: ["LocalDataBaseRepositoryImpl"]),
+      name: "RepositoryImpl",
+      targets: ["RepositoryImpl"]),
     .library(
-      name: "NetworkRepositoryImpl",
-      targets: ["NetworkRepositoryImpl"]),
+      name: "Models",
+      targets: ["Models"]),
+    .library(
+      name: "Translator",
+      targets: ["Translator"]),
   ],
   dependencies: [
     .package(path: "../ProxyPackage"),
@@ -22,28 +25,34 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "LocalDataBaseRepositoryImpl",
+      name: "Models",
       dependencies: [
-        .product(name: "LocalDataBaseRepository", package: "Domain"),
+      ]),
+    .target(
+      name: "RepositoryImpl",
+      dependencies: [
+        .product(name: "Repository", package: "Domain"),
         "ProxyPackage",
+        "Models",
+        "Translator",
+        .product(name: "BaseRepository", package: "ProxyPackage"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
       ]),
     .target(
-      name: "NetworkRepositoryImpl",
+      name: "Translator",
       dependencies: [
-        .product(name: "NetworkRepository", package: "Domain"),
-        .product(name: "LocalDataBaseRepository", package: "Domain"),
-        "ProxyPackage",
-        .product(name: "AppFoundation", package: "ProxyPackage"),
+        "Models",
+        .product(name: "Entities", package: "Domain"),
       ]),
     .testTarget(
-      name: "NetworkRepositoryImplTests",
+      name: "RepositoryImplTests",
       dependencies: [
-        .product(name: "NetworkRepository", package: "Domain"),
-        "NetworkRepositoryImpl",
-        .product(name: "LocalDataBaseRepository", package: "Domain"),
-        "LocalDataBaseRepositoryImpl",
+        "RepositoryImpl",
+        "Translator",
+        .product(name: "Entities", package: "Domain"),
+        .product(name: "Repository", package: "Domain"),
         .product(name: "RepositoryTestSupports", package: "Domain"),
+        .product(name: "BaseRepository", package: "ProxyPackage"),
         .product(name: "ProxyTestSupport", package: "ProxyPackage"),
       ]
     ),

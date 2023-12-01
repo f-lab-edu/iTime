@@ -10,7 +10,7 @@ import RIBs
 import AppRoot
 import LoggedOut
 import LoggedIn
-import AuthenticationUsecase
+import Usecase
 
 public protocol AppRootDependency: Dependency {
   var authenticationUsecase: AuthenticationUsecase { get }

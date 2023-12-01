@@ -17,6 +17,9 @@ let package = Package(
       name: "AppFoundation",
       targets: ["AppFoundation"]),
     .library(
+      name: "BaseRepository",
+      targets: ["BaseRepository"]),
+    .library(
       name: "SharedUI",
       targets: ["SharedUI"]),
     .library(
@@ -69,6 +72,11 @@ let package = Package(
         "ProxyPackage"
       ]
     ),
+    .target(
+      name: "BaseRepository",
+      dependencies: [
+        "ProxyPackage",
+      ]),
     .target(
       name: "SharedUI",
       dependencies: [

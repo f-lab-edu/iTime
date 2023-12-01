@@ -5,9 +5,14 @@
 //  Created by 이상헌 on 11/23/23.
 //
 
-import LocalDataBaseRepository
+import Repository
 
-public final class UserDefaultRepositoryMock: WriteUserDefaultRepository, ReadOnlyUserDefaultRepository {
+public final class UserDefaultRepositoryMock:
+  WriteUserIDRepository,
+  WriteIsAppBackgroundRepository,
+  ReadOnlyUserIDRepository,
+  ReadOnlyIsAppBackgroundRepository
+{
   
   public var dummyUserID: String = String()
   public var dummyIsAppBackground: Bool = false

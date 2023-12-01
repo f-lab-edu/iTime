@@ -57,7 +57,7 @@ let package = Package(
         "AppRoot",
         "LoggedIn",
         "LoggedOut",
-        .product(name: "AuthenticationUsecase", package: "Domain"),
+        .product(name: "Usecase", package: "Domain"),
         .product(name: "SharedUI", package: "ProxyPackage"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
       ]),
@@ -70,7 +70,7 @@ let package = Package(
       name: "EditorImpl",
       dependencies: [
         "Editor",
-        .product(name: "BookmarkUsecase", package: "Domain"),
+        .product(name: "Usecase", package: "Domain"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),
       ]),
@@ -83,7 +83,7 @@ let package = Package(
       name: "LoggedInImpl",
       dependencies: [
         "LoggedIn",
-        .product(name: "AuthenticationUsecase", package: "Domain"),
+        .product(name: "Usecase", package: "Domain"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),
       ]),
@@ -96,7 +96,7 @@ let package = Package(
       name: "LoggedOutImpl",
       dependencies: [
         "LoggedOut",
-        .product(name: "AuthenticationUsecase", package: "Domain"),
+        .product(name: "Usecase", package: "Domain"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),
       ]
@@ -111,7 +111,7 @@ let package = Package(
       dependencies: [
         "Start",
         "Editor",
-        .product(name: "AuthenticationUsecase", package: "Domain"),
+        .product(name: "Usecase", package: "Domain"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),
       ]),

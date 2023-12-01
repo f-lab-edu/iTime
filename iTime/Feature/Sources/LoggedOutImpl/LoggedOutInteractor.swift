@@ -9,8 +9,8 @@ import RIBs
 import RxSwift
 
 import LoggedOut
+import Usecase
 import AppFoundation
-import AuthenticationUsecase
 
 protocol LoggedOutPresentable: Presentable {
   var listener: LoggedOutPresentableListener? { get set }

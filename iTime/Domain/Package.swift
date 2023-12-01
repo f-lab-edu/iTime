@@ -10,86 +10,70 @@ let package = Package(
   ],
   products: [
     .library(
-      name: "AuthenticationUsecase",
-      targets: ["AuthenticationUsecase"]),
+      name: "Entities",
+      targets: ["Entities"]),
     .library(
-      name: "AuthenticationUsecaseImpl",
-      targets: ["AuthenticationUsecaseImpl"]),
-    .library(
-      name: "BookmarkUsecase",
-      targets: ["BookmarkUsecase"]),
-    .library(
-      name: "BookmarkUsecaseImpl",
-      targets: ["BookmarkUsecaseImpl"]),
-    .library(
-        name: "LocalDataBaseRepository",
-        targets: ["LocalDataBaseRepository"]),
-    .library(
-      name: "NetworkRepository",
-      targets: ["NetworkRepository"]),
+      name: "Repository",
+      targets: ["Repository"]),
     .library(
       name: "RepositoryTestSupports",
       targets: ["RepositoryTestSupports"]),
+    .library(
+      name: "Usecase",
+      targets: ["Usecase"]),
+    .library(
+      name: "UsecaseImpl",
+      targets: ["UsecaseImpl"]),
+    .library(
+      name: "UsecaseTestSupports",
+      targets: ["UsecaseTestSupports"]),
   ],
   dependencies: [
     .package(path: "../ProxyPackage"),
   ],
   targets: [
     .target(
-      name: "AuthenticationUsecase",
+      name: "Entities",
       dependencies: [
-        "NetworkRepository",
+      ]),
+    .target(
+      name: "Repository",
+      dependencies: [
+        "Entities",
         "ProxyPackage",
       ]),
-    .target(
-      name: "AuthenticationUsecaseImpl",
-      dependencies: [
-        "AuthenticationUsecase",
-        "NetworkRepository",
-        .product(name: "AppFoundation", package: "ProxyPackage")
-      ]),
-    .target(
-      name: "BookmarkUsecase",
-      dependencies: [
-        "ProxyPackage",
-      ]),
-    .target(
-      name: "BookmarkUsecaseImpl",
-      dependencies: [
-        "BookmarkUsecase",
-        .product(name: "AppFoundation", package: "ProxyPackage")
-      ]),
-    .testTarget(
-      name: "AuthenticationUsecaseImplTests",
-      dependencies: [
-        "AuthenticationUsecase",
-        "AuthenticationUsecaseImpl",
-        "NetworkRepository",
-        "RepositoryTestSupports",
-      ]),
-    .testTarget(
-      name: "BookmarkUsecaseImplTests",
-      dependencies: [
-        "BookmarkUsecase",
-        "BookmarkUsecaseImpl",
-        "RepositoryTestSupports",
-      ]),
-    .target(
-        name: "LocalDataBaseRepository",
-        dependencies: [
-            "ProxyPackage"
-        ]),
-    .target(
-        name: "NetworkRepository",
-        dependencies: [
-            "ProxyPackage"
-        ]),
     .target(
       name: "RepositoryTestSupports",
       dependencies: [
-        "NetworkRepository",
-        "LocalDataBaseRepository",
+        "Repository",
+        .product(name: "BaseRepository", package: "ProxyPackage"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
+      ]),
+    .target(
+      name: "Usecase",
+      dependencies: [
+        "Entities",
+        "ProxyPackage",
+      ]),
+    .target(
+      name: "UsecaseImpl",
+      dependencies: [
+        "Usecase",
+        .product(name: "AppFoundation", package: "ProxyPackage")
+      ]),
+    .target(
+      name: "UsecaseTestSupports",
+      dependencies: [
+        "Usecase",
+        .product(name: "AppFoundation", package: "ProxyPackage"),
+      ]),
+    .testTarget(
+      name: "UsecaseImplTests",
+      dependencies: [
+        "Usecase",
+        "UsecaseImpl",
+        "Repository",
+        "UsecaseTestSupports"
       ]),
   ]
 )
