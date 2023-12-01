@@ -7,8 +7,10 @@
 
 import RxSwift
 
+import Entities
+
 public protocol UserSessionRepository {
-  func sessionObservable(with userID: String) -> Observable<UserSession?>
-  func createSessionIfNeeded(_ session: UserSession, for userID: String) -> Observable<UserSession>
-  func updateSession(_ session: UserSession, for userID: String) -> Observable<UserSession>
+  func sessionObservable(with userID: String) -> Observable<UserModel?>
+  func createSessionIfNeeded(_ session: UserModel, for userID: String) -> Observable<UserModel>
+  func updateSession(_ session: UserModel, for userID: String) -> Observable<UserModel>
 }

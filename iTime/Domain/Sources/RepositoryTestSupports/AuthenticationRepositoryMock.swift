@@ -5,7 +5,7 @@
 //  Created by 이상헌 on 2023/10/29.
 //
 
-import NetworkRepository
+import Repository
 
 // MARK: - AuthenticationRepositoryMock
 

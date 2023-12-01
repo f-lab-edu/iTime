@@ -7,6 +7,8 @@
 
 import RxSwift
 
+import Models
+import Entities
 import BaseRepository
 import Repository
 import AppFoundation
@@ -38,19 +40,20 @@ final class UserSessionRepositoryImpl: UserSessionRepository {
   
   // MARK: - Methods
   
-  func sessionObservable(with userID: String) -> Observable<UserSession?> {
+  func sessionObservable(with userID: String) -> Observable<UserModel?> {
     firestoreRepository.documentObservable(for: DatabaseReference.singleUser(userID: userID), includeMetadata: true)
       .compactMap { try? $0.decode() }
+      .map(UserModel.init(data:))
   }
   
-  func createSessionIfNeeded(_ session: UserSession, for userID: String) -> Observable<UserSession> {
+  func createSessionIfNeeded(_ session: UserModel, for userID: String) -> Observable<UserModel> {
     sessionObservable(with: userID)
       .withUnretained(self)
       .flatMap { this, oldSession -> Observable<Void> in
         if oldSession == nil {
           return this.firestoreRepository.update(
             reference: DatabaseReference.singleUser(userID: userID),
-            with: session.toJson() ?? [:],
+            with: UserSession(session.data).toJson() ?? [:],
             merge: false
           )
           .map { _ in Void() }
@@ -64,13 +67,13 @@ final class UserSessionRepositoryImpl: UserSessionRepository {
       }
   }
   
-  func updateSession(_ session: UserSession, for userID: String) -> Observable<UserSession> {
+  func updateSession(_ session: UserModel, for userID: String) -> Observable<UserModel> {
     sessionObservable(with: userID)
       .withUnretained(self)
       .flatMap { this, _ in
         this.firestoreRepository.update(
           reference: DatabaseReference.singleUser(userID: userID),
-          with: session.toJson() ?? [:],
+          with: UserSession(session.data).toJson() ?? [:],
           merge: true
         )
       }

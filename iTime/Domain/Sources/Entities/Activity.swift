@@ -2,17 +2,10 @@
 //  File.swift
 //  
 //
-//  Created by 이상헌 on 11/26/23.
+//  Created by 이상헌 on 12/1/23.
 //
 
-import Foundation
-
-// MARK: - Activity
-
-public struct Activity:
-  Codable,
-  Equatable
-{
+public struct Activity: Equatable {
   public let title: String
   public let category: Category
   
@@ -26,3 +19,9 @@ public struct Activity:
   }
 }
 
+extension Activity {
+  public static let empty: Activity = .init(
+    title: String(),
+    category: .empty
+  )
+}

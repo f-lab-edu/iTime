@@ -4,9 +4,11 @@ import RxSwift
 import RxTest
 
 import RepositoryTestSupports
-import NetworkRepository
+import Repository
+import Entities
+import Translator
 import ProxyTestSupport
-@testable import NetworkRepositoryImpl
+@testable import RepositoryImpl
 
 final class BookmarkRepositoryImplTests: XCTestCase {
   
@@ -20,7 +22,7 @@ final class BookmarkRepositoryImplTests: XCTestCase {
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
   
-  private var resultSubject: PublishSubject<[Activity]>!
+  private var resultSubject: PublishSubject<[Bookmark]>!
   private lazy var observer = scheduler.record(
     resultSubject,
     disposeBag: disposeBag
@@ -40,12 +42,13 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     userDefaultRepository = UserDefaultRepositoryMock()
     scheduler = TestScheduler(initialClock: 0)
     disposeBag = DisposeBag()
-    resultSubject = PublishSubject<[Activity]>()
+    resultSubject = PublishSubject<[Bookmark]>()
     _ = observer
     
     sut = BookmarkRepositoryImpl(
       firestoreRepository: firestoreRepository,
-      userDefaultRepository: userDefaultRepository
+      userDefaultRepository: userDefaultRepository, 
+      translator: BookmarkTranslatorImpl()
     )
   }
   

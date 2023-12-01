@@ -8,7 +8,7 @@
 import RxSwift
 
 import BaseRepository
-import NetworkRepository
+import Repository
 
 public final class FirestoreRepositoryMock: FirestoreRepository {
   

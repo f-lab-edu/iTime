@@ -7,12 +7,15 @@
 
 import RxSwift
 
-import BaseRepository
+import Models
+import Entities
+import Translator
 import Repository
+import BaseRepository
 
 import AppFoundation
 
-public final class TimeLogHistoryRepositoryImpl: TimeLogHistoryRepository {
+public final class TimeLogRecordRepositoryImpl: TimeLogRecordRepository {
   
   // MARK: - DocumentReferenceConvertible
   
@@ -22,7 +25,7 @@ public final class TimeLogHistoryRepositoryImpl: TimeLogHistoryRepository {
     var referencePath: String {
       switch self {
       case let .timeLogHistorySession(userID):
-        return "\(DatabaseEndpoint.userSession.rawValue)/\(userID)/\(DatabaseEndpoint.timeLogHistorySession.rawValue)/timeloghistory"
+        return "\(DatabaseEndpoint.userSession.rawValue)/\(userID)/\(DatabaseEndpoint.timeLogHistorySession.rawValue)/timelogrecord"
       }
     }
   }
@@ -31,27 +34,30 @@ public final class TimeLogHistoryRepositoryImpl: TimeLogHistoryRepository {
   
   private let firestoreRepository: FirestoreRepository
   private let userDefaultRepository: ReadOnlyUserIDRepository
+  private let translator: TimeLogRecordTranslator
   
   // MARK: - Initialization
   
   public init(
     firestoreRepository: FirestoreRepository,
-    userDefaultRepository: ReadOnlyUserIDRepository
+    userDefaultRepository: ReadOnlyUserIDRepository,
+    translator: TimeLogRecordTranslator
   ) {
     self.firestoreRepository = firestoreRepository
     self.userDefaultRepository = userDefaultRepository
+    self.translator = translator
   }
 
-  public func append(_ history: TimeLogHistory) -> Single<[TimeLogHistory]> {
+  public func append(_ record: TimeLogRecord) -> Single<[TimeLogRecord]> {
     timeLogHistories()
-      .map { $0 + [history] }
+      .map { $0 + [record] }
       .flatMap { [weak self] histories in
         guard let self else { return .error(MyError.networkNullError)}
         return self.update(with: histories)
       }
   }
   
-  public func remove(with logID: String) -> Single<[TimeLogHistory]> {
+  public func remove(with logID: String) -> Single<[TimeLogRecord]> {
     timeLogHistories()
       .map {  $0.filter { $0.id != logID } }
       .flatMap { [weak self] histories in
@@ -60,26 +66,28 @@ public final class TimeLogHistoryRepositoryImpl: TimeLogHistoryRepository {
       }
   }
   
-  public func timeLogHistories() -> Single<[TimeLogHistory]> {
-    let timeLogHistoryList: Single<TimeLogHistoryList> =
+  public func timeLogHistories() -> Single<[TimeLogRecord]> {
+    let timeLogHistoryList: Single<TimeLogList> =
     firestoreRepository.documentObservable(
       for: DatabaseReference.timeLogHistorySession(userID: userDefaultRepository.userID()),
       includeMetadata: false
     )
     .compactMap { try $0.decode() }
-    .ifEmpty(default: TimeLogHistoryList([]))
+    .ifEmpty(default: TimeLogList([]))
     .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
     .asSingle()
     
-    return timeLogHistoryList.map(\.timeLogHistories)
+    return timeLogHistoryList
+      .map(\.timeLogs)
+      .map(translator.translateToTimeLogRecords(by:))
   }
   
   // MARK: - Private
   
-  private func update(with histories: [TimeLogHistory]) -> Single<[TimeLogHistory]> {
+  private func update(with records: [TimeLogRecord]) -> Single<[TimeLogRecord]> {
     firestoreRepository.update(
       reference: DatabaseReference.timeLogHistorySession(userID: userDefaultRepository.userID()),
-      with: TimeLogHistoryList(histories).toJson() ?? [:],
+      with: translator.translateToTimeLogList(by: records).toJson() ?? [:],
       merge: false
     )
     .withUnretained(self)

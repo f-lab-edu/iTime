@@ -7,8 +7,11 @@
 
 import RxSwift
 
-import BaseRepository
+import Models
+import Entities
+import Translator
 import Repository
+import BaseRepository
 
 import AppFoundation
 
@@ -31,23 +34,26 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
   
   private let firestoreRepository: FirestoreRepository
   private let userDefaultRepository: ReadOnlyUserIDRepository
+  private let translator: BookmarkTranslator
   
   // MARK: - Initialization
   
   public init(
     firestoreRepository: FirestoreRepository,
-    userDefaultRepository: ReadOnlyUserIDRepository
+    userDefaultRepository: ReadOnlyUserIDRepository,
+    translator: BookmarkTranslator
   ) {
     self.firestoreRepository = firestoreRepository
     self.userDefaultRepository = userDefaultRepository
+    self.translator = translator
   }
   
   // MARK: - Methods
   
-  public func update(with bookmarks: [Activity]) -> Single<[Activity]> {
+  public func update(with bookmarks: [Bookmark]) -> Single<[Bookmark]> {
     firestoreRepository.update(
       reference: DatabaseReference.bookmarkSession(userID: userDefaultRepository.userID()),
-      with: BookmarkList(bookmarks).toJson() ?? [:] ,
+      with: translator.translateToPerformList(by: bookmarks).toJson() ?? [:] ,
       merge: false
     )
     .withUnretained(self)
@@ -56,9 +62,8 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
     .asSingle()
   }
   
-  public func append(_ bookmark: Activity) -> Single<[Activity]> {
+  public func append(_ bookmark: Bookmark) -> Single<[Bookmark]> {
     bookmarks()
-      .debug("shlee@@")
       .map { $0 + [bookmark] }
       .flatMap { [weak self] bookmarks in
         guard let self else { return .error(MyError.networkNullError)}
@@ -66,7 +71,7 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
       }
   }
   
-  public func remove(_ bookmark: Activity) -> Single<[Activity]> {
+  public func remove(_ bookmark: Bookmark) -> Single<[Bookmark]> {
     bookmarks()
       .map { $0.filter { $0 != bookmark } }
       .flatMap { [weak self] bookmarks in
@@ -75,18 +80,22 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
       }
   }
   
-  public func bookmarks() -> Single<[Activity]> {
-    let bookmarkList: Single<BookmarkList> =
+  public func bookmarks() -> Single<[Bookmark]> {
+    let performList: Single<PerformList> =
     firestoreRepository.documentObservable(
       for: DatabaseReference.bookmarkSession(userID: userDefaultRepository.userID()),
       includeMetadata: false
     )
     .compactMap { try $0.decode() }
-    .ifEmpty(default: BookmarkList([]))
+    .ifEmpty(default: PerformList([]))
     .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
     .asSingle()
     
-    return bookmarkList.map(\.bookmarks)
+    return performList
+      .map(\.performs)
+      .debug("bookmark1")
+      .map(translator.translateToBookmarks(by:))
+      .debug("bookmark2")
   }
   
 }

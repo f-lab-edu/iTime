@@ -24,6 +24,9 @@ let package = Package(
     .library(
       name: "UsecaseImpl",
       targets: ["UsecaseImpl"]),
+    .library(
+      name: "UsecaseTestSupports",
+      targets: ["UsecaseTestSupports"]),
   ],
   dependencies: [
     .package(path: "../ProxyPackage"),
@@ -36,7 +39,15 @@ let package = Package(
     .target(
       name: "Repository",
       dependencies: [
+        "Entities",
         "ProxyPackage",
+      ]),
+    .target(
+      name: "RepositoryTestSupports",
+      dependencies: [
+        "Repository",
+        .product(name: "BaseRepository", package: "ProxyPackage"),
+        .product(name: "AppFoundation", package: "ProxyPackage"),
       ]),
     .target(
       name: "Usecase",
@@ -51,10 +62,9 @@ let package = Package(
         .product(name: "AppFoundation", package: "ProxyPackage")
       ]),
     .target(
-      name: "RepositoryTestSupports",
+      name: "UsecaseTestSupports",
       dependencies: [
-        "Repository",
-        .product(name: "BaseRepository", package: "ProxyPackage"),
+        "Usecase",
         .product(name: "AppFoundation", package: "ProxyPackage"),
       ]),
     .testTarget(
@@ -63,7 +73,7 @@ let package = Package(
         "Usecase",
         "UsecaseImpl",
         "Repository",
-        "RepositoryTestSupports",
+        "UsecaseTestSupports"
       ]),
   ]
 )

@@ -7,7 +7,8 @@
 
 import Foundation
 
-import NetworkRepository
+import Entities
+import Repository
 
 public enum DummyData {
   public enum DummyID {
@@ -16,19 +17,17 @@ public enum DummyData {
     public static let timeLogHistoryID = "TestTimeLogHistoryID"
   }
   public enum DummyBookmark {
-    public static let dummyBookmarkOne: Activity = .init(title: "테스트1", category: .init(title: "테스트", color: "테스트"))
-    public static let dummyBookmarkTwo: Activity = .init(title: "테스트2", category: .init(title: "테스트", color: "테스트"))
+    public static let dummyBookmarkOne: Bookmark = .init(title: "테스트1", category: .init(title: "테스트", color: "테스트"))
+    public static let dummyBookmarkTwo: Bookmark = .init(title: "테스트2", category: .init(title: "테스트", color: "테스트"))
     
-    public static let dummyBookmarksOne: [Activity] = [dummyBookmarkOne]
-    public static let dummyBookmarksTwo: [Activity] = [dummyBookmarkOne, dummyBookmarkOne]
-    public static let dummyBookmarksThree: [Activity] = [dummyBookmarkOne, dummyBookmarkOne, dummyBookmarkOne]
-    public static let dummyBookmarksFour: [Activity] = [dummyBookmarkOne, dummyBookmarkOne, dummyBookmarkOne, dummyBookmarkOne]
-    public static let dummyBookmarkList: BookmarkList = BookmarkList(dummyBookmarksFour)
+    public static let dummyBookmarksOne: [Bookmark] = [dummyBookmarkOne]
+    public static let dummyBookmarksTwo: [Bookmark] = [dummyBookmarkOne, dummyBookmarkOne]
+    public static let dummyBookmarksThree: [Bookmark] = [dummyBookmarkOne, dummyBookmarkOne, dummyBookmarkOne]
+    public static let dummyBookmarksFour: [Bookmark] = [dummyBookmarkOne, dummyBookmarkOne, dummyBookmarkOne, dummyBookmarkOne]
   }
   
   public enum DummyTimeLogHistory {
-    public static let dummyTimeLogHistory: TimeLogHistory = .init(id: DummyID.timeLogHistoryID, activity: DummyBookmark.dummyBookmarkOne, startTime: "10:10:22", endTime: "20:20:33", coordinate: .empty)
-    public static let dummyTimeLogHisotries: [TimeLogHistory] = [dummyTimeLogHistory, dummyTimeLogHistory, dummyTimeLogHistory, dummyTimeLogHistory]
-    public static let dummyTimeLogHistoryList: TimeLogHistoryList = TimeLogHistoryList(dummyTimeLogHisotries)
+    public static let dummyTimeLogRecord: TimeLogRecord = .init(id: DummyID.timeLogHistoryID, activity: .empty, startTime: "10:10:22", endTime: "20:20:33", coordinate: .zero)
+    public static let dummyTimeLogRecords: [TimeLogRecord] = [dummyTimeLogRecord, dummyTimeLogRecord, dummyTimeLogRecord, dummyTimeLogRecord]
   }
 }
