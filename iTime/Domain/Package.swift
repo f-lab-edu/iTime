@@ -35,6 +35,7 @@ let package = Package(
     .target(
       name: "Entities",
       dependencies: [
+        "ProxyPackage"
       ]),
     .target(
       name: "Repository",

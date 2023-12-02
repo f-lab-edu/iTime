@@ -7,6 +7,7 @@
 
 import RIBs
 
+import Entities
 import Editor
 import Usecase
 import SharedUI
@@ -14,7 +15,7 @@ import SharedUI
 // MARK: - BookmarkEditorDependency
 
 public protocol BookmarkEditorDependency: Dependency {
-  var bookmarkUsecase: BookmarkUsecase { get }
+  var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream { get }
 }
 
 // MARK: - BookmarkEditorComponent
@@ -38,7 +39,7 @@ public final class BookmarkEditorBuilder:
     let viewController = BookmarkEditorViewController()
     let interactor = BookmarkEditorInteractor(
       presenter: viewController,
-      bookmarkUsecase: dependency.bookmarkUsecase
+      mutableBookmarkModelDataStream: dependency.mutableBookmarkModelDataStream 
     )
     interactor.listener = listener
     return BookmarkEditorRouter(

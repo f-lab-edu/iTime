@@ -83,7 +83,7 @@ final class CurrentSavedItemsSectionView:
     return delegateDataSource.numberOfSavedItems()
   }
   
-  func configurationData(at index: Int) -> String {
+  func bookmark(at index: Int) -> String {
     guard let delegateDataSource = delegateDataSource else { return String() }
     return delegateDataSource.configurationSavedItem(at: index)
   }

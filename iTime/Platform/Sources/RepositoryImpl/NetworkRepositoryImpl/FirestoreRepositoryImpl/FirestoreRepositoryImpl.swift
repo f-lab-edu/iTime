@@ -23,7 +23,7 @@ extension QuerySnapshot: iTimeQuerySnapshot {
 
 // MARK: - FirestoreRepository Implemetation
 
-public final class FirestoreRepositoryImpl {
+public final class FirestoreRepositoryImpl: FirestoreRepository {
   public func create(
     reference: DocumentReferenceConvertible,
     with data: [String : Any]

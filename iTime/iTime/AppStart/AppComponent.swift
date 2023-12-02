@@ -23,6 +23,9 @@ import Usecase
 import UsecaseImpl
 import Repository
 import RepositoryImpl
+import BaseRepository
+import Translator
+import Entities
 import AppFoundation
 
 // MARK: - AppComponent
@@ -37,6 +40,7 @@ final class AppComponent:
   LogEntryEditorDependency,
   CategoryEditorDependency
 {
+  
   var timeFormatter: TimeFormatter {
     TimeFormatterImpl()
   }
@@ -69,10 +73,18 @@ final class AppComponent:
     LoggedOutBuilder(dependency: self)
   }
   
-  var bookmarkUsecase: BookmarkUsecase {
+  var timeLogUsecase: TimeLogUsecase {
     shared {
-      BookmarkUsecaseImpl(bookmarkRepository: 2)
+      TimeLogUsecaseImpl(
+        bookmarkRepository: bookmarkRepository,
+        timeLogRecordRepository: timeLogRecordRepository,
+        mutableBookmarkModelDataStream: mutableBookmarkModelDataStream
+      )
     }
+  }
+  
+  var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream {
+    BookmarkModelDataStreamImpl()
   }
   
   var authenticationUsecase: AuthenticationUsecase {
@@ -85,5 +97,33 @@ final class AppComponent:
   
   var authorizationContextProvider: AuthorizationContextProviding {
     UIApplication.shared
+  }
+}
+
+// MARK: - filreprivate
+
+extension AppComponent {
+  fileprivate var bookmarkRepository: BookmarkRepository {
+    BookmarkRepositoryImpl(
+      firestoreRepository: firestoreRepository,
+      userDefaultRepository: userDefaultRepository,
+      translator: BookmarkTranslatorImpl()
+    )
+  }
+  
+  fileprivate var timeLogRecordRepository: TimeLogRecordRepository {
+    TimeLogRecordRepositoryImpl(
+      firestoreRepository: firestoreRepository,
+      userDefaultRepository: userDefaultRepository,
+      translator: TimeLogRecordTranslatorImpl() // TODO: FIX
+    )
+  }
+  
+  fileprivate var firestoreRepository: FirestoreRepository {
+    FirestoreRepositoryImpl()
+  }
+
+  fileprivate var userDefaultRepository: UserDefaultRepository {
+    UserDefaultRepositoryImpl()
   }
 }

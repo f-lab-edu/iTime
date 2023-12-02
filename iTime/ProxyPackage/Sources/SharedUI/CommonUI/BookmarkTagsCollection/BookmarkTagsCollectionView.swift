@@ -5,13 +5,15 @@
 //  Created by 이상헌 on 11/10/23.
 //
 
+import RxSwift
+
 import UIKit
 
 // MARK: - BookmarkTagsCollectionViewAdapterDataSource
 
 public protocol BookmarkTagsCollectionViewAdapterDataSource: AnyObject {
   func numberOfItems() -> Int
-  func configurationData(at index: Int) -> String
+  func bookmark(at index: Int) -> String
 }
 
 public protocol BookmarkCollectionViewCellDelegate: AnyObject {
@@ -81,7 +83,7 @@ extension BookmarkTagsCollectionViewAdapter: UICollectionViewDataSource {
     cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
     let cell = collectionView.dequeue(BookmarkTagCell.self, indexPath: indexPath)
-    cell.configure(by: adapterDataSource?.configurationData(at: indexPath.row) ?? "")
+    cell.configure(by: adapterDataSource?.bookmark(at: indexPath.row) ?? "")
     
     return cell
   }
@@ -106,7 +108,7 @@ extension BookmarkTagsCollectionViewAdapter: UICollectionViewDelegateFlowLayout 
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAt indexPath: IndexPath
   ) -> CGSize {
-    guard let data = adapterDataSource?.configurationData(at: indexPath.row) else { return .zero }
+    guard let data = adapterDataSource?.bookmark(at: indexPath.row) else { return .zero }
     let labelWidthSize = data.width(
       withConstrainedHeight: 24.0,
       font: UIFont.custom(.regular, 16)

@@ -11,21 +11,16 @@ import Repository
 
 // MARK: - UserDefaultRepositoryImpl
 
-final class UserDefaultRepositoryImpl:
-    WriteUserIDRepository,
-    WriteIsAppBackgroundRepository,
-    ReadOnlyUserIDRepository,
-    ReadOnlyIsAppBackgroundRepository
-{
-  func updateUserID(with userID: String) {
+public final class UserDefaultRepositoryImpl: UserDefaultRepository {
+  public func updateUserID(with userID: String) {
     UserDefaults.standard.setValue(isAppBackground, forKey: UserDefaultKey.isAppBackground.rawValue)
   }
   
-  func updateIsAppBackground(with isAppBackground: Bool) {
+  public func updateIsAppBackground(with isAppBackground: Bool) {
     UserDefaults.standard.setValue(isAppBackground, forKey: UserDefaultKey.isAppBackground.rawValue)
   }
   
-  func userID() -> String {
+  public func userID() -> String {
     guard let userID = UserDefaults.standard.string(forKey: UserDefaultKey.userID.rawValue) else {
       assertionFailure(" userID is nil, default value is empty ")
       return String()
@@ -34,7 +29,9 @@ final class UserDefaultRepositoryImpl:
   }
   
   /// defualt value is false
-  func isAppBackground() -> Bool {
+  public func isAppBackground() -> Bool {
     UserDefaults.standard.bool(forKey: UserDefaultKey.isAppBackground.rawValue)
   }
+  
+  public init() {}
 }

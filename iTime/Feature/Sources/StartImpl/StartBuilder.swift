@@ -9,6 +9,7 @@ import RIBs
 
 import Start
 import Editor
+import Entities
 import AppFoundation
 
 // MARK: - StartDependency
@@ -16,6 +17,7 @@ import AppFoundation
 public protocol StartDependency: Dependency {
   var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
   var logEntryEditorBuilder: LogEntryEditorBuildable { get }
+  var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream { get }
   var timeFormatter: TimeFormatter { get }
 }
 
@@ -25,6 +27,9 @@ final class StartComponent:
   Component<StartDependency>,
   LogEntryCreationDependency
 {
+  var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream {
+    dependency.mutableBookmarkModelDataStream
+  }
   
   var timeFormatter: TimeFormatter {
     dependency.timeFormatter
