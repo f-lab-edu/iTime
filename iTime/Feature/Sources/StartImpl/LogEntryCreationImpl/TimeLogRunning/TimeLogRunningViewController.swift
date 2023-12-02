@@ -11,6 +11,7 @@ import RIBs
 import RxSwift
 
 import SharedUI
+import AppFoundation
 
 // MARK: - TimeLogRunningPresentableListener
 
@@ -54,9 +55,18 @@ final class TimeLogRunningViewController:
     .textColor(.white)
     .build()
   
-  private let datePickerSectionView = DatePickerSectionView()
+  private lazy var datePickerSectionView = DatePickerSectionView(timeFormatter: timeFormatter)
   
   private let timeOperatorButtonsView = TimeOperatorButtonsView()
+  
+  // MARK: - Properties
+  private let timeFormatter: TimeFormatter
+  
+  // MARK: - Initialziation
+  
+  init(timeFormatter: TimeFormatter) {
+    self.timeFormatter = timeFormatter
+  }
   
   // MARK: - View LifeCycle
   
@@ -140,6 +150,6 @@ extension TimeLogRunningViewController {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview("UIKit Portrait") {
-  TimeLogRunningViewController()
+  TimeLogRunningViewController(timeFormatter: TimeFormatterImpl())
 }
 #endif

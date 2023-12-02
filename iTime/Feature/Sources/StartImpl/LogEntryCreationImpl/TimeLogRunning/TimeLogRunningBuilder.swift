@@ -8,13 +8,14 @@
 import RIBs
 
 import Start
+import AppFoundation
 
 // FIXME: TimeRunning 별도 모듈 분리 필요...!
 
 // MARK: - TimeLogRunningDependency
 
 public protocol TimeLogRunningDependency: Dependency {
-  
+  var timeFormatter: TimeFormatter { get }
 }
 
 // MARK: - TimeLogRunningComponent
@@ -36,7 +37,7 @@ public final class TimeLogRunningBuilder:
   
   public func build(withListener listener: TimeLogRunningListener) -> TimeLogRunningRouting {
     let _ = TimeLogRunningComponent(dependency: dependency)
-    let viewController = TimeLogRunningViewController()
+    let viewController = TimeLogRunningViewController(timeFormatter: dependency.timeFormatter)
     let interactor = TimeLogRunningInteractor(presenter: viewController)
     interactor.listener = listener
     return TimeLogRunningRouter(
