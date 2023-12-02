@@ -53,7 +53,7 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
     sut = TimeLogRecordRepositoryImpl(
       firestoreRepository: firestoreRepository,
       userDefaultRepository: userDefaultRepository,
-      translator: TimeLogRecordTranslatorImpl()
+      translator: TimeLogRecordTranslator()
     )
   }
   

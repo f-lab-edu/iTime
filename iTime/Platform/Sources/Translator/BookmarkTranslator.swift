@@ -10,14 +10,7 @@ import Entities
 
 // MARK: - BookmarkTranslator
 
-public protocol BookmarkTranslator {
-  func translateToBookmarks(by performs: [Perform]) -> [Bookmark]
-  func translateToPerformList(by bookmarks: [Bookmark]) -> PerformList
-}
-
-// MARK: - BookmarkTranslatorImpl
-
-public final class BookmarkTranslatorImpl: BookmarkTranslator {
+public final class BookmarkTranslator {
   public func translateToBookmarks(by performs: [Perform]) -> [Bookmark] {
     performs.map {
       Bookmark(
