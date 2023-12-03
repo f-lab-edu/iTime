@@ -13,12 +13,11 @@ import Entities
 
 // MARK: - TimeLogUsecaseImpl
 
-
 public final class TimeLogUsecaseImpl: 
   TimeLogUsecase,
   ModelDataStreamListener
 {
-    
+
   // MARK: - Properties
   
   private let bookmarkRepository: BookmarkRepository
@@ -26,7 +25,7 @@ public final class TimeLogUsecaseImpl:
   private let mutableBookmarkModelDataStream: MutableBookmarkModelDataStream
   
   private var isLoaded: Bool = false
-    
+
   // MARK: - Initialization
 
   public init(
