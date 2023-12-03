@@ -41,14 +41,6 @@ final class AppComponent:
   CategoryEditorDependency
 {
   
-  var timeFormatter: TimeFormatter {
-    TimeFormatterImpl()
-  }
-  
-  init() {
-    super.init(dependency: EmptyComponent())
-  }
-  
   var categoryEditorBuilder: CategoryEditorBuildable {
     CategoryEditorBuilder(dependency: self)
   }
@@ -73,62 +65,46 @@ final class AppComponent:
     LoggedOutBuilder(dependency: self)
   }
   
-  var timeLogUsecase: TimeLogUsecase {
-    shared {
-      TimeLogUsecaseImpl(
-        bookmarkRepository: bookmarkRepository,
-        timeLogRecordRepository: timeLogRecordRepository,
-        mutableBookmarkModelDataStream: mutableBookmarkModelDataStream, 
-        mutableTimeLogRecordModelDataStream: mutableTimeLogRecordModelDataStream
-      )
-    }
-  }
-  
-  var mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream {
-    TimeLogRecordModelDataStreamImpl()
-  }
-  
-  var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream {
-    BookmarkModelDataStreamImpl()
-  }
-  
-  var authenticationUsecase: AuthenticationUsecase {
-    shared {
-      AuthenticationUsecaseImpl(
-        appleAuthenticationRepository: AppleAuthenticationRepositoryImpl(), authorizationContextProvider: authorizationContextProvider
-      )
-    }
-  }
-  
-  var authorizationContextProvider: AuthorizationContextProviding {
-    UIApplication.shared
-  }
-}
-
-// MARK: - filreprivate
-
-extension AppComponent {
-  fileprivate var bookmarkRepository: BookmarkRepository {
-    BookmarkRepositoryImpl(
+  init() {
+    let firestoreRepository = FirestoreRepositoryImpl()
+    let userDefaultRepository = UserDefaultRepositoryImpl()
+    let bookmarkRepository = BookmarkRepositoryImpl(
       firestoreRepository: firestoreRepository,
       userDefaultRepository: userDefaultRepository,
       translator: BookmarkTranslator()
     )
-  }
-  
-  fileprivate var timeLogRecordRepository: TimeLogRecordRepository {
-    TimeLogRecordRepositoryImpl(
+    let timeLogRecordRepository = TimeLogRecordRepositoryImpl(
       firestoreRepository: firestoreRepository,
       userDefaultRepository: userDefaultRepository,
       translator: TimeLogRecordTranslator()
     )
+    self.mutableBookmarkModelDataStream = BookmarkModelDataStreamImpl()
+    self.mutableTimeLogRecordModelDataStream = TimeLogRecordModelDataStreamImpl()
+    self.timeLogUsecase = TimeLogUsecaseImpl(
+      bookmarkRepository: bookmarkRepository,
+      timeLogRecordRepository: timeLogRecordRepository,
+      mutableBookmarkModelDataStream: mutableBookmarkModelDataStream,
+      mutableTimeLogRecordModelDataStream: mutableTimeLogRecordModelDataStream
+    )
+    
+    self.authenticationUsecase = AuthenticationUsecaseImpl(
+      appleAuthenticationRepository: AppleAuthenticationRepositoryImpl(),
+      authorizationContextProvider: UIApplication.shared
+    )
+    
+    super.init(dependency: EmptyComponent())
   }
   
-  fileprivate var firestoreRepository: FirestoreRepository {
-    FirestoreRepositoryImpl()
-  }
-
-  fileprivate var userDefaultRepository: UserDefaultRepository {
-    UserDefaultRepositoryImpl()
+  var timeLogUsecase: TimeLogUsecase
+  
+  var authenticationUsecase: AuthenticationUsecase
+  
+  var mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream
+  
+  var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream
+  
+  var timeFormatter: TimeFormatter {
+    TimeFormatterImpl()
   }
 }
+
