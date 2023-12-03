@@ -93,9 +93,7 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
     
     return performList
       .map(\.performs)
-      .debug("bookmark1")
       .map(translator.translateToBookmarks(by:))
-      .debug("bookmark2")
   }
   
 }
