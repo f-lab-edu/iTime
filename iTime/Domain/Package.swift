@@ -60,6 +60,7 @@ let package = Package(
       name: "UsecaseImpl",
       dependencies: [
         "Usecase",
+        "Repository",
         .product(name: "AppFoundation", package: "ProxyPackage")
       ]),
     .target(
