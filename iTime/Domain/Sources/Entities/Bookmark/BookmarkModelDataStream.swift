@@ -44,9 +44,14 @@ public final class BookmarkModelDataStreamImpl: MutableBookmarkModelDataStream {
   
   // MARK: - Properties
   
-  public var bookmarks: Observable<[Bookmark]> { bookmarkModelDataRelay.asObservable().map(\.models) }
+  public var bookmarks: Observable<[Bookmark]> {
+    bookmarkModelDataRelay
+      .asObservable()
+      .do(onSubscribe: { [weak self] in self?.listener?.loadDataIfNeeded() } )
+      .map(\.models)
+  }
   private let bookmarkModelDataRelay = BehaviorRelay<BookmarkModelData>(value: BookmarkModelData())
-  
+  weak var listener: ModelDataStreamListener?
   
   // MARK: - Internal Methods
   

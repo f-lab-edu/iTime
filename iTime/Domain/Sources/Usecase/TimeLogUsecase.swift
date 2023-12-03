@@ -10,7 +10,5 @@ import RxSwift
 // MARK: - TimeLogUsecase
 
 public protocol TimeLogUsecase {
-  func loadData() -> Single<Void>
+  func preLoadAllData() -> Single<Void>
 }
-
-

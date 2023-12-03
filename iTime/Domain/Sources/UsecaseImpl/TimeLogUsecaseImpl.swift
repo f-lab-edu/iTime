@@ -13,13 +13,18 @@ import Entities
 
 // MARK: - TimeLogUsecaseImpl
 
-public final class TimeLogUsecaseImpl: TimeLogUsecase {
+public final class TimeLogUsecaseImpl: 
+  TimeLogUsecase,
+  ModelDataStreamListener
+{
   
   // MARK: - Properties
   
   private let bookmarkRepository: BookmarkRepository
   private let timeLogRecordRepository: TimeLogRecordRepository
   private let mutableBookmarkModelDataStream: MutableBookmarkModelDataStream
+  
+  private var isLoaded: Bool = false
   
   // MARK: - Initialization
 
@@ -33,8 +38,16 @@ public final class TimeLogUsecaseImpl: TimeLogUsecase {
     self.mutableBookmarkModelDataStream = mutableBookmarkModelDataStream
   }
   
-  public func loadData() -> Single<Void> {
+  // TimeLogRecord Data 같이 당기는 거 합치기 구현 전 입니다.
+  public func preLoadAllData() -> Single<Void> {
     loadBookmarks()
+      .do(onSuccess: { [weak self] in self?.isLoaded = true })
+  }
+  
+  public func loadDataIfNeeded() {
+    guard !isLoaded else { return }
+    _ = preLoadAllData()
+        .subscribe()
   }
   
   // MARK: - Private
