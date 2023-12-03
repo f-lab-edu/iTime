@@ -47,26 +47,38 @@ public final class TimeLogRecordRepositoryImpl: TimeLogRecordRepository {
     self.userDefaultRepository = userDefaultRepository
     self.translator = translator
   }
+  
+  public func update(with records: [TimeLogRecord]) -> Single<[TimeLogRecord]> {
+    firestoreRepository.update(
+      reference: DatabaseReference.timeLogHistorySession(userID: userDefaultRepository.userID()),
+      with: translator.translateToTimeLogList(by: records).toJson() ?? [:],
+      merge: false
+    )
+    .withUnretained(self)
+    .flatMap { owner, _ in owner.timeLogRecords() }
+    .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
+    .asSingle()
+  }
 
   public func append(_ record: TimeLogRecord) -> Single<[TimeLogRecord]> {
-    timeLogHistories()
+    timeLogRecords()
       .map { $0 + [record] }
-      .flatMap { [weak self] histories in
+      .flatMap { [weak self] records in
         guard let self else { return .error(MyError.networkNullError)}
-        return self.update(with: histories)
+        return self.update(with: records)
       }
   }
   
   public func remove(with logID: String) -> Single<[TimeLogRecord]> {
-    timeLogHistories()
+    timeLogRecords()
       .map {  $0.filter { $0.id != logID } }
-      .flatMap { [weak self] histories in
+      .flatMap { [weak self] records in
         guard let self else { return .error(MyError.networkNullError)}
-        return self.update(with: histories)
+        return self.update(with: records)
       }
   }
   
-  public func timeLogHistories() -> Single<[TimeLogRecord]> {
+  public func timeLogRecords() -> Single<[TimeLogRecord]> {
     let timeLogHistoryList: Single<TimeLogList> =
     firestoreRepository.documentObservable(
       for: DatabaseReference.timeLogHistorySession(userID: userDefaultRepository.userID()),
@@ -80,19 +92,5 @@ public final class TimeLogRecordRepositoryImpl: TimeLogRecordRepository {
     return timeLogHistoryList
       .map(\.timeLogs)
       .map(translator.translateToTimeLogRecords(by:))
-  }
-  
-  // MARK: - Private
-  
-  private func update(with records: [TimeLogRecord]) -> Single<[TimeLogRecord]> {
-    firestoreRepository.update(
-      reference: DatabaseReference.timeLogHistorySession(userID: userDefaultRepository.userID()),
-      with: translator.translateToTimeLogList(by: records).toJson() ?? [:],
-      merge: false
-    )
-    .withUnretained(self)
-    .flatMap { owner, _ in owner.timeLogHistories() }
-    .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
-    .asSingle()
   }
 }

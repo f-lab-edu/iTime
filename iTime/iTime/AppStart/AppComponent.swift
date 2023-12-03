@@ -78,9 +78,14 @@ final class AppComponent:
       TimeLogUsecaseImpl(
         bookmarkRepository: bookmarkRepository,
         timeLogRecordRepository: timeLogRecordRepository,
-        mutableBookmarkModelDataStream: mutableBookmarkModelDataStream
+        mutableBookmarkModelDataStream: mutableBookmarkModelDataStream, 
+        mutableTimeLogRecordModelDataStream: mutableTimeLogRecordModelDataStream
       )
     }
+  }
+  
+  var mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream {
+    TimeLogRecordModelDataStreamImpl()
   }
   
   var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream {

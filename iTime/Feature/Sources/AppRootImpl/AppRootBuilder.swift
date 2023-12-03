@@ -16,6 +16,7 @@ public protocol AppRootDependency: Dependency {
   var authenticationUsecase: AuthenticationUsecase { get }
   var loggedInBuilder: LoggedInBuildable { get }
   var loggedOutBuilder: LoggedOutBuildable { get }
+  var timeLogUsecase: TimeLogUsecase { get }
 }
 
 final class AppRootComponent: Component<AppRootDependency>
@@ -36,7 +37,8 @@ public final class AppRootBuilder:
     let viewController = AppRootViewController()
     let _ = AppRootComponent(dependency: dependency)
     let interactor = AppRootInteractor(
-      presenter: viewController,
+      presenter: viewController, 
+      timeLogUsecase: dependency.timeLogUsecase,
       authenticationUsecase: dependency.authenticationUsecase
     )
     

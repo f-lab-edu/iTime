@@ -23,6 +23,7 @@ public final class TimeLogUsecaseImpl:
   private let bookmarkRepository: BookmarkRepository
   private let timeLogRecordRepository: TimeLogRecordRepository
   private let mutableBookmarkModelDataStream: MutableBookmarkModelDataStream
+  private let mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream
   
   private var isLoaded: Bool = false
 
@@ -31,17 +32,26 @@ public final class TimeLogUsecaseImpl:
   public init(
     bookmarkRepository: BookmarkRepository,
     timeLogRecordRepository: TimeLogRecordRepository,
-    mutableBookmarkModelDataStream: MutableBookmarkModelDataStream
+    mutableBookmarkModelDataStream: MutableBookmarkModelDataStream,
+    mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream
   ) {
     self.bookmarkRepository = bookmarkRepository
     self.timeLogRecordRepository = timeLogRecordRepository
     self.mutableBookmarkModelDataStream = mutableBookmarkModelDataStream
+    self.mutableTimeLogRecordModelDataStream = mutableTimeLogRecordModelDataStream
   }
   
-  // TimeLogRecord Data 같이 당기는 거 합치기 구현 전 입니다.
+  // MARK: - Internal Methods
+  
   public func preLoadAllData() -> Single<Void> {
-    loadBookmarks()
-      .do(onSuccess: { [weak self] in self?.isLoaded = true })
+    Observable.merge(
+      [loadBookmarks(),
+      loadTimeLogRecords()]
+        .map { $0.asObservable() }
+    )
+    .toArray()
+    .map( { _ in () })
+    .do(onSuccess: { [weak self] in self?.isLoaded = true })
   }
   
   public func loadDataIfNeeded() {
@@ -60,12 +70,29 @@ public final class TimeLogUsecaseImpl:
       }
   }
   
-  private func loadTimeLogs() -> Single<Void> {
-    return .never()
+  private func loadTimeLogRecords() -> Single<Void> {
+    timeLogRecordRepository.timeLogRecords()
+      .flatMap { [weak self] records in
+        self?.mutableTimeLogRecordModelDataStream.updateRecords(with: records)
+        return .just(Void())
+      }
   }
   
   private func updateLoadedData(by bookmarks: [Bookmark]) -> Observable<Void> {
-    return .empty()
+    let updateBookmarkStream = mutableBookmarkModelDataStream.bookmarks
+      .withUnretained(self)
+      .flatMap { owner, bookmarks in owner.bookmarkRepository.update(with: bookmarks) }
+      .map { _ in () }
+    
+    let updateTimeLogRecordStream = mutableTimeLogRecordModelDataStream.timeLogRecords
+      .withUnretained(self)
+      .flatMap { owner, records in owner.timeLogRecordRepository.update(with: records) }
+      .map { _ in () }
+    
+    return .merge(
+      updateBookmarkStream,
+      updateTimeLogRecordStream
+    )
   }
   
 }
