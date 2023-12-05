@@ -79,7 +79,7 @@ public final class BookmarkModelDataStreamImpl: MutableBookmarkModelDataStream {
   
   public func remove(_ bookmark: Bookmark) {
     var newBookmarks: [Bookmark] {
-      var models = bookmarkModelDataRelay.value.models.filter { $0 != bookmark }
+      let models = bookmarkModelDataRelay.value.models.filter { $0 != bookmark }
       return models
     }
     

@@ -28,12 +28,15 @@ final class AppRootInteractor:
   weak var listener: AppRootListener?
   
   private let authenticationUsecase: AuthenticationUsecase
+  private let timeLogUsecase: TimeLogUsecase
   
   init(
     presenter: AppRootPresentable,
+    timeLogUsecase: TimeLogUsecase,
     authenticationUsecase: AuthenticationUsecase
   ) {
     self.authenticationUsecase = authenticationUsecase
+    self.timeLogUsecase = timeLogUsecase
     super.init(presenter: presenter)
     presenter.listener = self
   }
@@ -47,6 +50,15 @@ final class AppRootInteractor:
     authenticationUsecase.isLoggedIn() ?
     router?.attachLoggedIn() :
     router?.attachLoggedOut()
+  }
+  
+  private func loadData() {
+    _ = timeLogUsecase.preLoadAllData()
+      .subscribe(with: self) { owner, _ in
+        print("preLoadData is success")
+      } onFailure: { owner, error in
+        print(error.localizedDescription)
+      }
   }
   
   func detachLoggedOut() {

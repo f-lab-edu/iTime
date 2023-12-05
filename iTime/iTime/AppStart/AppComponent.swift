@@ -78,9 +78,14 @@ final class AppComponent:
       TimeLogUsecaseImpl(
         bookmarkRepository: bookmarkRepository,
         timeLogRecordRepository: timeLogRecordRepository,
-        mutableBookmarkModelDataStream: mutableBookmarkModelDataStream
+        mutableBookmarkModelDataStream: mutableBookmarkModelDataStream, 
+        mutableTimeLogRecordModelDataStream: mutableTimeLogRecordModelDataStream
       )
     }
+  }
+  
+  var mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream {
+    TimeLogRecordModelDataStreamImpl()
   }
   
   var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream {
@@ -107,7 +112,7 @@ extension AppComponent {
     BookmarkRepositoryImpl(
       firestoreRepository: firestoreRepository,
       userDefaultRepository: userDefaultRepository,
-      translator: BookmarkTranslatorImpl()
+      translator: BookmarkTranslator()
     )
   }
   
@@ -115,7 +120,7 @@ extension AppComponent {
     TimeLogRecordRepositoryImpl(
       firestoreRepository: firestoreRepository,
       userDefaultRepository: userDefaultRepository,
-      translator: TimeLogRecordTranslatorImpl() // TODO: FIX
+      translator: TimeLogRecordTranslator()
     )
   }
   

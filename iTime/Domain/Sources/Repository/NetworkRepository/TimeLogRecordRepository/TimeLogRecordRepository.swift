@@ -9,7 +9,8 @@ import RxSwift
 import Entities
 
 public protocol TimeLogRecordRepository {
+  func update(with records: [TimeLogRecord]) -> Single<[TimeLogRecord]>
   func append(_ record: TimeLogRecord) -> Single<[TimeLogRecord]>
   func remove(with logID: String) -> Single<[TimeLogRecord]>
-  func timeLogHistories() -> Single<[TimeLogRecord]>
+  func timeLogRecords() -> Single<[TimeLogRecord]>
 }
