@@ -85,7 +85,7 @@ final class ItemHistorySectionView:
     return delegateDataSource.numberOfHistoryItems()
   }
   
-  func configurationData(at index: Int) -> String {
+  func bookmark(at index: Int) -> String {
     guard let delegateDataSource = delegateDataSource else { return String() }
     return delegateDataSource.configurationHistoryItem(at: index)
   }

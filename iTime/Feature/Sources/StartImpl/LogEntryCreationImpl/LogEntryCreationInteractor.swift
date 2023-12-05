@@ -4,11 +4,13 @@
 //
 //  Created by 이상헌 on 2023/11/05.
 //
+import Foundation
 
 import RIBs
 import RxSwift
 
 import Start
+import Entities
 
 protocol LogEntryCreationPresentable: Presentable {
   var listener: LogEntryCreationPresentableListener? { get set }
@@ -22,8 +24,17 @@ final class LogEntryCreationInteractor:
   
   weak var router: LogEntryCreationRouting?
   weak var listener: LogEntryCreationListener?
+  private var bookmarks: [Bookmark] {
+    return []
+  }
   
-  override init(presenter: LogEntryCreationPresentable) {
+  private let bookmarkModelDataStream: BookmarkModelDataStream
+  
+  init(
+    presenter: LogEntryCreationPresentable,
+    bookmarkModelDataStream: BookmarkModelDataStream
+  ) {
+    self.bookmarkModelDataStream = bookmarkModelDataStream
     super.init(presenter: presenter)
     presenter.listener = self
   }
@@ -58,15 +69,15 @@ final class LogEntryCreationInteractor:
     
   }
   
-  // BookmarkTagCoollectionView DataSources
-  // TODO: init data
   func numberOfItems() -> Int {
-    10
+    bookmarks.count
   }
   
-  func configurationData(at index: Int) -> String {
-   "즐겨찾기"
+  func bookmark(at index: Int) -> String {
+    "Bookmark"
   }
+  
+  // MARK: - listener
   
   func detachLocationEntryEditorRIB() {
     print("detachLocationEntryEditorRIB")

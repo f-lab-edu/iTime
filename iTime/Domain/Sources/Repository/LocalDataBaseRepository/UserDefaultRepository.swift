@@ -7,6 +7,10 @@
 
 import Foundation
 
+// MARK: - UserDefaultRepository
+
+public protocol UserDefaultRepository: ReadOnlyUserIDRepository, ReadOnlyIsAppBackgroundRepository, WriteUserIDRepository, WriteIsAppBackgroundRepository {}
+
 // MARK: - ReadOnlyUserDefaultRepository
 
 public protocol ReadOnlyUserIDRepository {

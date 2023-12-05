@@ -10,6 +10,7 @@ import RxSwift
 
 import Editor
 import Usecase
+import Entities
 
 // MARK: - BookmarkEditorPresentable
 
@@ -29,15 +30,15 @@ final class BookmarkEditorInteractor:
   
   weak var router: BookmarkEditorRouting?
   weak var listener: BookmarkEditorListener?
-  private let bookmarkUsecase: BookmarkUsecase
+  private let mutableBookmarkModelDataStream: MutableBookmarkModelDataStream
   
   // MARK: - Initialization & DeInitialization
   
   init(
     presenter: BookmarkEditorPresentable,
-    bookmarkUsecase: BookmarkUsecase
+    mutableBookmarkModelDataStream: MutableBookmarkModelDataStream
   ) {
-    self.bookmarkUsecase = bookmarkUsecase
+    self.mutableBookmarkModelDataStream = mutableBookmarkModelDataStream
     super.init(presenter: presenter)
     presenter.listener = self
   }

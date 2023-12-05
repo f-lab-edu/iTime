@@ -9,6 +9,7 @@ import RIBs
 
 import Start
 import Editor
+import Entities
 import AppFoundation
 
 // MARK: - LogEntryCreationDependency
@@ -16,6 +17,7 @@ import AppFoundation
 protocol LogEntryCreationDependency: Dependency {
   var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
   var logEntryEditorBuilder: LogEntryEditorBuildable { get }
+  var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream { get }
   var timeFormatter: TimeFormatter { get }
 }
 
@@ -52,7 +54,10 @@ final class LogEntryCreationBuilder:
     func build(withListener listener: LogEntryCreationListener) -> LogEntryCreationRouting {
         let component = LogEntryCreationComponent(dependency: dependency)
         let viewController = LogEntryCreationViewController()
-        let interactor = LogEntryCreationInteractor(presenter: viewController)
+      let interactor = LogEntryCreationInteractor(
+        presenter: viewController,
+        bookmarkModelDataStream: dependency.mutableBookmarkModelDataStream
+      )
         interactor.listener = listener
         return LogEntryCreationRouter(
           interactor: interactor,
