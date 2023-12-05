@@ -48,7 +48,7 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     sut = BookmarkRepositoryImpl(
       firestoreRepository: firestoreRepository,
       userDefaultRepository: userDefaultRepository, 
-      translator: BookmarkTranslatorImpl()
+      translator: BookmarkTranslator()
     )
   }
   

@@ -8,16 +8,9 @@
 import Models
 import Entities
 
-// MARK: - TimeLogRecordTranslator
-
-public protocol TimeLogRecordTranslator {
-  func translateToTimeLogRecords(by timeLog: [TimeLog]) -> [TimeLogRecord]
-  func translateToTimeLogList(by timeLogRecords: [TimeLogRecord]) -> TimeLogList
-}
-
 // MARK: - TimeLogRecordTranslatorImpl
 
-public final class TimeLogRecordTranslatorImpl: TimeLogRecordTranslator {
+public final class TimeLogRecordTranslator {
   public func translateToTimeLogRecords(by timeLog: [TimeLog]) -> [TimeLogRecord] {
     timeLog.map {
       TimeLogRecord(
@@ -61,6 +54,5 @@ public final class TimeLogRecordTranslatorImpl: TimeLogRecordTranslator {
       }
     )
   }
-  
   public init() {}
 }
