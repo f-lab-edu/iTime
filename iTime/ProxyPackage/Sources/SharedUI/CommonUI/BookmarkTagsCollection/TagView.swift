@@ -30,6 +30,8 @@ public final class TagView:
     .text(TextType.bookmark.localizedText())
     .textColor(.black40)
     .textAlignment(.center)
+    .adjustsFontForContentSizeCategory(true)
+    .font(UIFontMetrics.default.scaledFont(for: .custom(.regular, 14)))
     .build()
   
   // MARK: - Initialization & Deinitialization
