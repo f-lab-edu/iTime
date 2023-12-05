@@ -95,13 +95,13 @@ final class AppComponent:
     super.init(dependency: EmptyComponent())
   }
   
-  var timeLogUsecase: TimeLogUsecase
+  let timeLogUsecase: TimeLogUsecase
   
-  var authenticationUsecase: AuthenticationUsecase
+  let authenticationUsecase: AuthenticationUsecase
   
-  var mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream
+  let mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream
   
-  var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream
+  let mutableBookmarkModelDataStream: MutableBookmarkModelDataStream
   
   var timeFormatter: TimeFormatter {
     TimeFormatterImpl()
