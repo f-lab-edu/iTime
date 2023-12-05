@@ -112,7 +112,7 @@ extension AppComponent {
     BookmarkRepositoryImpl(
       firestoreRepository: firestoreRepository,
       userDefaultRepository: userDefaultRepository,
-      translator: BookmarkTranslatorImpl()
+      translator: BookmarkTranslator()
     )
   }
   
@@ -120,7 +120,7 @@ extension AppComponent {
     TimeLogRecordRepositoryImpl(
       firestoreRepository: firestoreRepository,
       userDefaultRepository: userDefaultRepository,
-      translator: TimeLogRecordTranslatorImpl() // TODO: FIX
+      translator: TimeLogRecordTranslator()
     )
   }
   
