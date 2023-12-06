@@ -22,43 +22,83 @@ final class TimeLogUsecaseImplTests: XCTestCase {
   
   private var bookmarkRepository: BookmarkRepositoryMock!
   private var timeLogRecordRepository: TimeLogRecordRepositoryMock!
-  private var mutableBookmarkModelDataStream: MutableBookmarkModelDataStreamMock!
-  private var mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStreamMock!
-  
+  private var bookmarkModelDataStreamImpl: BookmarkModelDataStreamImpl!
+  private var timeLogRecordModelDataStreamImpl: TimeLogRecordModelDataStreamImpl!
+  private var configuration: DummyDataConfiguration!
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
   
+  private var bookmarkSubject: PublishSubject<[Bookmark]>!
+  private lazy var bookmarkObserver = scheduler.record(bookmarkSubject, disposeBag: disposeBag)
+  private var timeLogRecordSubject: PublishSubject<[TimeLogRecord]>!
+  private lazy var timeLogRecordObserver = scheduler.record(timeLogRecordSubject, disposeBag: disposeBag)
+  
   override func setUp() {
+    configuration = DummyDataConfiguration()
     disposeBag = DisposeBag()
     scheduler = TestScheduler(initialClock: 0)
-    
+  
     bookmarkRepository = BookmarkRepositoryMock()
     timeLogRecordRepository = TimeLogRecordRepositoryMock()
-    mutableBookmarkModelDataStream = MutableBookmarkModelDataStreamMock()
-    mutableTimeLogRecordModelDataStream = MutableTimeLogRecordModelDataStreamMock()
+    bookmarkModelDataStreamImpl = BookmarkModelDataStreamImpl()
+    timeLogRecordModelDataStreamImpl = TimeLogRecordModelDataStreamImpl()
+    bookmarkSubject = .init()
+    _ = bookmarkObserver
+    timeLogRecordSubject = .init()
+    _ = timeLogRecordObserver
     
     sut = TimeLogUsecaseImpl(
       bookmarkRepository: bookmarkRepository,
       timeLogRecordRepository: timeLogRecordRepository,
-      mutableBookmarkModelDataStream: mutableBookmarkModelDataStream,
-      mutableTimeLogRecordModelDataStream: mutableTimeLogRecordModelDataStream
+      mutableBookmarkModelDataStream: bookmarkModelDataStreamImpl,
+      mutableTimeLogRecordModelDataStream: timeLogRecordModelDataStreamImpl
     )
   }
   
-  func test_preLoadAllData() {
-    // When & Then
-    _ = sut.preLoadAllData()
-      .subscribe { result in
-        switch result {
-        case .success:
-          XCTAssertEqual(self.bookmarkRepository.bookmarksCallcount, 1)
-          XCTAssertEqual(self.timeLogRecordRepository.timeLogRecordsCallCount, 1)
-          XCTAssertEqual(self.mutableBookmarkModelDataStream.updateCallCount, 1)
-          XCTAssertEqual(self.mutableTimeLogRecordModelDataStream.updateRecordsCallCount, 1)
-        case .failure:
-          XCTFail()
-        }
-      }
+  func test_when_preLoadAllData_bookmarkModelDataStream() {
+    // Given
+    let bookmarks = DummyData.DummyBookmark.dummyBookmarksFour
+    bookmarkModelDataStreamImpl.update(with: bookmarks)
+    
+    // When
+    scheduler.scheduleAt(1) {
+      _ = self.sut.preLoadAllData().subscribe()
+    }
+    
+    scheduler.scheduleAt(2) {
+      _ = self.bookmarkModelDataStreamImpl.bookmarks
+        .subscribe(onNext: { self.bookmarkSubject.onNext($0) })
+    }
+    
+    // Then
+    scheduler.start()
+    
+    XCTAssertEqual(bookmarkObserver.events, [
+      .next(2, bookmarks),
+    ])
+  }
+  
+  func test_when_preLoadAllData_timeLogRecordModelDataStream() {
+    // Given
+    let timeLogRecords = DummyData.DummyTimeLogRecord.dummyTimeLogRecords
+    timeLogRecordModelDataStreamImpl.updateRecords(with: timeLogRecords)
+    
+    // When
+    scheduler.scheduleAt(1) {
+      _ = self.sut.preLoadAllData().subscribe()
+    }
+    
+    scheduler.scheduleAt(2) {
+      _ = self.timeLogRecordModelDataStreamImpl.timeLogRecords
+        .subscribe(onNext: { self.timeLogRecordSubject.onNext($0) })
+    }
+    
+    // Then
+    scheduler.start()
+    
+    XCTAssertEqual(timeLogRecordObserver.events, [
+      .next(2, timeLogRecords),
+    ])
   }
   
 }

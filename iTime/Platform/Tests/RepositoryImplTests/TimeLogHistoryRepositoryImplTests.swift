@@ -112,7 +112,7 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
     }
     
     scheduler.scheduleAt(2) {
-      _ = self.sut.timeLogHistories()
+      _ = self.sut.timeLogRecords()
         .subscribe(onSuccess: { self.resultSubject.onNext($0) })
     }
     
