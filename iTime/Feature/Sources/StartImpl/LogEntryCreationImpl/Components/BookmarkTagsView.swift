@@ -26,7 +26,7 @@ final class BookmarkTagsView: BaseView {
     }
     .build()
   
-  private lazy var bookmarkTagsCollectionView = DynamicHeightCollectionView(
+  lazy var bookmarkTagsCollectionView = DynamicHeightCollectionView(
     frame: .zero,
     collectionViewLayout: .init()
   ).builder
