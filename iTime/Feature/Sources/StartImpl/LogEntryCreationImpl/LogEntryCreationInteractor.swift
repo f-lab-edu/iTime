@@ -36,9 +36,8 @@ final class LogEntryCreationInteractor:
   weak var router: LogEntryCreationRouting?
   weak var listener: LogEntryCreationListener?
   let initalState: LogEntryCreationPresentableState
-  
+
   private var bookmarks: [Bookmark] = []
-  
   private let bookmarkModelDataStream: BookmarkModelDataStream
   
   init(
@@ -51,24 +50,12 @@ final class LogEntryCreationInteractor:
     super.init(presenter: presenter)
     presenter.listener = self
   }
-  
-  func didTapBookmarkTagEditor() {
-    router?.attachBookmarkEditorRIB()
-  }
-  
-  func didTapEditorRoutingButton() {
-    router?.attachLogEntryEditorRIB()
-  }
-  
-  func didTapStartButton() {
-    router?.attachTimeLogRunningRIB()
-  }
 
 }
 
 // MARK: - Mutate
 extension LogEntryCreationInteractor {
-    func mutate(action: LogEntryCreationPresentableAction) -> Observable<Mutation> {
+    func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .didTapEncouragingBox: 
             return didTapEncouragingBoxMutation()
@@ -88,42 +75,49 @@ extension LogEntryCreationInteractor {
     }
     
     private func didTapEncouragingBoxMutation() -> Observable<Mutation> {
-        return .empty()
+      return .just(.setLoading(true))
     }
     
     private func didTapSettingButtonMutation() -> Observable<Mutation> {
-        return .empty()
+      return .just(.setLoading(true))
     }
     
     private func didTapBookmarkTagEditorMutation() -> Observable<Mutation> {
         router?.attachBookmarkEditorRIB()
-        return .empty()
+      return .just(.setLoading(true))
     }
     
     private func didTapEditorRoutingButtonMutation() -> Observable<Mutation> {
-        router?.attachLogEntryEditorRIB(
-        return .empty()
+        router?.attachLogEntryEditorRIB()
+      return .just(.setLoading(true))
     }
     
     private func didTapStartButtonMutation() -> Observable<Mutation> {
         router?.attachTimeLogRunningRIB()
-        return .empty()
+      return .just(.setLoading(true))
     }
     
     private func didTapTagCellMutation() -> Observable<Mutation> {
-        return .empty()
+      return .just(.setLoading(true))
     }
     
     private func didTapEncouragingBoxCloseButtonMutation() -> Observable<Mutation> {
-        return .empty()
+      return .just(.setLoading(true))
     }
 }
 
 // MARK: - Reduce
 
 extension LogEntryCreationInteractor {
-    func reduce(state: LogEntryCreationPresentableState, mutation: Mutation) -> LogEntryCreationPresentableState {
-        return .init()
+    func reduce(state: State, mutation: Mutation) -> LogEntryCreationPresentableState {
+      var newState = state
+      
+      switch mutation {
+      case .setLoading:
+        newState.test = Void()
+      }
+      
+      return newState
     }
 }
 

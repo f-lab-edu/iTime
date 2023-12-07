@@ -4,13 +4,15 @@
 //
 //  Created by 이상헌 on 12/5/23.
 //
+import Foundation
 
 import RxSwift
 import RIBs
+import class Foundation.NSLock.NSRecursiveLock
 
 // MARK: - Reactor
 
-public protocol LightReactor {
+public protocol LightReactor: AnyObject, AssociatedObjectStore {
   
   associatedtype Action
   
@@ -27,20 +29,29 @@ public protocol LightReactor {
   func sendAction(_ action: Action)
   
   func mutate(action: Action) -> Observable<Mutation>
-    
+  
   func transform(mutation: Observable<Mutation>) -> Observable<Mutation>
   
   func reduce(state: State, mutation: Mutation) -> State
+}
+
+// warning 제거 참고
+// https://github.com/atrick/swift-evolution/blob/diagnose-implicit-raw-bitwise/proposals/nnnn-implicit-raw-bitwise-conversion.md#workarounds-for-common-cases
+private struct AssociatedKey {
+    static var actionKey: Void? // pointer
 }
 
 // MARK: - Reactor Impl
 
 extension LightReactor where Self: Interactor {
   
+  var _action: PublishSubject<Action> {
+    return associatedObject(forKey: &AssociatedKey.actionKey, default: .init())
+  }
+  
   public var action: PublishSubject<Action> {
     _ = self.state
-    
-    return self.action
+    return _action
   }
   
   public var state: Observable<State> {
@@ -52,7 +63,7 @@ extension LightReactor where Self: Interactor {
   }
   
   public func makeStreamCycle() -> Observable<State> {
-    let mutation = action
+    let mutation = _action
       .withUnretained(self)
       .flatMap { owner, action in
         owner.mutate(action: action)
@@ -75,9 +86,9 @@ extension LightReactor where Self: Interactor {
   public func mutate(action: Action) -> Observable<Mutation> {
     return .empty()
   }
-    
+  
   public func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-    return .empty()
+    return mutation
   }
   
   public func reduce(state: State, mutation: Mutation) -> State {

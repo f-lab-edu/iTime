@@ -76,7 +76,7 @@ final class LogEntryCreationViewController:
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
-    bindActions()
+    bind(listener: listener)
   }
   
 }
@@ -178,7 +178,9 @@ extension LogEntryCreationViewController {
 
 extension LogEntryCreationViewController {
   private func bindState(from listener: LogEntryCreationPresentableListener) {
-    
+      listener.state.map(\.test)
+          .subscribe()
+          .disposed(by: disposeBag)
   }
 }
 

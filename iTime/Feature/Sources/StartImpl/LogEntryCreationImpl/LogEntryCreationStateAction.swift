@@ -13,7 +13,7 @@ import AppFoundation
 // MARK: - LogEntryCreationPresentableState
 
 struct LogEntryCreationPresentableState {
-  
+    var test = Void()
 }
 
 // MARK: - LogEntryCreationPresentableAction
