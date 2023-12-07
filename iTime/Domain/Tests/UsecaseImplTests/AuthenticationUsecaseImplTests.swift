@@ -1,7 +1,8 @@
 import XCTest
 import Repository
 import AppFoundation
-@testable import AuthenticationUsecaseImpl
+import UsecaseTestSupports
+@testable import UsecaseImpl
 
 import RxSwift
 

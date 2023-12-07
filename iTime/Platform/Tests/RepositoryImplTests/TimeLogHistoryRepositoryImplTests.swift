@@ -59,7 +59,7 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
   
   func test_append() {
     // Given
-    let dummyTimeLogRecord = DummyData.DummyTimeLogHistory.dummyTimeLogRecord
+    let dummyTimeLogRecord = DummyData.DummyTimeLogRecord.dummyTimeLogRecord
     
     // When
     scheduler.scheduleAt(1) {
@@ -80,7 +80,7 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
     
     // Given
     let dummyTimeLogRecordID = DummyData.DummyID.timeLogHistoryID
-    let dummyTimeLogRecord = DummyData.DummyTimeLogHistory.dummyTimeLogRecord
+    let dummyTimeLogRecord = DummyData.DummyTimeLogRecord.dummyTimeLogRecord
     
     // When
     scheduler.scheduleAt(1) {
@@ -102,7 +102,7 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
   
   func test_timeLogHistorires() {
     // Given
-    let dummyTimeLogRecord = DummyData.DummyTimeLogHistory.dummyTimeLogRecord
+    let dummyTimeLogRecord = DummyData.DummyTimeLogRecord.dummyTimeLogRecord
     
     // When
     scheduler.scheduleAt(1) {
@@ -112,7 +112,7 @@ final class TimeLogHistoryRepositoryImplTests: XCTestCase {
     }
     
     scheduler.scheduleAt(2) {
-      _ = self.sut.timeLogHistories()
+      _ = self.sut.timeLogRecords()
         .subscribe(onSuccess: { self.resultSubject.onNext($0) })
     }
     

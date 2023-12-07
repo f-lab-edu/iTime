@@ -87,7 +87,6 @@ final class BookmarkRepositoryImplTests: XCTestCase {
     XCTAssertEqual(observer.events, [
       .next(1, [dummyBookmark])
     ])
-    //XCTAssertEqual(firestoreRepository.updateCallCount, 2)
   }
   
   func test_remove() {

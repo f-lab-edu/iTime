@@ -26,7 +26,7 @@ public enum DummyData {
     public static let dummyBookmarksFour: [Bookmark] = [dummyBookmarkOne, dummyBookmarkOne, dummyBookmarkOne, dummyBookmarkOne]
   }
   
-  public enum DummyTimeLogHistory {
+  public enum DummyTimeLogRecord {
     public static let dummyTimeLogRecord: TimeLogRecord = .init(id: DummyID.timeLogHistoryID, activity: .empty, startTime: "10:10:22", endTime: "20:20:33", coordinate: .zero)
     public static let dummyTimeLogRecords: [TimeLogRecord] = [dummyTimeLogRecord, dummyTimeLogRecord, dummyTimeLogRecord, dummyTimeLogRecord]
   }

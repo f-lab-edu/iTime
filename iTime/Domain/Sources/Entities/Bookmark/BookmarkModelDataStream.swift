@@ -51,7 +51,8 @@ public final class BookmarkModelDataStreamImpl: MutableBookmarkModelDataStream {
       .map(\.models)
   }
   private let bookmarkModelDataRelay = BehaviorRelay<BookmarkModelData>(value: BookmarkModelData())
-  weak var listener: ModelDataStreamListener?
+
+  public weak var listener: ModelDataStreamListener?
   
   // MARK: - Internal Methods
   

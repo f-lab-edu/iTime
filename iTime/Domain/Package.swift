@@ -66,6 +66,8 @@ let package = Package(
     .target(
       name: "UsecaseTestSupports",
       dependencies: [
+        "Repository",
+        "RepositoryTestSupports",
         "Usecase",
         .product(name: "AppFoundation", package: "ProxyPackage"),
       ]),
@@ -74,8 +76,8 @@ let package = Package(
       dependencies: [
         "Usecase",
         "UsecaseImpl",
-        "Repository",
-        "UsecaseTestSupports"
+        .product(name: "ProxyTestSupport", package: "ProxyPackage"),
+        "UsecaseTestSupports",
       ]),
   ]
 )
