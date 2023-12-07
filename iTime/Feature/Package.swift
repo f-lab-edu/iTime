@@ -124,13 +124,15 @@ let package = Package(
       .target(
         name: "History",
         dependencies: [
-          "ProxyPackage"
+          "ProxyPackage",
         ]),
     .target(
       name: "HistoryImpl",
       dependencies: [
         "History",
-        "ProxyPackage"
+        .product(name: "Usecase", package: "Domain"),
+        .product(name: "AppFoundation", package: "ProxyPackage"),
+        .product(name: "SharedUI", package: "ProxyPackage"),
       ]),
     .testTarget(
       name: "LoggedInImplTests",
