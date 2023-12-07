@@ -23,6 +23,12 @@ let package = Package(
       name: "EditorImpl",
       targets: ["EditorImpl"]),
     .library(
+      name: "History",
+      targets: ["History"]),
+    .library(
+      name: "HistoryImpl",
+      targets: ["HistoryImpl"]),
+    .library(
       name: "LoggedIn",
       targets: ["LoggedIn"]),
     .library(
@@ -114,6 +120,17 @@ let package = Package(
         .product(name: "Usecase", package: "Domain"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),
+      ]),
+      .target(
+        name: "History",
+        dependencies: [
+          "ProxyPackage"
+        ]),
+    .target(
+      name: "HistoryImpl",
+      dependencies: [
+        "History",
+        "ProxyPackage"
       ]),
     .testTarget(
       name: "LoggedInImplTests",

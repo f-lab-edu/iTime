@@ -19,6 +19,8 @@
 		DE1A18E62B00B26A009E1672 /* StartImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18E52B00B26A009E1672 /* StartImpl */; };
 		DE1A18F22B00B273009E1672 /* AppFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18F12B00B273009E1672 /* AppFoundation */; };
 		DE1A18F42B00B273009E1672 /* ProxyPackage in Frameworks */ = {isa = PBXBuildFile; productRef = DE1A18F32B00B273009E1672 /* ProxyPackage */; };
+		DE2526012B2213780059186B /* History in Frameworks */ = {isa = PBXBuildFile; productRef = DE2526002B2213780059186B /* History */; };
+		DE2526032B2213780059186B /* HistoryImpl in Frameworks */ = {isa = PBXBuildFile; productRef = DE2526022B2213780059186B /* HistoryImpl */; };
 		DE44DF4A2B07AE9E000A4865 /* SharedUI in Frameworks */ = {isa = PBXBuildFile; productRef = DE44DF492B07AE9E000A4865 /* SharedUI */; };
 		DE4E551C2AEA483F00DDD145 /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E551B2AEA483F00DDD145 /* AppComponent.swift */; };
 		DE577F2C2AFBA29C006699F2 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE577F2B2AFBA29C006699F2 /* Configuration.swift */; };
@@ -69,7 +71,9 @@
 				DEB9EF412B16BE9F0030820D /* Repository in Frameworks */,
 				DEB9EF452B16BE9F0030820D /* UsecaseImpl in Frameworks */,
 				DE44DF4A2B07AE9E000A4865 /* SharedUI in Frameworks */,
+				DE2526032B2213780059186B /* HistoryImpl in Frameworks */,
 				DE1A18E22B00B26A009E1672 /* LoggedOutImpl in Frameworks */,
+				DE2526012B2213780059186B /* History in Frameworks */,
 				DE1A18F42B00B273009E1672 /* ProxyPackage in Frameworks */,
 				DE1A18E02B00B26A009E1672 /* LoggedOut in Frameworks */,
 				DEB9EF472B16BEA70030820D /* RepositoryImpl in Frameworks */,
@@ -190,6 +194,8 @@
 				DEB9EF422B16BE9F0030820D /* Usecase */,
 				DEB9EF442B16BE9F0030820D /* UsecaseImpl */,
 				DEB9EF462B16BEA70030820D /* RepositoryImpl */,
+				DE2526002B2213780059186B /* History */,
+				DE2526022B2213780059186B /* HistoryImpl */,
 			);
 			productName = iTime;
 			productReference = DE05709F2AE6735E00669BDF /* iTime.app */;
@@ -716,6 +722,14 @@
 		DE1A18F32B00B273009E1672 /* ProxyPackage */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProxyPackage;
+		};
+		DE2526002B2213780059186B /* History */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = History;
+		};
+		DE2526022B2213780059186B /* HistoryImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HistoryImpl;
 		};
 		DE44DF492B07AE9E000A4865 /* SharedUI */ = {
 			isa = XCSwiftPackageProductDependency;

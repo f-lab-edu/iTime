@@ -8,7 +8,7 @@
 import RIBs
 import RxSwift
 
-import CategoryCreation
+import Editor
 
 // MARK: - CategoryCreationPresentable
 

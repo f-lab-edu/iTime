@@ -7,7 +7,7 @@
 
 import RIBs
 
-import DateSelection
+import History
 
 // MARK: - DateSelectionInteractable
 

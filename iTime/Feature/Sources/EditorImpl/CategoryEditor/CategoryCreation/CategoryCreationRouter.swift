@@ -7,7 +7,7 @@
 
 import RIBs
 
-import CategoryCreation
+import Editor
 
 // MARK: - CategoryCreationInteractable
 
