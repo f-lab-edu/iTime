@@ -8,7 +8,6 @@ import Foundation
 
 import RxSwift
 import RIBs
-import class Foundation.NSLock.NSRecursiveLock
 
 // MARK: - Reactor
 
@@ -38,7 +37,7 @@ public protocol LightReactor: AnyObject, AssociatedObjectStore {
 // warning 제거 참고
 // https://github.com/atrick/swift-evolution/blob/diagnose-implicit-raw-bitwise/proposals/nnnn-implicit-raw-bitwise-conversion.md#workarounds-for-common-cases
 private struct AssociatedKey {
-    static var actionKey: Void? // pointer
+  static var actionKey: Void? // pointer
 }
 
 // MARK: - Reactor Impl
