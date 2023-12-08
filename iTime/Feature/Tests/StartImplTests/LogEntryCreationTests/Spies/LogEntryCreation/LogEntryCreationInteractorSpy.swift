@@ -2,41 +2,47 @@
 //  File.swift
 //  
 //
-//  Created by 이상헌 on 12/9/23.
+//  Created by 이상헌 on 11/18/23.
 //
+
 import RxSwift
+
 import Start
+import RIBsTestSupport
+
 @testable import StartImpl
 
-final class LogEntryCreationInteractorSpy: LogEntryCreationInteractable {
-  var router: LogEntryCreationRouting?
-  
-  var listener: LogEntryCreationListener?
-  
-  func activate() {
-    
-  }
-  
-  func deactivate() {
-    
-  }
-  
+final class LogEntryCreationInteratableSpy: LogEntryCreationInteractable {
   func detachLocationEntryEditorRIB() {
-    
+  
   }
   
   func attachTimeLogRunningRIB() {
     
   }
   
-  var isActive: Bool = false
+  var router: LogEntryCreationRouting?
+  var listener: LogEntryCreationListener?
   
-  var isActiveStream: RxSwift.Observable<Bool> = .empty()
-  
-  init(router: LogEntryCreationRouting? = nil, listener: LogEntryCreationListener? = nil, isActive: Bool, isActiveStream: RxSwift.Observable<Bool>) {
-    self.router = router
-    self.listener = listener
-    self.isActive = isActive
-    self.isActiveStream = isActiveStream
+  public func activate() {
+    
   }
+  
+  public func deactivate() {
+    
+  }
+  
+  public var isActive: Bool { (try? isActiveSubject.value()) ?? false }
+  
+  public var isActiveStream: Observable<Bool> { isActiveSubject.asObservable()}
+  
+  private let isActiveSubject = BehaviorSubject<Bool>(value: false)
 }
+
+final class LogEntryCreationViewControllableSpy:
+  ViewControllableMock,
+  LogEntryCreationViewControllable
+{
+  
+}
+
