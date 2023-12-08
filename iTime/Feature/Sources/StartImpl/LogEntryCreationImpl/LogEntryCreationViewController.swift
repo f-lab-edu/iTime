@@ -84,20 +84,20 @@ final class LogEntryCreationViewController:
 // MARK: - Bind listener
 
 extension LogEntryCreationViewController {
-    private func bind(listener: LogEntryCreationPresentableListener?) {
-        guard let listener = listener else { return }
-        bindActions()
-        bindActionRelay()
-        bindState(from: listener)
-    }
-    
-    private func bindActionRelay() {
-        self.actionRelay.asObservable()
-            .bind(with: self) { onwer, action in
-                onwer.listener?.sendAction(action)
-            }
-            .disposed(by: disposeBag)
-    }
+  private func bind(listener: LogEntryCreationPresentableListener?) {
+    guard let listener = listener else { return }
+    bindActions()
+    bindActionRelay()
+    bindState(from: listener)
+  }
+  
+  private func bindActionRelay() {
+    self.actionRelay.asObservable()
+      .bind(with: self) { onwer, action in
+        onwer.listener?.sendAction(action)
+      }
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: Bind Actions
@@ -112,14 +112,12 @@ extension LogEntryCreationViewController {
     bindEdtiorRoutingButtonTapAction()
     bindStartButtonTapAction()
   }
-    
+  
   private func bindLoadDataAction() {
     rx.viewWillAppear
       .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
-      .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in
-        owner.bookmarkTagsView.bookmarkTagsCollectionView.reloadData()
-      }
+      .map { _ in .loadAction }
+      .bind(to: self.actionRelay)
       .disposed(by: disposeBag)
   }
   
@@ -138,7 +136,7 @@ extension LogEntryCreationViewController {
     )
     .map { _ in .didTapEncouragingBox }
     .bind(to: self.actionRelay)
-      .disposed(by: disposeBag)
+    .disposed(by: disposeBag)
   }
   
   private func bindEncouragingBoxCloseButtonTapAction() {
@@ -178,9 +176,17 @@ extension LogEntryCreationViewController {
 
 extension LogEntryCreationViewController {
   private func bindState(from listener: LogEntryCreationPresentableListener) {
-      listener.state.map(\.test)
-          .subscribe()
-          .disposed(by: disposeBag)
+    bindBookmarksState(from: listener)
+  }
+  
+  private func bindBookmarksState(from listener: LogEntryCreationPresentableListener) {
+    listener.state.map(\.bookmarks)
+      .distinctUntilChanged()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in
+        owner.bookmarkTagsView.bookmarkTagsCollectionView.reloadData()
+      }
+      .disposed(by: disposeBag)
   }
 }
 

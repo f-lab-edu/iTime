@@ -11,12 +11,12 @@ import RIBs
 
 // MARK: - Reactor
 
-public protocol LightReactor: AnyObject, AssociatedObjectStore {
-  
+public protocol LightReactor: 
+  AnyObject,
+  AssociatedObjectStore
+{
   associatedtype Action
-  
   associatedtype Mutation = Action
-  
   associatedtype State
   
   var action: PublishSubject<Action> { get }
@@ -24,6 +24,8 @@ public protocol LightReactor: AnyObject, AssociatedObjectStore {
   var initalState: State { get }
   
   var state: Observable<State> { get }
+    
+  var currentState: State { get }
   
   func sendAction(_ action: Action)
   
@@ -36,8 +38,11 @@ public protocol LightReactor: AnyObject, AssociatedObjectStore {
 
 // warning 제거 참고
 // https://github.com/atrick/swift-evolution/blob/diagnose-implicit-raw-bitwise/proposals/nnnn-implicit-raw-bitwise-conversion.md#workarounds-for-common-cases
+
+// pointer
 private struct AssociatedKey {
-  static var actionKey: Void? // pointer
+  static var actionKey: Void?
+  static var currentStateKey: Void?
 }
 
 // MARK: - Reactor Impl
@@ -61,6 +66,11 @@ extension LightReactor where Self: Interactor {
     self.action.on(.next(action))
   }
   
+  public internal(set) var currentState: State {
+    get { return self.associatedObject(forKey: &AssociatedKey.currentStateKey, default: self.initalState) }
+    set { self.setAssociatedObject(newValue, forKey: &AssociatedKey.currentStateKey) }
+  }
+  
   public func makeStreamCycle() -> Observable<State> {
     let mutation = _action
       .withUnretained(self)
@@ -73,6 +83,9 @@ extension LightReactor where Self: Interactor {
         guard let self else { return state }
         return self.reduce(state: state, mutation: mutation)
       }
+      .do(onNext: { [weak self] state in
+        self?.currentState = state
+      })
       .replay(1)
     
     state

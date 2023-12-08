@@ -5,12 +5,12 @@
 //  Created by 이상헌 on 11/19/23.
 //
 
-import Start
+import Editor
 import RIBsTestSupport
 
-// MARK: - LogEntryEditorBuildableMock
+// MARK: - LogEntryEditorBuildableSpy
 
-final class LogEntryEditorBuildableMock: LogEntryEditorBuildable {
+final class LogEntryEditorBuildableSpy: LogEntryEditorBuildable {
   
   var buildHandler: ((_ listener: LogEntryEditorListener) -> LogEntryEditorRouting)?
   
@@ -26,8 +26,13 @@ final class LogEntryEditorBuildableMock: LogEntryEditorBuildable {
   }
 }
 
-// MARK: - LogEntryEditorRoutingMock
+// MARK: - LogEntryEditorRoutingSpy
 
-final class LogEntryEditorRoutingMock: ViewableRoutingMock, LogEntryEditorRouting {
+final class LogEntryEditorRoutingSpy:
+  ViewableRoutingMock,
+  LogEntryEditorRouting {
+  func attachCategoryEditorRIB() {
+    
+  }
 }
 

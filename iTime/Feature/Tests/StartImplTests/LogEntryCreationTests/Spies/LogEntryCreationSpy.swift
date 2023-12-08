@@ -12,7 +12,15 @@ import RIBsTestSupport
 
 @testable import StartImpl
 
-final class LogEntryCreationInteratableMock: LogEntryCreationInteractable {
+final class LogEntryCreationInteratableSpy: LogEntryCreationInteractable {
+  func detachLocationEntryEditorRIB() {
+  
+  }
+  
+  func attachTimeLogRunningRIB() {
+    
+  }
+  
   var router: LogEntryCreationRouting?
   var listener: LogEntryCreationListener?
   
@@ -31,7 +39,10 @@ final class LogEntryCreationInteratableMock: LogEntryCreationInteractable {
   private let isActiveSubject = BehaviorSubject<Bool>(value: false)
 }
 
-final class LogEntryCreationViewControllableMock: ViewControllableMock, LogEntryCreationViewControllable {
+final class LogEntryCreationViewControllableSpy:
+  ViewControllableMock,
+  LogEntryCreationViewControllable
+{
   
 }
 

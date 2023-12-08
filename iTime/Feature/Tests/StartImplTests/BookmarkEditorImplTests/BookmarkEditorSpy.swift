@@ -5,12 +5,12 @@
 //  Created by 이상헌 on 11/19/23.
 //
 
-import Start
+import Editor
 import RIBsTestSupport
 
 // MARK: - BookmarkEditorBuildableMock
 
-final class BookmarkEditorBuildableMock: BookmarkEditorBuildable {
+final class BookmarkEditorBuildableSpy: BookmarkEditorBuildable {
   
   var buildHandler: ((_ listener: BookmarkEditorListener) -> BookmarkEditorRouting)?
   
@@ -29,5 +29,12 @@ final class BookmarkEditorBuildableMock: BookmarkEditorBuildable {
 
 // MARK: - BookmarkEditorRoutingMock
 
-final class BookmarkEditorRoutingMock: ViewableRoutingMock, BookmarkEditorRouting {
+final class BookmarkEditorRoutingMock: 
+  ViewableRoutingMock,
+  BookmarkEditorRouting {
+  func detachBookmarkEdtiorRIB() {
+    
+  }
 }
+
+

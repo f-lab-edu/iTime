@@ -7,18 +7,21 @@
 
 import RxSwift
 
+import Entities
 import SharedUI
 import AppFoundation
 
 // MARK: - LogEntryCreationPresentableState
 
-struct LogEntryCreationPresentableState {
-    var test = Void()
+ struct LogEntryCreationPresentableState {
+  var bookmarks: [Bookmark] = []
+  var isHiddenEncouragingBox = false
 }
 
 // MARK: - LogEntryCreationPresentableAction
 
 enum LogEntryCreationPresentableAction {
+  case loadAction
   case didTapEncouragingBox
   case didTapSettingButton
   case didTapBookmarkTagEditor
