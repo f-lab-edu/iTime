@@ -36,6 +36,7 @@ let package = Package(
     .package(url: "https://github.com/SnapKit/SnapKit.git", from: "5.0.0"),
     .package(url: "https://github.com/RxSwiftCommunity/RxGesture.git", from: "4.0.4"),
     .package(url: "https://github.com/richardtop/CalendarKit.git", branch: "master"),
+    .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.9.0"),
   ],
   targets: [
     .target(
@@ -64,6 +65,7 @@ let package = Package(
       dependencies: [
         .product(name: "RxTest", package: "RxSwift"),
         .product(name: "RxBlocking", package: "RxSwift"),
+        .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
       ]
     ),
     .target(
