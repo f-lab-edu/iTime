@@ -21,7 +21,7 @@ import AppFoundation
 // MARK: - LogEntryCreationPresentableAction
 
 enum LogEntryCreationPresentableAction {
-  case loadAction
+  case loadData
   case didTapEncouragingBox
   case didTapSettingButton
   case didTapBookmarkTagEditor

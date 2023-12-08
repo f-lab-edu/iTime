@@ -65,7 +65,7 @@ final class LogEntryCreationInteractor:
 extension LogEntryCreationInteractor {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
-    case .loadAction:
+    case .loadData:
       return loadDataMutation()
     case .didTapEncouragingBox:
       return didTapEncouragingBoxMutation()
@@ -93,7 +93,7 @@ extension LogEntryCreationInteractor {
   }
   
   private func didTapEncouragingBoxMutation() -> Observable<Mutation> {
-    return .just(.setIsHiddenEncouragingBox(true))
+    return .empty()
   }
   
   private func didTapSettingButtonMutation() -> Observable<Mutation> {
@@ -117,7 +117,7 @@ extension LogEntryCreationInteractor {
   }
   
   private func didTapEncouragingBoxCloseButtonMutation() -> Observable<Mutation> {
-    return .empty()
+    return .just(.setIsHiddenEncouragingBox(true))
   }
 }
 

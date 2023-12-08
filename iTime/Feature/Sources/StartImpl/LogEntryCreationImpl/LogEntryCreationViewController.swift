@@ -116,7 +116,7 @@ extension LogEntryCreationViewController {
   private func bindLoadDataAction() {
     rx.viewWillAppear
       .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
-      .map { _ in .loadAction }
+      .map { _ in .loadData }
       .bind(to: self.actionRelay)
       .disposed(by: disposeBag)
   }

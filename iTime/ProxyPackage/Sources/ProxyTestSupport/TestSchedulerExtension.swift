@@ -5,6 +5,8 @@
 //  Created by 이상헌 on 2022/12/05.
 //
 
+import Foundation
+
 import RxSwift
 import RxTest
 
@@ -24,4 +26,18 @@ extension TestScheduler {
            .disposed(by: disposeBag)
        return observer
    }
+}
+
+// https://sudo-park.medium.com/swift-unittest%EC%97%90%EC%84%9C-rxswift-concurrency-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-75c0907a3423
+public extension ObservableType {
+    
+    func values(
+        with timeoutMillis: TimeInterval,
+        scheduler: SchedulerType = MainScheduler.instance
+    ) -> AsyncThrowingStream<Element, Error> {
+        
+        let timeout: RxTimeInterval = .milliseconds(Int(timeoutMillis * 1000))
+        return self.timeout(timeout, scheduler: scheduler)
+            .values
+    }
 }

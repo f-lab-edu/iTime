@@ -31,8 +31,8 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/firebase/firebase-ios-sdk.git", exact: "10.15.0"),
-    .package(url: "https://github.com/ReactiveX/RxSwift.git", exact: "6.2.0"),
-    .package(url: "https://github.com/uber/RIBs.git", exact: "0.14.1"),
+    .package(url: "https://github.com/ReactiveX/RxSwift.git", exact: "6.5.0"),
+    .package(url: "https://github.com/uber/RIBs.git", exact: "0.15.1"),
     .package(url: "https://github.com/SnapKit/SnapKit.git", from: "5.0.0"),
     .package(url: "https://github.com/RxSwiftCommunity/RxGesture.git", from: "4.0.4"),
     .package(url: "https://github.com/richardtop/CalendarKit.git", branch: "master"),
