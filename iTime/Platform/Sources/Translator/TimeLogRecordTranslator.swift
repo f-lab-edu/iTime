@@ -22,14 +22,12 @@ public final class TimeLogRecordTranslator {
             color: $0.perform.classification.color
           )
         ),
-        startTime: $0.startTime,
-        endTime: $0.endTime,
-        coordinates: $0.coordinates.map {
-          Coordinate2D(
-            latitude: $0.latitude,
-            longitude: $0.longitude
-          )
-        }
+        startDate: $0.startDate,
+        endDate: $0.endDate,
+        coordinate: Coordinate2D(
+          latitude: $0.coordinate.latitude,
+          longitude: $0.coordinate.longitude
+        )
       )
     }
   }
@@ -46,14 +44,12 @@ public final class TimeLogRecordTranslator {
               color: $0.activity.category.color
             )
           ),
-          startTime: $0.startTime,
-          endTime: $0.endTime,
-          coordinates: $0.coordinates.map {
-            Coordinate(
-              latitude: $0.latitude,
-              longitude: $0.longitude
-            )
-          }
+          startDate: $0.startDate,
+          endDate: $0.endDate,
+          coordinate: Coordinate(
+            latitude: $0.coordinate.latitude,
+            longitude: $0.coordinate.longitude
+          )
         )
       }
     )

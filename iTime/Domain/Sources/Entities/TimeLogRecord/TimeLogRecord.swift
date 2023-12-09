@@ -22,14 +22,14 @@ public struct TimeLogRecord:
   public init(
     id: String = String(),
     activity: Activity = .empty,
-    startTime: String = String(),
-    endTime: String = String(),
+    startDate: String = String(),
+    endDate: String = String(),
     coordinate: Coordinate2D = .zero
   ) {
     self.id = id
     self.activity = activity
-    self.startTime = startTime
-    self.endTime = endTime
+    self.startDate = startDate
+    self.endDate = endDate
     self.coordinate = coordinate
   }
   
