@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - UserDefaultRepository
 
-public protocol UserDefaultRepository: ReadOnlyUserIDRepository, ReadOnlyIsAppBackgroundRepository, WriteUserIDRepository, WriteIsAppBackgroundRepository {}
+public protocol UserDefaultRepository: ReadOnlyUserIDRepository, ReadOnlyLastlyTrackedTimeRepository, WriteUserIDRepository, WriteLastlyTrackedTimeRepository {}
 
 // MARK: - ReadOnlyUserDefaultRepository
 
@@ -17,8 +17,8 @@ public protocol ReadOnlyUserIDRepository {
   func userID() -> String
 }
 
-public protocol ReadOnlyIsAppBackgroundRepository {
-  func isAppBackground() -> Bool
+public protocol ReadOnlyLastlyTrackedTimeRepository {
+  func lastlyTrackedTime() -> Int
 }
 
 // MARK: - WriteUserDefaultRepository
@@ -27,13 +27,13 @@ public protocol WriteUserIDRepository {
     func updateUserID(with userID: String)
 }
 
-public protocol WriteIsAppBackgroundRepository {
-    func updateIsAppBackground(with isAppBackground: Bool)
+public protocol WriteLastlyTrackedTimeRepository {
+    func updateLastlyTrackedTime(with time: Int)
 }
 
 // MARK: - UserDefaultKey
 
 public enum UserDefaultKey: String {
   case userID
-  case isAppBackground
+  case lastlyTrackedTime
 }

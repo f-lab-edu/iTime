@@ -414,6 +414,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2L2K3UD2LK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iTime/Resources/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 일정 간 위치정보 제공을 위해 위치권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 일정 간 위치정보 제공을 위해 위치권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -449,6 +451,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2L2K3UD2LK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iTime/Resources/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 일정 간 위치정보 제공을 위해 위치권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 일정 간 위치정보 제공을 위해 위치권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -549,6 +553,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2L2K3UD2LK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iTime/Resources/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 일정 간 위치정보 제공을 위해 위치권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 일정 간 위치정보 제공을 위해 위치권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -643,6 +649,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2L2K3UD2LK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iTime/Resources/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 일정 간 위치정보 제공을 위해 위치권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 일정 간 위치정보 제공을 위해 위치권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

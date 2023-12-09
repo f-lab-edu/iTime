@@ -13,11 +13,11 @@ import Repository
 
 public final class UserDefaultRepositoryImpl: UserDefaultRepository {
   public func updateUserID(with userID: String) {
-    UserDefaults.standard.setValue(isAppBackground, forKey: UserDefaultKey.isAppBackground.rawValue)
+    UserDefaults.standard.setValue(userID, forKey: UserDefaultKey.userID.rawValue)
   }
-  
-  public func updateIsAppBackground(with isAppBackground: Bool) {
-    UserDefaults.standard.setValue(isAppBackground, forKey: UserDefaultKey.isAppBackground.rawValue)
+
+  public func updateLastlyTrackedTime(with time: Int) {
+    UserDefaults.standard.setValue(time, forKey: UserDefaultKey.lastlyTrackedTime.rawValue)
   }
   
   public func userID() -> String {
@@ -28,10 +28,9 @@ public final class UserDefaultRepositoryImpl: UserDefaultRepository {
     return userID
   }
   
-  /// defualt value is false
-  public func isAppBackground() -> Bool {
-    UserDefaults.standard.bool(forKey: UserDefaultKey.isAppBackground.rawValue)
+  public func lastlyTrackedTime() -> Int {
+    UserDefaults.standard.integer(forKey: UserDefaultKey.lastlyTrackedTime.rawValue)
   }
-  
+
   public init() {}
 }

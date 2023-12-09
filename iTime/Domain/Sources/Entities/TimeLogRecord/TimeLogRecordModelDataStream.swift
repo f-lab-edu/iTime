@@ -50,7 +50,7 @@ public final class TimeLogRecordModelDataStreamImpl: MutableTimeLogRecordModelDa
   // MARK: - Internal Methods
   
   public func updateRecords(with timeLogRecords: [TimeLogRecord]) {
-    var modelByID = timeLogRecords.reduce(into: [String: TimeLogRecord]()) { $0[$1.id] = $1 }
+    let modelByID = timeLogRecords.reduce(into: [String: TimeLogRecord]()) { $0[$1.id] = $1 }
     let data = TimeLogRecordModelData(models: timeLogRecords, modelByID: modelByID)
     timeLogRecordsDataRelay.accept(data)
   }
@@ -80,7 +80,7 @@ public final class TimeLogRecordModelDataStreamImpl: MutableTimeLogRecordModelDa
   
   public func remove(_ timeLogRecord: TimeLogRecord) {
     var newTimeLogRecords: [TimeLogRecord] {
-      var records = timeLogRecordsDataRelay.value.models.filter { $0 != timeLogRecord }
+      let records = timeLogRecordsDataRelay.value.models.filter { $0 != timeLogRecord }
       return records
     }
     

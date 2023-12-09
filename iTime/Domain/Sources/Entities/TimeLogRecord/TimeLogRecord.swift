@@ -5,22 +5,26 @@
 //  Created by 이상헌 on 12/1/23.
 //
 
+import AppFoundation
+
 // MARK: - TimeLogRecord
 
-public struct TimeLogRecord: Equatable
+public struct TimeLogRecord:
+  Equatable,
+  PropertyBuilderCompatible
 {
-  public let id: String
-  public let activity: Activity
-  public let startTime: String
-  public let endTime: String
-  public let coordinate: Coordinate2D
+  public var id: String
+  public var activity: Activity
+  public var startDate: String
+  public var endDate: String
+  public var coordinate: Coordinate2D
   
   public init(
-    id: String, 
-    activity: Activity,
-    startTime: String,
-    endTime: String,
-    coordinate: Coordinate2D
+    id: String = String(),
+    activity: Activity = .empty,
+    startTime: String = String(),
+    endTime: String = String(),
+    coordinate: Coordinate2D = .zero
   ) {
     self.id = id
     self.activity = activity
