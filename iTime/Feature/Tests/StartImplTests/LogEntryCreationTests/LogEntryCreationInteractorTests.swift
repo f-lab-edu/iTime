@@ -49,7 +49,7 @@ final class LogEntryCreationInteractorTests: XCTestCase {
   func test_didTapBookmarkTagEditor() {
     // When
     sut.activate()
-    sut.presenter.listener?.didTapBookmarkTagEditor()
+    sut.didTapBookmarkTagEditor()
     
     // Then
     XCTAssertEqual(router.attachBookmarkEditorRIbCallCount, 1)
@@ -58,7 +58,7 @@ final class LogEntryCreationInteractorTests: XCTestCase {
   func test_didTapEditorRoutingButton() {
     // When
     sut.activate()
-    // sut.sendAction(.didTapEditorRoutingButton)
+    sut.didTapEditorRoutingButton()
     
     // Then
     XCTAssertEqual(router.attachLogEntryEditorRIBCallCount, 1)
@@ -67,7 +67,7 @@ final class LogEntryCreationInteractorTests: XCTestCase {
   func test_didTapStartButton() {
     // When
     sut.activate()
-   // sut.sendAction(.didTapStartButton)
+    sut.didTapStartButton()
     
     // Then
     XCTAssertEqual(router.attachTimeLogRunningRIBCallCount, 1)
