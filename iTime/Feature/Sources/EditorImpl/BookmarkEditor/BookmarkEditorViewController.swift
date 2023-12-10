@@ -14,11 +14,7 @@ import SharedUI
 
 // MARK: - BookmarkEditorPresentableListener
 
-protocol BookmarkEditorPresentableListener:
-  AnyObject,
-  SavedItemSectionDelegateDataSource,
-  ItemHistorySectionDelegateDataSource
-{
+protocol BookmarkEditorPresentableListener: AnyObject {
   func didTapSaveButton()
   func didTapAddButton()
   func didTapBackButton()
@@ -46,13 +42,13 @@ final class BookmarkEditorViewController:
   
   private let customNavigationBar = CustomNavigationBar()
   
-  private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(delegateDataSource: listener)
-  
   private let separatedView = UIView().builder
     .backgroundColor(.black90)
     .build()
   
-  private lazy var itemHistorySectionView = ItemHistorySectionView(delegateDataSource: listener)
+  private let bookmarkListContainterView = UIView()
+  
+  private let activityHistoryContainterView = UIView()
   
   private let saveBookmarkButtonSectionView = SaveBookmarkButtonSectionView()
   
@@ -76,11 +72,11 @@ extension BookmarkEditorViewController {
   }
   
   private func bindSaveButtonTapAction() {
-    saveBookmarkButtonSectionView.saveButton.rx
-      .tapWithPreventDuplication()
-      .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in print("tap") }
-      .disposed(by: disposeBag)
+//    bookmarkListContainterView.saveButton.rx
+//      .tapWithPreventDuplication()
+//      .asDriver(onErrorDriveWith: .empty())
+//      .drive(with: self) { owner, _ in print("tap") }
+//      .disposed(by: disposeBag)
   }
   
   private func bindAddButtonTapAction() {
@@ -107,18 +103,15 @@ extension BookmarkEditorViewController {
   
 }
 
-extension BookmarkEditorViewController {
-  
-}
 
 // MARK: - Layout
 
 extension BookmarkEditorViewController {
   private func setupUI() {
     view.addSubview(customNavigationBar)
-    view.addSubview(currentSavedItemsSectionView)
+    view.addSubview(bookmarkListContainterView)
+    view.addSubview(activityHistoryContainterView)
     view.addSubview(separatedView)
-    view.addSubview(itemHistorySectionView)
     view.addSubview(saveBookmarkButtonSectionView)
     
     layout()
@@ -128,7 +121,7 @@ extension BookmarkEditorViewController {
     makeCustomNavigationBarConstraints()
     makeCurrentSavedItemSectionViewConstraints()
     makeSeparatedViewConstraints()
-    makeItemHistorySectionViewConstraints()
+    makeActivityHistoryContainterViewConstraints()
     makeSaveBookmarkButtonSectionViewConstraints()
   }
   
@@ -140,7 +133,7 @@ extension BookmarkEditorViewController {
   }
   
   private func makeCurrentSavedItemSectionViewConstraints() {
-    currentSavedItemsSectionView.snp.makeConstraints {
+    bookmarkListContainterView.snp.makeConstraints {
       $0.top.equalTo(customNavigationBar.snp.bottom)
       $0.leading.trailing.equalToSuperview()
     }
@@ -148,17 +141,17 @@ extension BookmarkEditorViewController {
   
   private func makeSeparatedViewConstraints() {
     separatedView.snp.makeConstraints {
-      $0.top.equalTo(currentSavedItemsSectionView.snp.bottom)
+      $0.top.equalTo(bookmarkListContainterView.snp.bottom)
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(Metric.separatedViewHeight)
     }
   }
   
-  private func makeItemHistorySectionViewConstraints() {
-    itemHistorySectionView.snp.makeConstraints {
+  private func makeActivityHistoryContainterViewConstraints() {
+    activityHistoryContainterView.snp.makeConstraints {
       $0.top.equalTo(separatedView.snp.bottom)
       $0.leading.trailing.equalToSuperview()
-      $0.bottom.equalTo(saveBookmarkButtonSectionView.snp.top).priority(.low)
+      $0.bottom.equalTo(bookmarkListContainterView.snp.top).priority(.low)
     }
   }
   
@@ -167,6 +160,14 @@ extension BookmarkEditorViewController {
       $0.leading.trailing.equalToSuperview()
       $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
     }
+  }
+  
+  func addBookmarkList(_ view: ViewControllable) {
+    addChildViewController(container: bookmarkListContainterView, child: view)
+  }
+  
+  func addActivityHistory(_ view: ViewControllable) {
+    addChildViewController(container: activityHistoryContainterView, child: view)
   }
 }
 

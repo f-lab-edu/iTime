@@ -17,7 +17,11 @@ public protocol LogEntryCreationBuildable: Buildable {
 
 public protocol LogEntryCreationRouting: ViewableRouting {
   func attachLogEntryEditorRIB()
+  func detachLogEntryEditorRIB()
   func attachTimeLogRunningRIB()
+  func detachTimeLogRunningRIB()
+  func attachBookmarkEditorRIB()
+  func detachBookmarkEditorRIB()
 }
 
 // MARK: - LogEntryCreationListener

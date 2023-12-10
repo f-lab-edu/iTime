@@ -27,6 +27,7 @@ final class LogEntryCreationInteractor:
   LogEntryCreationPresentableListener
 {
   
+  
   weak var router: LogEntryCreationRouting?
   weak var listener: LogEntryCreationListener?
   
@@ -55,6 +56,10 @@ final class LogEntryCreationInteractor:
   
   func didTapStartButton() {
     router?.attachTimeLogRunningRIB()
+  }
+  
+  func didTapBookmarkTagEditor() {
+    router?.attachBookmarkEditorRIB()
   }
   
 }

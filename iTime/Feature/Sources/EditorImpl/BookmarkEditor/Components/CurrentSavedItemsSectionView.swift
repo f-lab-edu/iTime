@@ -62,11 +62,11 @@ final class CurrentSavedItemsSectionView:
   
   // MARK: - properties
   
-  private weak var delegateDataSource: SavedItemSectionDelegateDataSource?
+  private weak var delegateDataSource: (BookmarkCollectionViewCellDelegate & BookmarkTagsCollectionViewAdapterDataSource)?
   
   // MARK: - Initialization & Deinitialization
   
-  init(delegateDataSource: SavedItemSectionDelegateDataSource?) {
+  init(delegateDataSource: (BookmarkCollectionViewCellDelegate & BookmarkTagsCollectionViewAdapterDataSource)?) {
     self.delegateDataSource = delegateDataSource
     super.init(frame: .zero)
   }
@@ -75,17 +75,17 @@ final class CurrentSavedItemsSectionView:
   
   func didTapTagCell() {
     guard let delegateDataSource = delegateDataSource else { return }
-    delegateDataSource.didTapSaveItemSectionCell()
+    delegateDataSource.didTapTagCell()
   }
   
   func numberOfItems() -> Int {
     guard let delegateDataSource = delegateDataSource else { return  -1 }
-    return delegateDataSource.numberOfSavedItems()
+    return delegateDataSource.numberOfItems()
   }
   
   func bookmark(at index: Int) -> String {
     guard let delegateDataSource = delegateDataSource else { return String() }
-    return delegateDataSource.configurationSavedItem(at: index)
+    return delegateDataSource.bookmark(at: index)
   }
   
   // MARK: - Layout

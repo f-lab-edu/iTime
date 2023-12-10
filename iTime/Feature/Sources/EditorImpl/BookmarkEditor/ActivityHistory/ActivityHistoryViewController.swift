@@ -14,7 +14,11 @@ import SharedUI
 
 // MARK: - ActivityHistoryPresentableListener
 
-protocol ActivityHistoryPresentableListener: AnyObject {
+protocol ActivityHistoryPresentableListener: 
+  AnyObject,
+  BookmarkCollectionViewCellDelegate,
+  BookmarkTagsCollectionViewAdapterDataSource
+{
 }
 
 // MARK: - ActivityHistoryViewController
@@ -36,6 +40,8 @@ final class ActivityHistoryViewController:
   weak var listener: ActivityHistoryPresentableListener?
   
   // MARK: - UI Components
+  
+  private lazy var itemHistorySectionView = ItemHistorySectionView(delegateDataSource: listener)
   
   // MARK: - View LifeCycle
   
@@ -62,6 +68,7 @@ extension ActivityHistoryViewController {
 
 extension ActivityHistoryViewController {
   private func setupUI() {
+    view.addSubview(itemHistorySectionView)
     
     layout()
   }

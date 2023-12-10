@@ -41,4 +41,16 @@ final class ActivityHistoryInteractor:
   override func didBecomeActive() {
     super.didBecomeActive()
   }
+  
+  func didTapTagCell() {
+    
+  }
+  
+  func numberOfItems() -> Int {
+    1
+  }
+  
+  func bookmark(at index: Int) -> String {
+    "22"
+  }
 }

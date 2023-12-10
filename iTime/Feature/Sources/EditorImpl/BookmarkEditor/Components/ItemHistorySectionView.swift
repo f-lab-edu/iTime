@@ -54,11 +54,11 @@ final class ItemHistorySectionView:
   
   // MARK: - properties
   
-  private weak var delegateDataSource: ItemHistorySectionDelegateDataSource?
+  private weak var delegateDataSource:  (BookmarkCollectionViewCellDelegate & BookmarkTagsCollectionViewAdapterDataSource)?
   
   // MARK: - Initialization & Deinitialization
   
-  init(delegateDataSource: (ItemHistorySectionDelegateDataSource)?) {
+  init(delegateDataSource: (BookmarkCollectionViewCellDelegate & BookmarkTagsCollectionViewAdapterDataSource)?) {
     self.delegateDataSource = delegateDataSource
     super.init(frame: .zero)
   }
@@ -77,17 +77,17 @@ final class ItemHistorySectionView:
   
   func didTapTagCell() {
     guard let delegateDataSource = delegateDataSource else { return }
-    delegateDataSource.didTapItemHistorySectionCell()
+    delegateDataSource.didTapTagCell()
   }
   
   func numberOfItems() -> Int {
     guard let delegateDataSource = delegateDataSource else { return  -1 }
-    return delegateDataSource.numberOfHistoryItems()
+    return delegateDataSource.numberOfItems()
   }
   
   func bookmark(at index: Int) -> String {
     guard let delegateDataSource = delegateDataSource else { return String() }
-    return delegateDataSource.configurationHistoryItem(at: index)
+    return delegateDataSource.bookmark(at: index)
   }
   
   // MARK: - Layout

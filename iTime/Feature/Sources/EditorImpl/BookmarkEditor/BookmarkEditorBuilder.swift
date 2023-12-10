@@ -8,6 +8,7 @@
 import RIBs
 
 import Entities
+import Start
 import Editor
 import Usecase
 import SharedUI
@@ -16,11 +17,19 @@ import SharedUI
 
 public protocol BookmarkEditorDependency: Dependency {
   var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream { get }
+  var bookmarkListBuilder: BookmarkListBuildable { get }
 }
 
 // MARK: - BookmarkEditorComponent
 
-final class BookmarkEditorComponent: Component<BookmarkEditorDependency> {
+final class BookmarkEditorComponent: 
+  Component<BookmarkEditorDependency>,
+  ActivityHistoryDependency
+{
+  
+  fileprivate var activityHistoryBuilder: ActivityHistoryBuildable {
+      ActivityHistoryBuilder(dependency: self)
+  }
 }
 
 // MARK: - BookmarkEditorBuilder
@@ -35,7 +44,7 @@ public final class BookmarkEditorBuilder:
   }
   
   public func build(withListener listener: BookmarkEditorListener) -> BookmarkEditorRouting {
-    let _ = BookmarkEditorComponent(dependency: dependency)
+    let component = BookmarkEditorComponent(dependency: dependency)
     let viewController = BookmarkEditorViewController()
     let interactor = BookmarkEditorInteractor(
       presenter: viewController,
@@ -44,7 +53,9 @@ public final class BookmarkEditorBuilder:
     interactor.listener = listener
     return BookmarkEditorRouter(
       interactor: interactor,
-      viewController: viewController
+      viewController: viewController,
+      bookmarkListBuilder: dependency.bookmarkListBuilder,
+      activityHistoryBuilder: component.activityHistoryBuilder
     )
   }
 }

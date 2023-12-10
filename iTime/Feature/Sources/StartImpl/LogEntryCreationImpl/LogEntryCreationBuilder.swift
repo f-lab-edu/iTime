@@ -75,7 +75,8 @@ final class LogEntryCreationBuilder:
       logEntryEditorBuilder: dependency.logEntryEditorBuilder,
       timeLogRunningBuilder: component.timeLogRunningBuilder,
       bookmarkListBuilder: dependency.bookmarkListBuilder,
-      loggingRetentionBuilder: component.loggingRetentionBuilder
+      loggingRetentionBuilder: component.loggingRetentionBuilder,
+      bookmarkEditorBuilder: dependency.bookmarkEditorBuilder
     )
   }
 }
