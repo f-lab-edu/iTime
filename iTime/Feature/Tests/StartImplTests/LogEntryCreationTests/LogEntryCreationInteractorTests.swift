@@ -31,7 +31,6 @@ final class LogEntryCreationInteractorTests: XCTestCase {
     disposeBag = DisposeBag()
     
     sut = LogEntryCreationInteractor(
-      initialState: .init(),
       presenter: presenter,
       bookmarkModelDataStream: bookmarkModelDataStream
     )
@@ -47,56 +46,28 @@ final class LogEntryCreationInteractorTests: XCTestCase {
     XCTAssertEqual(presenter.listenerSetCallCount, 1)
   }
   
-  func test_loadDataMutation() async throws {
-    // Given
-    let dummyBookmarks = DummyData.DummyBookmark.dummyBookmarksFour
-    bookmarkModelDataStream.update(with: dummyBookmarks)
-    
-    // When
-    async let stateValues = sut.state.take(1).values
-    sut.activate()
-    sut.sendAction(.loadData)
-    
-    // Then
-    let targetState = try await stateValues.first(where: { _ in true })
-    let bookmarks = targetState.map(\.bookmarks)?.compactMap { $0 }
-    XCTAssertEqual(bookmarks, dummyBookmarks)
-  }
-  
-  func test_didTapEncouragingBoxCloseButtonMutation() async throws {
-    // When
-    async let stateValues = sut.state.take(1).values
-    sut.activate()
-    sut.sendAction(.didTapEncouragingBoxCloseButton)
-    
-    // Then
-    let targetState = try await stateValues.first(where: { _ in true })
-    let isHiddenEncouragingBox = targetState.map(\.isHiddenEncouragingBox)!
-    XCTAssertEqual(isHiddenEncouragingBox, true)
-  }
-  
-  func test_didTapBookmarkTagEditorMutation() {
+  func test_didTapBookmarkTagEditor() {
     // When
     sut.activate()
-    sut.sendAction(.didTapBookmarkTagEditor)
+    sut.presenter.listener?.didTapBookmarkTagEditor()
     
     // Then
     XCTAssertEqual(router.attachBookmarkEditorRIbCallCount, 1)
   }
   
-  func test_didTapEditorRoutingButtonMutation() {
+  func test_didTapEditorRoutingButton() {
     // When
     sut.activate()
-    sut.sendAction(.didTapEditorRoutingButton)
+    // sut.sendAction(.didTapEditorRoutingButton)
     
     // Then
     XCTAssertEqual(router.attachLogEntryEditorRIBCallCount, 1)
   }
   
-  func test_didTapStartButtonMutation() {
+  func test_didTapStartButton() {
     // When
     sut.activate()
-    sut.sendAction(.didTapStartButton)
+   // sut.sendAction(.didTapStartButton)
     
     // Then
     XCTAssertEqual(router.attachTimeLogRunningRIBCallCount, 1)

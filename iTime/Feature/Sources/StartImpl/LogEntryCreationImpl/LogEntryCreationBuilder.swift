@@ -55,7 +55,6 @@ final class LogEntryCreationBuilder:
         let component = LogEntryCreationComponent(dependency: dependency)
         let viewController = LogEntryCreationViewController()
       let interactor = LogEntryCreationInteractor(
-        initialState: LogEntryCreationPresentableState(),
         presenter: viewController,
         bookmarkModelDataStream: dependency.mutableBookmarkModelDataStream
       )

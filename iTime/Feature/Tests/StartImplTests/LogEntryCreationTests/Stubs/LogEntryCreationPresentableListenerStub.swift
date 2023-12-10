@@ -11,11 +11,25 @@ import RxSwift
 // MARK: - LogEntryCreationPresentableListenerStub
 
 final class LogEntryCreationPresentableListenerStub: LogEntryCreationPresentableListener {
-  func sendAction(_ action: Action) {
+  func didTapEncouragingBox() {
     
   }
   
-  var state: Observable<State> = .just(.init())
+  func didTapSettingButton() {
+    
+  }
+  
+  func didTapBookmarkTagEditor() {
+    
+  }
+  
+  func didTapEditorRoutingButton() {
+    
+  }
+  
+  func didTapStartButton() {
+    
+  }
   
   func didTapTagCell() {
     
