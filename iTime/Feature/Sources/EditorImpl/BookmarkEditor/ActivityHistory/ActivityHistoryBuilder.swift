@@ -7,7 +7,7 @@
 
 import RIBs
 
-import ActivityHistory
+import Editor
 
 // MARK: - ActivityHistoryDependency
 

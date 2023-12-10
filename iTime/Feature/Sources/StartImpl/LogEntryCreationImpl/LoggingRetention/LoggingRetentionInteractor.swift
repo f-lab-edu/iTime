@@ -8,7 +8,7 @@
 import RIBs
 import RxSwift
 
-import LoggingRetention
+import Start
 
 // MARK: - LoggingRetentionPresentable
 

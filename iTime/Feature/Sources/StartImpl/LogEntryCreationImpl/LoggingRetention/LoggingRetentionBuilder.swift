@@ -7,7 +7,7 @@
 
 import RIBs
 
-import LoggingRetention
+import Start
 
 // MARK: - LoggingRetentionDependency
 

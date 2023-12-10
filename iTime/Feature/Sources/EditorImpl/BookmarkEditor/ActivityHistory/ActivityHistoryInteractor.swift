@@ -8,7 +8,7 @@
 import RIBs
 import RxSwift
 
-import ActivityHistory
+import Editor
 
 // MARK: - ActivityHistoryPresentable
 

@@ -7,7 +7,7 @@
 
 import RIBs
 
-import BookmarkList
+import Start
 
 // MARK: - BookmarkListDependency
 

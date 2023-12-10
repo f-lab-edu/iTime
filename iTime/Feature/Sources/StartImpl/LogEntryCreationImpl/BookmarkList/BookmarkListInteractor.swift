@@ -8,7 +8,7 @@
 import RIBs
 import RxSwift
 
-import BookmarkList
+import Start
 
 // MARK: - BookmarkListPresentable
 
