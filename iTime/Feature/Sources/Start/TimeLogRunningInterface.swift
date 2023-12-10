@@ -21,5 +21,6 @@ public protocol TimeLogRunningRouting: ViewableRouting {
 // MARK: - TimeLogRunningListener
 
 public protocol TimeLogRunningListener: AnyObject {
+  func detachTimeLogRunningRIB()
 }
 

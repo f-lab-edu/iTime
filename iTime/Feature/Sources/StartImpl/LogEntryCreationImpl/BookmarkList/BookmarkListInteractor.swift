@@ -58,3 +58,9 @@ final class BookmarkListInteractor:
     super.didBecomeActive()
   }
 }
+
+extension BookmarkListInteractor {
+//  func detachBookmarkEditorRIB() {
+//    
+//  }
+}

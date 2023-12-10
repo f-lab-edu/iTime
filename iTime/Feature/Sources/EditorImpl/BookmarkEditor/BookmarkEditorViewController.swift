@@ -101,11 +101,11 @@ extension BookmarkEditorViewController {
   }
   
   private func bindSaveButtonTapAction() {
-    //    bookmarkListContainterView.saveButton.rx
-    //      .tapWithPreventDuplication()
-    //      .asDriver(onErrorDriveWith: .empty())
-    //      .drive(with: self) { owner, _ in print("tap") }
-    //      .disposed(by: disposeBag)
+    saveBookmarkButtonSectionView.saveButton.rx
+          .tapWithPreventDuplication()
+          .asDriver(onErrorDriveWith: .empty())
+          .drive(with: self) { owner, _ in print("tap") }
+          .disposed(by: disposeBag)
   }
   
   private func bindAddButtonTapAction() {
@@ -120,7 +120,7 @@ extension BookmarkEditorViewController {
     customNavigationBar.backButton.rx
       .tapWithPreventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in print("tap") }
+      .drive(with: self) { owner, _ in owner.listener?.didTapBackButton() }
       .disposed(by: disposeBag)
   }
   
