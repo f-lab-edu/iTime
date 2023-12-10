@@ -33,7 +33,8 @@ final class BookmarkListViewController:
   // MARK: - Constants
   
   private enum Metric {
-    
+    static let emptyGuideLabelTopMargin: CGFloat = 4
+    static let emptyGuideLabelBottomMargin: CGFloat = 24
   }
   
   // MARK: - Properties
@@ -41,6 +42,7 @@ final class BookmarkListViewController:
   weak var listener: BookmarkListPresentableListener?
   
   // MARK: - UI Components
+  
   private let bookmarkTagsCollectionView = DynamicHeightCollectionView(
     frame: .zero,
     collectionViewLayout: .init()
@@ -54,6 +56,13 @@ final class BookmarkListViewController:
     delegate: listener,
     alignedCollectionViewFlowLayout: CenterAlignedCollectionViewFlowLayout()
   )
+  
+  private let emptyGuideLabel = UILabel().builder
+    .text("자주 하시는 활동으로 저장해보세요!")
+    .font(.custom(.regular, 12))
+    .textColor(.black60)
+    .isHidden(true)
+    .build()
   
   // MARK: - View LifeCycle
   
@@ -85,6 +94,7 @@ extension BookmarkListViewController {
   private func setupUI() {
     view.backgroundColor = .clear
     view.addSubview(bookmarkTagsCollectionView)
+    view.addSubview(emptyGuideLabel)
     _ = adapter
     
     layout()
@@ -92,11 +102,20 @@ extension BookmarkListViewController {
   
   private func layout() {
     makeBookmarkTagsCollectionViewConstraints()
+    makeEmptyGuideLabelConstraints()
   }
   
   private func makeBookmarkTagsCollectionViewConstraints() {
     bookmarkTagsCollectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
+    }
+  }
+  
+  private func makeEmptyGuideLabelConstraints() {
+    emptyGuideLabel.snp.makeConstraints {
+      $0.leading.trailing.equalToSuperview()
+      $0.top.equalToSuperview().offset(Metric.emptyGuideLabelTopMargin)
+      $0.bottom.equalToSuperview().offset(-Metric.emptyGuideLabelBottomMargin).priority(.low)
     }
   }
 }

@@ -47,7 +47,7 @@ final class ActivityHistoryInteractor:
   }
   
   func numberOfItems() -> Int {
-    1
+    2
   }
   
   func bookmark(at index: Int) -> String {

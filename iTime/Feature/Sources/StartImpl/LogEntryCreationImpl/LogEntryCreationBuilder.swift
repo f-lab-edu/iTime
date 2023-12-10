@@ -27,7 +27,7 @@ protocol LogEntryCreationDependency: Dependency {
 final class LogEntryCreationComponent:
   Component<LogEntryCreationDependency>,
   TimeLogRunningDependency,
-    LoggingRetentionDependency
+  LoggingRetentionDependency
 {
   var timeFormatter: TimeFormatter {
     dependency.timeFormatter

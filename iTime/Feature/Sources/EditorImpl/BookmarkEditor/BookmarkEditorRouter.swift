@@ -1,6 +1,6 @@
 //
 //  BookmarkEditorRouter.swift
-//  
+//
 //
 //  Created by 이상헌 on 11/14/23.
 //
@@ -62,7 +62,7 @@ final class BookmarkEditorRouter:
   override func didLoad() {
     super.didLoad()
     attachBookmarkListRIB()
-   
+    attachActivityHistoryRIB()
   }
   
   // MARK: Route methods
