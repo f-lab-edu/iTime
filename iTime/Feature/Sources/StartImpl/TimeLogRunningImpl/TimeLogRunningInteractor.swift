@@ -36,7 +36,6 @@ final class TimeLogRunningInteractor:
     presenter.listener = self
   }
   
-  
   func didTapBackButton() {
     listener?.detachTimeLogRunningRIB()
   }

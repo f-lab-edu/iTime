@@ -63,6 +63,10 @@ final class BookmarkEditorInteractor:
     listener?.detachBookmarkEditorRIB()
   }
   
+  func didTapTagCell() {
+    
+  }
+  
    // MARK: - Private
   
   private func presentError(error: Error) {

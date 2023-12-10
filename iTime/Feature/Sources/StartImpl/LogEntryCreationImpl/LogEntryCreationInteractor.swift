@@ -26,7 +26,7 @@ final class LogEntryCreationInteractor:
   LogEntryCreationInteractable,
   LogEntryCreationPresentableListener
 {
-   
+  
   // MARK: - Properties
   
   weak var router: LogEntryCreationRouting?
@@ -84,6 +84,10 @@ extension LogEntryCreationInteractor {
   
   func detachTimeLogRunningRIB() {
     router?.detachTimeLogRunningRIB()
+  }
+  
+  func didTapTagCell() {
+    print("didTapTagCell")
   }
   
 }

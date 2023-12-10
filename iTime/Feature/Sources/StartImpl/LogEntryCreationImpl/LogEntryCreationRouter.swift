@@ -9,6 +9,7 @@ import RIBs
 
 import Start
 import Editor
+import SharedUI
 
 // MARK: - LogEntryCreationInteractable
 
@@ -86,7 +87,13 @@ final class LogEntryCreationRouter:
   
   func attachBookmarkListRIB() {
     guard bookmarkListRouter == nil else { return }
-    let router = bookmarkListBuilder.build(withListener: interactor)
+    let router = bookmarkListBuilder.build(
+      withListener: interactor,
+      payload: BookmarkListBuildDependency(
+        alignedCollectionViewFlowLayout: CenterAlignedCollectionViewFlowLayout(),
+        borderColor: .init(innerColor: .black60)
+      )
+    )
     bookmarkListRouter = router
     attachChild(router)
     viewController.addBookmarkList(router.viewControllable)

@@ -110,7 +110,9 @@ let package = Package(
     .target(
       name: "Start",
       dependencies: [
-        "ProxyPackage"
+        "ProxyPackage",
+        .product(name: "AppFoundation", package: "ProxyPackage"),
+        .product(name: "SharedUI", package: "ProxyPackage"),
       ]),
     .target(
       name: "StartImpl",

@@ -52,7 +52,8 @@ final class ActivityHistoryViewController:
     collectionView: activityHistoryCollectionView,
     adapterDataSource: listener,
     delegate: listener,
-    alignedCollectionViewFlowLayout: LeadingAlignedCollectionViewFlowLayout()
+    alignedCollectionViewFlowLayout: LeadingAlignedCollectionViewFlowLayout(),
+    cellBorderColor: .black60
   )
   
   // MARK: - View LifeCycle
