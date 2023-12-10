@@ -15,6 +15,7 @@ import AppFoundation
 // MARK: - StartDependency
 
 public protocol StartDependency: Dependency {
+  var bookmarkListBuilder: BookmarkListBuildable { get }
   var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
   var logEntryEditorBuilder: LogEntryEditorBuildable { get }
   var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream { get }
@@ -27,6 +28,14 @@ final class StartComponent:
   Component<StartDependency>,
   LogEntryCreationDependency
 {
+  var bookmarkEditorBuilder: BookmarkEditorBuildable {
+    dependency.bookmarkEditorBuilder
+  }
+  
+  var bookmarkListBuilder: BookmarkListBuildable {
+    dependency.bookmarkListBuilder
+  }
+  
   var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream {
     dependency.mutableBookmarkModelDataStream
   }
@@ -35,14 +44,9 @@ final class StartComponent:
     dependency.timeFormatter
   }
   
-  var bookmarkEditorBuilder: BookmarkEditorBuildable {
-    dependency.bookmarkEditorBuilder
-  }
-  
   var logEntryEditorBuilder: LogEntryEditorBuildable {
     dependency.logEntryEditorBuilder
   }
-  
   
   fileprivate var logEntryCreationBuilder: LogEntryCreationBuildable {
     LogEntryCreationBuilder(dependency: self)

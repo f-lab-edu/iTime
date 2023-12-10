@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxRelay
 import SnapKit
+import RIBs
 
 open class BaseViewController:
   UIViewController,

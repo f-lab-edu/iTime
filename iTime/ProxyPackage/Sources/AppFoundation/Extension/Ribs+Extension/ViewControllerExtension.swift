@@ -7,6 +7,7 @@
 
 import UIKit
 
+import SnapKit
 import RIBs
 
 public extension ViewControllable {
@@ -256,4 +257,14 @@ public extension ViewControllable {
             completion?()
         }
     }
+  
+  func addChildViewController(container: UIView, child: ViewControllable) {
+    let vc = child.uiviewController
+    uiviewController.addChild(vc)
+    container.addSubview(vc.view)
+    vc.view.snp.makeConstraints {
+        $0.edges.equalToSuperview()
+    }
+    vc.didMove(toParent: self.uiviewController)
+  }
 }

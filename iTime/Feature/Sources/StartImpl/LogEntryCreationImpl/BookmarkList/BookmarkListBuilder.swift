@@ -7,12 +7,13 @@
 
 import RIBs
 
+import Editor
 import Start
 
 // MARK: - BookmarkListDependency
 
 public protocol BookmarkListDependency: Dependency {
-  
+  var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
 }
 
 // MARK: - BookmarkListComponent
@@ -39,7 +40,8 @@ public final class BookmarkListBuilder:
     interactor.listener = listener
     return BookmarkListRouter(
       interactor: interactor,
-      viewController: viewController
+      viewController: viewController,
+      bookmarkEditorBuilder: dependency.bookmarkEditorBuilder
     )
   }
 }

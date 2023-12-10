@@ -26,7 +26,7 @@ final class LogEntryCreationInteractor:
   LogEntryCreationInteractable,
   LogEntryCreationPresentableListener
 {
- 
+  
   weak var router: LogEntryCreationRouting?
   weak var listener: LogEntryCreationListener?
   
@@ -42,15 +42,11 @@ final class LogEntryCreationInteractor:
   }
   
   func didTapEncouragingBox() {
-  
+    
   }
   
   func didTapSettingButton() {
     
-  }
-  
-  func didTapBookmarkTagEditor() {
-    router?.attachBookmarkEditorRIB()
   }
   
   func didTapEditorRoutingButton() {
@@ -61,22 +57,6 @@ final class LogEntryCreationInteractor:
     router?.attachTimeLogRunningRIB()
   }
   
-}
-
-// MARK: - Delegate & DataSource
-
-extension LogEntryCreationInteractor {
-  func numberOfItems() -> Int {
-    1
-  }
-  
-  func bookmark(at index: Int) -> String {
-    "22"
-  }
-  
-  func didTapTagCell() {
-    print()
-  }
 }
 
 // MARK: - Listener

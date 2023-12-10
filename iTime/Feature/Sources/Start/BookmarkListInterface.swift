@@ -16,6 +16,7 @@ public protocol BookmarkListBuildable: Buildable {
 // MARK: - BookmarkListRouting
 
 public protocol BookmarkListRouting: ViewableRouting {
+  func attachBookmarkEditorRIB()
 }
 
 // MARK: - BookmarkListListener

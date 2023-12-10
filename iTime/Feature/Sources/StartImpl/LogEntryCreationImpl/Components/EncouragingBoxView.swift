@@ -12,7 +12,7 @@ import SnapKit
 import SharedUI
 import AppFoundation
 
-final class EncouragingBoxView: BaseView {
+final class LoggingRetentionBoxView: BaseView {
   
   // MARK: - Constants
   
@@ -90,8 +90,8 @@ final class EncouragingBoxView: BaseView {
 }
 
 #if DEBUG
-@available(iOS 17.0, *)
-#Preview("UIKit Portrait") {
-  EncouragingBoxView()
-}
+//@available(iOS 17.0, *)
+//#Preview("UIKit Portrait") {
+//  print()
+//}
 #endif

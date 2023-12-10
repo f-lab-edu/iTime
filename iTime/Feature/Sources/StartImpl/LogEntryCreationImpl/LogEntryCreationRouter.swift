@@ -15,7 +15,8 @@ import Editor
 protocol LogEntryCreationInteractable:
   Interactable,
   LogEntryEditorListener,
-  BookmarkEditorListener,
+  BookmarkListListener,
+  LoggingRetentionListener,
   TimeLogRunningListener
 {
   var router: LogEntryCreationRouting? { get set }
@@ -25,6 +26,8 @@ protocol LogEntryCreationInteractable:
 // MARK: - LogEntryCreationViewControllable
 
 protocol LogEntryCreationViewControllable: ViewControllable {
+  func addBookmarkList(_ view: ViewControllable)
+  func addLoggingRetention(_ view: ViewControllable)
 }
 
 // MARK: - LogEntryCreationRouter
@@ -35,27 +38,72 @@ final class LogEntryCreationRouter:
   LogEntryCreationRouting
 {
   
+  // MARK: - Properties
+  
   private let logEntryEditorBuilder: LogEntryEditorBuildable
   private var logEntryEditorRouter: LogEntryEditorRouting?
   
-  private let bookmarkEditorBuilder: BookmarkEditorBuildable
-  private var bookmarkEditorRouter: BookmarkEditorRouting?
-  
   private let timeLogRunningBuilder: TimeLogRunningBuildable
   private var timeLogRunningRouter: TimeLogRunningRouting?
+  
+  private let bookmarkListBuilder: BookmarkListBuildable
+  private var bookmarkListRouter: BookmarkListRouting?
+  
+  private let loggingRetentionBuilder: LoggingRetentionBuildable
+  private var loggingRetentionRouter: LoggingRetentionRouting?
+
+  // MARK: - Initialization
   
   init(
     interactor: LogEntryCreationInteractable,
     viewController: LogEntryCreationViewControllable,
     logEntryEditorBuilder: LogEntryEditorBuildable,
-    bookmarkEditorBuilder: BookmarkEditorBuildable,
-    timeLogRunningBuilder: TimeLogRunningBuildable
+    timeLogRunningBuilder: TimeLogRunningBuildable,
+    bookmarkListBuilder: BookmarkListBuildable,
+    loggingRetentionBuilder: LoggingRetentionBuildable
   ) {
     self.logEntryEditorBuilder = logEntryEditorBuilder
-    self.bookmarkEditorBuilder = bookmarkEditorBuilder
     self.timeLogRunningBuilder = timeLogRunningBuilder
+    self.bookmarkListBuilder = bookmarkListBuilder
+    self.loggingRetentionBuilder = loggingRetentionBuilder
     super.init(interactor: interactor, viewController: viewController)
     interactor.router = self
+  }
+  
+  override func didLoad() {
+    super.didLoad()
+    attachBookmarkListRIB()
+    attachLoggingRetentionRIB()
+  }
+  
+  // MARK: Route methods
+  
+  func attachBookmarkListRIB() {
+    guard bookmarkListRouter == nil else { return }
+    let router = bookmarkListBuilder.build(withListener: interactor)
+    bookmarkListRouter = router
+    attachChild(router)
+    viewController.addBookmarkList(router.viewControllable)
+  }
+  
+  func detachBookmarkListRIB() {
+    guard let router = bookmarkListRouter else { return }
+    bookmarkListRouter = nil
+    detachChild(router)
+  }
+  
+  func attachLoggingRetentionRIB() {
+    guard loggingRetentionRouter == nil else { return }
+    let router = loggingRetentionBuilder.build(withListener: interactor)
+    loggingRetentionRouter = router
+    attachChild(router)
+    viewController.addLoggingRetention(router.viewControllable)
+  }
+  
+  func detachLoggingRetentionRIB() {
+    guard let router = loggingRetentionRouter else { return }
+    loggingRetentionRouter = nil
+    detachChild(router)
   }
   
   func attachLogEntryEditorRIB() {
@@ -73,25 +121,6 @@ final class LogEntryCreationRouter:
   func detachLogEntryEditorRIB() {
     guard let router = logEntryEditorRouter else { return }
     logEntryEditorRouter = nil
-    detachChild(router)
-    viewController.dismiss(animated: true, completion: nil)
-  }
-  
-  func attachBookmarkEditorRIB() {
-    guard bookmarkEditorRouter == nil else { return }
-    let router = bookmarkEditorBuilder.build(withListener: interactor)
-    bookmarkEditorRouter = router
-    attachChild(router)
-    viewController.presentFullScreen(
-      router.viewControllable,
-      animated: true,
-      completion: nil
-    )
-  }
-  
-  func detachBookmarkEditorRIB() {
-    guard let router = bookmarkEditorRouter else { return }
-    bookmarkEditorRouter = nil
     detachChild(router)
     viewController.dismiss(animated: true, completion: nil)
   }
