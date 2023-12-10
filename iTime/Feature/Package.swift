@@ -144,7 +144,10 @@ let package = Package(
       name: "StartImplTests",
       dependencies: [
         "StartImpl",
-        .product(name: "RIBsTestSupport", package: "ProxyPackage")
+        .product(name: "RepositoryTestSupports", package: "Domain"),
+        .product(name: "Entities", package: "Domain"),
+        .product(name: "RIBsTestSupport", package: "ProxyPackage"),
+        .product(name: "ProxyTestSupport", package: "ProxyPackage"),
       ]
     )
   ]

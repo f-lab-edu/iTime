@@ -13,138 +13,80 @@ import Start
 import Entities
 import AppFoundation
 
+// MARK: - LogEntryCreationPresentable
+
 protocol LogEntryCreationPresentable: Presentable {
   var listener: LogEntryCreationPresentableListener? { get set }
 }
 
+// MARK: - LogEntryCreationInteractor
+
 final class LogEntryCreationInteractor:
   PresentableInteractor<LogEntryCreationPresentable>,
   LogEntryCreationInteractable,
-  LogEntryCreationPresentableListener,
-  LightReactor
+  LogEntryCreationPresentableListener
 {
-  
-  // MARK: - LightReactor
-  
-  typealias Action = LogEntryCreationPresentableAction
-  typealias State = LogEntryCreationPresentableState
-  
-  enum Mutation {
-    case setLoading(Bool)
-  }
-  
+ 
   weak var router: LogEntryCreationRouting?
   weak var listener: LogEntryCreationListener?
-  let initalState: LogEntryCreationPresentableState
-
-  private var bookmarks: [Bookmark] = []
+  
   private let bookmarkModelDataStream: BookmarkModelDataStream
   
   init(
-    initialState: LogEntryCreationPresentableState,
     presenter: LogEntryCreationPresentable,
     bookmarkModelDataStream: BookmarkModelDataStream
   ) {
-    self.initalState = initialState
     self.bookmarkModelDataStream = bookmarkModelDataStream
     super.init(presenter: presenter)
     presenter.listener = self
   }
-
-}
-
-// MARK: - Mutate
-extension LogEntryCreationInteractor {
-    func mutate(action: Action) -> Observable<Mutation> {
-        switch action {
-        case .didTapEncouragingBox: 
-            return didTapEncouragingBoxMutation()
-        case .didTapSettingButton:
-            return didTapSettingButtonMutation()
-        case .didTapBookmarkTagEditor:
-            return didTapBookmarkTagEditorMutation()
-        case .didTapEditorRoutingButton:
-            return didTapEditorRoutingButtonMutation()
-        case .didTapStartButton:
-            return didTapStartButtonMutation()
-        case .didTapTagCell:
-            return didTapTagCellMutation()
-        case .didTapEncouragingBoxCloseButton:
-            return didTapEncouragingBoxCloseButtonMutation()
-        }
-    }
+  
+  func didTapEncouragingBox() {
+  
+  }
+  
+  func didTapSettingButton() {
     
-    private func didTapEncouragingBoxMutation() -> Observable<Mutation> {
-      return .just(.setLoading(true))
-    }
-    
-    private func didTapSettingButtonMutation() -> Observable<Mutation> {
-      return .just(.setLoading(true))
-    }
-    
-    private func didTapBookmarkTagEditorMutation() -> Observable<Mutation> {
-        router?.attachBookmarkEditorRIB()
-      return .just(.setLoading(true))
-    }
-    
-    private func didTapEditorRoutingButtonMutation() -> Observable<Mutation> {
-        router?.attachLogEntryEditorRIB()
-      return .just(.setLoading(true))
-    }
-    
-    private func didTapStartButtonMutation() -> Observable<Mutation> {
-        router?.attachTimeLogRunningRIB()
-      return .just(.setLoading(true))
-    }
-    
-    private func didTapTagCellMutation() -> Observable<Mutation> {
-      return .just(.setLoading(true))
-    }
-    
-    private func didTapEncouragingBoxCloseButtonMutation() -> Observable<Mutation> {
-      return .just(.setLoading(true))
-    }
-}
-
-// MARK: - Reduce
-
-extension LogEntryCreationInteractor {
-    func reduce(state: State, mutation: Mutation) -> LogEntryCreationPresentableState {
-      var newState = state
-      
-      switch mutation {
-      case .setLoading:
-        newState.test = Void()
-      }
-      
-      return newState
-    }
+  }
+  
+  func didTapBookmarkTagEditor() {
+    router?.attachBookmarkEditorRIB()
+  }
+  
+  func didTapEditorRoutingButton() {
+    router?.attachLogEntryEditorRIB()
+  }
+  
+  func didTapStartButton() {
+    router?.attachTimeLogRunningRIB()
+  }
+  
 }
 
 // MARK: - Delegate & DataSource
 
 extension LogEntryCreationInteractor {
-    func numberOfItems() -> Int {
-      bookmarks.count
-    }
-    
-    func bookmark(at index: Int) -> String {
-      "Bookmark"
-    }
-    
-    func didTapTagCell() {
-        sendAction(.didTapTagCell)
-    }
+  func numberOfItems() -> Int {
+    1
+  }
+  
+  func bookmark(at index: Int) -> String {
+    "22"
+  }
+  
+  func didTapTagCell() {
+    print()
+  }
 }
 
 // MARK: - Listener
 
 extension LogEntryCreationInteractor {
-    func detachLocationEntryEditorRIB() {
-      print("detachLocationEntryEditorRIB")
-    }
-    
-    func attachTimeLogRunningRIB() {
-      print("attachTimeLogRunningRIB")
-    }
+  func detachLocationEntryEditorRIB() {
+    print("detachLocationEntryEditorRIB")
+  }
+  
+  func attachTimeLogRunningRIB() {
+    print("attachTimeLogRunningRIB")
+  }
 }

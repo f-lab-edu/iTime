@@ -10,29 +10,33 @@ import XCTest
 import RIBs
 
 import Start
+import Editor
 import RIBsTestSupport
 @testable import StartImpl
 
 final class LogEntryCreationRouterTests: XCTestCase {
   private var sut: LogEntryCreationRouter!
-  private var interactor: LogEntryCreationInteratableMock!
-  private var viewController: LogEntryCreationViewControllableMock!
-  private var logEntryEditorBuilder: LogEntryEditorBuildableMock!
-  private var bookmarkEditorBuilder: BookmarkEditorBuildableMock!
+  private var interactor: LogEntryCreationInteratableSpy!
+  private var viewController: LogEntryCreationViewControllableSpy!
+  private var logEntryEditorBuilder: LogEntryEditorBuildableSpy!
+  private var bookmarkEditorBuilder: BookmarkEditorBuildableSpy!
+  private var timeLogRunningBuilder: TimeLogRunningBuildableSpy!
   
   override func setUp() {
     super.setUp()
     
-    interactor = LogEntryCreationInteratableMock()
-    viewController = LogEntryCreationViewControllableMock()
-    logEntryEditorBuilder = LogEntryEditorBuildableMock()
-    bookmarkEditorBuilder = BookmarkEditorBuildableMock()
+    interactor = LogEntryCreationInteratableSpy()
+    viewController = LogEntryCreationViewControllableSpy()
+    logEntryEditorBuilder = LogEntryEditorBuildableSpy()
+    bookmarkEditorBuilder = BookmarkEditorBuildableSpy()
+    timeLogRunningBuilder = TimeLogRunningBuildableSpy()
     
     sut = LogEntryCreationRouter(
       interactor: interactor,
       viewController: viewController,
       logEntryEditorBuilder: logEntryEditorBuilder,
-      bookmarkEditorBuilder: bookmarkEditorBuilder
+      bookmarkEditorBuilder: bookmarkEditorBuilder, 
+      timeLogRunningBuilder: timeLogRunningBuilder
     )
   }
   
@@ -40,7 +44,7 @@ final class LogEntryCreationRouterTests: XCTestCase {
   
   func test_attach_logEntryEditor() {
     // Given
-    let router = LogEntryEditorRoutingMock(
+    let router = LogEntryEditorRoutingSpy(
       interactable: Interactor(),
       viewControllable: ViewControllableMock()
     )
@@ -63,7 +67,7 @@ final class LogEntryCreationRouterTests: XCTestCase {
   
   func test_detach_logEntryEditor() {
     // Given
-    let router = LogEntryEditorRoutingMock(
+    let router = LogEntryEditorRoutingSpy(
       interactable: Interactor(),
       viewControllable: ViewControllableMock()
     )

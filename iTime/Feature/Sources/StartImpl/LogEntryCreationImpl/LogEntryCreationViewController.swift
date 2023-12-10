@@ -14,6 +14,20 @@ import RxSwift
 import SharedUI
 import AppFoundation
 
+// MARK: - LogEntryCreationPresentableListener
+
+protocol LogEntryCreationPresentableListener:
+  AnyObject,
+  BookmarkCollectionViewCellDelegate,
+  BookmarkTagsCollectionViewAdapterDataSource {
+  func didTapEncouragingBox()
+  func didTapSettingButton()
+  func didTapBookmarkTagEditor()
+  func didTapEditorRoutingButton()
+  func didTapStartButton()
+  func didTapTagCell()
+}
+
 // MARK: - LogEntryCreationViewController
 
 final class LogEntryCreationViewController:
@@ -40,8 +54,6 @@ final class LogEntryCreationViewController:
   // MARK: - Properties
   
   weak var listener: LogEntryCreationPresentableListener?
-  
-  private let actionRelay = PublishRelay<LogEntryCreationPresentableListener.Action>()
   
   // MARK: - UI Components
   
@@ -84,20 +96,11 @@ final class LogEntryCreationViewController:
 // MARK: - Bind listener
 
 extension LogEntryCreationViewController {
-    private func bind(listener: LogEntryCreationPresentableListener?) {
-        guard let listener = listener else { return }
-        bindActions()
-        bindActionRelay()
-        bindState(from: listener)
-    }
-    
-    private func bindActionRelay() {
-        self.actionRelay.asObservable()
-            .bind(with: self) { onwer, action in
-                onwer.listener?.sendAction(action)
-            }
-            .disposed(by: disposeBag)
-    }
+  private func bind(listener: LogEntryCreationPresentableListener?) {
+    guard let listener = listener else { return }
+    bindActions()
+    bindState(from: listener)
+  }
 }
 
 // MARK: Bind Actions
@@ -112,22 +115,20 @@ extension LogEntryCreationViewController {
     bindEdtiorRoutingButtonTapAction()
     bindStartButtonTapAction()
   }
-    
+  
   private func bindLoadDataAction() {
     rx.viewWillAppear
       .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in
-        owner.bookmarkTagsView.bookmarkTagsCollectionView.reloadData()
-      }
+      .drive()
       .disposed(by: disposeBag)
   }
   
   private func bindSettingButtonTapAction() {
     todayDateBar.settingButton.rx.tap
       .preventDuplication()
-      .map { _ in .didTapSettingButton }
-      .bind(to: self.actionRelay)
+      .asDriver(onErrorDriveWith: .empty())
+          .drive(with: self) { owner, _ in owner.listener?.didTapSettingButton() }
       .disposed(by: disposeBag)
   }
   
@@ -136,40 +137,40 @@ extension LogEntryCreationViewController {
       encouragingBoxView.guideLabel.rx.tapGestureWithPreventDuplication(),
       encouragingBoxView.rightAccessoryImageView.rx.tapGestureWithPreventDuplication()
     )
-    .map { _ in .didTapEncouragingBox }
-    .bind(to: self.actionRelay)
-      .disposed(by: disposeBag)
+    .asDriver(onErrorDriveWith: .empty())
+         .drive(with: self) { owner, _ in owner.listener?.didTapEncouragingBox() }
+    .disposed(by: disposeBag)
   }
   
   private func bindEncouragingBoxCloseButtonTapAction() {
     encouragingBoxView.closeButton.rx.tap
       .preventDuplication()
-      .map { _ in .didTapEncouragingBoxCloseButton }
-      .bind(to: self.actionRelay)
+      .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, _ in print("close") }
       .disposed(by: disposeBag)
   }
   
   private func bindBookmarkTagsEditButtonTapAction() {
     bookmarkTagsView.bookmarkEditorButtonLabel.rx
       .tapGestureWithPreventDuplication()
-      .map { _ in .didTapBookmarkTagEditor }
-      .bind(to: self.actionRelay)
+      .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, _ in owner.listener?.didTapBookmarkTagEditor() }
       .disposed(by: disposeBag)
   }
   
   private func bindEdtiorRoutingButtonTapAction() {
     editorRoutingButton.rx.tap
       .preventDuplication()
-      .map { _ in .didTapEditorRoutingButton }
-      .bind(to: self.actionRelay)
+      .asDriver(onErrorDriveWith: .empty())
+           .drive(with: self) { owner, _ in owner.listener?.didTapEditorRoutingButton() }
       .disposed(by: disposeBag)
   }
   
   private func bindStartButtonTapAction() {
     startButton.rx.tap
       .preventDuplication()
-      .map { _ in .didTapStartButton }
-      .bind(to: self.actionRelay)
+      .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, _ in owner.listener?.didTapStartButton() }
       .disposed(by: disposeBag)
   }
 }
@@ -178,9 +179,11 @@ extension LogEntryCreationViewController {
 
 extension LogEntryCreationViewController {
   private func bindState(from listener: LogEntryCreationPresentableListener) {
-      listener.state.map(\.test)
-          .subscribe()
-          .disposed(by: disposeBag)
+    bindBookmarksState(from: listener)
+  }
+  
+  private func bindBookmarksState(from listener: LogEntryCreationPresentableListener) {
+    
   }
 }
 
