@@ -13,6 +13,6 @@ import Foundation
 
 public protocol TimerUsecase {
   func start() -> Observable<Void>
-  func stop()
-  func save(_ activity: Activity) -> Observable<Void>
+  func suspend()
+  func finish(_ activity: Activity) -> Observable<Void>
 }

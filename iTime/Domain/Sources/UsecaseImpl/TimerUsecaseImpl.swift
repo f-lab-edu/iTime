@@ -19,105 +19,42 @@ final class TimerUsecaseImpl: TimerUsecase {
   
   // MARK: - Properties
   
-  private let timeLogRecordRelay = BehaviorRelay(value: TimeLogRecord())
-  private var timeLogRecordRelayBuilder: PropertyBuilder<TimeLogRecord> { timeLogRecordRelay.value.builder }
+  private let timeLogRecordBuilder: TimeLogRecordBuilder
   
-  private let locationTracker: LocationTracker
-  private let runningTimeTracker: RunningTimeTracker
-  private let userDefaultRepository: UserDefaultRepository
-  private let timeLogRecordRepository: TimeLogRecordRepository
-  private let mutableTimerInfoModelDataStream: MutableTimerInfoModelDataStream
-  private let mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream
+  private let timeStartFacade: TimeStartFacade
+  private let timeSuspenseFacade: TimeSuspenseFacade
+  private let timeFinishFacade: TimeFinishFacade
   
   // MARK: - Initialization
   
   init(
-    locationTracker: LocationTracker,
-    runningTimeTracker: RunningTimeTracker,
-    userDefaultRepository: UserDefaultRepository,
-    timeLogRecordRepository: TimeLogRecordRepository,
-    mutableTimerInfoModelDataStream: MutableTimerInfoModelDataStream,
-    mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream
+    timeLogRecordBuilder: TimeLogRecordBuilder,
+    timeStartFacade: TimeStartFacade,
+    timeSuspenseFacade: TimeSuspenseFacade,
+    timeFinishFacade: TimeFinishFacade
   ) {
-    self.locationTracker = locationTracker
-    self.runningTimeTracker = runningTimeTracker
-    self.userDefaultRepository = userDefaultRepository
-    self.timeLogRecordRepository = timeLogRecordRepository
-    self.mutableTimerInfoModelDataStream = mutableTimerInfoModelDataStream
-    self.mutableTimeLogRecordModelDataStream = mutableTimeLogRecordModelDataStream
+    self.timeLogRecordBuilder = timeLogRecordBuilder
+    self.timeStartFacade = timeStartFacade
+    self.timeSuspenseFacade = timeSuspenseFacade
+    self.timeFinishFacade = timeFinishFacade
   }
   
   func start() -> Observable<Void> {
-    runningTimeTracker.currentTimerTime()
-      .filter { $0 != .zero }
-      .withUnretained(self)
-      .map { owner, time in
-        owner.mutableTimerInfoModelDataStream.updateRunningTime(with: time)
-        owner.userDefaultRepository.updateLastlyTrackedTime(with: time)
-      }
-      .do(onSubscribe: { [weak self] in
-        self?.runningTimeTracker.initiateTimerIfNeeded()
-      })
+    timeStartFacade.start()
   }
   
-  func stop() {
-    runningTimeTracker.stopTimer()
+  func suspend() {
+    timeSuspenseFacade.suspend()
   }
   
-  func save(_ activity: Activity) -> Observable<Void> {
-    defer {
-      runningTimeTracker.resetTimer()
+  func finish(_ activity: Activity) -> Observable<Void> {
+    timeLogRecordBuilder.timeLogRecord(
+      activity: activity
+    )
+    .withUnretained(self)
+    .flatMap { owner, record in
+      owner.timeFinishFacade.finish(record)
     }
-    
-    return .merge(
-      .just(saveID()),
-      .just(saveActivity(activity)),
-      saveCurrentLocation(),
-      saveDate()
-    )
   }
   
-  // MARK: - Privates
-  
-  private func saveID() {
-    timeLogRecordRelay.accept(
-      timeLogRecordRelayBuilder
-        .id(UUID().uuidString)
-    )
-  }
-  
-  private func saveActivity(_ activity: Activity) {
-    timeLogRecordRelay.accept(
-      timeLogRecordRelayBuilder
-        .activity(activity)
-    )
-  }
-  
-  private func saveCurrentLocation() -> Observable<Void> {
-    locationTracker.currentUserLocation()
-      .withUnretained(self)
-      .map { owner, location in
-        owner.timeLogRecordRelay.accept(owner.timeLogRecordRelayBuilder.coordinate(Coordinate2D(location)))
-      }
-  }
-  
-  private func saveDate() -> Observable<Void> {
-    mutableTimerInfoModelDataStream.timerInfoModelDataStream.map(\.runningTime)
-      .withUnretained(self)
-      .map { owner, time in
-        guard let startDate = owner.runningTimeTracker.getStartDate() else {
-          assertionFailure("cannot find startTime")
-          return
-        }
-        guard let dateComponentSecond = Calendar.current.dateComponents([.hour, .minute, .second], from: startDate).second else {
-          return
-        }
-        let endDate = startDate.addingTimeInterval(Double(dateComponentSecond + time))
-        owner.timeLogRecordRelay.accept(
-          owner.timeLogRecordRelayBuilder
-            .startDate("\(startDate)")
-            .endDate("\(endDate)")
-        )
-      }
-  }
 }

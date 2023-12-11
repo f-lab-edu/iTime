@@ -38,6 +38,12 @@ final class LocationTracker: NSObject, CLLocationManagerDelegate {
     locationManager.stopUpdatingLocation()
   }
   
+  func resetLocationTracking() {
+    locationManager.stopUpdatingLocation()
+    currentCoorindates = []
+    userLocationRelay.accept([])
+  }
+  
   func startLocationTracking() {
     locationManager.requestAlwaysAuthorization()
     locationManager.requestWhenInUseAuthorization()
