@@ -18,8 +18,22 @@ public protocol BookmarkListDependency: Dependency {
 
 // MARK: - BookmarkListComponent
 
-final class BookmarkListComponent: Component<BookmarkListDependency> {
+final class BookmarkListComponent:
+  Component<BookmarkListDependency>,
+  BookmarkListRouterDependency
+{
   
+  var viewController: BookmarkListViewControllable & BookmarkListPresentable {
+    BookmarkListViewController()
+  }
+  
+  var interactor: BookmarkListInteractable {
+    BookmarkListInteractor(presenter: viewController)
+  }
+  
+  var bookmarkEditorBuilder: BookmarkEditorBuildable {
+    dependency.bookmarkEditorBuilder
+  }
 }
 
 // MARK: - BookmarkListBuilder
@@ -35,13 +49,6 @@ public final class BookmarkListBuilder:
   
   public func build(withListener listener: BookmarkListListener) -> BookmarkListRouting {
     let component = BookmarkListComponent(dependency: dependency)
-    let viewController = BookmarkListViewController()
-    let interactor = BookmarkListInteractor(presenter: viewController)
-    interactor.listener = listener
-    return BookmarkListRouter(
-      interactor: interactor,
-      viewController: viewController,
-      bookmarkEditorBuilder: dependency.bookmarkEditorBuilder
-    )
+    return BookmarkListRouter(component)
   }
 }

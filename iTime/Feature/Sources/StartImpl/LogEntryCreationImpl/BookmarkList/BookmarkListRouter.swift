@@ -1,6 +1,6 @@
 //
 //  BookmarkListRouter.swift
-//  
+//
 //
 //  Created by 이상헌 on 12/10/23.
 //
@@ -25,6 +25,14 @@ protocol BookmarkListInteractable:
 protocol BookmarkListViewControllable: ViewControllable {
 }
 
+// MARK: - BookmarkListRouterDependency
+
+protocol BookmarkListRouterDependency {
+  var interactor: BookmarkListInteractable { get }
+  var viewController: BookmarkListViewControllable & BookmarkListPresentable { get }
+  var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
+}
+
 // MARK: - BookmarkListRouter
 
 final class BookmarkListRouter:
@@ -40,14 +48,10 @@ final class BookmarkListRouter:
   
   // MARK: - Initialization & DeInitialization
   
-  init(
-    interactor: BookmarkListInteractable,
-    viewController: BookmarkListViewControllable,
-    bookmarkEditorBuilder: BookmarkEditorBuildable
-  ) {
-    self.bookmarkEditorBuilder = bookmarkEditorBuilder
-    super.init(interactor: interactor, viewController: viewController)
-    interactor.router = self
+  init(_ dependency: BookmarkListRouterDependency) {
+    self.bookmarkEditorBuilder = dependency.bookmarkEditorBuilder
+    super.init(interactor: dependency.interactor, viewController: dependency.viewController)
+    dependency.interactor.router = self
   }
   
   // MARK: Route methods
