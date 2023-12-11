@@ -14,11 +14,7 @@ import SharedUI
 
 // MARK: - BookmarkEditorPresentableListener
 
-protocol BookmarkEditorPresentableListener:
-  AnyObject,
-  SavedItemSectionDelegateDataSource,
-  ItemHistorySectionDelegateDataSource
-{
+protocol BookmarkEditorPresentableListener: AnyObject {
   func didTapSaveButton()
   func didTapAddButton()
   func didTapBackButton()
@@ -31,11 +27,15 @@ final class BookmarkEditorViewController:
   BookmarkEditorPresentable,
   BookmarkEditorViewControllable
 {
-
+  
   // MARK: - Constants
   
   private enum Metric {
     static let separatedViewHeight: CGFloat = 9
+    static let sectionHeaderTitleLabelTopMargin: CGFloat = 16
+    static let sectionHeaderTitleLabelLeadingMargin: CGFloat = 24
+    static let currentCountIndexLabelTrailingMargin: CGFloat = 24
+    static let guideLabelTopMargin: CGFloat = 4
   }
   
   // MARK: - Properties
@@ -46,13 +46,38 @@ final class BookmarkEditorViewController:
   
   private let customNavigationBar = CustomNavigationBar()
   
-  private lazy var currentSavedItemsSectionView = CurrentSavedItemsSectionView(delegateDataSource: listener)
+  private let bookmarkListSectionHeaderTitleLabel = UILabel().builder
+    .text("현재 저장된 활동")
+    .font(.custom(.bold, 16))
+    .textColor(.black40)
+    .build()
+  
+  private let currentCountIndexLabel = UILabel().builder
+    .text("3/6")
+    .font(.custom(.regular, 16))
+    .textColor(.black40)
+    .build()
+  
+  private let bookmarkListContainterView = UIView()
   
   private let separatedView = UIView().builder
     .backgroundColor(.black90)
     .build()
   
-  private lazy var itemHistorySectionView = ItemHistorySectionView(delegateDataSource: listener)
+  
+  private let activityHistorySectionHeaderTitleLabel = UILabel().builder
+    .text("현재 기록")
+    .font(.custom(.bold, 16))
+    .textColor(.black40)
+    .build()
+  
+  private let guideLabel = UILabel().builder
+    .text("자주 했던 활동을 모아 보았어요")
+    .font(.custom(.regular, 12))
+    .textColor(.black60)
+    .build()
+  
+  private let activityHistoryContainterView = UIView()
   
   private let saveBookmarkButtonSectionView = SaveBookmarkButtonSectionView()
   
@@ -76,11 +101,11 @@ extension BookmarkEditorViewController {
   }
   
   private func bindSaveButtonTapAction() {
-    saveBookmarkButtonSectionView.saveButton.rx
-      .tapWithPreventDuplication()
-      .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in print("tap") }
-      .disposed(by: disposeBag)
+    //    bookmarkListContainterView.saveButton.rx
+    //      .tapWithPreventDuplication()
+    //      .asDriver(onErrorDriveWith: .empty())
+    //      .drive(with: self) { owner, _ in print("tap") }
+    //      .disposed(by: disposeBag)
   }
   
   private func bindAddButtonTapAction() {
@@ -107,18 +132,19 @@ extension BookmarkEditorViewController {
   
 }
 
-extension BookmarkEditorViewController {
-  
-}
 
 // MARK: - Layout
 
 extension BookmarkEditorViewController {
   private func setupUI() {
     view.addSubview(customNavigationBar)
-    view.addSubview(currentSavedItemsSectionView)
+    view.addSubview(bookmarkListSectionHeaderTitleLabel)
+    view.addSubview(currentCountIndexLabel)
+    view.addSubview(bookmarkListContainterView)
     view.addSubview(separatedView)
-    view.addSubview(itemHistorySectionView)
+    view.addSubview(activityHistorySectionHeaderTitleLabel)
+    view.addSubview(guideLabel)
+    view.addSubview(activityHistoryContainterView)
     view.addSubview(saveBookmarkButtonSectionView)
     
     layout()
@@ -126,9 +152,13 @@ extension BookmarkEditorViewController {
   
   private func layout() {
     makeCustomNavigationBarConstraints()
-    makeCurrentSavedItemSectionViewConstraints()
+    makeBookmarkListSectionHeaderTitleLabelConstraints()
+    makeCurrentCountIndexLabelConstraints()
+    makeBookmarkListContainterViewViewConstraints()
     makeSeparatedViewConstraints()
-    makeItemHistorySectionViewConstraints()
+    makeActivityHistorySectionHeaderTitleLabelConstraints()
+    makeActivityHistorySectionGuideLabelConstraints()
+    makeActivityHistoryContainterViewConstraints()
     makeSaveBookmarkButtonSectionViewConstraints()
   }
   
@@ -139,26 +169,54 @@ extension BookmarkEditorViewController {
     }
   }
   
-  private func makeCurrentSavedItemSectionViewConstraints() {
-    currentSavedItemsSectionView.snp.makeConstraints {
-      $0.top.equalTo(customNavigationBar.snp.bottom)
+  private func makeBookmarkListSectionHeaderTitleLabelConstraints() {
+    bookmarkListSectionHeaderTitleLabel.snp.makeConstraints {
+      $0.leading.equalToSuperview().offset(Metric.sectionHeaderTitleLabelLeadingMargin)
+      $0.top.equalTo(customNavigationBar.snp.bottom).offset(Metric.sectionHeaderTitleLabelTopMargin)
+    }
+  }
+  
+  private func makeCurrentCountIndexLabelConstraints() {
+    currentCountIndexLabel.snp.makeConstraints {
+      $0.centerY.equalTo(bookmarkListSectionHeaderTitleLabel)
+      $0.trailing.equalToSuperview().offset(-Metric.currentCountIndexLabelTrailingMargin)
+    }
+  }
+  
+  private func makeBookmarkListContainterViewViewConstraints() {
+    bookmarkListContainterView.snp.makeConstraints {
+      $0.top.equalTo(bookmarkListSectionHeaderTitleLabel.snp.bottom)
       $0.leading.trailing.equalToSuperview()
     }
   }
   
   private func makeSeparatedViewConstraints() {
     separatedView.snp.makeConstraints {
-      $0.top.equalTo(currentSavedItemsSectionView.snp.bottom)
+      $0.top.equalTo(bookmarkListContainterView.snp.bottom)
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(Metric.separatedViewHeight)
     }
   }
   
-  private func makeItemHistorySectionViewConstraints() {
-    itemHistorySectionView.snp.makeConstraints {
-      $0.top.equalTo(separatedView.snp.bottom)
+  private func makeActivityHistorySectionHeaderTitleLabelConstraints() {
+    activityHistorySectionHeaderTitleLabel.snp.makeConstraints {
+      $0.leading.equalToSuperview().offset(Metric.sectionHeaderTitleLabelLeadingMargin)
+      $0.top.equalTo(separatedView.snp.bottom).offset(Metric.sectionHeaderTitleLabelTopMargin)
+    }
+  }
+  
+  private func makeActivityHistorySectionGuideLabelConstraints() {
+    guideLabel.snp.makeConstraints {
+      $0.leading.equalTo(activityHistorySectionHeaderTitleLabel)
+      $0.top.equalTo(activityHistorySectionHeaderTitleLabel.snp.bottom).offset(Metric.guideLabelTopMargin)
+    }
+  }
+  
+  private func makeActivityHistoryContainterViewConstraints() {
+    activityHistoryContainterView.snp.makeConstraints {
+      $0.top.equalTo(guideLabel.snp.bottom)
       $0.leading.trailing.equalToSuperview()
-      $0.bottom.equalTo(saveBookmarkButtonSectionView.snp.top).priority(.low)
+      $0.bottom.equalTo(bookmarkListContainterView.snp.top).priority(.low)
     }
   }
   
@@ -167,6 +225,14 @@ extension BookmarkEditorViewController {
       $0.leading.trailing.equalToSuperview()
       $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
     }
+  }
+  
+  func addBookmarkList(_ view: ViewControllable) {
+    addChildViewController(container: bookmarkListContainterView, child: view)
+  }
+  
+  func addActivityHistory(_ view: ViewControllable) {
+    addChildViewController(container: activityHistoryContainterView, child: view)
   }
 }
 

@@ -17,7 +17,8 @@ protocol LogEntryCreationInteractable:
   LogEntryEditorListener,
   BookmarkListListener,
   LoggingRetentionListener,
-  TimeLogRunningListener
+  TimeLogRunningListener,
+  BookmarkEditorListener
 {
   var router: LogEntryCreationRouting? { get set }
   var listener: LogEntryCreationListener? { get set }
@@ -51,6 +52,9 @@ final class LogEntryCreationRouter:
   
   private let loggingRetentionBuilder: LoggingRetentionBuildable
   private var loggingRetentionRouter: LoggingRetentionRouting?
+  
+  private let bookmarkEditorBuilder: BookmarkEditorBuildable
+  private var bookmarkEditorRouter: BookmarkEditorRouting?
 
   // MARK: - Initialization
   
@@ -60,12 +64,14 @@ final class LogEntryCreationRouter:
     logEntryEditorBuilder: LogEntryEditorBuildable,
     timeLogRunningBuilder: TimeLogRunningBuildable,
     bookmarkListBuilder: BookmarkListBuildable,
-    loggingRetentionBuilder: LoggingRetentionBuildable
+    loggingRetentionBuilder: LoggingRetentionBuildable,
+    bookmarkEditorBuilder: BookmarkEditorBuildable
   ) {
     self.logEntryEditorBuilder = logEntryEditorBuilder
     self.timeLogRunningBuilder = timeLogRunningBuilder
     self.bookmarkListBuilder = bookmarkListBuilder
     self.loggingRetentionBuilder = loggingRetentionBuilder
+    self.bookmarkEditorBuilder = bookmarkEditorBuilder
     super.init(interactor: interactor, viewController: viewController)
     interactor.router = self
   }
@@ -137,6 +143,21 @@ final class LogEntryCreationRouter:
   func detachTimeLogRunningRIB() {
     guard let router = timeLogRunningRouter else { return }
     timeLogRunningRouter = nil
+    detachChild(router)
+    viewController.popViewController(animated: true, completion: nil)
+  }
+  
+  func attachBookmarkEditorRIB() {
+    guard bookmarkEditorRouter == nil else { return }
+    let router = bookmarkEditorBuilder.build(withListener: interactor)
+    bookmarkEditorRouter = router
+    attachChild(router)
+    viewController.pushViewController(router.viewControllable, animated: true)
+  }
+  
+  func detachBookmarkEditorRIB() {
+    guard let router = bookmarkEditorRouter else { return }
+    bookmarkEditorRouter = nil
     detachChild(router)
     viewController.popViewController(animated: true, completion: nil)
   }

@@ -19,7 +19,7 @@ protocol BookmarkListPresentableListener:
   BookmarkCollectionViewCellDelegate,
   BookmarkTagsCollectionViewAdapterDataSource
 {
-  func didTapBookmarkTagEditor()
+
 }
 
 // MARK: - BookmarkListViewController
@@ -33,7 +33,8 @@ final class BookmarkListViewController:
   // MARK: - Constants
   
   private enum Metric {
-    
+    static let emptyGuideLabelTopMargin: CGFloat = 4
+    static let emptyGuideLabelBottomMargin: CGFloat = 24
   }
   
   // MARK: - Properties
@@ -42,8 +43,26 @@ final class BookmarkListViewController:
   
   // MARK: - UI Components
   
-  private lazy var bookmarkTagsView = BookmarkTagsView(listener: listener)
+  private let bookmarkTagsCollectionView = DynamicHeightCollectionView(
+    frame: .zero,
+    collectionViewLayout: .init()
+  ).builder
+    .backgroundColor(.clear)
+    .build()
   
+  private lazy var adapter = BookmarkTagsCollectionViewAdapter(
+    collectionView: bookmarkTagsCollectionView,
+    adapterDataSource: listener,
+    delegate: listener,
+    alignedCollectionViewFlowLayout: CenterAlignedCollectionViewFlowLayout()
+  )
+  
+  private let emptyGuideLabel = UILabel().builder
+    .text("자주 하시는 활동으로 저장해보세요!")
+    .font(.custom(.regular, 12))
+    .textColor(.black60)
+    .isHidden(true)
+    .build()
   
   // MARK: - View LifeCycle
   
@@ -51,23 +70,16 @@ final class BookmarkListViewController:
     super.viewDidLoad()
     setupUI()
   }
-  
+
 }
 
 // MARK: - Bind Action
 
 extension BookmarkListViewController {
   private func bindActions() {
-    bindBookmarkTagsEditButtonTapAction()
+    
   }
-  
-  private func bindBookmarkTagsEditButtonTapAction() {
-    bookmarkTagsView.bookmarkEditorButtonLabel.rx
-      .tapGestureWithPreventDuplication()
-      .asDriver(onErrorDriveWith: .empty())
-            .drive(with: self) { owner, _ in owner.listener?.didTapBookmarkTagEditor() }
-      .disposed(by: disposeBag)
-  }
+
 }
 
 // MARK: - Bind State
@@ -81,18 +93,29 @@ extension BookmarkListViewController {
 extension BookmarkListViewController {
   private func setupUI() {
     view.backgroundColor = .clear
-    view.addSubview(bookmarkTagsView)
+    view.addSubview(bookmarkTagsCollectionView)
+    view.addSubview(emptyGuideLabel)
+    _ = adapter
     
     layout()
   }
   
   private func layout() {
-    makeBookmarkTagsViewConstraints()
+    makeBookmarkTagsCollectionViewConstraints()
+    makeEmptyGuideLabelConstraints()
   }
   
-  private func makeBookmarkTagsViewConstraints() {
-    bookmarkTagsView.snp.makeConstraints {
+  private func makeBookmarkTagsCollectionViewConstraints() {
+    bookmarkTagsCollectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
+    }
+  }
+  
+  private func makeEmptyGuideLabelConstraints() {
+    emptyGuideLabel.snp.makeConstraints {
+      $0.leading.trailing.equalToSuperview()
+      $0.top.equalToSuperview().offset(Metric.emptyGuideLabelTopMargin)
+      $0.bottom.equalToSuperview().offset(-Metric.emptyGuideLabelBottomMargin).priority(.low)
     }
   }
 }

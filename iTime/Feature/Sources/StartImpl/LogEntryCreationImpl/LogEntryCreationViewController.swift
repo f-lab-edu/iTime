@@ -19,6 +19,7 @@ import AppFoundation
 protocol LogEntryCreationPresentableListener: AnyObject {
   func didTapEncouragingBox()
   func didTapSettingButton()
+  func didTapBookmarkTagEditor()
   func didTapEditorRoutingButton()
   func didTapStartButton()
 }
@@ -41,6 +42,8 @@ final class LogEntryCreationViewController:
     static let editorRoutingButtonTopMargin: CGFloat = 58
     static let startButtonsTopMargin: CGFloat = 12
     static let startButtonsBottomMargin: CGFloat = 100
+    static let bookmarkTagsCollectionViewTopMargin: CGFloat = 16
+    static let bookmarkEditorButtonLabelTopMargin: CGFloat = 16
     static let buttonsRadious: CGFloat = 8
     static let bookmarkTagsTopMargin: CGFloat = 70
     static let bookmarkTagsViewLeadingTrailingInset: CGFloat = 24
@@ -58,7 +61,27 @@ final class LogEntryCreationViewController:
   
   private let loggingRetentionContainterView = UIView()
   
+  private let tagView = TagView().builder
+    .with {
+      $0.configure(by: "즐겨찾기")
+    }
+    .build()
+  
   private let bookmarkListContainerView = UIView()
+  
+  private let bookmarkEditorButtonLabel = UILabel().builder
+    .textColor(.black60)
+    .with {
+      let attr = NSAttributedString(
+          string: "수정하기",
+          attributes: [
+              NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue,
+              .font: UIFont.custom(.regular, 15),
+              .foregroundColor: UIColor.black60,
+          ])
+      $0.attributedText = attr
+    }
+    .build()
   
   private let editorRoutingButton = UIButton().builder
     .set(\.layer.cornerRadius, to: Metric.buttonsRadious)
@@ -106,6 +129,7 @@ extension LogEntryCreationViewController {
     bindSettingButtonTapAction()
     bindEdtiorRoutingButtonTapAction()
     bindStartButtonTapAction()
+    bindBookmarkTagsEditButtonTapAction()
   }
   
   private func bindLoadDataAction() {
@@ -139,6 +163,14 @@ extension LogEntryCreationViewController {
             .drive(with: self) { owner, _ in owner.listener?.didTapStartButton() }
       .disposed(by: disposeBag)
   }
+  
+  private func bindBookmarkTagsEditButtonTapAction() {
+    bookmarkEditorButtonLabel.rx
+      .tapGestureWithPreventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, _ in owner.listener?.didTapBookmarkTagEditor() }
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Bind State
@@ -157,7 +189,9 @@ extension LogEntryCreationViewController {
     view.backgroundColor = .black100
     view.addSubview(todayDateBar)
     view.addSubview(loggingRetentionContainterView)
+    view.addSubview(tagView)
     view.addSubview(bookmarkListContainerView)
+    view.addSubview(bookmarkEditorButtonLabel)
     view.addSubview(editorRoutingButton)
     view.addSubview(startButton)
     
@@ -168,7 +202,9 @@ extension LogEntryCreationViewController {
     makeTodayDateBarConstraints()
     makeLoggingRetentionBoxViewConstraints()
     makeBookmarkListContainerViewConstraints()
+    makeBookmarkEditorButtonLabelConstraints()
     makeEditorRoutingButtonConstraints()
+    makeTagViewConstraints()
     makeStartButtonConstraints()
   }
   
@@ -191,7 +227,6 @@ extension LogEntryCreationViewController {
   private func makeEditorRoutingButtonConstraints() {
     editorRoutingButton.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(Metric.buttonsLeadingTrailingMargin)
-      $0.top.equalTo(bookmarkListContainerView.snp.bottom).offset(Metric.editorRoutingButtonTopMargin)
       $0.height.equalTo(Metric.buttonsHeight)
     }
   }
@@ -204,10 +239,25 @@ extension LogEntryCreationViewController {
     }
   }
   
+  private func makeTagViewConstraints() {
+    tagView.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.centerY.equalToSuperview().multipliedBy(0.84)
+    }
+  }
+  
   private func makeBookmarkListContainerViewConstraints() {
     bookmarkListContainerView.snp.makeConstraints {
-      $0.bottom.equalTo(editorRoutingButton.snp.top).offset(-Metric.bookmarkTagsTopMargin).priority(.low)
+      $0.top.equalTo(tagView.snp.bottom).offset(Metric.bookmarkTagsCollectionViewTopMargin)
       $0.leading.trailing.equalToSuperview().inset(Metric.bookmarkTagsViewLeadingTrailingInset)
+    }
+  }
+  
+  private func makeBookmarkEditorButtonLabelConstraints() {
+    bookmarkEditorButtonLabel.snp.makeConstraints {
+      $0.top.equalTo(bookmarkListContainerView.snp.bottom).offset(Metric.bookmarkEditorButtonLabelTopMargin)
+      $0.centerX.equalToSuperview()
+      $0.bottom.equalTo(editorRoutingButton.snp.top).offset(-Metric.bookmarkTagsTopMargin).priority(.low)
     }
   }
   

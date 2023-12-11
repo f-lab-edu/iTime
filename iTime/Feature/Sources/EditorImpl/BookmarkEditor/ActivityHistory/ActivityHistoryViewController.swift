@@ -14,7 +14,11 @@ import SharedUI
 
 // MARK: - ActivityHistoryPresentableListener
 
-protocol ActivityHistoryPresentableListener: AnyObject {
+protocol ActivityHistoryPresentableListener: 
+  AnyObject,
+  BookmarkCollectionViewCellDelegate,
+  BookmarkTagsCollectionViewAdapterDataSource
+{
 }
 
 // MARK: - ActivityHistoryViewController
@@ -36,6 +40,20 @@ final class ActivityHistoryViewController:
   weak var listener: ActivityHistoryPresentableListener?
   
   // MARK: - UI Components
+  
+  private let activityHistoryCollectionView = DynamicHeightCollectionView(
+    frame: .zero,
+    collectionViewLayout: .init()
+  ).builder
+    .backgroundColor(.clear)
+    .build()
+  
+  private lazy var adapter = BookmarkTagsCollectionViewAdapter(
+    collectionView: activityHistoryCollectionView,
+    adapterDataSource: listener,
+    delegate: listener,
+    alignedCollectionViewFlowLayout: LeadingAlignedCollectionViewFlowLayout()
+  )
   
   // MARK: - View LifeCycle
   
@@ -62,12 +80,20 @@ extension ActivityHistoryViewController {
 
 extension ActivityHistoryViewController {
   private func setupUI() {
+    view.addSubview(activityHistoryCollectionView)
+    _ = adapter
     
     layout()
   }
   
   private func layout() {
-    
+    makeActivityHistoryCollectionViewConstraints()
+  }
+  
+  private func makeActivityHistoryCollectionViewConstraints() {
+    activityHistoryCollectionView.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
   }
 }
 
