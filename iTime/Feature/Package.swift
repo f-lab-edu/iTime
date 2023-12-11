@@ -89,6 +89,7 @@ let package = Package(
       name: "LoggedInImpl",
       dependencies: [
         "LoggedIn",
+        "Start",
         .product(name: "Usecase", package: "Domain"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),
