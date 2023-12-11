@@ -38,8 +38,12 @@ final class AppComponent:
   StartDependency,
   BookmarkEditorDependency,
   LogEntryEditorDependency,
-  CategoryEditorDependency
+  CategoryEditorDependency,
+  BookmarkListDependency
 {
+  var bookmarkListBuilder: BookmarkListBuildable {
+    BookmarkListBuilder(dependency: self)
+  }
   
   var categoryEditorBuilder: CategoryEditorBuildable {
     CategoryEditorBuilder(dependency: self)

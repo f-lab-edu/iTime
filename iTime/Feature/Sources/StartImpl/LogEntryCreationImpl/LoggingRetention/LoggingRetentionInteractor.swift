@@ -41,4 +41,12 @@ final class LoggingRetentionInteractor:
   override func didBecomeActive() {
     super.didBecomeActive()
   }
+  
+  func didTaploggingRetentionBox() {
+  
+  }
+  
+  func didTaploggingRetentionBoxCloseButton() {
+    
+  }
 }

@@ -17,7 +17,6 @@ public protocol LogEntryCreationBuildable: Buildable {
 
 public protocol LogEntryCreationRouting: ViewableRouting {
   func attachLogEntryEditorRIB()
-  func attachBookmarkEditorRIB()
   func attachTimeLogRunningRIB()
 }
 

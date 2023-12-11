@@ -36,6 +36,22 @@ final class BookmarkListInteractor:
     presenter.listener = self
   }
   
+  func didTapBookmarkTagEditor() {
+    
+  }
+  
+  func numberOfItems() -> Int {
+    1
+  }
+  
+  func bookmark(at index: Int) -> String {
+    "22"
+  }
+  
+  func didTapTagCell() {
+    print()
+  }
+  
   // MARK: - LifeCycle
   
   override func didBecomeActive() {

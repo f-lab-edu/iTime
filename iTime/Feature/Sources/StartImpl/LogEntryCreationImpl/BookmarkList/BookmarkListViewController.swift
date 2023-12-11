@@ -14,7 +14,12 @@ import SharedUI
 
 // MARK: - BookmarkListPresentableListener
 
-protocol BookmarkListPresentableListener: AnyObject {
+protocol BookmarkListPresentableListener:
+  AnyObject,
+  BookmarkCollectionViewCellDelegate,
+  BookmarkTagsCollectionViewAdapterDataSource
+{
+  func didTapBookmarkTagEditor()
 }
 
 // MARK: - BookmarkListViewController
@@ -37,6 +42,9 @@ final class BookmarkListViewController:
   
   // MARK: - UI Components
   
+  private lazy var bookmarkTagsView = BookmarkTagsView(listener: listener)
+  
+  
   // MARK: - View LifeCycle
   
   override func viewDidLoad() {
@@ -49,7 +57,17 @@ final class BookmarkListViewController:
 // MARK: - Bind Action
 
 extension BookmarkListViewController {
+  private func bindActions() {
+    bindBookmarkTagsEditButtonTapAction()
+  }
   
+  private func bindBookmarkTagsEditButtonTapAction() {
+    bookmarkTagsView.bookmarkEditorButtonLabel.rx
+      .tapGestureWithPreventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, _ in owner.listener?.didTapBookmarkTagEditor() }
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Bind State
@@ -62,12 +80,20 @@ extension BookmarkListViewController {
 
 extension BookmarkListViewController {
   private func setupUI() {
+    view.backgroundColor = .clear
+    view.addSubview(bookmarkTagsView)
     
     layout()
   }
   
   private func layout() {
-    
+    makeBookmarkTagsViewConstraints()
+  }
+  
+  private func makeBookmarkTagsViewConstraints() {
+    bookmarkTagsView.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
   }
 }
 

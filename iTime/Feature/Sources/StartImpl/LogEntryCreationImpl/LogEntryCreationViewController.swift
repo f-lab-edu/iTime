@@ -16,16 +16,11 @@ import AppFoundation
 
 // MARK: - LogEntryCreationPresentableListener
 
-protocol LogEntryCreationPresentableListener:
-  AnyObject,
-  BookmarkCollectionViewCellDelegate,
-  BookmarkTagsCollectionViewAdapterDataSource {
+protocol LogEntryCreationPresentableListener: AnyObject {
   func didTapEncouragingBox()
   func didTapSettingButton()
-  func didTapBookmarkTagEditor()
   func didTapEditorRoutingButton()
   func didTapStartButton()
-  func didTapTagCell()
 }
 
 // MARK: - LogEntryCreationViewController
@@ -61,9 +56,9 @@ final class LogEntryCreationViewController:
     .backgroundColor(.clear)
     .build()
   
-  private let encouragingBoxView = EncouragingBoxView()
+  private let loggingRetentionContainterView = UIView()
   
-  private lazy var bookmarkTagsView = BookmarkTagsView(listener: listener)
+  private let bookmarkListContainerView = UIView()
   
   private let editorRoutingButton = UIButton().builder
     .set(\.layer.cornerRadius, to: Metric.buttonsRadious)
@@ -109,9 +104,6 @@ extension LogEntryCreationViewController {
   private func bindActions() {
     bindLoadDataAction()
     bindSettingButtonTapAction()
-    bindEncouragingBoxTapAction()
-    bindEncouragingBoxCloseButtonTapAction()
-    bindBookmarkTagsEditButtonTapAction()
     bindEdtiorRoutingButtonTapAction()
     bindStartButtonTapAction()
   }
@@ -129,32 +121,6 @@ extension LogEntryCreationViewController {
       .preventDuplication()
       .asDriver(onErrorDriveWith: .empty())
           .drive(with: self) { owner, _ in owner.listener?.didTapSettingButton() }
-      .disposed(by: disposeBag)
-  }
-  
-  private func bindEncouragingBoxTapAction() {
-    Observable.merge(
-      encouragingBoxView.guideLabel.rx.tapGestureWithPreventDuplication(),
-      encouragingBoxView.rightAccessoryImageView.rx.tapGestureWithPreventDuplication()
-    )
-    .asDriver(onErrorDriveWith: .empty())
-         .drive(with: self) { owner, _ in owner.listener?.didTapEncouragingBox() }
-    .disposed(by: disposeBag)
-  }
-  
-  private func bindEncouragingBoxCloseButtonTapAction() {
-    encouragingBoxView.closeButton.rx.tap
-      .preventDuplication()
-      .asDriver(onErrorDriveWith: .empty())
-            .drive(with: self) { owner, _ in print("close") }
-      .disposed(by: disposeBag)
-  }
-  
-  private func bindBookmarkTagsEditButtonTapAction() {
-    bookmarkTagsView.bookmarkEditorButtonLabel.rx
-      .tapGestureWithPreventDuplication()
-      .asDriver(onErrorDriveWith: .empty())
-            .drive(with: self) { owner, _ in owner.listener?.didTapBookmarkTagEditor() }
       .disposed(by: disposeBag)
   }
   
@@ -179,12 +145,9 @@ extension LogEntryCreationViewController {
 
 extension LogEntryCreationViewController {
   private func bindState(from listener: LogEntryCreationPresentableListener) {
-    bindBookmarksState(from: listener)
-  }
-  
-  private func bindBookmarksState(from listener: LogEntryCreationPresentableListener) {
     
   }
+  
 }
 
 // MARK: - Layout
@@ -193,8 +156,8 @@ extension LogEntryCreationViewController {
   private func setupUI() {
     view.backgroundColor = .black100
     view.addSubview(todayDateBar)
-    view.addSubview(encouragingBoxView)
-    view.addSubview(bookmarkTagsView)
+    view.addSubview(loggingRetentionContainterView)
+    view.addSubview(bookmarkListContainerView)
     view.addSubview(editorRoutingButton)
     view.addSubview(startButton)
     
@@ -203,8 +166,8 @@ extension LogEntryCreationViewController {
   
   private func layout() {
     makeTodayDateBarConstraints()
-    makeEncouragingBoxViewConstraints()
-    makeBookmarkTagsViewConstraints()
+    makeLoggingRetentionBoxViewConstraints()
+    makeBookmarkListContainerViewConstraints()
     makeEditorRoutingButtonConstraints()
     makeStartButtonConstraints()
   }
@@ -217,8 +180,8 @@ extension LogEntryCreationViewController {
     }
   }
   
-  private func makeEncouragingBoxViewConstraints() {
-    encouragingBoxView.snp.makeConstraints {
+  private func makeLoggingRetentionBoxViewConstraints() {
+    loggingRetentionContainterView.snp.makeConstraints {
       $0.top.equalTo(todayDateBar.snp.bottom)
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(Metric.encouragingBoxViewHeight)
@@ -228,7 +191,7 @@ extension LogEntryCreationViewController {
   private func makeEditorRoutingButtonConstraints() {
     editorRoutingButton.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(Metric.buttonsLeadingTrailingMargin)
-      $0.top.equalTo(bookmarkTagsView.snp.bottom).offset(Metric.editorRoutingButtonTopMargin)
+      $0.top.equalTo(bookmarkListContainerView.snp.bottom).offset(Metric.editorRoutingButtonTopMargin)
       $0.height.equalTo(Metric.buttonsHeight)
     }
   }
@@ -241,11 +204,19 @@ extension LogEntryCreationViewController {
     }
   }
   
-  private func makeBookmarkTagsViewConstraints() {
-    bookmarkTagsView.snp.makeConstraints {
+  private func makeBookmarkListContainerViewConstraints() {
+    bookmarkListContainerView.snp.makeConstraints {
       $0.bottom.equalTo(editorRoutingButton.snp.top).offset(-Metric.bookmarkTagsTopMargin).priority(.low)
       $0.leading.trailing.equalToSuperview().inset(Metric.bookmarkTagsViewLeadingTrailingInset)
     }
+  }
+  
+  func addBookmarkList(_ view: ViewControllable) {
+    addChildViewController(container: bookmarkListContainerView, child: view)
+  }
+  
+  func addLoggingRetention(_ view: ViewControllable) {
+    addChildViewController(container: loggingRetentionContainterView, child: view)
   }
   
 }
