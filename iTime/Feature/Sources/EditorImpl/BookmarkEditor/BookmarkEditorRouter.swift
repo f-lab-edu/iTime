@@ -37,6 +37,7 @@ final class BookmarkEditorRouter:
   BookmarkEditorRouting
 {
   
+  
   // MARK: - Properties
   
   private let bookmarkListBuilder: BookmarkListBuildable
