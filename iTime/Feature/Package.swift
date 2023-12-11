@@ -76,6 +76,7 @@ let package = Package(
       name: "EditorImpl",
       dependencies: [
         "Editor",
+        "Start",
         .product(name: "Usecase", package: "Domain"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),
