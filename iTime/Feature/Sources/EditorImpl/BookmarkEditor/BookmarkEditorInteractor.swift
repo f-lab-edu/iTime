@@ -30,15 +30,15 @@ final class BookmarkEditorInteractor:
   
   weak var router: BookmarkEditorRouting?
   weak var listener: BookmarkEditorListener?
-  private let mutableBookmarkModelDataStream: MutableBookmarkModelDataStream
+  private let bookmarkModelDataStream: BookmarkModelDataStream
   
   // MARK: - Initialization & DeInitialization
   
   init(
     presenter: BookmarkEditorPresentable,
-    mutableBookmarkModelDataStream: MutableBookmarkModelDataStream
+    bookmarkModelDataStream: BookmarkModelDataStream
   ) {
-    self.mutableBookmarkModelDataStream = mutableBookmarkModelDataStream
+    self.bookmarkModelDataStream = bookmarkModelDataStream
     super.init(presenter: presenter)
     presenter.listener = self
   }

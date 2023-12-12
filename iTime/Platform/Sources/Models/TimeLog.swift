@@ -15,21 +15,21 @@ public struct TimeLog:
 {
   public let id: String
   public let perform: Perform
-  public let startTime: String
-  public let endTime: String
+  public let startDate: String
+  public let endDate: String
   public let coordinate: Coordinate
   
   public init(
     id: String,
     perform: Perform,
-    startTime: String,
-    endTime: String,
+    startDate: String,
+    endDate: String,
     coordinate: Coordinate
   ) {
     self.id = id
     self.perform = perform
-    self.startTime = startTime
-    self.endTime = endTime
+    self.startDate = startDate
+    self.endDate = endDate
     self.coordinate = coordinate
   }
   

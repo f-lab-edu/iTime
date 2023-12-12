@@ -18,7 +18,7 @@ protocol LogEntryCreationDependency: Dependency {
   var logEntryEditorBuilder: LogEntryEditorBuildable { get }
   var bookmarkListBuilder: BookmarkListBuildable { get }
   var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
-  var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream { get }
+  var bookmarkModelDataStream: BookmarkModelDataStream { get }
   var timeFormatter: TimeFormatter { get }
 }
 
@@ -66,7 +66,7 @@ final class LogEntryCreationBuilder:
     let viewController = LogEntryCreationViewController()
     let interactor = LogEntryCreationInteractor(
       presenter: viewController,
-      bookmarkModelDataStream: dependency.mutableBookmarkModelDataStream
+      bookmarkModelDataStream: dependency.bookmarkModelDataStream
     )
     interactor.listener = listener
     return LogEntryCreationRouter(

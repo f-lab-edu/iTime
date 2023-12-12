@@ -16,7 +16,7 @@ import SharedUI
 // MARK: - BookmarkEditorDependency
 
 public protocol BookmarkEditorDependency: Dependency {
-  var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream { get }
+  var bookmarkModelDataStream: BookmarkModelDataStream { get }
   var bookmarkListBuilder: BookmarkListBuildable { get }
 }
 
@@ -48,7 +48,7 @@ public final class BookmarkEditorBuilder:
     let viewController = BookmarkEditorViewController()
     let interactor = BookmarkEditorInteractor(
       presenter: viewController,
-      mutableBookmarkModelDataStream: dependency.mutableBookmarkModelDataStream 
+      bookmarkModelDataStream: dependency.bookmarkModelDataStream 
     )
     interactor.listener = listener
     return BookmarkEditorRouter(
