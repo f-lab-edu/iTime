@@ -8,65 +8,83 @@
 import CoreLocation
 
 import RxSwift
-import RxRelay
 
 import Repository
+import AppFoundation
 
 // MARK: - LocationTracker
 
 public final class LocationTrackerImpl:
   NSObject,
   CLLocationManagerDelegate,
-  LocationTracker
+  LocationTracker,
+  LocationFetcherDelegate
 {
   
-  private let locationManager = CLLocationManager()
+  private var locationFetcher: LocationFetcher
+
   private var currentCoorindates: [CLLocationCoordinate2D] = []
-  private let userLocationRelay: BehaviorRelay<[CLLocationCoordinate2D]> = .init(value: [])
+  private let userLocationSubject: BehaviorSubject<[CLLocationCoordinate2D]> = .init(value: [])
   private let applicationShared: ApplicationShared
   
-  init(applicationShared: ApplicationShared) {
+  init(
+    applicationShared: ApplicationShared,
+    locationFetcher: LocationFetcher
+  ) {
     self.applicationShared = applicationShared
+    self.locationFetcher = locationFetcher
   }
   
   public func currentUserLocation() -> Observable<CLLocationCoordinate2D> {
-    return userLocationRelay
+    return userLocationSubject
       .compactMap(\.last) // FIXME: 위치 빈도 수 가장 높은 지역의 Coordinate 추출 필요
       .asObservable()
   }
   
   public func stopLocationTracking() {
-    locationManager.stopUpdatingLocation()
+    locationFetcher.stopUpdatingLocation()
   }
   
   public func resetLocationTracking() {
-    locationManager.stopUpdatingLocation()
+    locationFetcher.stopUpdatingLocation()
     currentCoorindates = []
-    userLocationRelay.accept([])
+    userLocationSubject.onNext([])
   }
   
   public func startLocationTracking() {
-    locationManager.requestAlwaysAuthorization()
-    locationManager.requestWhenInUseAuthorization()
+    locationFetcher.requestAlwaysAuthorization()
+    locationFetcher.requestWhenInUseAuthorization()
     
     guard CLLocationManager.locationServicesEnabled() else {
       requestLocationSettingPermission()
       return
     }
-    locationManager.delegate = self
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    locationManager.allowsBackgroundLocationUpdates = true
-    locationManager.startUpdatingLocation()
-  }
-  
-  public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    guard let currentLocation: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-    currentCoorindates.append(currentLocation)
-    userLocationRelay.accept(currentCoorindates)
+    locationFetcher.locationFetcherDelegate = self
+    locationFetcher.desiredAccuracy = kCLLocationAccuracyBest
+    locationFetcher.allowsBackgroundLocationUpdates = true
+    locationFetcher.startUpdatingLocation()
   }
   
   private func requestLocationSettingPermission() {
     guard let url = URL(string: "App-Prefs:root=Privacy&path=LOCATION") else { return }
-    applicationShared.open(url: url)
+    applicationShared.open(url, options: [:], completionHandler: nil)
+  }
+  
+  public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    locationFetcher(manager, didUpdateLocations: locations)
+  }
+  
+  public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    locationFetcher(manager, didFailWithError: error)
+  }
+  
+  public func locationFetcher(_ fetcher: LocationFetcher, didUpdateLocations locations: [CLLocation]) {
+    guard let currentLocation: CLLocationCoordinate2D = locations.last?.coordinate else { return }
+    currentCoorindates.append(currentLocation)
+    userLocationSubject.onNext(currentCoorindates)
+  }
+  
+  public func locationFetcher(_ fetcher: LocationFetcher, didFailWithError error: Error) {
+    userLocationSubject.onError(error)
   }
 }
