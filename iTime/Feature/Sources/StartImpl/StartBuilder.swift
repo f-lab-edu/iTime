@@ -18,7 +18,7 @@ public protocol StartDependency: Dependency {
   var bookmarkListBuilder: BookmarkListBuildable { get }
   var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
   var logEntryEditorBuilder: LogEntryEditorBuildable { get }
-  var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream { get }
+  var bookmarkModelDataStream: BookmarkModelDataStream { get }
   var timeFormatter: TimeFormatter { get }
 }
 
@@ -36,8 +36,8 @@ final class StartComponent:
     dependency.bookmarkListBuilder
   }
   
-  var mutableBookmarkModelDataStream: MutableBookmarkModelDataStream {
-    dependency.mutableBookmarkModelDataStream
+  var bookmarkModelDataStream: BookmarkModelDataStream {
+    dependency.bookmarkModelDataStream
   }
   
   var timeFormatter: TimeFormatter {
