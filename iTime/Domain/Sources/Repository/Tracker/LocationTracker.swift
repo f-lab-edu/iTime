@@ -10,7 +10,6 @@ import RxRelay
 
 import CoreLocation
 
-
 // MARK: - LocationTracker
 
 public protocol LocationTracker {
