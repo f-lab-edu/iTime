@@ -10,10 +10,11 @@ import RIBs
 import Editor
 import Start
 
+import AppFoundation
+
 // MARK: - BookmarkListDependency
 
 public protocol BookmarkListDependency: Dependency {
-  var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
 }
 
 // MARK: - BookmarkListComponent
@@ -28,20 +29,25 @@ public final class BookmarkListBuilder:
   Builder<BookmarkListDependency>,
   BookmarkListBuildable
 {
-  
+
   public override init(dependency: BookmarkListDependency) {
     super.init(dependency: dependency)
   }
   
-  public func build(withListener listener: BookmarkListListener) -> BookmarkListRouting {
+  public func build(
+    withListener listener: BookmarkListListener,
+    payload: BookmarkListBuildDependency
+  ) -> BookmarkListRouting {
     let component = BookmarkListComponent(dependency: dependency)
-    let viewController = BookmarkListViewController()
+    let viewController = BookmarkListViewController(
+      alignedCollectionViewFlowLayout: payload.alignedCollectionViewFlowLayout,
+      cellBorderColor: payload.borderColor.innerColor
+    )
     let interactor = BookmarkListInteractor(presenter: viewController)
     interactor.listener = listener
     return BookmarkListRouter(
       interactor: interactor,
-      viewController: viewController,
-      bookmarkEditorBuilder: dependency.bookmarkEditorBuilder
+      viewController: viewController
     )
   }
 }

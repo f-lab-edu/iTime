@@ -19,7 +19,7 @@ protocol BookmarkListPresentableListener:
   BookmarkCollectionViewCellDelegate,
   BookmarkTagsCollectionViewAdapterDataSource
 {
-
+  
 }
 
 // MARK: - BookmarkListViewController
@@ -40,6 +40,16 @@ final class BookmarkListViewController:
   // MARK: - Properties
   
   weak var listener: BookmarkListPresentableListener?
+  private let alignedCollectionViewFlowLayout: UICollectionViewFlowLayout
+  private let cellBorderColor: UIColor
+  
+  init(
+    alignedCollectionViewFlowLayout: UICollectionViewFlowLayout,
+    cellBorderColor: UIColor
+  ) {
+    self.alignedCollectionViewFlowLayout = alignedCollectionViewFlowLayout
+    self.cellBorderColor = cellBorderColor
+  }
   
   // MARK: - UI Components
   
@@ -54,7 +64,8 @@ final class BookmarkListViewController:
     collectionView: bookmarkTagsCollectionView,
     adapterDataSource: listener,
     delegate: listener,
-    alignedCollectionViewFlowLayout: CenterAlignedCollectionViewFlowLayout()
+    alignedCollectionViewFlowLayout: alignedCollectionViewFlowLayout, 
+    cellBorderColor: cellBorderColor
   )
   
   private let emptyGuideLabel = UILabel().builder
@@ -123,6 +134,6 @@ extension BookmarkListViewController {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview("UIKit Portrait") {
-  BookmarkListViewController()
+  BookmarkListViewController(alignedCollectionViewFlowLayout: CenterAlignedCollectionViewFlowLayout(), cellBorderColor: .pointGreen)
 }
 #endif

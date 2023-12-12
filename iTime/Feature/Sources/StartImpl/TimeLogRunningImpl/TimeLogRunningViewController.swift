@@ -16,6 +16,7 @@ import AppFoundation
 // MARK: - TimeLogRunningPresentableListener
 
 protocol TimeLogRunningPresentableListener: AnyObject {
+  func didTapBackButton()
 }
 
 // MARK: - TimeLogRunningViewController
@@ -73,6 +74,7 @@ final class TimeLogRunningViewController:
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    bindActions()
   }
   
 }
@@ -80,7 +82,17 @@ final class TimeLogRunningViewController:
 // MARK: - Bind Action
 
 extension TimeLogRunningViewController {
+  private func bindActions() {
+    bindDidTapBackButton()
+  }
   
+  private func bindDidTapBackButton() {
+    customNavigationBar.backButton.rx
+      .tapWithPreventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in owner.listener?.didTapBackButton() }
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Bind State

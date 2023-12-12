@@ -76,6 +76,7 @@ let package = Package(
       name: "EditorImpl",
       dependencies: [
         "Editor",
+        "Start",
         .product(name: "Usecase", package: "Domain"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),
@@ -89,6 +90,7 @@ let package = Package(
       name: "LoggedInImpl",
       dependencies: [
         "LoggedIn",
+        "Start",
         .product(name: "Usecase", package: "Domain"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),
@@ -110,7 +112,9 @@ let package = Package(
     .target(
       name: "Start",
       dependencies: [
-        "ProxyPackage"
+        "ProxyPackage",
+        .product(name: "AppFoundation", package: "ProxyPackage"),
+        .product(name: "SharedUI", package: "ProxyPackage"),
       ]),
     .target(
       name: "StartImpl",

@@ -7,7 +7,9 @@
 
 import UIKit
 
-public class LeadingAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
+import AppFoundation
+
+public class LeadingAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout, AlignedCollectionViewFlowLayout {
   
   override public func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     guard let superAttributes = super.layoutAttributesForElements(in: rect) else { return nil }

@@ -22,7 +22,7 @@ public protocol LogEntryEditorRouting: ViewableRouting {
 // MARK: - LogEntryEditorListener
 
 public protocol LogEntryEditorListener: AnyObject {
-  func detachLocationEntryEditorRIB()
   func attachTimeLogRunningRIB()
+  func detachLogEntryEditorRIB()
 }
 

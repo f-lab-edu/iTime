@@ -20,6 +20,11 @@ public protocol BookmarkCollectionViewCellDelegate: AnyObject {
   func didTapTagCell()
 }
 
+public struct BookmarkCollectionCellViewModel {
+  let title: String
+  let borderColor: UIColor
+}
+
 // MARK: - BookmarkTagsCollectionViewAdapter
 
 public final class BookmarkTagsCollectionViewAdapter: NSObject {
@@ -37,6 +42,7 @@ public final class BookmarkTagsCollectionViewAdapter: NSObject {
   
   weak var adapterDataSource: BookmarkTagsCollectionViewAdapterDataSource?
   weak var delegate: BookmarkCollectionViewCellDelegate?
+  private let cellBorderColor: UIColor
   
   private var sectionInset: UIEdgeInsets {
     UIEdgeInsets(
@@ -51,8 +57,10 @@ public final class BookmarkTagsCollectionViewAdapter: NSObject {
     collectionView: UICollectionView,
     adapterDataSource: BookmarkTagsCollectionViewAdapterDataSource?,
     delegate: BookmarkCollectionViewCellDelegate?,
-    alignedCollectionViewFlowLayout: UICollectionViewFlowLayout
+    alignedCollectionViewFlowLayout: UICollectionViewFlowLayout,
+    cellBorderColor: UIColor
   ) {
+    self.cellBorderColor = cellBorderColor
     super.init()
     let layout = alignedCollectionViewFlowLayout
     layout.minimumInteritemSpacing = Metric.itemHorizontalInset
@@ -83,7 +91,8 @@ extension BookmarkTagsCollectionViewAdapter: UICollectionViewDataSource {
     cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
     let cell = collectionView.dequeue(BookmarkTagCell.self, indexPath: indexPath)
-    cell.configure(by: adapterDataSource?.bookmark(at: indexPath.row) ?? "")
+    let title = adapterDataSource?.bookmark(at: indexPath.row) ?? ""
+    cell.configure(by: .init(title: title, borderColor: cellBorderColor))
     
     return cell
   }

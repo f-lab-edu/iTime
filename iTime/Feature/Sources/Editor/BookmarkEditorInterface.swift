@@ -22,5 +22,6 @@ public protocol BookmarkEditorRouting: ViewableRouting {
 // MARK: - BookmarkEditorListener
 
 public protocol BookmarkEditorListener: AnyObject {
+  func detachBookmarkEditorRIB()
 }
 

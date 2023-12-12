@@ -7,8 +7,10 @@
 
 import UIKit
 
+import AppFoundation
+
 /// https://stackoverflow.com/questions/13588283/how-to-center-align-the-cells-of-a-uicollectionview/30104749#30104749
-public class CenterAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
+public class CenterAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout, AlignedCollectionViewFlowLayout {
   
   public override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     guard let superAttributes = super.layoutAttributesForElements(in: rect) else { return nil }

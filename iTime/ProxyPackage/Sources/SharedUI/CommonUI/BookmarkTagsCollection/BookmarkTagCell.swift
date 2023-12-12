@@ -22,7 +22,7 @@ public final class BookmarkTagCell:
   
   // MARK: - Properties
   
-  public typealias ViewModel = String
+  public typealias ViewModel = BookmarkCollectionCellViewModel
   
   // MARK: - UI Components
   
@@ -44,20 +44,20 @@ public final class BookmarkTagCell:
     layout()
   }
   
-  public override func draw(_ rect: CGRect) {
-    super.draw(rect)
-    contentView.clipsToBounds = true
-    contentView.applyRoundedCorners(Metric.contentViewRadius, widthBorder: 1, borderColor: .black60)
-  }
-  
   public override func layerWillDraw(_ layer: CALayer) {
     super.layerWillDraw(layer)
   }
   
   // MARK: - Internal methods
   
-  public func configure(by viewModel: String) {
-    tagLabel.text = viewModel
+  public func configure(by viewModel: BookmarkCollectionCellViewModel) {
+    tagLabel.text = viewModel.title
+    contentView.clipsToBounds = true
+    contentView.applyRoundedCorners(
+      Metric.contentViewRadius,
+      widthBorder: 1,
+      borderColor: viewModel.borderColor
+    )
   }
   
   // MARK: - Private methods

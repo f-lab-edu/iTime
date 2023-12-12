@@ -36,9 +36,8 @@ final class TimeLogRunningInteractor:
     presenter.listener = self
   }
   
-  // MARK: - LifeCycle
-  
-  override func didBecomeActive() {
-    super.didBecomeActive()
+  func didTapBackButton() {
+    listener?.detachTimeLogRunningRIB()
   }
+  
 }

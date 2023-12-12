@@ -9,6 +9,7 @@ import RIBs
 
 import Start
 import Editor
+import SharedUI
 
 // MARK: - BookmarkEditorInteractable
 
@@ -69,7 +70,13 @@ final class BookmarkEditorRouter:
   
   func attachBookmarkListRIB() {
     guard bookmarkListRouter == nil else { return }
-    let router = bookmarkListBuilder.build(withListener: interactor)
+    let router = bookmarkListBuilder.build(
+      withListener: interactor,
+      payload: BookmarkListBuildDependency(
+        alignedCollectionViewFlowLayout: LeadingAlignedCollectionViewFlowLayout(),
+        borderColor: .init(innerColor: .pointGreen)
+      )
+    )
     bookmarkListRouter = router
     attachChild(router)
     viewController.addBookmarkList(router.viewControllable)

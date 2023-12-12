@@ -27,11 +27,14 @@ final class LogEntryCreationInteractor:
   LogEntryCreationPresentableListener
 {
   
+  // MARK: - Properties
   
   weak var router: LogEntryCreationRouting?
   weak var listener: LogEntryCreationListener?
   
   private let bookmarkModelDataStream: BookmarkModelDataStream
+  
+  // MARK: Initialziation
   
   init(
     presenter: LogEntryCreationPresentable,
@@ -67,11 +70,24 @@ final class LogEntryCreationInteractor:
 // MARK: - Listener
 
 extension LogEntryCreationInteractor {
-  func detachLocationEntryEditorRIB() {
-    print("detachLocationEntryEditorRIB")
+  func detachLogEntryEditorRIB() {
+    router?.detachLogEntryEditorRIB()
+  }
+  
+  func detachBookmarkEditorRIB() {
+    router?.detachBookmarkEditorRIB()
   }
   
   func attachTimeLogRunningRIB() {
-    print("attachTimeLogRunningRIB")
+    router?.attachTimeLogRunningRIB()
   }
+  
+  func detachTimeLogRunningRIB() {
+    router?.detachTimeLogRunningRIB()
+  }
+  
+  func didTapTagCell() {
+    print("didTapTagCell")
+  }
+  
 }

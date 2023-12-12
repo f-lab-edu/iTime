@@ -46,7 +46,7 @@ final class LogEntryEditorInteractor:
   
   func didTapStartButton() {
     listener?.attachTimeLogRunningRIB()
-    listener?.detachLocationEntryEditorRIB()
+    listener?.detachLogEntryEditorRIB()
   }
   
   func didTapCategoryStateView() {
@@ -54,10 +54,10 @@ final class LogEntryEditorInteractor:
   }
   
   func didTapCloseButton() {
-    listener?.detachLocationEntryEditorRIB()
+    listener?.detachLogEntryEditorRIB()
   }
   
   func detachCategoryEditorRIB() {
-    listener?.detachLocationEntryEditorRIB()
+    listener?.detachLogEntryEditorRIB()
   }
 }

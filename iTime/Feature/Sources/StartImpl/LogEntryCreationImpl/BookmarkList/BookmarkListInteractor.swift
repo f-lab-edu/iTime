@@ -36,6 +36,12 @@ final class BookmarkListInteractor:
     presenter.listener = self
   }
   
+  // MARK: - LifeCycle
+  
+  override func didBecomeActive() {
+    super.didBecomeActive()
+  }
+  
   func didTapBookmarkTagEditor() {
     
   }
@@ -49,12 +55,7 @@ final class BookmarkListInteractor:
   }
   
   func didTapTagCell() {
-    print()
-  }
-  
-  // MARK: - LifeCycle
-  
-  override func didBecomeActive() {
-    super.didBecomeActive()
+    listener?.didTapTagCell()
   }
 }
+

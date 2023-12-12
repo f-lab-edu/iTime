@@ -60,7 +60,11 @@ final class BookmarkEditorInteractor:
   }
   
   func didTapBackButton() {
-   
+    listener?.detachBookmarkEditorRIB()
+  }
+  
+  func didTapTagCell() {
+    
   }
   
    // MARK: - Private
