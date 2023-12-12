@@ -16,18 +16,18 @@ public final class TimeStartFacade {
   
   private let locationTracker: LocationTracker
   private let runningTimeTracker: RunningTimeTracker
-  private let mutableTimerInfoModelDataStream: MutableTimerInfoModelDataStream
+  private let timerInfoModelDataStream: TimerInfoModelDataStream
   private let userDefaultRepository: UserDefaultRepository
   
   init(
     locationTracker: LocationTracker,
     runningTimeTracker: RunningTimeTracker,
-    mutableTimerInfoModelDataStream: MutableTimerInfoModelDataStream,
+    timerInfoModelDataStream: TimerInfoModelDataStream,
     userDefaultRepository: UserDefaultRepository
   ) {
     self.locationTracker = locationTracker
     self.runningTimeTracker = runningTimeTracker
-    self.mutableTimerInfoModelDataStream = mutableTimerInfoModelDataStream
+    self.timerInfoModelDataStream = timerInfoModelDataStream
     self.userDefaultRepository = userDefaultRepository
   }
   
@@ -37,7 +37,7 @@ public final class TimeStartFacade {
       .withUnretained(self)
       .map { owner, time in
         owner.locationTracker.startLocationTracking()
-        owner.mutableTimerInfoModelDataStream.updateRunningTime(with: time)
+        owner.timerInfoModelDataStream.updateRunningTime(with: time)
         owner.userDefaultRepository.updateLastlyTrackedTime(with: time)
       }
       .do(onSubscribe: { [weak self] in

@@ -23,18 +23,18 @@ final class TimeLogRecordBuilder {
   
   private let locationTracker: LocationTracker
   private let runningTimeTracker: RunningTimeTracker
-  private let mutableTimerInfoModelDataStream: MutableTimerInfoModelDataStream
+  private let timerInfoModelDataStream: TimerInfoModelDataStream
   
   // MARK: Initialization
   
   init(
     locationTracker: LocationTracker,
     runningTimeTracker: RunningTimeTracker,
-    mutableTimerInfoModelDataStream: MutableTimerInfoModelDataStream
+    timerInfoModelDataStream: TimerInfoModelDataStream
   ) {
     self.locationTracker = locationTracker
     self.runningTimeTracker = runningTimeTracker
-    self.mutableTimerInfoModelDataStream = mutableTimerInfoModelDataStream
+    self.timerInfoModelDataStream = timerInfoModelDataStream
   }
   
   func timeLogRecord(activity: Activity) -> Observable<TimeLogRecord> {
@@ -73,7 +73,7 @@ final class TimeLogRecordBuilder {
   }
   
   private func saveDate() -> Observable<Void> {
-    mutableTimerInfoModelDataStream.timerInfoModelDataStream.map(\.runningTime)
+    timerInfoModelDataStream.timerInfoModelDataStream.map(\.runningTime)
       .withUnretained(self)
       .map { owner, time in
         guard let startDate = owner.runningTimeTracker.getStartDate() else {

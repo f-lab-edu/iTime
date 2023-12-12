@@ -12,27 +12,11 @@ import RxRelay
 
 import AppFoundation
 
-// MARK: - TimerInfoModelDataStream
-
-public protocol TimerInfoModelDataStream {
-  var timerInfoModelDataStream: Observable<TimerInfo> { get }
-}
-
-// MARK: - MutatableTimeInfoModelDataStream
-
-public protocol MutableTimerInfoModelDataStream: TimerInfoModelDataStream {
-  func updateTimerInfo(with info: TimerInfo)
-  func updateLastlyForegroundTrackedDate(with date: Date)
-  func updateCurrentDate(with date: Date)
-  func updateRunningTime(with time: Int)
-  func updateStartTime(with time: Int)
-}
-
-final class TimerInfoModelStreamImpl: MutableTimerInfoModelDataStream {
+public final class TimerInfoModelDataStream {
   
   // MARK: - Properties
   
-  var timerInfoModelDataStream: RxSwift.Observable<TimerInfo> { timerInfoModelDataRelay.asObservable() }
+  public var timerInfoModelDataStream: RxSwift.Observable<TimerInfo> { timerInfoModelDataRelay.asObservable() }
   private let timerInfoModelDataRelay = BehaviorRelay<TimerInfo>(value: TimerInfo())
   private var timerInfoModelRelayBuilder: PropertyBuilder<TimerInfo> { timerInfoModelDataRelay.value.builder }
   
@@ -40,35 +24,37 @@ final class TimerInfoModelStreamImpl: MutableTimerInfoModelDataStream {
   
   // MARK: - Internal Methods
   
-  func updateTimerInfo(with info: TimerInfo) {
+  public func updateTimerInfo(with info: TimerInfo) {
     timerInfoModelDataRelay.accept(info)
   }
   
-  func updateLastlyForegroundTrackedDate(with date: Date) {
+  public func updateLastlyForegroundTrackedDate(with date: Date) {
     timerInfoModelDataRelay.accept(
       timerInfoModelRelayBuilder
         .lastlyForegroundTrackedDate(date)
     )
   }
   
-  func updateCurrentDate(with date: Date) {
+  public func updateCurrentDate(with date: Date) {
     timerInfoModelDataRelay.accept(
       timerInfoModelRelayBuilder
         .currentDate(date)
     )
   }
   
-  func updateRunningTime(with time: Int) {
+  public func updateRunningTime(with time: Int) {
     timerInfoModelDataRelay.accept(
       timerInfoModelRelayBuilder
         .runningTime(time)
     )
   }
   
-  func updateStartTime(with time: Int) {
+  public func updateStartTime(with time: Int) {
     timerInfoModelDataRelay.accept(
       timerInfoModelRelayBuilder
         .startTime(time)
     )
   }
+  
+  public init() {}
 }
