@@ -23,24 +23,9 @@ struct TimeLogRecordModelData: Equatable {
   }
 }
 
-// MARK: - TimeLogRecordModelDataStream
-
-public protocol TimeLogRecordModelDataStream {
-  var timeLogRecords: Observable<[TimeLogRecord]> { get }
-}
-
-// MARK: - MutableTimeLogRecordModelDataStream
-
-public protocol MutableTimeLogRecordModelDataStream: TimeLogRecordModelDataStream {
-  func updateRecords(with timeLogRecords: [TimeLogRecord])
-  func updateRecord(with timeLogRecord: TimeLogRecord)
-  func append(_ timeLogRecord: TimeLogRecord)
-  func remove(_ timeLogRecord: TimeLogRecord)
-}
-
 // MARK: - TimeLogRecordModelDataStreamImpl
 
-public final class TimeLogRecordModelDataStreamImpl: MutableTimeLogRecordModelDataStream {
+public final class TimeLogRecordModelDataStream {
   
   // MARK: - Properties
   
@@ -50,7 +35,7 @@ public final class TimeLogRecordModelDataStreamImpl: MutableTimeLogRecordModelDa
   // MARK: - Internal Methods
   
   public func updateRecords(with timeLogRecords: [TimeLogRecord]) {
-    var modelByID = timeLogRecords.reduce(into: [String: TimeLogRecord]()) { $0[$1.id] = $1 }
+    let modelByID = timeLogRecords.reduce(into: [String: TimeLogRecord]()) { $0[$1.id] = $1 }
     let data = TimeLogRecordModelData(models: timeLogRecords, modelByID: modelByID)
     timeLogRecordsDataRelay.accept(data)
   }
@@ -80,7 +65,7 @@ public final class TimeLogRecordModelDataStreamImpl: MutableTimeLogRecordModelDa
   
   public func remove(_ timeLogRecord: TimeLogRecord) {
     var newTimeLogRecords: [TimeLogRecord] {
-      var records = timeLogRecordsDataRelay.value.models.filter { $0 != timeLogRecord }
+      let records = timeLogRecordsDataRelay.value.models.filter { $0 != timeLogRecord }
       return records
     }
     

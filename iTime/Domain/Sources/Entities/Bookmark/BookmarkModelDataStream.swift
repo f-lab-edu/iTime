@@ -24,23 +24,9 @@ struct BookmarkModelData: Equatable {
   }
 }
 
-// MARK: - BookmarkDataStream
-
-public protocol BookmarkModelDataStream {
-  var bookmarks: Observable<[Bookmark]> { get }
-}
-
-// MARK: - MutableBookmarkDataStream
-
-public protocol MutableBookmarkModelDataStream: BookmarkModelDataStream {
-  func update(with bookmarks: [Bookmark])
-  func append(_ bookmark: Bookmark)
-  func remove(_ bookmark: Bookmark)
-}
-
 // MARK: - BookmarkDataStreamImpl
 
-public final class BookmarkModelDataStreamImpl: MutableBookmarkModelDataStream {
+public final class BookmarkModelDataStream {
   
   // MARK: - Properties
   

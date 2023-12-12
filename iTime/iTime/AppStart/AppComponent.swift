@@ -41,6 +41,7 @@ final class AppComponent:
   CategoryEditorDependency,
   BookmarkListDependency
 {
+  
   var bookmarkListBuilder: BookmarkListBuildable {
     BookmarkListBuilder(dependency: self)
   }
@@ -82,13 +83,13 @@ final class AppComponent:
       userDefaultRepository: userDefaultRepository,
       translator: TimeLogRecordTranslator()
     )
-    self.mutableBookmarkModelDataStream = BookmarkModelDataStreamImpl()
-    self.mutableTimeLogRecordModelDataStream = TimeLogRecordModelDataStreamImpl()
+    self.bookmarkModelDataStream = BookmarkModelDataStream()
+    self.timeLogRecordModelDataStream = TimeLogRecordModelDataStream()
     self.timeLogUsecase = TimeLogUsecaseImpl(
       bookmarkRepository: bookmarkRepository,
       timeLogRecordRepository: timeLogRecordRepository,
-      mutableBookmarkModelDataStream: mutableBookmarkModelDataStream,
-      mutableTimeLogRecordModelDataStream: mutableTimeLogRecordModelDataStream
+      bookmarkModelDataStream: bookmarkModelDataStream,
+      timeLogRecordModelDataStream: timeLogRecordModelDataStream
     )
     
     self.authenticationUsecase = AuthenticationUsecaseImpl(
@@ -103,9 +104,9 @@ final class AppComponent:
   
   let authenticationUsecase: AuthenticationUsecase
   
-  let mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream
+  let bookmarkModelDataStream: BookmarkModelDataStream
   
-  let mutableBookmarkModelDataStream: MutableBookmarkModelDataStream
+  let timeLogRecordModelDataStream: TimeLogRecordModelDataStream
   
   var timeFormatter: TimeFormatter {
     TimeFormatterImpl()

@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by 이상헌 on 12/1/23.
 //
@@ -22,8 +22,8 @@ public final class TimeLogRecordTranslator {
             color: $0.perform.classification.color
           )
         ),
-        startTime: $0.startTime,
-        endTime: $0.endTime,
+        startDate: $0.startDate,
+        endDate: $0.endDate,
         coordinate: Coordinate2D(
           latitude: $0.coordinate.latitude,
           longitude: $0.coordinate.longitude
@@ -35,22 +35,22 @@ public final class TimeLogRecordTranslator {
   public func translateToTimeLogList(by timeLogRecords: [TimeLogRecord]) -> TimeLogList {
     .init(
       timeLogRecords.map {
-      TimeLog(
-        id: $0.id,
-        perform: Perform(
-          title: $0.activity.title,
-          classification: Classification(
-            title: $0.activity.category.title,
-            color: $0.activity.category.color
+        TimeLog(
+          id: $0.id,
+          perform: Perform(
+            title: $0.activity.title,
+            classification: Classification(
+              title: $0.activity.category.title,
+              color: $0.activity.category.color
+            )
+          ),
+          startDate: $0.startDate,
+          endDate: $0.endDate,
+          coordinate: Coordinate(
+            latitude: $0.coordinate.latitude,
+            longitude: $0.coordinate.longitude
           )
-        ),
-        startTime: $0.startTime,
-        endTime: $0.endTime,
-        coordinate: Coordinate(
-          latitude: $0.coordinate.latitude,
-          longitude: $0.coordinate.longitude
         )
-      )
       }
     )
   }
