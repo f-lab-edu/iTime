@@ -32,7 +32,7 @@ public final class TimeStartFacade {
   }
   
   func start() -> Observable<Void> {
-    runningTimeTracker.currentTimerTime()
+    runningTimeTracker.currentSeconds()
       .filter { $0 != .zero }
       .withUnretained(self)
       .map { owner, time in
@@ -41,7 +41,7 @@ public final class TimeStartFacade {
         owner.userDefaultRepository.updateLastlyTrackedTime(with: time)
       }
       .do(onSubscribe: { [weak self] in
-        self?.runningTimeTracker.initiateTimerIfNeeded()
+        // self?.runningTimeTracker.initiateTimerIfNeeded()
       })
   }
 }

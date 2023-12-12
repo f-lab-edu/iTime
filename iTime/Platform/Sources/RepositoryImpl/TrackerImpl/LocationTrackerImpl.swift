@@ -1,23 +1,24 @@
 //
 //  File.swift
+//  
 //
+//  Created by 이상헌 on 12/12/23.
 //
-//  Created by 이상헌 on 12/9/23.
-//
+
+import CoreLocation
 
 import RxSwift
 import RxRelay
-import CoreLocation
 
-// MARK: - ApplicationShared
-
-public protocol ApplicationShared {
-  func open(url: URL)
-}
+import Repository
 
 // MARK: - LocationTracker
 
-final class LocationTracker: NSObject, CLLocationManagerDelegate {
+public final class LocationTrackerImpl:
+  NSObject,
+  CLLocationManagerDelegate,
+  LocationTracker
+{
   
   private let locationManager = CLLocationManager()
   private var currentCoorindates: [CLLocationCoordinate2D] = []
@@ -28,23 +29,23 @@ final class LocationTracker: NSObject, CLLocationManagerDelegate {
     self.applicationShared = applicationShared
   }
   
-  func currentUserLocation() -> Observable<CLLocationCoordinate2D> {
+  public func currentUserLocation() -> Observable<CLLocationCoordinate2D> {
     return userLocationRelay
       .compactMap(\.last) // FIXME: 위치 빈도 수 가장 높은 지역의 Coordinate 추출 필요
       .asObservable()
   }
   
-  func stopLocationTracking() {
+  public func stopLocationTracking() {
     locationManager.stopUpdatingLocation()
   }
   
-  func resetLocationTracking() {
+  public func resetLocationTracking() {
     locationManager.stopUpdatingLocation()
     currentCoorindates = []
     userLocationRelay.accept([])
   }
   
-  func startLocationTracking() {
+  public func startLocationTracking() {
     locationManager.requestAlwaysAuthorization()
     locationManager.requestWhenInUseAuthorization()
     
@@ -58,7 +59,7 @@ final class LocationTracker: NSObject, CLLocationManagerDelegate {
     locationManager.startUpdatingLocation()
   }
   
-  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+  public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     guard let currentLocation: CLLocationCoordinate2D = manager.location?.coordinate else { return }
     currentCoorindates.append(currentLocation)
     userLocationRelay.accept(currentCoorindates)

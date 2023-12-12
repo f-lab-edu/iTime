@@ -23,24 +23,9 @@ struct TimeLogRecordModelData: Equatable {
   }
 }
 
-// MARK: - TimeLogRecordModelDataStream
-
-public protocol TimeLogRecordModelDataStream {
-  var timeLogRecords: Observable<[TimeLogRecord]> { get }
-}
-
-// MARK: - MutableTimeLogRecordModelDataStream
-
-public protocol MutableTimeLogRecordModelDataStream: TimeLogRecordModelDataStream {
-  func updateRecords(with timeLogRecords: [TimeLogRecord])
-  func updateRecord(with timeLogRecord: TimeLogRecord)
-  func append(_ timeLogRecord: TimeLogRecord)
-  func remove(_ timeLogRecord: TimeLogRecord)
-}
-
 // MARK: - TimeLogRecordModelDataStreamImpl
 
-public final class TimeLogRecordModelDataStreamImpl: MutableTimeLogRecordModelDataStream {
+public final class TimeLogRecordModelDataStream {
   
   // MARK: - Properties
   

@@ -15,24 +15,24 @@ final class TimeFinishFacade {
   private let locationTracker: LocationTracker
   private let runningTimeTracker: RunningTimeTracker
   private let timeLogRecordRepository: TimeLogRecordRepository
-  private let mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream
+  private let timeLogRecordModelDataStream: TimeLogRecordModelDataStream
   
   init(
     locationTracker: LocationTracker,
     runningTimeTracker: RunningTimeTracker,
     timeLogRecordRepository: TimeLogRecordRepository,
-    mutableTimeLogRecordModelDataStream: MutableTimeLogRecordModelDataStream
+    timeLogRecordModelDataStream: TimeLogRecordModelDataStream
   ) {
     self.locationTracker = locationTracker
     self.runningTimeTracker = runningTimeTracker
     self.timeLogRecordRepository = timeLogRecordRepository
-    self.mutableTimeLogRecordModelDataStream = mutableTimeLogRecordModelDataStream
+    self.timeLogRecordModelDataStream = timeLogRecordModelDataStream
   }
   
   func finish(_ record: TimeLogRecord) -> Observable<Void> {
-    runningTimeTracker.resetTimer()
+    runningTimeTracker.finish()
     locationTracker.resetLocationTracking()
-    mutableTimeLogRecordModelDataStream.append(record)
+    timeLogRecordModelDataStream.append(record)
     return timeLogRecordRepository.append(record)
       .asObservable() // TODO: Check, asSingle()
       .map { _ in return Void() }

@@ -7,6 +7,8 @@
 
 import Foundation
 
+import Repository
+
 final class TimeSuspenseFacade {
   
   private let runningTimeTracker: RunningTimeTracker
@@ -21,7 +23,7 @@ final class TimeSuspenseFacade {
   }
     
   func suspend() {
-    runningTimeTracker.stopTimer()
+    runningTimeTracker.suspend()
     locationTracker.stopLocationTracking()
   }
 }
