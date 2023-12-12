@@ -40,8 +40,5 @@ public final class TimeStartFacade {
         owner.timerInfoModelDataStream.updateRunningTime(with: time)
         owner.userDefaultRepository.updateLastlyTrackedTime(with: time)
       }
-      .do(onSubscribe: { [weak self] in
-        // self?.runningTimeTracker.initiateTimerIfNeeded()
-      })
   }
 }

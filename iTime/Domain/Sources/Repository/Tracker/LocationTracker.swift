@@ -10,12 +10,6 @@ import RxRelay
 
 import CoreLocation
 
-// MARK: - ApplicationShared
-
-public protocol ApplicationShared {
-  func open(url: URL)
-}
-
 // MARK: - LocationTracker
 
 public protocol LocationTracker {
