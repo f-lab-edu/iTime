@@ -20,7 +20,7 @@ public protocol RunningTimeTracker {
   var timerState: TimerState { get }
   
   func start()
-  func resumed()
+  func resume()
   func suspend()
   func finish()
   
