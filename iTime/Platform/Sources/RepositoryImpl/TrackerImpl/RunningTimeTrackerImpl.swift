@@ -14,10 +14,10 @@ import Repository
 
 public final class RunningTimeTrackerImpl: RunningTimeTracker {
   
-  public var timerState = TimerState.canceled
-  private var timers = DispatchSource.makeTimerSource()
+  public var timerState = TimerState.suspended
   private let timerSecondRelay: BehaviorRelay<Int> = .init(value: .zero)
   private var startDate: Date?
+  private let timer = DispatchSource.makeTimerSource(queue: .global(qos: .background))
                                                         
   deinit {
     removeTimer()
@@ -32,10 +32,6 @@ public final class RunningTimeTrackerImpl: RunningTimeTracker {
   }
   
   public func start() {
-    guard timerState == .canceled else {
-      resumed()
-      return
-    }
     startDate = Date()
     setTimer()
     resumed()
@@ -44,13 +40,13 @@ public final class RunningTimeTrackerImpl: RunningTimeTracker {
   public func resumed() {
     guard timerState == .suspended else { return }
     timerState = .resumed
-    timers.resume()
+    timer.resume()
   }
   
   public func suspend() {
     guard timerState == .resumed else { return }
     timerState = .suspended
-    timers.suspend()
+    timer.suspend()
   }
   
   public func cancel() {
@@ -68,21 +64,22 @@ public final class RunningTimeTrackerImpl: RunningTimeTracker {
   private func setTimer() {
     initTimer()
     
-    timers.schedule(deadline: .now(), repeating: 1)
-    timers.setEventHandler(handler: { [weak self] in
+    timer.schedule(deadline: .now(), repeating: 1)
+    timer.setEventHandler(handler: { [weak self] in
       guard let currentSecond = self?.timerSecondRelay.value else { return }
       self?.timerSecondRelay.accept(currentSecond + 1)
     })
   }
   
   private func initTimer() {
-    timers.setEventHandler(handler: nil)
+    timer.setEventHandler(handler: nil)
   }
   
   private func removeTimer() {
-    timers.resume()
-    timers.cancel()
+    timer.resume()
+    timer.cancel()
     initTimer()
   }
   
+  public init() {}
 }
