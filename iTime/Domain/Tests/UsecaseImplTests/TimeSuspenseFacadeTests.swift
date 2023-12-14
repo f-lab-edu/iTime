@@ -26,5 +26,13 @@ final class TimeSuspenseFacadeTests: XCTestCase {
     )
   }
   
+  func test_suspend() {
+    // When
+    sut.suspend()
+    
+    // Then
+    XCTAssertEqual(runningTimeTracker.suspendCallCount, 1)
+    XCTAssertEqual(locationTracker.stopLocationTrackingCallCount, 1)
+  }
   
 }

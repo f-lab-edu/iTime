@@ -32,5 +32,24 @@ final class TimeFinishFacadeTests: XCTestCase {
       timeLogRecordModelDataStream: timeLogRecordModelDataStream
     )
   }
+  
+  func test_finish() async throws {
+    // Given
+    let dummyTimeLogRecord = DummyData.DummyTimeLogRecord.dummyTimeLogRecord
+    timeLogRecordModelDataStream.updateRecords(with: [])
+    
+    // When
+    async let void = sut.finish(dummyTimeLogRecord).take(1).values
+    async let timeLogRecords = timeLogRecordModelDataStream.timeLogRecords.values
+    
+    // Then
+    let result: Void? = try await void.first(where: { _ in true })
+    let record = try await timeLogRecords.first(where: { _ in true })
+    XCTAssertNotNil(result)
+    XCTAssertEqual(record, [dummyTimeLogRecord])
+    XCTAssertEqual(timeLogRecordRepository.appendCallCount, 1)
+    XCTAssertEqual(runningTimeTracker.finishCallCount, 1)
+    XCTAssertEqual(locationTracker.resetLocationTrackingCallCount, 1)
+  }
 
 }
