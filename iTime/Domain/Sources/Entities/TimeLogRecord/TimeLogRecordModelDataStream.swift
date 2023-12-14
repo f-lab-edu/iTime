@@ -43,7 +43,8 @@ public final class TimeLogRecordModelDataStream {
   public func updateRecord(with timeLogRecord: TimeLogRecord) {
     var modelByID = timeLogRecordsDataRelay.value.modelByID
     modelByID[timeLogRecord.id] = timeLogRecord
-    let data = TimeLogRecordModelData(models: timeLogRecordsDataRelay.value.models, modelByID: modelByID)
+    
+      let data = TimeLogRecordModelData(models: modelByID.., modelByID: modelByID)
     timeLogRecordsDataRelay.accept(data)
   }
   
