@@ -8,11 +8,12 @@
 import RxSwift
 import RxRelay
 
+import Usecase
 import Repository
 import Entities
 import AppFoundation
 
-public final class TimeStartFacade {
+public final class TimeStartFacadeImpl: TimeStartFacade {
   
   private let locationTracker: LocationTracker
   private let runningTimeTracker: RunningTimeTracker
@@ -31,7 +32,7 @@ public final class TimeStartFacade {
     self.userDefaultRepository = userDefaultRepository
   }
   
-  func start() -> Observable<Void> {
+  public func start() -> Observable<Void> {
     runningTimeTracker.currentSeconds()
       .filter { $0 != .zero }
       .withUnretained(self)

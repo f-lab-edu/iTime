@@ -11,9 +11,9 @@ import RepositoryTestSupports
 import UsecaseTestSupports
 @testable import UsecaseImpl
 
-final class TimeFinishFacadeTests: XCTestCase {
+final class TimeFinishFacadeImpltests: XCTestCase {
 
-  private var sut: TimeFinishFacade!
+  private var sut: TimeFinishFacadeImpl!
   private var locationTracker: LocationTrackerMock!
   private var runningTimeTracker: RunningTimeTrackerMock!
   private var timeLogRecordRepository: TimeLogRecordRepositoryMock!
@@ -25,7 +25,7 @@ final class TimeFinishFacadeTests: XCTestCase {
     timeLogRecordRepository = TimeLogRecordRepositoryMock()
     timeLogRecordModelDataStream = TimeLogRecordModelDataStream()
     
-    sut = TimeFinishFacade(
+    sut = TimeFinishFacadeImpl(
       locationTracker: locationTracker,
       runningTimeTracker: runningTimeTracker,
       timeLogRecordRepository: timeLogRecordRepository,

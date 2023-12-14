@@ -38,10 +38,10 @@ public final class RunningTimeTrackerImpl: RunningTimeTracker {
   public func start() {
     guard timerState == .suspended else { return }
     startDate = Date()
-    resumed()
+    resume()
   }
   
-  public func resumed() {
+  public func resume() {
     guard timerState == .suspended else { return }
     timerState = .resumed
     setTimer()

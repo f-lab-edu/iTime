@@ -10,9 +10,9 @@ import XCTest
 import UsecaseTestSupports
 @testable import UsecaseImpl
 
-final class TimeSuspenseFacadeTests: XCTestCase {
+final class TimeSuspenseFacadeImplTests: XCTestCase {
 
-  private var sut: TimeSuspenseFacade!
+  private var sut: TimeSuspenseFacadeImpl!
   private var runningTimeTracker: RunningTimeTrackerMock!
   private var locationTracker: LocationTrackerMock!
   
@@ -20,7 +20,7 @@ final class TimeSuspenseFacadeTests: XCTestCase {
     runningTimeTracker = RunningTimeTrackerMock()
     locationTracker = LocationTrackerMock()
     
-    sut = TimeSuspenseFacade(
+    sut = TimeSuspenseFacadeImpl(
       runningTimeTracker: runningTimeTracker,
       locationTracker: locationTracker
     )

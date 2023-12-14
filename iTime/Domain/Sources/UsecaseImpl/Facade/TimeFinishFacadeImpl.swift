@@ -8,9 +8,10 @@
 import RxSwift
 
 import Entities
+import Usecase
 import Repository
 
-final class TimeFinishFacade {
+final class TimeFinishFacadeImpl: TimeFinishFacade {
   
   private let locationTracker: LocationTracker
   private let runningTimeTracker: RunningTimeTracker

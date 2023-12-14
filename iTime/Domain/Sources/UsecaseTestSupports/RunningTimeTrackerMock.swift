@@ -10,7 +10,7 @@ import RxSwift
 import Repository
 
 public final class RunningTimeTrackerMock: RunningTimeTracker {
-  
+
   public var timerState: TimerState = .suspended
   
   public var startCallCount: Int = 0

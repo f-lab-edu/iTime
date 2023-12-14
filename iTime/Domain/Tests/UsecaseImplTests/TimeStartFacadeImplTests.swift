@@ -13,9 +13,9 @@ import RepositoryTestSupports
 
 @testable import UsecaseImpl
 
-final class TimeStartFacadeTests: XCTestCase {
+final class TimeStartFacadeImplTests: XCTestCase {
   
-  private var sut: TimeStartFacade!
+  private var sut: TimeStartFacadeImpl!
   private var locationTracker: LocationTrackerMock!
   private var runningTimeTracker: RunningTimeTrackerMock!
   private var timerInfoModelDataStream: TimerInfoModelDataStream!
@@ -28,7 +28,7 @@ final class TimeStartFacadeTests: XCTestCase {
     timerInfoModelDataStream = TimerInfoModelDataStream()
     userDefaultRepository = UserDefaultRepositoryMock()
     
-    sut = TimeStartFacade(
+    sut = TimeStartFacadeImpl(
       locationTracker: locationTracker,
       runningTimeTracker: runningTimeTracker,
       timerInfoModelDataStream: timerInfoModelDataStream,
