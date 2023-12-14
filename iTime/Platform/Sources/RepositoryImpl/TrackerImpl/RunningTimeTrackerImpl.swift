@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by 이상헌 on 12/12/23.
 //
@@ -11,16 +11,20 @@ import RxSwift
 import RxRelay
 
 import Repository
+import Clocks
+
+// MARK: - RunningTimeTrackerImpl
 
 public final class RunningTimeTrackerImpl: RunningTimeTracker {
   
   public var timerState = TimerState.suspended
   private let timerSecondRelay: BehaviorRelay<Int> = .init(value: .zero)
   private var startDate: Date?
-  private let timer = DispatchSource.makeTimerSource(queue: .global(qos: .background))
-                                                        
-  deinit {
-    removeTimer()
+  private let timer: any Clock<Duration>
+  private var timerTask: Task<Void, Error>?
+  
+  public init(timer: any Clock<Duration>) {
+    self.timer = timer
   }
   
   public func currentSeconds() -> Observable<Int> {
@@ -32,54 +36,41 @@ public final class RunningTimeTrackerImpl: RunningTimeTracker {
   }
   
   public func start() {
+    guard timerState == .suspended else { return }
     startDate = Date()
-    setTimer()
     resumed()
   }
   
   public func resumed() {
     guard timerState == .suspended else { return }
     timerState = .resumed
-    timer.resume()
+    setTimer()
   }
   
   public func suspend() {
     guard timerState == .resumed else { return }
     timerState = .suspended
-    timer.suspend()
-  }
-  
-  public func cancel() {
-    timerState = .canceled
     initTimer()
   }
   
   public func finish() {
     timerState = .finished
-    cancel()
+    initTimer()
   }
   
   // MARK: - Private
   
   private func setTimer() {
     initTimer()
-    
-    timer.schedule(deadline: .now(), repeating: 1)
-    timer.setEventHandler(handler: { [weak self] in
-      guard let currentSecond = self?.timerSecondRelay.value else { return }
-      self?.timerSecondRelay.accept(currentSecond + 1)
-    })
+    timerTask = Task {
+      for await _ in self.timer.timer(interval: .seconds(1)) {
+        let currentSecond = self.timerSecondRelay.value
+        self.timerSecondRelay.accept(currentSecond + 1)
+      }
+    }
   }
   
   private func initTimer() {
-    timer.setEventHandler(handler: nil)
+      timerTask = nil
   }
-  
-  private func removeTimer() {
-    timer.resume()
-    timer.cancel()
-    initTimer()
-  }
-  
-  public init() {}
 }
