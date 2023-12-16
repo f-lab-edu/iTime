@@ -22,7 +22,6 @@ public final class UserDefaultRepositoryImpl: UserDefaultRepository {
   
   public func userID() -> String {
     guard let userID = UserDefaults.standard.string(forKey: UserDefaultKey.userID.rawValue) else {
-      assertionFailure(" userID is nil, default value is empty ")
       return String()
     }
     return userID

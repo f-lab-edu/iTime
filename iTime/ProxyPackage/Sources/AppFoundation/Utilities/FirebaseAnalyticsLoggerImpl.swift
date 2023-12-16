@@ -21,6 +21,7 @@ public final class FirebaseAnalyticsLoggerImpl: FirebaseAnalyticsLogger {
   }
   
   private func setUserID() {
+    guard userID().isNotEmpty else { return }
     Analytics.setUserID(userID())
   }
   
