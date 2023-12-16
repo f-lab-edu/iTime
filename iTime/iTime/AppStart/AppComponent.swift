@@ -85,11 +85,21 @@ final class AppComponent:
     )
     self.bookmarkModelDataStream = BookmarkModelDataStream()
     self.timeLogRecordModelDataStream = TimeLogRecordModelDataStream()
-    self.timeLogUsecase = TimeLogUsecaseImpl(
+    
+    let firebaseAnalyticsLogger = FirebaseAnalyticsLoggerImpl(
+      userID: userDefaultRepository.userID
+    )
+    
+    let timeLogUsecase = TimeLogUsecaseImpl(
       bookmarkRepository: bookmarkRepository,
       timeLogRecordRepository: timeLogRecordRepository,
       bookmarkModelDataStream: bookmarkModelDataStream,
       timeLogRecordModelDataStream: timeLogRecordModelDataStream
+    )
+    
+    self.timeLogUsecase = TimeLogUsecaseMonitoringDecorator(
+      decoratee: timeLogUsecase,
+      logger: firebaseAnalyticsLogger
     )
     
     self.authenticationUsecase = AuthenticationUsecaseImpl(
