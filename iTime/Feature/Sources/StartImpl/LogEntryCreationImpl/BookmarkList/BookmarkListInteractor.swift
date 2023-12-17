@@ -18,8 +18,6 @@ import AppFoundation
 protocol BookmarkListPresentable: Presentable {
   var listener: BookmarkListPresentableListener? { get set }
   func presentError(_ error: DisplayErrorMessage)
-  func hiddenEmptyIfneeded(_ isHidden: Bool)
-  func reloadBookmarks()
 }
 
 // MARK: - BookmarkListInteractor
@@ -40,11 +38,11 @@ final class BookmarkListInteractor:
   // MARK: - Initialization & DeInitialization
   
   init(
-    initialState: BookmarkListModel.State,
+    initalState: BookmarkListModel.State,
     presenter: BookmarkListPresentable,
     bookmarkModelDataStream: BookmarkModelDataStream
   ) {
-    self.state = initialState
+    self.state = initalState
     self.bookmarkModelDataStream = bookmarkModelDataStream
     super.init(presenter: presenter)
     presenter.listener = self
@@ -61,12 +59,11 @@ final class BookmarkListInteractor:
         self.presenter.presentError(self.bookmarkListErrorMessage(error.localizedDescription))
         return .empty()
       })
+      .take(1)
       .subscribe(with: self) { owner, bookmarks in
         var newState = owner.state
         newState.bookmarks = bookmarks
         owner.state = newState
-        owner.presenter.reloadBookmarks()
-        owner.presenter.hiddenEmptyIfneeded(!bookmarks.isEmpty)
       }
       .disposeOnDeactivate(interactor: self)
   }

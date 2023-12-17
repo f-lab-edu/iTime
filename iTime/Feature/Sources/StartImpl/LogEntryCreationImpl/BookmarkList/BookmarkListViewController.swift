@@ -44,19 +44,13 @@ final class BookmarkListViewController:
   weak var listener: BookmarkListPresentableListener?
   private let alignedCollectionViewFlowLayout: UICollectionViewFlowLayout
   private let cellBorderColor: UIColor
-  private let emptyLabelText: String
-  private let emptyTextAlignment: NSTextAlignment
   
   init(
     alignedCollectionViewFlowLayout: UICollectionViewFlowLayout,
-    cellBorderColor: UIColor,
-    emptyLabelText: String,
-    emptyTextAlignment: NSTextAlignment
+    cellBorderColor: UIColor
   ) {
     self.alignedCollectionViewFlowLayout = alignedCollectionViewFlowLayout
     self.cellBorderColor = cellBorderColor
-    self.emptyLabelText = emptyLabelText
-    self.emptyTextAlignment = emptyTextAlignment
   }
   
   // MARK: - UI Components
@@ -76,12 +70,10 @@ final class BookmarkListViewController:
     cellBorderColor: cellBorderColor
   )
   
-  private lazy var emptyGuideLabel = UILabel().builder
-    .numberOfLines(0)
+  private let emptyGuideLabel = UILabel().builder
+    .text("자주 하시는 활동으로 저장해보세요!")
     .font(.custom(.regular, 12))
-    .text(self.emptyLabelText)
     .textColor(.black60)
-    .textAlignment(self.emptyTextAlignment)
     .isHidden(true)
     .build()
   
@@ -96,15 +88,6 @@ final class BookmarkListViewController:
   func presentError(_ error: DisplayErrorMessage) {
     showErrorAlert(with: error)
   }
-  
-  func hiddenEmptyIfneeded(_ isHidden: Bool) {
-    emptyGuideLabel.isHidden = isHidden
-  }
-  
-  func reloadBookmarks() {
-    bookmarkTagsCollectionView.reloadData()
-  }
-  
 }
 
 // MARK: - Bind Actions
@@ -159,6 +142,6 @@ extension BookmarkListViewController {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview("UIKit Portrait") {
-  BookmarkListViewController(alignedCollectionViewFlowLayout: CenterAlignedCollectionViewFlowLayout(), cellBorderColor: .pointGreen, emptyLabelText: "emptyLabel", emptyTextAlignment: .left)
+  BookmarkListViewController(alignedCollectionViewFlowLayout: CenterAlignedCollectionViewFlowLayout(), cellBorderColor: .pointGreen)
 }
 #endif

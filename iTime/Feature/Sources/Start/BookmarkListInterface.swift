@@ -4,7 +4,7 @@
 //
 //  Created by 이상헌 on 12/10/23.
 //
-import UIKit
+import Foundation
 
 import RIBs
 
@@ -23,19 +23,10 @@ public protocol BookmarkListBuildable: Buildable {
 public struct BookmarkListBuildDependency {
   public let alignedCollectionViewFlowLayout: AlignedCollectionViewFlowLayout
   public let borderColor: ColorWrapper
-  public let emptyLabel: String
-  public let emptyTextAlignment: NSTextAlignment
   
-  public init(
-    alignedCollectionViewFlowLayout: AlignedCollectionViewFlowLayout,
-    borderColor: ColorWrapper,
-    emptyLabel: String,
-    emptyTextAlignment: NSTextAlignment
-  ) {
+  public init(alignedCollectionViewFlowLayout: AlignedCollectionViewFlowLayout, borderColor: ColorWrapper) {
     self.alignedCollectionViewFlowLayout = alignedCollectionViewFlowLayout
     self.borderColor = borderColor
-    self.emptyLabel = emptyLabel
-    self.emptyTextAlignment = emptyTextAlignment
   }
 }
 

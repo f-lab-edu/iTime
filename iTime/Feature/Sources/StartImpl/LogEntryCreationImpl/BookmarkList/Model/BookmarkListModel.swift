@@ -9,6 +9,9 @@ import Entities
 import AppFoundation
 
 enum BookmarkListModel {
+  enum ViewModel {
+    case errorAlert(DisplayErrorMessage)
+  }
   struct State {
     var bookmarks: [Bookmark] = []
   }
