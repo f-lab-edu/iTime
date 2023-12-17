@@ -36,6 +36,7 @@ final class BookmarkEditorViewController:
     static let sectionHeaderTitleLabelLeadingMargin: CGFloat = 24
     static let currentCountIndexLabelTrailingMargin: CGFloat = 24
     static let guideLabelTopMargin: CGFloat = 4
+    static let separationTopMargin: CGFloat = 24
   }
   
   // MARK: - Properties
@@ -186,13 +187,14 @@ extension BookmarkEditorViewController {
   private func makeBookmarkListContainterViewViewConstraints() {
     bookmarkListContainterView.snp.makeConstraints {
       $0.top.equalTo(bookmarkListSectionHeaderTitleLabel.snp.bottom)
-      $0.leading.trailing.equalToSuperview()
+      $0.leading.equalTo(bookmarkListSectionHeaderTitleLabel)
+      $0.trailing.equalTo(currentCountIndexLabel)
     }
   }
   
   private func makeSeparatedViewConstraints() {
     separatedView.snp.makeConstraints {
-      $0.top.equalTo(bookmarkListContainterView.snp.bottom)
+      $0.top.equalTo(bookmarkListContainterView.snp.bottom).offset(Metric.separationTopMargin)
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(Metric.separatedViewHeight)
     }
@@ -215,7 +217,7 @@ extension BookmarkEditorViewController {
   private func makeActivityHistoryContainterViewConstraints() {
     activityHistoryContainterView.snp.makeConstraints {
       $0.top.equalTo(guideLabel.snp.bottom)
-      $0.leading.trailing.equalToSuperview()
+      $0.leading.trailing.equalTo(bookmarkListContainterView)
       $0.bottom.equalTo(bookmarkListContainterView.snp.top).priority(.low)
     }
   }

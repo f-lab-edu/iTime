@@ -74,7 +74,9 @@ final class BookmarkEditorRouter:
       withListener: interactor,
       payload: BookmarkListBuildDependency(
         alignedCollectionViewFlowLayout: LeadingAlignedCollectionViewFlowLayout(),
-        borderColor: .init(innerColor: .pointGreen)
+        borderColor: .init(innerColor: .pointGreen),
+        emptyLabel: "자주 하시는 활동으로 저장해보세요!",
+        emptyTextAlignment: .left
       )
     )
     bookmarkListRouter = router

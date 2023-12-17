@@ -91,7 +91,9 @@ final class LogEntryCreationRouter:
       withListener: interactor,
       payload: BookmarkListBuildDependency(
         alignedCollectionViewFlowLayout: CenterAlignedCollectionViewFlowLayout(),
-        borderColor: .init(innerColor: .black60)
+        borderColor: .init(innerColor: .black60),
+        emptyLabel: "즐겨찾기를 등록해\n빠른 활동 시작을 해보세요!",
+        emptyTextAlignment: .center
       )
     )
     bookmarkListRouter = router
