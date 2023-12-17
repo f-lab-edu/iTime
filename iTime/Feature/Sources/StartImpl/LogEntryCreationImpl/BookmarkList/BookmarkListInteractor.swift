@@ -19,6 +19,7 @@ protocol BookmarkListPresentable: Presentable {
   var listener: BookmarkListPresentableListener? { get set }
   func presentError(_ error: DisplayErrorMessage)
   func hiddenEmptyIfneeded(_ isHidden: Bool)
+  func reloadBookmarks()
 }
 
 // MARK: - BookmarkListInteractor
@@ -34,16 +35,14 @@ final class BookmarkListInteractor:
   weak var router: BookmarkListRouting?
   weak var listener: BookmarkListListener?
   private let bookmarkModelDataStream: BookmarkModelDataStream
-  private var state: BookmarkListModel.State
+  private var bookmarkList: [Bookmark] = []
   
   // MARK: - Initialization & DeInitialization
   
   init(
-    initalState: BookmarkListModel.State,
     presenter: BookmarkListPresentable,
     bookmarkModelDataStream: BookmarkModelDataStream
   ) {
-    self.state = initalState
     self.bookmarkModelDataStream = bookmarkModelDataStream
     super.init(presenter: presenter)
     presenter.listener = self
@@ -60,22 +59,20 @@ final class BookmarkListInteractor:
         self.presenter.presentError(self.bookmarkListErrorMessage(error.localizedDescription))
         return .empty()
       })
-      .take(1)
       .subscribe(with: self) { owner, bookmarks in
-        var newState = owner.state
-        newState.bookmarks = bookmarks
+        owner.bookmarkList = bookmarks
+        owner.presenter.reloadBookmarks()
         owner.presenter.hiddenEmptyIfneeded(!bookmarks.isEmpty)
-        owner.state = newState
       }
       .disposeOnDeactivate(interactor: self)
   }
   
   func numberOfItems() -> Int {
-    state.bookmarks.count
+    bookmarkList.count
   }
   
   func bookmark(at index: Int) -> String {
-    state.bookmarks[index].title
+    bookmarkList[index].title
   }
   
   func didTapTagCell(at index: IndexPath) {
