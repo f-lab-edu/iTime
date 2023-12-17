@@ -4,6 +4,7 @@
 //
 //  Created by 이상헌 on 12/10/23.
 //
+import Foundation
 
 import RIBs
 import RxSwift
@@ -42,15 +43,15 @@ final class ActivityHistoryInteractor:
     super.didBecomeActive()
   }
   
-  func didTapTagCell() {
-    
-  }
-  
   func numberOfItems() -> Int {
     2
   }
   
   func bookmark(at index: Int) -> String {
     "22"
+  }
+  
+  func didTapTagCell(at index: IndexPath) {
+    print(index)
   }
 }

@@ -1,6 +1,6 @@
 //
 //  BookmarkListViewController.swift
-//  
+//
 //
 //  Created by 이상헌 on 12/10/23.
 //
@@ -11,6 +11,7 @@ import RIBs
 import RxSwift
 
 import SharedUI
+import AppFoundation
 
 // MARK: - BookmarkListPresentableListener
 
@@ -19,7 +20,7 @@ protocol BookmarkListPresentableListener:
   BookmarkCollectionViewCellDelegate,
   BookmarkTagsCollectionViewAdapterDataSource
 {
-  
+  func loadBookmarkList()
 }
 
 // MARK: - BookmarkListViewController
@@ -27,7 +28,8 @@ protocol BookmarkListPresentableListener:
 final class BookmarkListViewController:
   BaseViewController,
   BookmarkListPresentable,
-  BookmarkListViewControllable
+  BookmarkListViewControllable,
+  ErrorAlertable
 {
   
   // MARK: - Constants
@@ -64,7 +66,7 @@ final class BookmarkListViewController:
     collectionView: bookmarkTagsCollectionView,
     adapterDataSource: listener,
     delegate: listener,
-    alignedCollectionViewFlowLayout: alignedCollectionViewFlowLayout, 
+    alignedCollectionViewFlowLayout: alignedCollectionViewFlowLayout,
     cellBorderColor: cellBorderColor
   )
   
@@ -80,23 +82,29 @@ final class BookmarkListViewController:
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    bindActions()
   }
-
+  
+  func presentError(_ error: DisplayErrorMessage) {
+    showErrorAlert(with: error)
+  }
 }
 
-// MARK: - Bind Action
+// MARK: - Bind Actions
 
 extension BookmarkListViewController {
   private func bindActions() {
-    
+    bindLoadBookmarkList()
   }
-
-}
-
-// MARK: - Bind State
-
-extension BookmarkListViewController {
   
+  private func bindLoadBookmarkList() {
+    rx.viewWillAppear
+      .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
+      .subscribe(with: self) { owner, _ in
+        owner.listener?.loadBookmarkList()
+      }
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Layout

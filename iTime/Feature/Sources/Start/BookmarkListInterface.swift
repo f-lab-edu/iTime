@@ -4,6 +4,7 @@
 //
 //  Created by 이상헌 on 12/10/23.
 //
+import Foundation
 
 import RIBs
 
@@ -38,6 +39,6 @@ public protocol BookmarkListRouting: ViewableRouting {
 // MARK: - BookmarkListListener
 
 public protocol BookmarkListListener: AnyObject {
-  func didTapTagCell()
+  func didTapTagCell(at index: IndexPath)
 }
 

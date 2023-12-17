@@ -4,6 +4,7 @@
 //
 //  Created by 이상헌 on 11/14/23.
 //
+import Foundation
 
 import RIBs
 import RxSwift
@@ -63,8 +64,8 @@ final class BookmarkEditorInteractor:
     listener?.detachBookmarkEditorRIB()
   }
   
-  func didTapTagCell() {
-    
+  func didTapTagCell(at index: IndexPath) {
+    print(index)
   }
   
    // MARK: - Private

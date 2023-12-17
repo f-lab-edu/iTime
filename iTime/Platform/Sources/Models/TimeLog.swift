@@ -20,6 +20,7 @@ public struct TimeLog:
   public let coordinate: Coordinate
   
   public init(
+    
     id: String,
     perform: Perform,
     startDate: String,

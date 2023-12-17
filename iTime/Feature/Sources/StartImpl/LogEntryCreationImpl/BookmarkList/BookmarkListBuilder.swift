@@ -10,17 +10,23 @@ import RIBs
 import Editor
 import Start
 
+import Entities
 import AppFoundation
 
 // MARK: - BookmarkListDependency
 
 public protocol BookmarkListDependency: Dependency {
+  var bookmarkModelDataStream: BookmarkModelDataStream { get }
 }
 
 // MARK: - BookmarkListComponent
 
 final class BookmarkListComponent: Component<BookmarkListDependency> {
+  var initalState: BookmarkListModel.State = .init()
   
+  var bookmarkModelDataStream: BookmarkModelDataStream {
+    dependency.bookmarkModelDataStream
+  }
 }
 
 // MARK: - BookmarkListBuilder
@@ -43,7 +49,11 @@ public final class BookmarkListBuilder:
       alignedCollectionViewFlowLayout: payload.alignedCollectionViewFlowLayout,
       cellBorderColor: payload.borderColor.innerColor
     )
-    let interactor = BookmarkListInteractor(presenter: viewController)
+    let interactor = BookmarkListInteractor(
+      initalState: component.initalState,
+      presenter: viewController,
+      bookmarkModelDataStream: component.bookmarkModelDataStream
+    )
     interactor.listener = listener
     return BookmarkListRouter(
       interactor: interactor,
