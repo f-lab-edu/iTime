@@ -10,6 +10,7 @@ import RIBs
 import Start
 import Editor
 import Entities
+import Usecase
 import AppFoundation
 
 // MARK: - LogEntryCreationDependency
@@ -21,6 +22,7 @@ public protocol LogEntryCreationDependency: Dependency {
   var timeLogRunningBuilder: TimeLogRunningBuildable { get }
   var loggingRetentionBuilder: LoggingRetentionBuildable { get }
   var bookmarkModelDataStream: BookmarkModelDataStream { get }
+  var timerUsecase: TimerUsecase { get }
   var timeFormatter: TimeFormatter { get }
 }
 
@@ -28,11 +30,23 @@ public protocol LogEntryCreationDependency: Dependency {
 
 final class LogEntryCreationComponent: Component<LogEntryCreationDependency> {
   
-  var timeFormatter: TimeFormatter {
+  fileprivate var timeFormatter: TimeFormatter {
     dependency.timeFormatter
   }
   
-  var bookmarkEditorBuilder: BookmarkEditorBuildable {
+  fileprivate var timerUsecase: TimerUsecase {
+    dependency.timerUsecase
+  }
+  
+  fileprivate var bookmarkModelDataStream: BookmarkModelDataStream {
+    dependency.bookmarkModelDataStream
+  }
+  
+  fileprivate var bookmarkListBuilder: BookmarkListBuildable {
+    dependency.bookmarkListBuilder
+  }
+  
+  fileprivate var bookmarkEditorBuilder: BookmarkEditorBuildable {
     dependency.bookmarkEditorBuilder
   }
   
@@ -65,17 +79,18 @@ public final class LogEntryCreationBuilder:
     let viewController = LogEntryCreationViewController()
     let interactor = LogEntryCreationInteractor(
       presenter: viewController,
-      bookmarkModelDataStream: dependency.bookmarkModelDataStream
+      bookmarkModelDataStream: component.bookmarkModelDataStream,
+      timerUsecase: component.timerUsecase
     )
     interactor.listener = listener
     return LogEntryCreationRouter(
       interactor: interactor,
       viewController: viewController,
-      logEntryEditorBuilder: dependency.logEntryEditorBuilder,
+      logEntryEditorBuilder: component.logEntryEditorBuilder,
       timeLogRunningBuilder: component.timeLogRunningBuilder,
-      bookmarkListBuilder: dependency.bookmarkListBuilder,
+      bookmarkListBuilder: component.bookmarkListBuilder,
       loggingRetentionBuilder: component.loggingRetentionBuilder,
-      bookmarkEditorBuilder: dependency.bookmarkEditorBuilder
+      bookmarkEditorBuilder: component.bookmarkEditorBuilder
     )
   }
 }

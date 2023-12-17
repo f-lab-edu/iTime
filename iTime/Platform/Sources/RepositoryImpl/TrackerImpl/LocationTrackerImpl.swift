@@ -27,7 +27,7 @@ public final class LocationTrackerImpl:
   private let userLocationSubject: BehaviorSubject<[CLLocationCoordinate2D]> = .init(value: [])
   private let applicationShared: ApplicationShared
   
-  init(
+  public init(
     applicationShared: ApplicationShared,
     locationFetcher: LocationFetcher
   ) {
@@ -52,8 +52,10 @@ public final class LocationTrackerImpl:
   }
   
   public func startLocationTracking() {
-    locationFetcher.requestAlwaysAuthorization()
-    locationFetcher.requestWhenInUseAuthorization()
+    DispatchQueue.main.async { [weak self] in
+      self?.locationFetcher.requestAlwaysAuthorization()
+      self?.locationFetcher.requestWhenInUseAuthorization()
+    }
     
     guard CLLocationManager.locationServicesEnabled() else {
       requestLocationSettingPermission()
