@@ -11,6 +11,7 @@ import RxSwift
 
 import Start
 import Entities
+import Usecase
 import AppFoundation
 
 // MARK: - LogEntryCreationPresentable
@@ -33,14 +34,17 @@ final class LogEntryCreationInteractor:
   weak var listener: LogEntryCreationListener?
   
   private let bookmarkModelDataStream: BookmarkModelDataStream
+  private let timerUsecase: TimerUsecase
   
   // MARK: Initialziation
   
   init(
     presenter: LogEntryCreationPresentable,
-    bookmarkModelDataStream: BookmarkModelDataStream
+    bookmarkModelDataStream: BookmarkModelDataStream,
+    timerUsecase: TimerUsecase
   ) {
     self.bookmarkModelDataStream = bookmarkModelDataStream
+    self.timerUsecase = timerUsecase
     super.init(presenter: presenter)
     presenter.listener = self
   }
@@ -58,7 +62,11 @@ final class LogEntryCreationInteractor:
   }
   
   func didTapStartButton() {
-    router?.attachTimeLogRunningRIB()
+    timerUsecase.start()
+      .subscribe(with: self) { owner, _ in
+        owner.router?.attachTimeLogRunningRIB()
+      }
+      .disposeOnDeactivate(interactor: self)
   }
   
   func didTapBookmarkTagEditor() {

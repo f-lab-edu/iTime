@@ -15,7 +15,7 @@ import Entities
 import Usecase
 import AppFoundation
 
-final class TimerUsecaseImpl: TimerUsecase {
+public final class TimerUsecaseImpl: TimerUsecase {
   
   // MARK: - Properties
   
@@ -27,7 +27,7 @@ final class TimerUsecaseImpl: TimerUsecase {
   
   // MARK: - Initialization
   
-  init(
+  public init(
     timeLogRecordBuilder: TimeLogRecordBuilder,
     timeStartFacade: TimeStartFacade,
     timeSuspenseFacade: TimeSuspenseFacade,
@@ -39,15 +39,15 @@ final class TimerUsecaseImpl: TimerUsecase {
     self.timeFinishFacade = timeFinishFacade
   }
   
-  func start() -> Observable<Void> {
+  public func start() -> Observable<Void> {
     timeStartFacade.start()
   }
   
-  func suspend() {
+  public func suspend() {
     timeSuspenseFacade.suspend()
   }
   
-  func finish(_ activity: Activity) -> Observable<Void> {
+  public func finish(_ activity: Activity) -> Observable<Void> {
     timeLogRecordBuilder.timeLogRecord(
       activity: activity
     )

@@ -14,7 +14,7 @@ import Entities
 import Repository
 import AppFoundation
 
-final class TimeLogRecordBuilder {
+public final class TimeLogRecordBuilder {
   
   // MARK: - Properties
   
@@ -27,7 +27,7 @@ final class TimeLogRecordBuilder {
   
   // MARK: Initialization
   
-  init(
+  public init(
     locationTracker: LocationTracker,
     runningTimeTracker: RunningTimeTracker,
     timerInfoModelDataStream: TimerInfoModelDataStream

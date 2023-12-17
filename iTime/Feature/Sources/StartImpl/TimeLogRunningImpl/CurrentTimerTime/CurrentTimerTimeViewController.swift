@@ -15,6 +15,7 @@ import SharedUI
 // MARK: - CurrentTimerTimePresentableListener
 
 protocol CurrentTimerTimePresentableListener: AnyObject {
+  func loadCurrentTime()
 }
 
 // MARK: - CurrentTimerTimeViewController
@@ -48,20 +49,21 @@ final class CurrentTimerTimeViewController:
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    bindLoadCurrentTime()
   }
   
-}
-
-// MARK: - Bind Action
-
-extension CurrentTimerTimeViewController {
+  func currentRunningTime(_ time: String) {
+    mainCurrentTimeLabel.text = time
+  }
   
-}
-
-// MARK: - Bind State
-
-extension CurrentTimerTimeViewController {
-  
+  private func bindLoadCurrentTime() {
+    rx.viewWillAppear
+      .throttle(.seconds(1), latest: false ,scheduler: MainScheduler.instance)
+      .subscribe(with: self) { owner, _ in
+        owner.listener?.loadCurrentTime()
+      }
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Layout
