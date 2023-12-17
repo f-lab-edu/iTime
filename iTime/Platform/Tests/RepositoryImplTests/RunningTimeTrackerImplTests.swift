@@ -136,4 +136,27 @@ final class RunningTimeTrackerImplTests: XCTestCase {
     XCTAssertEqual(result, randomSecond)
   }
   
+  func test_Time_Passes_When_TimeStart() async throws {
+    // When
+    sut.start()
+    
+    // Then
+    await testClock.advance(by: .seconds(1))
+    
+    async let afterOneSecond = sut.currentSeconds().take(1).values
+    let oneSecond = try await afterOneSecond.first(where: { _ in true })
+    XCTAssertEqual(oneSecond, 1)
+    
+    await testClock.advance(by: .seconds(3))
+    
+    async let afterThreeSecond = sut.currentSeconds().take(1).values
+    let threeSecond = try await afterThreeSecond.first(where: { _ in true })
+    XCTAssertEqual(threeSecond, 4)
+    
+    await testClock.advance(by: .seconds(4))
+    
+    async let afterFourSecond = sut.currentSeconds().take(1).values
+    let eightSecond = try await afterFourSecond.first(where: { _ in true })
+    XCTAssertEqual(eightSecond, 8)
+  }
 }
