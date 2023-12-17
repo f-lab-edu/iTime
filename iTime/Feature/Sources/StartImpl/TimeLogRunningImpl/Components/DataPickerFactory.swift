@@ -72,14 +72,14 @@ final class DatePickerFactory {
   }
   
   func makeStartDateToolBar(_ textField: UITextField) {
-    let toolbar = UIToolbar()
-    toolbar.sizeToFit()
+    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
     
     let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
     let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     toolbar.setItems([flexibleSpace, saveButton], animated: true)
     textField.inputAccessoryView = toolbar
     textField.inputView = startDatePicker
+    toolbar.sizeToFit()
     
     saveButton.rx
       .tap
@@ -94,8 +94,7 @@ final class DatePickerFactory {
   }
   
   func makeEndDateToolBar(_ textField: UITextField) {
-    let toolbar = UIToolbar()
-    toolbar.sizeToFit()
+    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
     
     let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
     let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -103,6 +102,7 @@ final class DatePickerFactory {
     textField.inputAccessoryView = toolbar
     textField.inputView = endDatePicker
     endDatePicker.minimumDate = startDatePicker.date
+    toolbar.sizeToFit()
     
     saveButton.rx
       .tap
@@ -117,8 +117,7 @@ final class DatePickerFactory {
   }
   
   func makeStartTimeToolbar(_ textField: UITextField) {
-    let toolbar = UIToolbar()
-    toolbar.sizeToFit()
+    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
     
     let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
     let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -126,6 +125,7 @@ final class DatePickerFactory {
     textField.inputAccessoryView = toolbar
     textField.inputView = startTimePicker
     startTimePicker.maximumDate = endTimePicker.minimumDate
+    toolbar.sizeToFit()
     
     saveButton.rx
       .tap
@@ -140,8 +140,7 @@ final class DatePickerFactory {
   }
   
   func makeEndTimeToolbar(_ textField: UITextField) {
-    let toolbar = UIToolbar()
-    toolbar.sizeToFit()
+    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
     
     let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
     let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -149,6 +148,7 @@ final class DatePickerFactory {
     textField.inputAccessoryView = toolbar
     textField.inputView = endTimePicker
     endTimePicker.minimumDate = startTimePicker.date
+    toolbar.sizeToFit()
     
     saveButton.rx
       .tap

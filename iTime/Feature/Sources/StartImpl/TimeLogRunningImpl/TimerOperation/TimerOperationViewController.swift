@@ -37,6 +37,8 @@ final class TimerOperationViewController:
   
   // MARK: - UI Components
   
+  private let timeOperatorButtonsView = TimeOperatorButtonsView()
+  
   // MARK: - View LifeCycle
   
   override func viewDidLoad() {
@@ -62,12 +64,15 @@ extension TimerOperationViewController {
 
 extension TimerOperationViewController {
   private func setupUI() {
+    view.addSubview(timeOperatorButtonsView)
     
     layout()
   }
   
   private func layout() {
-    
+    timeOperatorButtonsView.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
   }
 }
 

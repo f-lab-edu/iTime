@@ -44,30 +44,13 @@ final class TimeLogRunningViewController:
   
   private let customNavigationBar = CustomNavigationBar()
   
-  private let tagView = TagView().builder
-    .with {
-      $0.configure(by: "영어공부")
-    }
-    .build()
+  private let currentActivityView = UIView()
   
-  private let mainCurrentTimeLabel = UILabel().builder
-    .text("0:00:03")
-    .font(.custom(.bold, 40))
-    .textColor(.white)
-    .build()
+  private let currentTimerTimeView = UIView()
   
-  private lazy var datePickerSectionView = DatePickerSectionView(timeFormatter: timeFormatter)
+  private lazy var datePickerSectionView = UIView()
   
-  private let timeOperatorButtonsView = TimeOperatorButtonsView()
-  
-  // MARK: - Properties
-  private let timeFormatter: TimeFormatter
-  
-  // MARK: - Initialziation
-  
-  init(timeFormatter: TimeFormatter) {
-    self.timeFormatter = timeFormatter
-  }
+  private let timeOperatorButtonsView = UIView()
   
   // MARK: - View LifeCycle
   
@@ -106,8 +89,8 @@ extension TimeLogRunningViewController {
 extension TimeLogRunningViewController {
   private func setupUI() {
     view.addSubview(customNavigationBar)
-    view.addSubview(tagView)
-    view.addSubview(mainCurrentTimeLabel)
+    view.addSubview(currentActivityView)
+    view.addSubview(currentTimerTimeView)
     view.addSubview(datePickerSectionView)
     view.addSubview(timeOperatorButtonsView)
     
@@ -130,22 +113,22 @@ extension TimeLogRunningViewController {
   }
   
   private func makeTagViewConstraints() {
-    tagView.snp.makeConstraints {
+    currentActivityView.snp.makeConstraints {
       $0.top.equalTo(customNavigationBar.snp.bottom).offset(Metric.tagViewTopMargin)
       $0.centerX.equalToSuperview()
     }
   }
   
   private func makeMainCurrentTimeLabelConstraints() {
-    mainCurrentTimeLabel.snp.makeConstraints {
-      $0.top.equalTo(tagView.snp.bottom).offset(Metric.mainCurrentTimeLabelTopMargin)
+    currentTimerTimeView.snp.makeConstraints {
+      $0.top.equalTo(currentActivityView.snp.bottom).offset(Metric.mainCurrentTimeLabelTopMargin)
       $0.centerX.equalToSuperview()
     }
   }
   
   private func makeDatePickerSectionViewConstraints() {
     datePickerSectionView.snp.makeConstraints {
-      $0.top.equalTo(mainCurrentTimeLabel.snp.bottom).offset(Metric.datePickerSectionViewTopMargin)
+      $0.top.equalTo(currentTimerTimeView.snp.bottom).offset(Metric.datePickerSectionViewTopMargin)
       $0.leading.trailing.greaterThanOrEqualToSuperview().priority(.low)
       $0.centerX.equalToSuperview()
     }
@@ -157,11 +140,27 @@ extension TimeLogRunningViewController {
       $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-Metric.timeOperatorButtonsViewBottomMargin)
     }
   }
+  
+  func addCurrentActivity(_ view: ViewControllable) {
+    addChildViewController(container: currentActivityView, child: view)
+  }
+  
+  func addCurrentTimerTime(_ view: ViewControllable) {
+    addChildViewController(container: currentTimerTimeView, child: view)
+  }
+  
+  func addActivityDatePicker(_ view: ViewControllable) {
+    addChildViewController(container: datePickerSectionView, child: view)
+  }
+  
+  func addTimerOperation(_ view: ViewControllable) {
+    addChildViewController(container: timeOperatorButtonsView, child: view)
+  }
 }
 
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview("UIKit Portrait") {
-  TimeLogRunningViewController(timeFormatter: TimeFormatterImpl())
+  TimeLogRunningViewController()
 }
 #endif

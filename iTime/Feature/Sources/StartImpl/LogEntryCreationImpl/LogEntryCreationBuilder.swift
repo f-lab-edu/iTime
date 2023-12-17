@@ -14,21 +14,20 @@ import AppFoundation
 
 // MARK: - LogEntryCreationDependency
 
-protocol LogEntryCreationDependency: Dependency {
+public protocol LogEntryCreationDependency: Dependency {
   var logEntryEditorBuilder: LogEntryEditorBuildable { get }
   var bookmarkListBuilder: BookmarkListBuildable { get }
   var bookmarkEditorBuilder: BookmarkEditorBuildable { get }
+  var timeLogRunningBuilder: TimeLogRunningBuildable { get }
+  var loggingRetentionBuilder: LoggingRetentionBuildable { get }
   var bookmarkModelDataStream: BookmarkModelDataStream { get }
   var timeFormatter: TimeFormatter { get }
 }
 
 // MARK: - LogEntryCreationComponent
 
-final class LogEntryCreationComponent:
-  Component<LogEntryCreationDependency>,
-  TimeLogRunningDependency,
-  LoggingRetentionDependency
-{
+final class LogEntryCreationComponent: Component<LogEntryCreationDependency> {
+  
   var timeFormatter: TimeFormatter {
     dependency.timeFormatter
   }
@@ -42,26 +41,26 @@ final class LogEntryCreationComponent:
   }
   
   fileprivate var timeLogRunningBuilder: TimeLogRunningBuildable {
-    TimeLogRunningBuilder(dependency: self)
+    dependency.timeLogRunningBuilder
   }
   
   fileprivate var loggingRetentionBuilder: LoggingRetentionBuildable {
-    LoggingRetentionBuilder(dependency: self)
+    dependency.loggingRetentionBuilder
   }
 }
 
 // MARK: - LogEntryCreationBuilder
 
-final class LogEntryCreationBuilder:
+public final class LogEntryCreationBuilder:
   Builder<LogEntryCreationDependency>,
   LogEntryCreationBuildable
 {
   
-  override init(dependency: LogEntryCreationDependency) {
+  public override init(dependency: LogEntryCreationDependency) {
     super.init(dependency: dependency)
   }
   
-  func build(withListener listener: LogEntryCreationListener) -> LogEntryCreationRouting {
+  public func build(withListener listener: LogEntryCreationListener) -> LogEntryCreationRouting {
     let component = LogEntryCreationComponent(dependency: dependency)
     let viewController = LogEntryCreationViewController()
     let interactor = LogEntryCreationInteractor(
