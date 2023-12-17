@@ -191,6 +191,45 @@ final class AppComponent:
       timeLogRecordRepository: timeLogRecordRepository
     )
     
+    let locationTracker = LocationTrackerImpl(
+      applicationShared: UIApplication.shared,
+      locationFetcher: CLLocationManager()
+    )
+    let runningTimeTracker = RunningTimeTrackerImpl()
+    self.timerInfoModelDataStream = TimerInfoModelDataStream()
+    
+    let timeLogRecordBuilder = TimeLogRecordBuilder(
+      locationTracker: locationTracker,
+      runningTimeTracker: runningTimeTracker,
+      timerInfoModelDataStream: timerInfoModelDataStream
+    )
+    
+    let timeStartFacade = TimeStartFacade(
+      locationTracker: locationTracker,
+      runningTimeTracker: runningTimeTracker,
+      timerInfoModelDataStream: timerInfoModelDataStream,
+      userDefaultRepository: userDefaultRepository
+    )
+    
+    let timeSuspenseFacade = TimeSuspenseFacade(
+      runningTimeTracker: runningTimeTracker,
+      locationTracker: locationTracker
+    )
+    
+    let timeFinishFacade = TimeFinishFacade(
+      locationTracker: locationTracker,
+      runningTimeTracker: runningTimeTracker,
+      timeLogRecordRepository: timeLogRecordRepository,
+      timeLogRecordModelDataStream: timeLogRecordModelDataStream
+    )
+    
+    self.timerUsecase = TimerUsecaseImpl(
+      timeLogRecordBuilder: timeLogRecordBuilder,
+      timeStartFacade: timeStartFacade,
+      timeSuspenseFacade: timeSuspenseFacade,
+      timeFinishFacade: timeFinishFacade
+    )
+    
     super.init(dependency: EmptyComponent())
   }
   
