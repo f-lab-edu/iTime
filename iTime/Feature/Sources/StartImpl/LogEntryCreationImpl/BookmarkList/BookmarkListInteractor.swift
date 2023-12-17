@@ -18,6 +18,7 @@ import AppFoundation
 protocol BookmarkListPresentable: Presentable {
   var listener: BookmarkListPresentableListener? { get set }
   func presentError(_ error: DisplayErrorMessage)
+  func hiddenEmptyIfneeded(_ isHidden: Bool)
 }
 
 // MARK: - BookmarkListInteractor
@@ -63,6 +64,7 @@ final class BookmarkListInteractor:
       .subscribe(with: self) { owner, bookmarks in
         var newState = owner.state
         newState.bookmarks = bookmarks
+        owner.presenter.hiddenEmptyIfneeded(!bookmarks.isEmpty)
         owner.state = newState
       }
       .disposeOnDeactivate(interactor: self)

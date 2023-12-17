@@ -47,7 +47,9 @@ public final class BookmarkListBuilder:
     let component = BookmarkListComponent(dependency: dependency)
     let viewController = BookmarkListViewController(
       alignedCollectionViewFlowLayout: payload.alignedCollectionViewFlowLayout,
-      cellBorderColor: payload.borderColor.innerColor
+      cellBorderColor: payload.borderColor.innerColor,
+      emptyLabelText: payload.emptyLabel, 
+      emptyTextAlignment: payload.emptyTextAlignment
     )
     let interactor = BookmarkListInteractor(
       initalState: component.initalState,
