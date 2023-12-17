@@ -100,6 +100,11 @@ final class BookmarkListViewController:
   func hiddenEmptyIfneeded(_ isHidden: Bool) {
     emptyGuideLabel.isHidden = isHidden
   }
+  
+  func reloadBookmarks() {
+    bookmarkTagsCollectionView.reloadData()
+  }
+  
 }
 
 // MARK: - Bind Actions
