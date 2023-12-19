@@ -51,6 +51,7 @@ let package = Package(
         .product(name: "RxRelay", package: "RxSwift"),
         .product(name: "FirebaseDatabase", package: "firebase-ios-sdk"),
         .product(name: "FirebaseFirestore", package: "firebase-ios-sdk"),
+        .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
         .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
         .product(name: "CalendarKit", package: "CalendarKit"),
         .product(name: "Clocks", package: "swift-clocks"),

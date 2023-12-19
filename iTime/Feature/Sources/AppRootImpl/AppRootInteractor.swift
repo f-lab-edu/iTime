@@ -4,11 +4,13 @@
 //
 //  Created by 이상헌 on 2023/10/26.
 //
+import OSLog
 
 import RIBs
 
 import AppRoot
 import Usecase
+import AppFoundation
 
 // MARK: - AppRootPresentable
 
@@ -55,9 +57,9 @@ final class AppRootInteractor:
   private func loadData() {
     _ = timeLogUsecase.preLoadAllData()
       .subscribe(with: self) { owner, _ in
-        print("preLoadData is success")
+        os_log(.debug, log: .presenter, "preLoadData is success")
       } onFailure: { owner, error in
-        print(error.localizedDescription)
+        os_log(.error, log: .presenter, "%@", error.localizedDescription)
       }
   }
   
