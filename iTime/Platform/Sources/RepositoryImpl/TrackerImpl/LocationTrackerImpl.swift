@@ -52,10 +52,8 @@ public final class LocationTrackerImpl:
   }
   
   public func startLocationTracking() {
-    DispatchQueue.main.async { [weak self] in
-      self?.locationFetcher.requestAlwaysAuthorization()
-      self?.locationFetcher.requestWhenInUseAuthorization()
-    }
+    locationFetcher.requestAlwaysAuthorization()
+    locationFetcher.requestWhenInUseAuthorization()
     
     DispatchQueue.global().async { [weak self] in
       guard CLLocationManager.locationServicesEnabled() else {

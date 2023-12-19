@@ -203,7 +203,7 @@ final class AppComponent:
       runningTimeTracker: runningTimeTracker,
       timerInfoModelDataStream: timerInfoModelDataStream
     )
-    
+
     let timeStartFacade = TimeStartFacade(
       locationTracker: locationTracker,
       runningTimeTracker: runningTimeTracker,
