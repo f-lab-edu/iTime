@@ -1,6 +1,6 @@
 //
 //  TimerOperationInteractor.swift
-//  
+//
 //
 //  Created by 이상헌 on 12/17/23.
 //
@@ -8,6 +8,7 @@
 import RIBs
 import RxSwift
 
+import Entities
 import Usecase
 import Start
 
@@ -20,30 +21,29 @@ protocol TimerOperationPresentable: Presentable {
 
 // MARK: - TimerOperationInteractor
 
-final class TimerOperationInteractor: 
+final class TimerOperationInteractor:
   PresentableInteractor<TimerOperationPresentable>,
   TimerOperationInteractable,
   TimerOperationPresentableListener
 {
-   
+  
+  
   // MARK: - Properties
   
   weak var router: TimerOperationRouting?
   weak var listener: TimerOperationListener?
   private let timerUsecase: TimerUsecase
-  private var isTimeRunning: Bool = true {
-    didSet {
-      self.presenter.isTimeRunning(isTimeRunning)
-    }
-  }
+  private let activityLogModelStream: ActivityLogModelStream
   
   // MARK: - Initialization & DeInitialization
   
   init(
     presenter: TimerOperationPresentable,
-    timerUsecase: TimerUsecase
+    timerUsecase: TimerUsecase,
+    activityLogModelStream: ActivityLogModelStream
   ) {
     self.timerUsecase = timerUsecase
+    self.activityLogModelStream = activityLogModelStream
     super.init(presenter: presenter)
     presenter.listener = self
   }
@@ -52,22 +52,25 @@ final class TimerOperationInteractor:
     timerUsecase.start()
       .take(1)
       .subscribe(with: self) { owner, _ in
-        owner.isTimeRunning = true
+        owner.presenter.isTimeRunning(true)
       }
       .disposeOnDeactivate(interactor: self)
   }
   
   func didTapPauseButton() {
     timerUsecase.suspend()
-    isTimeRunning = false
+    presenter.isTimeRunning(false)
   }
   
   func didTapStopButton() {
-    timerUsecase.finish( .init(title: "Test", category: .empty))
+    activityLogModelStream.activityLogStream
+      .map(Activity.toActivity(_:))
+      .flatMap(timerUsecase.finish)
       .take(1)
       .subscribe(with: self) { owner, _ in
         owner.listener?.detachTimeLogRunningRIB()
       }
       .disposeOnDeactivate(interactor: self)
   }
+  
 }
