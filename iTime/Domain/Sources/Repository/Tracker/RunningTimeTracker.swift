@@ -11,9 +11,8 @@ import RxSwift
 import RxRelay
 
 public enum TimerState {
-  case suspended
   case resumed
-  case canceled
+  case suspended
   case finished
 }
 
@@ -23,7 +22,6 @@ public protocol RunningTimeTracker {
   func start()
   func resumed()
   func suspend()
-  func cancel()
   func finish()
   
   func currentSeconds() -> Observable<Int>
