@@ -52,14 +52,14 @@ public final class LocationTrackerImpl:
   }
   
   public func startLocationTracking() {
-    DispatchQueue.main.async { [weak self] in
-      self?.locationFetcher.requestAlwaysAuthorization()
-      self?.locationFetcher.requestWhenInUseAuthorization()
-    }
+    locationFetcher.requestAlwaysAuthorization()
+    locationFetcher.requestWhenInUseAuthorization()
     
-    guard CLLocationManager.locationServicesEnabled() else {
-      requestLocationSettingPermission()
-      return
+    DispatchQueue.global().async { [weak self] in
+      guard CLLocationManager.locationServicesEnabled() else {
+        self?.requestLocationSettingPermission()
+        return
+      }
     }
     locationFetcher.locationFetcherDelegate = self
     locationFetcher.desiredAccuracy = kCLLocationAccuracyBest
