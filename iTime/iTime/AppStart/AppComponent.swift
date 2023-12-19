@@ -9,6 +9,7 @@ import UIKit
 import CoreLocation
 
 import RIBs
+import Clocks
 
 import AppRoot
 import AppRootImpl
@@ -126,7 +127,7 @@ final class AppComponent:
       userID: userDefaultRepository.userID
     )
     self.activityLogModelStream = ActivityLogModelStream()
-    self.timeLogUsecase = TimeLogUsecaseImpl(
+    let timeLogUsecase = TimeLogUsecaseImpl(
       bookmarkRepository: bookmarkRepository,
       timeLogRecordRepository: timeLogRecordRepository,
       bookmarkModelDataStream: bookmarkModelDataStream,
@@ -148,7 +149,7 @@ final class AppComponent:
       applicationShared: UIApplication.shared,
       locationFetcher: CLLocationManager()
     )
-    let runningTimeTracker = RunningTimeTrackerImpl()
+    let runningTimeTracker = RunningTimeTrackerImpl(timer: ContinuousClock())
     self.timerInfoModelDataStream = TimerInfoModelDataStream()
     
     let timeLogRecordBuilder = TimeLogRecordBuilder(
@@ -157,19 +158,19 @@ final class AppComponent:
       timerInfoModelDataStream: timerInfoModelDataStream
     )
 
-    let timeStartFacade = TimeStartFacade(
+    let timeStartFacade = TimeStartFacadeImpl(
       locationTracker: locationTracker,
       runningTimeTracker: runningTimeTracker,
       timerInfoModelDataStream: timerInfoModelDataStream,
       userDefaultRepository: userDefaultRepository
     )
     
-    let timeSuspenseFacade = TimeSuspenseFacade(
+    let timeSuspenseFacade = TimeSuspenseFacadeImpl(
       runningTimeTracker: runningTimeTracker,
       locationTracker: locationTracker
     )
     
-    let timeFinishFacade = TimeFinishFacade(
+    let timeFinishFacade = TimeFinishFacadeImpl(
       locationTracker: locationTracker,
       runningTimeTracker: runningTimeTracker,
       timeLogRecordRepository: timeLogRecordRepository,

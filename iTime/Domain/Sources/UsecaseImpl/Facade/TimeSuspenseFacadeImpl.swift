@@ -8,12 +8,12 @@
 import Usecase
 import Repository
 
-final class TimeSuspenseFacadeImpl: TimeSuspenseFacade {
+public final class TimeSuspenseFacadeImpl: TimeSuspenseFacade {
   
   private let runningTimeTracker: RunningTimeTracker
   private let locationTracker: LocationTracker
   
-  init(
+  public init(
     runningTimeTracker: RunningTimeTracker,
     locationTracker: LocationTracker
   ) {
@@ -21,7 +21,7 @@ final class TimeSuspenseFacadeImpl: TimeSuspenseFacade {
     self.locationTracker = locationTracker
   }
     
-  func suspend() {
+  public func suspend() {
     runningTimeTracker.suspend()
     locationTracker.stopLocationTracking()
   }
