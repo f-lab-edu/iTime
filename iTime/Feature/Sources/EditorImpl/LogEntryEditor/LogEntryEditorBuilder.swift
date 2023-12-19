@@ -8,17 +8,21 @@
 import RIBs
 
 import Editor
+import Start
 
 // MARK: - LogEntryEditorDependency
 
 public protocol LogEntryEditorDependency: Dependency {
   var categoryEditorBuilder: CategoryEditorBuildable { get }
+  var activityLogModelStream: ActivityLogModelStream { get }
 }
 
 // MARK: - LogEntryEditorComponent
 
 final class LogEntryEditorComponent: Component<LogEntryEditorDependency> {
-  
+  fileprivate var activityLogModelStream: ActivityLogModelStream {
+    dependency.activityLogModelStream
+  }
 }
 
 // MARK: - LogEntryEditorBuilder
@@ -33,9 +37,12 @@ public final class LogEntryEditorBuilder:
   }
   
   public func build(withListener listener: LogEntryEditorListener) -> LogEntryEditorRouting {
-    let _ = LogEntryEditorComponent(dependency: dependency)
+    let component = LogEntryEditorComponent(dependency: dependency)
     let viewController = LogEntryEditorViewController()
-    let interactor = LogEntryEditorInteractor(presenter: viewController)
+    let interactor = LogEntryEditorInteractor(
+      presenter: viewController,
+      activityLogModelStream: component.activityLogModelStream
+    )
     interactor.listener = listener
     return LogEntryEditorRouter(
       interactor: interactor,

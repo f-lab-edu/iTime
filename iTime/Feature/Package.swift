@@ -70,7 +70,8 @@ let package = Package(
     .target(
       name: "Editor",
       dependencies: [
-        "ProxyPackage"
+        "ProxyPackage",
+        "Start"
       ]),
     .target(
       name: "EditorImpl",

@@ -1,6 +1,6 @@
 //
 //  TimerOperationBuilder.swift
-//  
+//
 //
 //  Created by 이상헌 on 12/17/23.
 //
@@ -14,6 +14,7 @@ import Start
 
 public protocol TimerOperationDependency: Dependency {
   var timerUsecase: TimerUsecase { get }
+  var activityLogModelStream: ActivityLogModelStream { get }
 }
 
 // MARK: - TimerOperationComponent
@@ -21,6 +22,10 @@ public protocol TimerOperationDependency: Dependency {
 final class TimerOperationComponent: Component<TimerOperationDependency> {
   fileprivate var timerUsecase: TimerUsecase {
     dependency.timerUsecase
+  }
+  
+  fileprivate var activityLogModelStream: ActivityLogModelStream {
+    dependency.activityLogModelStream
   }
 }
 
@@ -40,7 +45,8 @@ public final class TimerOperationBuilder:
     let viewController = TimerOperationViewController()
     let interactor = TimerOperationInteractor(
       presenter: viewController,
-      timerUsecase: component.timerUsecase
+      timerUsecase: component.timerUsecase,
+      activityLogModelStream: component.activityLogModelStream
     )
     interactor.listener = listener
     return TimerOperationRouter(

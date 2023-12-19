@@ -160,7 +160,7 @@ extension LogEntryCreationViewController {
     startButton.rx.tap
       .preventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-            .drive(with: self) { owner, _ in owner.listener?.didTapStartButton() }
+      .drive(with: self) { owner, _ in owner.listener?.didTapStartButton() }
       .disposed(by: disposeBag)
   }
   

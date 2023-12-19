@@ -140,7 +140,9 @@ final class LogEntryCreationRouter:
   
   func attachTimeLogRunningRIB() {
     guard timeLogRunningRouter == nil else { return }
-    let router = timeLogRunningBuilder.build(withListener: interactor)
+    let router = timeLogRunningBuilder.build(
+      withListener: interactor
+    )
     timeLogRunningRouter = router
     attachChild(router)
     router.viewControllable.uiviewController.hidesBottomBarWhenPushed = true

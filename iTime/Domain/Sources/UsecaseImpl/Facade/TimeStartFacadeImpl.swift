@@ -39,9 +39,11 @@ public final class TimeStartFacadeImpl: TimeStartFacade {
     ) { $1 }
       .withUnretained(self)
       .map { owner, time in
-        owner.locationTracker.startLocationTracking()
         owner.timerInfoModelDataStream.updateRunningTime(with: time)
         owner.userDefaultRepository.updateLastlyTrackedTime(with: time)
       }
+      .do(onSubscribe: { [weak self] in
+        self?.locationTracker.startLocationTracking()
+      })
   }
 }

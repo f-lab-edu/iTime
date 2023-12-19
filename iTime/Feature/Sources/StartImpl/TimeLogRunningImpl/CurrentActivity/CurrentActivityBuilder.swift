@@ -12,13 +12,15 @@ import Start
 // MARK: - CurrentActivityDependency
 
 public protocol CurrentActivityDependency: Dependency {
-  
+  var activityLogModelStream: ActivityLogModelStream { get }
 }
 
 // MARK: - CurrentActivityComponent
 
 final class CurrentActivityComponent: Component<CurrentActivityDependency> {
-  
+  fileprivate var activityLogModelStream: ActivityLogModelStream {
+    dependency.activityLogModelStream
+  }
 }
 
 // MARK: - CurrentActivityBuilder
@@ -35,7 +37,10 @@ public final class CurrentActivityBuilder:
   public func build(withListener listener: CurrentActivityListener) -> CurrentActivityRouting {
     let component = CurrentActivityComponent(dependency: dependency)
     let viewController = CurrentActivityViewController()
-    let interactor = CurrentActivityInteractor(presenter: viewController)
+    let interactor = CurrentActivityInteractor(
+      presenter: viewController, 
+      activityLogModelStream: component.activityLogModelStream
+    )
     interactor.listener = listener
     return CurrentActivityRouter(
       interactor: interactor,
