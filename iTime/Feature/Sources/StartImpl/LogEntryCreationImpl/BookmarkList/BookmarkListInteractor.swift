@@ -35,14 +35,16 @@ final class BookmarkListInteractor:
   weak var router: BookmarkListRouting?
   weak var listener: BookmarkListListener?
   private let bookmarkModelDataStream: BookmarkModelDataStream
-  private var bookmarkList: [Bookmark] = []
+  private var state: BookmarkListModel.State
   
   // MARK: - Initialization & DeInitialization
   
   init(
+    initialState: BookmarkListModel.State,
     presenter: BookmarkListPresentable,
     bookmarkModelDataStream: BookmarkModelDataStream
   ) {
+    self.state = initialState
     self.bookmarkModelDataStream = bookmarkModelDataStream
     super.init(presenter: presenter)
     presenter.listener = self
@@ -60,7 +62,9 @@ final class BookmarkListInteractor:
         return .empty()
       })
       .subscribe(with: self) { owner, bookmarks in
-        owner.bookmarkList = bookmarks
+        var newState = owner.state
+        newState.bookmarks = bookmarks
+        owner.state = newState
         owner.presenter.reloadBookmarks()
         owner.presenter.hiddenEmptyIfneeded(!bookmarks.isEmpty)
       }
@@ -68,11 +72,11 @@ final class BookmarkListInteractor:
   }
   
   func numberOfItems() -> Int {
-    bookmarkList.count
+    state.bookmarks.count
   }
   
   func bookmark(at index: Int) -> String {
-    bookmarkList[index].title
+    state.bookmarks[index].title
   }
   
   func didTapTagCell(at index: IndexPath) {
