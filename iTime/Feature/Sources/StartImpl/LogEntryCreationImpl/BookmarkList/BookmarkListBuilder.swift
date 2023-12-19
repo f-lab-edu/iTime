@@ -52,6 +52,7 @@ public final class BookmarkListBuilder:
       emptyTextAlignment: payload.emptyTextAlignment
     )
     let interactor = BookmarkListInteractor(
+      initialState: component.initalState,
       presenter: viewController,
       bookmarkModelDataStream: component.bookmarkModelDataStream
     )
