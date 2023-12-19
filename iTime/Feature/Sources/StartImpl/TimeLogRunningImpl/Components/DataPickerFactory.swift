@@ -40,10 +40,15 @@ final class DatePickerFactory {
     .build()
   
   private let timeFormatter: TimeFormatter
+  private let screenWidth: CGFloat
   weak var delegate: EndEditingDelegate?
   
-  init(timeFormatter: TimeFormatter) {
+  init(
+    timeFormatter: TimeFormatter,
+    screenWidth: CGFloat
+  ) {
     self.timeFormatter = timeFormatter
+    self.screenWidth = screenWidth
   }
   
   // MARK: - Private
@@ -72,7 +77,7 @@ final class DatePickerFactory {
   }
   
   func makeStartDateToolBar(_ textField: UITextField) {
-    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
+    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 35))
     
     let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
     let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -94,7 +99,7 @@ final class DatePickerFactory {
   }
   
   func makeEndDateToolBar(_ textField: UITextField) {
-    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
+    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 35))
     
     let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
     let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -117,7 +122,7 @@ final class DatePickerFactory {
   }
   
   func makeStartTimeToolbar(_ textField: UITextField) {
-    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
+    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 35))
     
     let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
     let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -140,7 +145,7 @@ final class DatePickerFactory {
   }
   
   func makeEndTimeToolbar(_ textField: UITextField) {
-    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
+    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 35))
     
     let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
     let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
