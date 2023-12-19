@@ -13,8 +13,8 @@ import RepositoryTestSupports
 
 public final class TimeLogRecordRepositoryMock: TimeLogRecordRepository {
   
-  public let dummy = DummyData.DummyTimeLogRecord.dummyTimeLogRecords
-  
+  public var dummy = DummyData.DummyTimeLogRecord.dummyTimeLogRecords
+   
   public var updateCallCount: Int = 0
   public func update(with records: [Entities.TimeLogRecord]) -> RxSwift.Single<[Entities.TimeLogRecord]> {
     updateCallCount += 1

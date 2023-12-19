@@ -22,8 +22,8 @@ final class TimeLogUsecaseImplTests: XCTestCase {
   
   private var bookmarkRepository: BookmarkRepositoryMock!
   private var timeLogRecordRepository: TimeLogRecordRepositoryMock!
-  private var bookmarkModelDataStreamImpl: BookmarkModelDataStreamImpl!
-  private var timeLogRecordModelDataStreamImpl: TimeLogRecordModelDataStreamImpl!
+  private var bookmarkModelDataStreamImpl: BookmarkModelDataStream!
+  private var timeLogRecordModelDataStreamImpl: TimeLogRecordModelDataStream!
   private var configuration: DummyDataConfiguration!
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
@@ -40,8 +40,8 @@ final class TimeLogUsecaseImplTests: XCTestCase {
   
     bookmarkRepository = BookmarkRepositoryMock()
     timeLogRecordRepository = TimeLogRecordRepositoryMock()
-    bookmarkModelDataStreamImpl = BookmarkModelDataStreamImpl()
-    timeLogRecordModelDataStreamImpl = TimeLogRecordModelDataStreamImpl()
+    bookmarkModelDataStreamImpl = BookmarkModelDataStream()
+    timeLogRecordModelDataStreamImpl = TimeLogRecordModelDataStream()
     bookmarkSubject = .init()
     _ = bookmarkObserver
     timeLogRecordSubject = .init()
@@ -50,8 +50,8 @@ final class TimeLogUsecaseImplTests: XCTestCase {
     sut = TimeLogUsecaseImpl(
       bookmarkRepository: bookmarkRepository,
       timeLogRecordRepository: timeLogRecordRepository,
-      mutableBookmarkModelDataStream: bookmarkModelDataStreamImpl,
-      mutableTimeLogRecordModelDataStream: timeLogRecordModelDataStreamImpl
+      bookmarkModelDataStream: bookmarkModelDataStreamImpl,
+      timeLogRecordModelDataStream: timeLogRecordModelDataStreamImpl
     )
   }
   

@@ -38,12 +38,12 @@ final class TimeLogRecordBuilder {
   }
   
   func timeLogRecord(activity: Activity) -> Observable<TimeLogRecord> {
-    Observable<Void>.merge(
-      .just(saveID()),
-      .just(saveActivity(activity)),
+    Observable<Void>.zip(
+      Observable.just(saveID()),
+      Observable.just(saveActivity(activity)),
       saveCurrentLocation(),
       saveDate()
-    )
+    ) { _,_,_,_  in return Void() }
     .flatMap(timeLogRecordRelay.asObservable)
   }
   

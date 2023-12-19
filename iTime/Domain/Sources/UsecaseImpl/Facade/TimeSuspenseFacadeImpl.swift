@@ -5,11 +5,10 @@
 //  Created by 이상헌 on 12/11/23.
 //
 
-import Foundation
-
+import Usecase
 import Repository
 
-final class TimeSuspenseFacade {
+final class TimeSuspenseFacadeImpl: TimeSuspenseFacade {
   
   private let runningTimeTracker: RunningTimeTracker
   private let locationTracker: LocationTracker

@@ -34,7 +34,7 @@ public final class LocationTrackerMock: LocationTracker {
   public var currentUserLocationCallCount: Int = 0
   public func currentUserLocation() -> RxSwift.Observable<CLLocationCoordinate2D> {
     currentUserLocationCallCount += 1
-    return .empty()
+    return .just(.init())
   }
   
   public init() {}
