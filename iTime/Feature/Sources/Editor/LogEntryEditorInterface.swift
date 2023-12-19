@@ -7,6 +7,8 @@
 
 import RIBs
 
+import Start
+
 // MARK: - LogEntryEditorBuildable
 
 public protocol LogEntryEditorBuildable: Buildable {

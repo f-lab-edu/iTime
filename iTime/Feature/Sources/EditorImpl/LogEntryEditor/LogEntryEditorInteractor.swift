@@ -9,6 +9,7 @@ import RIBs
 import RxSwift
 
 import Editor
+import Start
 
 // MARK: - LogEntryEditorPresentable
 
@@ -29,9 +30,15 @@ final class LogEntryEditorInteractor:
   weak var router: LogEntryEditorRouting?
   weak var listener: LogEntryEditorListener?
   
+  private let activityLogModelStream: ActivityLogModelStream
+  
   // MARK: - Initialization & DeInitialization
   
-  override init(presenter: LogEntryEditorPresentable) {
+  init(
+    presenter: LogEntryEditorPresentable,
+    activityLogModelStream: ActivityLogModelStream
+  ) {
+    self.activityLogModelStream = activityLogModelStream
     super.init(presenter: presenter)
     presenter.listener = self
   }
@@ -43,11 +50,14 @@ final class LogEntryEditorInteractor:
   }
   
   // MARK: - Mutation
-  
-  func didTapStartButton() {
+  func didTapStartButton(_ title: String) {
+    activityLogModelStream.updateActivityTitle(with: title)
+    
+    
     listener?.attachTimeLogRunningRIB()
     listener?.detachLogEntryEditorRIB()
   }
+  
   
   func didTapCategoryStateView() {
     router?.attachCategoryEditorRIB()

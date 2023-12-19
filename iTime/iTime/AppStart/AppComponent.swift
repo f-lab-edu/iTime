@@ -125,8 +125,8 @@ final class AppComponent:
     let firebaseAnalyticsLogger = FirebaseAnalyticsLoggerImpl(
       userID: userDefaultRepository.userID
     )
-    
-    let timeLogUsecase = TimeLogUsecaseImpl(
+    self.activityLogModelStream = ActivityLogModelStream()
+    self.timeLogUsecase = TimeLogUsecaseImpl(
       bookmarkRepository: bookmarkRepository,
       timeLogRecordRepository: timeLogRecordRepository,
       bookmarkModelDataStream: bookmarkModelDataStream,
@@ -198,6 +198,8 @@ final class AppComponent:
   
   let timeLogRecordModelDataStream: TimeLogRecordModelDataStream
   
-  var timeFormatter = TimeFormatter()
+  let activityLogModelStream: ActivityLogModelStream
+  
+  let timeFormatter = TimeFormatter()
 }
 
