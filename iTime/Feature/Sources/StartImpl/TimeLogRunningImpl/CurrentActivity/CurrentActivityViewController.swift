@@ -37,6 +37,12 @@ final class CurrentActivityViewController:
   
   // MARK: - UI Components
   
+  private let tagView = TagView().builder
+    .with {
+      $0.configure(by: "영어공부")
+    }
+    .build()
+  
   // MARK: - View LifeCycle
   
   override func viewDidLoad() {
@@ -62,12 +68,15 @@ extension CurrentActivityViewController {
 
 extension CurrentActivityViewController {
   private func setupUI() {
+    view.addSubview(tagView)
     
     layout()
   }
   
   private func layout() {
-    
+    tagView.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
   }
 }
 

@@ -39,8 +39,42 @@ final class AppComponent:
   BookmarkEditorDependency,
   LogEntryEditorDependency,
   CategoryEditorDependency,
-  BookmarkListDependency
+  BookmarkListDependency,
+  TimeLogRunningDependency,
+  LoggingRetentionDependency,
+  LogEntryCreationDependency,
+  CurrentTimerTimeDependency,
+  ActivityDatePickerDependency,
+  TimerOperationDependency,
+  CurrentActivityDependency
 {
+  var logEntryCreationBuilder: LogEntryCreationBuildable {
+    LogEntryCreationBuilder(dependency: self)
+  }
+  
+  var currentActivityBuilder: CurrentActivityBuildable {
+    CurrentActivityBuilder(dependency: self)
+  }
+  
+  var currentTimerTimeBuilder: CurrentTimerTimeBuildable {
+    CurrentTimerTimeBuilder(dependency: self)
+  }
+  
+  var activityDatePickerBuilder: ActivityDatePickerBuildable {
+    ActivityDatePickerBuilder(dependency: self)
+  }
+  
+  var timerOperationBuilder: TimerOperationBuildable {
+    TimerOperationBuilder(dependency: self)
+  }
+  
+  var timeLogRunningBuilder: TimeLogRunningBuildable {
+    TimeLogRunningBuilder(dependency: self)
+  }
+  
+  var loggingRetentionBuilder: LoggingRetentionBuildable {
+    LoggingRetentionBuilder(dependency: self)
+  }
   
   var bookmarkListBuilder: BookmarkListBuildable {
     BookmarkListBuilder(dependency: self)
@@ -118,8 +152,6 @@ final class AppComponent:
   
   let timeLogRecordModelDataStream: TimeLogRecordModelDataStream
   
-  var timeFormatter: TimeFormatter {
-    TimeFormatterImpl()
-  }
+  var timeFormatter = TimeFormatter()
 }
 

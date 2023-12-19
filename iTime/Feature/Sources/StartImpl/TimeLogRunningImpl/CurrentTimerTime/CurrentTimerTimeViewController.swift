@@ -37,6 +37,12 @@ final class CurrentTimerTimeViewController:
   
   // MARK: - UI Components
   
+  private let mainCurrentTimeLabel = UILabel().builder
+    .text("0:00:03")
+    .font(.custom(.bold, 40))
+    .textColor(.white)
+    .build()
+  
   // MARK: - View LifeCycle
   
   override func viewDidLoad() {
@@ -62,12 +68,15 @@ extension CurrentTimerTimeViewController {
 
 extension CurrentTimerTimeViewController {
   private func setupUI() {
+    view.addSubview(mainCurrentTimeLabel)
     
     layout()
   }
   
   private func layout() {
-    
+    mainCurrentTimeLabel.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
   }
 }
 

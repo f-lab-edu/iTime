@@ -20,14 +20,12 @@ public protocol StartDependency: Dependency {
   var logEntryEditorBuilder: LogEntryEditorBuildable { get }
   var bookmarkModelDataStream: BookmarkModelDataStream { get }
   var timeFormatter: TimeFormatter { get }
+  var logEntryCreationBuilder: LogEntryCreationBuildable { get }
 }
 
 // MARK: - StartComponent
 
-final class StartComponent: 
-  Component<StartDependency>,
-  LogEntryCreationDependency
-{
+final class StartComponent: Component<StartDependency> {
   var bookmarkEditorBuilder: BookmarkEditorBuildable {
     dependency.bookmarkEditorBuilder
   }
@@ -49,7 +47,7 @@ final class StartComponent:
   }
   
   fileprivate var logEntryCreationBuilder: LogEntryCreationBuildable {
-    LogEntryCreationBuilder(dependency: self)
+    dependency.logEntryCreationBuilder
   }
 }
 

@@ -96,7 +96,10 @@ final class DatePickerSectionView:
   // MARK: - Properties
   
   private let timeFormatter: TimeFormatter
-  private lazy var datePickerFactory = DatePickerFactory(timeFormatter: timeFormatter)
+  private lazy var datePickerFactory = DatePickerFactory(
+    timeFormatter: timeFormatter,
+    screenWidth: self.window?.windowScene?.screen.bounds.width ?? .zero
+  )
   
   // MARK: - Initialization & Deinitialization
   

@@ -8,17 +8,20 @@
 import RIBs
 
 import Start
+import AppFoundation
 
 // MARK: - ActivityDatePickerDependency
 
 public protocol ActivityDatePickerDependency: Dependency {
-  
+  var timeFormatter: TimeFormatter { get }
 }
 
 // MARK: - ActivityDatePickerComponent
 
 final class ActivityDatePickerComponent: Component<ActivityDatePickerDependency> {
-  
+  fileprivate var timeFormatter: TimeFormatter {
+    dependency.timeFormatter
+  }
 }
 
 // MARK: - ActivityDatePickerBuilder
@@ -34,7 +37,7 @@ public final class ActivityDatePickerBuilder:
   
   public func build(withListener listener: ActivityDatePickerListener) -> ActivityDatePickerRouting {
     let component = ActivityDatePickerComponent(dependency: dependency)
-    let viewController = ActivityDatePickerViewController()
+    let viewController = ActivityDatePickerViewController(timeFormatter: component.timeFormatter)
     let interactor = ActivityDatePickerInteractor(presenter: viewController)
     interactor.listener = listener
     return ActivityDatePickerRouter(

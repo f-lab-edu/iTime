@@ -16,12 +16,30 @@ import AppFoundation
 
 public protocol TimeLogRunningDependency: Dependency {
   var timeFormatter: TimeFormatter { get }
+  var currentActivityBuilder: CurrentActivityBuildable { get }
+  var currentTimerTimeBuilder: CurrentTimerTimeBuildable { get }
+  var activityDatePickerBuilder: ActivityDatePickerBuildable { get }
+  var timerOperationBuilder: TimerOperationBuildable { get }
 }
 
 // MARK: - TimeLogRunningComponent
 
 final class TimeLogRunningComponent: Component<TimeLogRunningDependency> {
+  fileprivate var currentActivityBuilder: CurrentActivityBuildable {
+    dependency.currentActivityBuilder
+  }
   
+  fileprivate var currentTimerTimeBuilder: CurrentTimerTimeBuildable {
+    dependency.currentTimerTimeBuilder
+  }
+  
+  fileprivate var activityDatePickerBuilder: ActivityDatePickerBuildable {
+    dependency.activityDatePickerBuilder
+  }
+  
+  fileprivate var timerOperationBuilder: TimerOperationBuildable {
+    dependency.timerOperationBuilder
+  }
 }
 
 // MARK: - TimeLogRunningBuilder
@@ -36,13 +54,17 @@ public final class TimeLogRunningBuilder:
   }
   
   public func build(withListener listener: TimeLogRunningListener) -> TimeLogRunningRouting {
-    let _ = TimeLogRunningComponent(dependency: dependency)
-    let viewController = TimeLogRunningViewController(timeFormatter: dependency.timeFormatter)
+    let component = TimeLogRunningComponent(dependency: dependency)
+    let viewController = TimeLogRunningViewController()
     let interactor = TimeLogRunningInteractor(presenter: viewController)
     interactor.listener = listener
     return TimeLogRunningRouter(
       interactor: interactor,
-      viewController: viewController
+      viewController: viewController,
+      currentActivityBuilder: component.currentActivityBuilder,
+      currentTimerTimeBuilder: component.currentTimerTimeBuilder,
+      activityDatePickerBuilder: component.activityDatePickerBuilder,
+      timerOperationBuilder: component.timerOperationBuilder
     )
   }
 }

@@ -7,17 +7,7 @@
 
 import Foundation
 
-public protocol TimeFormatter {
-  func formatToHHMMSS(date: Date) -> String
-  func formatToYYYYMMDDHHMM(date: Date) -> String
-  func formatToHHMM(date: Date) -> String
-  func formatToMMDD(date: Date) -> String
-}
-
-public final class TimeFormatterImpl:
-  DateFormatter,
-  TimeFormatter
-{
+public final class TimeFormatter: DateFormatter {
   
   public override init() {
     super.init()

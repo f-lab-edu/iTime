@@ -11,6 +11,7 @@ import RIBs
 import RxSwift
 
 import SharedUI
+import AppFoundation
 
 // MARK: - ActivityDatePickerPresentableListener
 
@@ -34,8 +35,17 @@ final class ActivityDatePickerViewController:
   // MARK: - Properties
   
   weak var listener: ActivityDatePickerPresentableListener?
+  private let timeFormatter: TimeFormatter
+  
+  // MARK: - Initialziation
+  
+  init(timeFormatter: TimeFormatter) {
+    self.timeFormatter = timeFormatter
+  }
   
   // MARK: - UI Components
+  
+  private lazy var datePickerSectionView = DatePickerSectionView(timeFormatter: timeFormatter)
   
   // MARK: - View LifeCycle
   
@@ -62,18 +72,21 @@ extension ActivityDatePickerViewController {
 
 extension ActivityDatePickerViewController {
   private func setupUI() {
+    view.addSubview(datePickerSectionView)
     
     layout()
   }
   
   private func layout() {
-    
+    datePickerSectionView.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
   }
 }
 
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview("UIKit Portrait") {
-  ActivityDatePickerViewController()
+  ActivityDatePickerViewController(timeFormatter: TimeFormatter())
 }
 #endif
