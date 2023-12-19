@@ -196,6 +196,7 @@ final class AppComponent:
       locationFetcher: CLLocationManager()
     )
     let runningTimeTracker = RunningTimeTrackerImpl()
+    
     self.timerInfoModelDataStream = TimerInfoModelDataStream()
     
     let timeLogRecordBuilder = TimeLogRecordBuilder(
@@ -204,19 +205,19 @@ final class AppComponent:
       timerInfoModelDataStream: timerInfoModelDataStream
     )
 
-    let timeStartFacade = TimeStartFacade(
+    let timeStartFacade = TimeStartFacadeImpl(
       locationTracker: locationTracker,
       runningTimeTracker: runningTimeTracker,
       timerInfoModelDataStream: timerInfoModelDataStream,
       userDefaultRepository: userDefaultRepository
     )
     
-    let timeSuspenseFacade = TimeSuspenseFacade(
+    let timeSuspenseFacade = TimeSuspenseFacadeImpl(
       runningTimeTracker: runningTimeTracker,
       locationTracker: locationTracker
     )
     
-    let timeFinishFacade = TimeFinishFacade(
+    let timeFinishFacade = TimeFinishFacadeImpl(
       locationTracker: locationTracker,
       runningTimeTracker: runningTimeTracker,
       timeLogRecordRepository: timeLogRecordRepository,

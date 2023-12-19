@@ -55,7 +55,6 @@ public final class TimerUsecaseImpl: TimerUsecase {
     .flatMap { owner, record in
       owner.timeFinishFacade.finish(record)
     }
-    .debug("shlee")
   }
   
 }

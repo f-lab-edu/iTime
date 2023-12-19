@@ -32,7 +32,7 @@ public final class TimeStartFacadeImpl: TimeStartFacade {
     self.userDefaultRepository = userDefaultRepository
   }
   
-  func start() -> Observable<Void> {
+  public func start() -> Observable<Void> {
     Observable.combineLatest(
       Observable.just(runningTimeTracker.start()),
       runningTimeTracker.currentSeconds()
