@@ -12,4 +12,5 @@ public protocol AuthenticationRepository {
   func signOut()
   func deleteCurrentUser()
   func isLoggedIn() -> Bool
+  func userID() -> String?
 }

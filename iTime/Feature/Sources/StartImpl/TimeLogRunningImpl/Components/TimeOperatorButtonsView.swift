@@ -22,7 +22,7 @@ final class TimeOperatorButtonsView: BaseView {
   
   // MARK: - UI Components
   
-  private let startButton = UIButton().builder
+  let startButton = UIButton().builder
     .with {
       $0.setImage(.start, for: .normal)
       $0.backgroundColor = .black80
@@ -30,7 +30,7 @@ final class TimeOperatorButtonsView: BaseView {
     }
     .build()
   
-  private let pauseButton = UIButton().builder
+  let pauseButton = UIButton().builder
     .with {
       $0.setImage(.pause, for: .normal)
       $0.backgroundColor = .black80
@@ -38,7 +38,7 @@ final class TimeOperatorButtonsView: BaseView {
     }
     .build()
   
-  private let endButton = UIButton().builder
+  let stopButton = UIButton().builder
     .with {
       $0.setImage(.stop, for: .normal)
       $0.backgroundColor = .pointGreen
@@ -61,7 +61,7 @@ final class TimeOperatorButtonsView: BaseView {
   private func setupUI() {
     addSubview(startButton)
     addSubview(pauseButton)
-    addSubview(endButton)
+    addSubview(stopButton)
   }
   
   private func layout() {
@@ -85,7 +85,7 @@ final class TimeOperatorButtonsView: BaseView {
   }
   
   private func makeEndButtonConstraints() {
-    endButton.snp.makeConstraints {
+    stopButton.snp.makeConstraints {
       $0.width.height.equalTo(startButton)
       $0.leading.equalTo(startButton.snp.trailing).offset(Metric.stopButtonLeadingMargin)
       $0.trailing.top.bottom.equalToSuperview()

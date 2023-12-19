@@ -140,7 +140,8 @@ final class AppComponent:
     
     self.authenticationUsecase = AuthenticationUsecaseImpl(
       appleAuthenticationRepository: AppleAuthenticationRepositoryImpl(),
-      authorizationContextProvider: UIApplication.shared
+      authorizationContextProvider: UIApplication.shared, 
+      userDefaultRepository: userDefaultRepository
     )
     
     let locationTracker = LocationTrackerImpl(
@@ -155,7 +156,7 @@ final class AppComponent:
       runningTimeTracker: runningTimeTracker,
       timerInfoModelDataStream: timerInfoModelDataStream
     )
-    
+
     let timeStartFacade = TimeStartFacade(
       locationTracker: locationTracker,
       runningTimeTracker: runningTimeTracker,

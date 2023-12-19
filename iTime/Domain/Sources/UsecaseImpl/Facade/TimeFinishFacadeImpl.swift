@@ -35,7 +35,7 @@ final class TimeFinishFacadeImpl: TimeFinishFacade {
     locationTracker.resetLocationTracking()
     timeLogRecordModelDataStream.append(record)
     return timeLogRecordRepository.append(record)
-      .asObservable() // TODO: Check, asSingle()
+      .asObservable()
       .map { _ in return Void() }
   }
   
