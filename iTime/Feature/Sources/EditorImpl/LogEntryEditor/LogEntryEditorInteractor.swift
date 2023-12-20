@@ -50,8 +50,8 @@ final class LogEntryEditorInteractor:
   }
   
   // MARK: - Mutation
-  func didTapStartButton(_ title: String) {
-    activityLogModelStream.updateActivityTitle(with: title)
+  func didTapStartButton(_ title: String?) {
+    activityLogModelStream.updateActivityTitle(with: title ?? "")
     
     
     listener?.attachTimeLogRunningRIB()

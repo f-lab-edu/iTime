@@ -6,13 +6,31 @@
 //
 
 import RxSwift
+import RIBs
 
 import Start
 import RIBsTestSupport
 
+
 @testable import StartImpl
 
 final class LogEntryCreationInteratableSpy: LogEntryCreationInteractable {
+  func detachLogEntryEditorRIB() {
+    
+  }
+  
+  func didTapTagCell() {
+    
+  }
+  
+  func detachTimeLogRunningRIB() {
+    
+  }
+  
+  func detachBookmarkEditorRIB() {
+    
+  }
+  
   func detachLocationEntryEditorRIB() {
   
   }
@@ -43,6 +61,14 @@ final class LogEntryCreationViewControllableSpy:
   ViewControllableMock,
   LogEntryCreationViewControllable
 {
+  func addBookmarkList(_ view: ViewControllable) {
+    
+  }
+  
+  func addLoggingRetention(_ view: ViewControllable) {
+    
+  }
+  
   
 }
 
