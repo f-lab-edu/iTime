@@ -39,7 +39,6 @@ final class BookmarkEditorViewController:
     static let guideLabelHeight: CGFloat = 20
     static let guideLabelTopMargin: CGFloat = 4
     static let separationTopMargin: CGFloat = 24
-    static let buttonSectionViewHeight: CGFloat = 122
   }
   
   // MARK: - Properties
@@ -198,7 +197,7 @@ extension BookmarkEditorViewController {
   
   private func makeSeparatedViewConstraints() {
     separatedView.snp.makeConstraints {
-      $0.top.equalTo(bookmarkListContainterView.snp.bottom).offset(Metric.separationTopMargin)
+      $0.top.equalTo(bookmarkListContainterView.snp.bottom).offset(Metric.separationTopMargin).priority(.high)
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(Metric.separatedViewHeight)
     }
@@ -232,7 +231,6 @@ extension BookmarkEditorViewController {
     saveBookmarkButtonSectionView.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview()
       $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-      $0.height.equalTo(Metric.buttonSectionViewHeight)
     }
   }
   

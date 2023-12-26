@@ -1,6 +1,6 @@
 //
 //  ActivityHistoryInteractor.swift
-//  
+//
 //
 //  Created by 이상헌 on 12/10/23.
 //
@@ -24,7 +24,7 @@ protocol ActivityHistoryPresentable: Presentable {
 
 // MARK: - ActivityHistoryInteractor
 
-final class ActivityHistoryInteractor: 
+final class ActivityHistoryInteractor:
   PresentableInteractor<ActivityHistoryPresentable>,
   ActivityHistoryInteractable,
   ActivityHistoryPresentableListener
@@ -35,6 +35,7 @@ final class ActivityHistoryInteractor:
   weak var router: ActivityHistoryRouting?
   weak var listener: ActivityHistoryListener?
   private let timeLogRecordModelDataStream: TimeLogRecordModelDataStream
+  private let bookmarkModelDataStream: BookmarkModelDataStream
   private var state: ActivityHistoryModel.State
   
   // MARK: - Initialization & DeInitialization
@@ -42,10 +43,12 @@ final class ActivityHistoryInteractor:
   init(
     initialState: ActivityHistoryModel.State,
     presenter: ActivityHistoryPresentable,
-    timeLogRecordModelDataStream: TimeLogRecordModelDataStream
+    timeLogRecordModelDataStream: TimeLogRecordModelDataStream,
+    bookmarkModelDataStream: BookmarkModelDataStream
   ) {
     self.state = initialState
     self.timeLogRecordModelDataStream = timeLogRecordModelDataStream
+    self.bookmarkModelDataStream = bookmarkModelDataStream
     super.init(presenter: presenter)
     presenter.listener = self
   }
@@ -55,21 +58,25 @@ final class ActivityHistoryInteractor:
   }
   
   func loadActivityList() {
-    timeLogRecordModelDataStream.timeLogRecords
-      .map { $0.map(\.activity) }
-      .catch ({ [weak self] error in
-        guard let self else { return .empty() }
-        self.presenter.presentError(self.activityListErrorMessage(error.localizedDescription))
-        return .empty()
-      })
-      .subscribe(with: self) { owner, activities in
-        var newState = owner.state
-        newState.activityList = activities
-        owner.state = newState
-        owner.presenter.reloadActivities()
-        owner.presenter.hiddenEmptyIfNeeded(!activities.isEmpty)
-      }
-      .disposeOnDeactivate(interactor: self)
+    Observable.combineLatest(
+      timeLogRecordModelDataStream.timeLogRecords.map { $0.map(\.activity) },
+      bookmarkModelDataStream.bookmarks
+    )
+    .debug("shle")
+    .catch ({ [weak self] error in
+      guard let self else { return .empty() }
+      self.presenter.presentError(self.activityListErrorMessage(error.localizedDescription))
+      return .empty()
+    })
+    .map(filterSolidActivitiyList)
+    .subscribe(with: self) { owner, activities in
+      var newState = owner.state
+      newState.activityList = activities
+      owner.state = newState
+      owner.presenter.reloadActivities()
+      owner.presenter.hiddenEmptyIfNeeded(!activities.isEmpty)
+    }
+    .disposeOnDeactivate(interactor: self)
   }
   
   func numberOfItems() -> Int {
@@ -81,7 +88,8 @@ final class ActivityHistoryInteractor:
   }
   
   func didTapTagCell(at index: IndexPath) {
-    print(index)
+    guard let selectedActivity = state.activityList[safe: index.row] else { return }
+    bookmarkModelDataStream.append(Bookmark(selectedActivity))
   }
   
   private func activityListErrorMessage(_ message: String) -> DisplayErrorMessage {
@@ -90,5 +98,12 @@ final class ActivityHistoryInteractor:
       message: message,
       confirmActionTitle: "Confirm"
     )
+  }
+  
+  private func filterSolidActivitiyList(_ activityList: [Activity], _ bookmarkList: [Bookmark]) -> [Activity] {
+    activityList
+      .enumerated()
+      .filter { bookmarkList[safe: $0.offset]?.title != $0.element.title }
+      .map(\.element)
   }
 }

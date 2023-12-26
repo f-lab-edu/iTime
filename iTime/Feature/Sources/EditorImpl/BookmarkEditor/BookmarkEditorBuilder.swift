@@ -27,6 +27,10 @@ final class BookmarkEditorComponent:
   Component<BookmarkEditorDependency>,
   ActivityHistoryDependency
 {
+  var bookmarkModelDataStream: BookmarkModelDataStream {
+    dependency.bookmarkModelDataStream
+  }
+  
   var timeLogRecordModelDataStream: TimeLogRecordModelDataStream {
     dependency.timeLogRecordModelDataStream
   }

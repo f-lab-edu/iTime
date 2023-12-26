@@ -86,7 +86,7 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
       for: DatabaseReference.bookmarkSession(userID: userDefaultRepository.userID()),
       includeMetadata: false
     )
-    .compactMap { try $0.decode() }
+    .map { try $0.decode() ?? .init([]) }
     .ifEmpty(default: PerformList([]))
     .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
     .asSingle()

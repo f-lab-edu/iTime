@@ -14,6 +14,7 @@ import Editor
 
 public protocol ActivityHistoryDependency: Dependency {
   var timeLogRecordModelDataStream: TimeLogRecordModelDataStream { get }
+  var bookmarkModelDataStream: BookmarkModelDataStream { get }
 }
 
 // MARK: - ActivityHistoryComponent
@@ -23,6 +24,10 @@ final class ActivityHistoryComponent: Component<ActivityHistoryDependency> {
   
   fileprivate var timeLogRecordModelDataStream: TimeLogRecordModelDataStream {
     dependency.timeLogRecordModelDataStream
+  }
+  
+  fileprivate var bookmarkModelDataStream: BookmarkModelDataStream {
+    dependency.bookmarkModelDataStream
   }
 }
 
@@ -43,7 +48,8 @@ public final class ActivityHistoryBuilder:
     let interactor = ActivityHistoryInteractor(
       initialState: component.initialState,
       presenter: viewController,
-      timeLogRecordModelDataStream: component.timeLogRecordModelDataStream
+      timeLogRecordModelDataStream: component.timeLogRecordModelDataStream,
+      bookmarkModelDataStream: component.bookmarkModelDataStream
     )
     interactor.listener = listener
     return ActivityHistoryRouter(

@@ -17,6 +17,11 @@ public struct Bookmark {
     self.title = title
     self.category = category
   }
+  
+  public init(_ activity: Activity) {
+    self.title = activity.title
+    self.category = activity.category
+  }
 }
 
 // MARK: - Equatable

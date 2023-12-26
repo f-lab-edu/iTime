@@ -103,6 +103,10 @@ final class BookmarkListViewController:
   
   func reloadBookmarks() {
     bookmarkTagsCollectionView.reloadData()
+    bookmarkTagsCollectionView.layoutIfNeeded()
+    bookmarkTagsCollectionView.snp.updateConstraints {
+      $0.height.equalTo(bookmarkTagsCollectionView.intrinsicContentSize)
+    }
   }
   
 }
@@ -144,6 +148,7 @@ extension BookmarkListViewController {
   private func makeBookmarkTagsCollectionViewConstraints() {
     bookmarkTagsCollectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
+      $0.height.equalTo(bookmarkTagsCollectionView.intrinsicContentSize)
     }
   }
   
