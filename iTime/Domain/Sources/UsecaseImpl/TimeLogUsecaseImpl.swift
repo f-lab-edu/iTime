@@ -44,12 +44,11 @@ public final class TimeLogUsecaseImpl:
   // MARK: - Internal Methods
   
   public func preLoadAllData() -> Single<Void> {
-    Observable.merge(
-      [loadBookmarks(),
-      loadTimeLogRecords()]
-        .map { $0.asObservable() }
+    Single.zip(
+      [loadTimeLogRecords(),
+        loadBookmarks(),
+      ]
     )
-    .toArray()
     .map( { _ in () })
     .do(onSuccess: { [weak self] in self?.isLoaded = true })
   }
