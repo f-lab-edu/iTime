@@ -66,6 +66,7 @@ public final class CustomNavigationBar: BaseView {
   private func makeBackButtonCostraints() {
     backButton.snp.makeConstraints {
       $0.leading.equalToSuperview().offset(Metric.backButtonLeadingMargin)
+      $0.size.equalTo(Metric.backButtonSize)
       $0.top.bottom.equalToSuperview().inset(Metric.backButtonTopBottomMargin)
     }
   }

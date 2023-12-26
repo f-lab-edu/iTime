@@ -97,7 +97,7 @@ final class BookmarkListViewController:
     showErrorAlert(with: error)
   }
   
-  func hiddenEmptyIfneeded(_ isHidden: Bool) {
+  func hiddenEmptyIfNeeded(_ isHidden: Bool) {
     emptyGuideLabel.isHidden = isHidden
   }
   

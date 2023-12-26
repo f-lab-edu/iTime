@@ -34,9 +34,12 @@ final class BookmarkEditorViewController:
     static let separatedViewHeight: CGFloat = 9
     static let sectionHeaderTitleLabelTopMargin: CGFloat = 16
     static let sectionHeaderTitleLabelLeadingMargin: CGFloat = 24
+    static let sectionHeaderTitleLabelHeight: CGFloat = 24
     static let currentCountIndexLabelTrailingMargin: CGFloat = 24
+    static let guideLabelHeight: CGFloat = 20
     static let guideLabelTopMargin: CGFloat = 4
     static let separationTopMargin: CGFloat = 24
+    static let buttonSectionViewHeight: CGFloat = 122
   }
   
   // MARK: - Properties
@@ -64,7 +67,6 @@ final class BookmarkEditorViewController:
   private let separatedView = UIView().builder
     .backgroundColor(.black90)
     .build()
-  
   
   private let activityHistorySectionHeaderTitleLabel = UILabel().builder
     .text("현재 기록")
@@ -174,6 +176,7 @@ extension BookmarkEditorViewController {
     bookmarkListSectionHeaderTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().offset(Metric.sectionHeaderTitleLabelLeadingMargin)
       $0.top.equalTo(customNavigationBar.snp.bottom).offset(Metric.sectionHeaderTitleLabelTopMargin)
+      $0.height.equalTo(Metric.sectionHeaderTitleLabelHeight)
     }
   }
   
@@ -181,6 +184,7 @@ extension BookmarkEditorViewController {
     currentCountIndexLabel.snp.makeConstraints {
       $0.centerY.equalTo(bookmarkListSectionHeaderTitleLabel)
       $0.trailing.equalToSuperview().offset(-Metric.currentCountIndexLabelTrailingMargin)
+      $0.height.equalTo(Metric.sectionHeaderTitleLabelHeight)
     }
   }
   
@@ -204,6 +208,7 @@ extension BookmarkEditorViewController {
     activityHistorySectionHeaderTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().offset(Metric.sectionHeaderTitleLabelLeadingMargin)
       $0.top.equalTo(separatedView.snp.bottom).offset(Metric.sectionHeaderTitleLabelTopMargin)
+      $0.height.equalTo(Metric.sectionHeaderTitleLabelHeight)
     }
   }
   
@@ -211,6 +216,7 @@ extension BookmarkEditorViewController {
     guideLabel.snp.makeConstraints {
       $0.leading.equalTo(activityHistorySectionHeaderTitleLabel)
       $0.top.equalTo(activityHistorySectionHeaderTitleLabel.snp.bottom).offset(Metric.guideLabelTopMargin)
+      $0.height.equalTo(Metric.guideLabelHeight)
     }
   }
   
@@ -218,7 +224,7 @@ extension BookmarkEditorViewController {
     activityHistoryContainterView.snp.makeConstraints {
       $0.top.equalTo(guideLabel.snp.bottom)
       $0.leading.trailing.equalTo(bookmarkListContainterView)
-      $0.bottom.equalTo(bookmarkListContainterView.snp.top).priority(.low)
+      $0.bottom.equalTo(saveBookmarkButtonSectionView.snp.top)
     }
   }
   
@@ -226,6 +232,7 @@ extension BookmarkEditorViewController {
     saveBookmarkButtonSectionView.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview()
       $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+      $0.height.equalTo(Metric.buttonSectionViewHeight)
     }
   }
   

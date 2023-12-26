@@ -18,6 +18,7 @@ import SharedUI
 public protocol BookmarkEditorDependency: Dependency {
   var bookmarkModelDataStream: BookmarkModelDataStream { get }
   var bookmarkListBuilder: BookmarkListBuildable { get }
+  var timeLogRecordModelDataStream: TimeLogRecordModelDataStream { get }
 }
 
 // MARK: - BookmarkEditorComponent
@@ -26,6 +27,9 @@ final class BookmarkEditorComponent:
   Component<BookmarkEditorDependency>,
   ActivityHistoryDependency
 {
+  var timeLogRecordModelDataStream: TimeLogRecordModelDataStream {
+    dependency.timeLogRecordModelDataStream
+  }
   
   fileprivate var activityHistoryBuilder: ActivityHistoryBuildable {
       ActivityHistoryBuilder(dependency: self)
