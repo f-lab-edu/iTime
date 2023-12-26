@@ -65,7 +65,7 @@ final class BookmarkEditorInteractor:
   }
   
   func didTapTagCell(at index: IndexPath) {
-    print(index)
+    
   }
   
    // MARK: - Private
@@ -74,37 +74,4 @@ final class BookmarkEditorInteractor:
     
   }
 
-}
-
-// MARK: - SavedItemSection
-
-extension BookmarkEditorInteractor {
-  func numberOfSavedItems() -> Int {
-    3
-  }
-  
-  func configurationSavedItem(at index: Int) -> String {
-    "SavedItem"
-  }
-  
-  func didTapSaveItemSectionCell() {
-    print("didTapSaveItemSectionCell")
-  }
-}
-
-// MARK: - ItemHistorySection
-
-extension BookmarkEditorInteractor {
-  
-  func numberOfHistoryItems() -> Int {
-    3
-  }
-  
-  func configurationHistoryItem(at index: Int) -> String {
-    "HistoryItem"
-  }
-  
-  func didTapItemHistorySectionCell() {
-    print("didTapItemHistorySectionCell")
-  }
 }

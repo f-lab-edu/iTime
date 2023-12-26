@@ -1,6 +1,6 @@
 //
 //  ActivityHistoryViewController.swift
-//  
+//
 //
 //  Created by 이상헌 on 12/10/23.
 //
@@ -11,14 +11,16 @@ import RIBs
 import RxSwift
 
 import SharedUI
+import AppFoundation
 
 // MARK: - ActivityHistoryPresentableListener
 
-protocol ActivityHistoryPresentableListener: 
+protocol ActivityHistoryPresentableListener:
   AnyObject,
   BookmarkCollectionViewCellDelegate,
   BookmarkTagsCollectionViewAdapterDataSource
 {
+  func loadActivityList()
 }
 
 // MARK: - ActivityHistoryViewController
@@ -26,13 +28,14 @@ protocol ActivityHistoryPresentableListener:
 final class ActivityHistoryViewController:
   BaseViewController,
   ActivityHistoryPresentable,
-  ActivityHistoryViewControllable
+  ActivityHistoryViewControllable,
+  ErrorAlertable
 {
   
   // MARK: - Constants
   
   private enum Metric {
-    
+    static let emptyGuideLabelTopMargin: CGFloat = 4
   }
   
   // MARK: - Properties
@@ -56,11 +59,33 @@ final class ActivityHistoryViewController:
     cellBorderColor: .black60
   )
   
+  private lazy var emptyGuideLabel = UILabel().builder
+    .numberOfLines(0)
+    .font(.custom(.bold, 15))
+    .text("아직 기록이 존재하지 않습니다.")
+    .textColor(.black60)
+    .textAlignment(.center)
+    .isHidden(true)
+    .build()
+  
   // MARK: - View LifeCycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    bindActions()
+  }
+  
+  func presentError(_ error: DisplayErrorMessage) {
+    showErrorAlert(with: error)
+  }
+  
+  func hiddenEmptyIfNeeded(_ isHidden: Bool) {
+    emptyGuideLabel.isHidden = isHidden
+  }
+  
+  func reloadActivities() {
+    activityHistoryCollectionView.reloadData()
   }
   
 }
@@ -68,13 +93,18 @@ final class ActivityHistoryViewController:
 // MARK: - Bind Action
 
 extension ActivityHistoryViewController {
+  private func bindActions() {
+    bindLoadActivityList()
+  }
   
-}
-
-// MARK: - Bind State
-
-extension ActivityHistoryViewController {
-  
+  private func bindLoadActivityList() {
+    rx.viewWillAppear
+      .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
+      .subscribe(with: self) { owner, _ in
+        owner.listener?.loadActivityList()
+      }
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Layout
@@ -82,6 +112,7 @@ extension ActivityHistoryViewController {
 extension ActivityHistoryViewController {
   private func setupUI() {
     view.addSubview(activityHistoryCollectionView)
+    view.addSubview(emptyGuideLabel)
     _ = adapter
     
     layout()
@@ -89,11 +120,18 @@ extension ActivityHistoryViewController {
   
   private func layout() {
     makeActivityHistoryCollectionViewConstraints()
+    makeEmptyGuideLabelConstraints()
   }
   
   private func makeActivityHistoryCollectionViewConstraints() {
     activityHistoryCollectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
+    }
+  }
+  
+  private func makeEmptyGuideLabelConstraints() {
+    emptyGuideLabel.snp.makeConstraints {
+      $0.center.equalToSuperview()
     }
   }
 }

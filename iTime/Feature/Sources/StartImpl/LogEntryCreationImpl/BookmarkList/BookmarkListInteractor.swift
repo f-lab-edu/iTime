@@ -18,7 +18,7 @@ import AppFoundation
 protocol BookmarkListPresentable: Presentable {
   var listener: BookmarkListPresentableListener? { get set }
   func presentError(_ error: DisplayErrorMessage)
-  func hiddenEmptyIfneeded(_ isHidden: Bool)
+  func hiddenEmptyIfNeeded(_ isHidden: Bool)
   func reloadBookmarks()
 }
 
@@ -56,7 +56,7 @@ final class BookmarkListInteractor:
   
   func loadBookmarkList() {
     bookmarkModelDataStream.bookmarks
-      .catch({ [weak self] error in
+      .catch ({ [weak self] error in
         guard let self else { return .empty() }
         self.presenter.presentError(self.bookmarkListErrorMessage(error.localizedDescription))
         return .empty()
@@ -66,7 +66,7 @@ final class BookmarkListInteractor:
         newState.bookmarks = bookmarks
         owner.state = newState
         owner.presenter.reloadBookmarks()
-        owner.presenter.hiddenEmptyIfneeded(!bookmarks.isEmpty)
+        owner.presenter.hiddenEmptyIfNeeded(!bookmarks.isEmpty)
       }
       .disposeOnDeactivate(interactor: self)
   }
@@ -76,7 +76,7 @@ final class BookmarkListInteractor:
   }
   
   func bookmark(at index: Int) -> String {
-    state.bookmarks[index].title
+    state.bookmarks[safe: index]?.title ?? ""
   }
   
   func didTapTagCell(at index: IndexPath) {
