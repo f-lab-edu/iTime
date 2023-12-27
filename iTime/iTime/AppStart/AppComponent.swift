@@ -184,6 +184,13 @@ final class AppComponent:
       timeFinishFacade: timeFinishFacade
     )
     
+    self.editorUsecase = EditorUsecaseImpl(
+      bookmarkModelDataStream: bookmarkModelDataStream,
+      timeLogRecordModelDataStream: timeLogRecordModelDataStream,
+      bookmarkRepository: bookmarkRepository,
+      timeLogRecordRepository: timeLogRecordRepository
+    )
+    
     super.init(dependency: EmptyComponent())
   }
   
@@ -194,6 +201,8 @@ final class AppComponent:
   let authenticationUsecase: AuthenticationUsecase
   
   let timerInfoModelDataStream: TimerInfoModelDataStream
+  
+  let editorUsecase: EditorUsecase
   
   let bookmarkModelDataStream: BookmarkModelDataStream
   

@@ -15,8 +15,10 @@ public final class BookmarkRepositoryMock: BookmarkRepository {
   public let dummy = DummyData.DummyBookmark.dummyBookmarksFour
   
   public var updateCallCount: Int = 0
+  public var updatingBookmarks: [Bookmark] = []
   public func update(with bookmarks: [Entities.Bookmark]) -> RxSwift.Single<[Entities.Bookmark]> {
     updateCallCount += 1
+    updatingBookmarks = bookmarks
     return .just([])
   }
   

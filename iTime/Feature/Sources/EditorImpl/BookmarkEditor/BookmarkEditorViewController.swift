@@ -11,6 +11,7 @@ import RIBs
 import RxSwift
 
 import SharedUI
+import AppFoundation
 
 // MARK: - BookmarkEditorPresentableListener
 
@@ -25,9 +26,10 @@ protocol BookmarkEditorPresentableListener: AnyObject {
 final class BookmarkEditorViewController:
   BaseViewController,
   BookmarkEditorPresentable,
-  BookmarkEditorViewControllable
+  BookmarkEditorViewControllable,
+  ErrorAlertable
 {
-  
+   
   // MARK: - Constants
   
   private enum Metric {
@@ -91,6 +93,10 @@ final class BookmarkEditorViewController:
     bindActions()
   }
   
+  func presentError(_ error: DisplayErrorMessage) {
+    showErrorAlert(with: error)
+  }
+  
 }
 
 // MARK: - Bind Action
@@ -104,17 +110,17 @@ extension BookmarkEditorViewController {
   
   private func bindSaveButtonTapAction() {
     saveBookmarkButtonSectionView.saveButton.rx
-          .tapWithPreventDuplication()
-          .asDriver(onErrorDriveWith: .empty())
-          .drive(with: self) { owner, _ in print("tap") }
-          .disposed(by: disposeBag)
+      .tapWithPreventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in owner.listener?.didTapSaveButton() }
+      .disposed(by: disposeBag)
   }
   
   private func bindAddButtonTapAction() {
     customNavigationBar.addButton.rx
       .tapWithPreventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in print("tap") }
+      .drive(with: self) { owner, _ in owner.listener?.didTapAddButton() }
       .disposed(by: disposeBag)
   }
   
@@ -127,13 +133,6 @@ extension BookmarkEditorViewController {
   }
   
 }
-
-// MARK: - Bind State
-
-extension BookmarkEditorViewController {
-  
-}
-
 
 // MARK: - Layout
 
