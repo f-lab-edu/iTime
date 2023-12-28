@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class CategoryNavigationBar: 
+public final class CategoryNavigationBar: 
   BaseView,
   Configurable
 {
-  typealias ViewModel = CategoryNavigationBarViewMdoel
+  public typealias ViewModel = CategoryNavigationBarViewMdoel
   
   // MARK: - Constants
   
@@ -35,7 +35,7 @@ final class CategoryNavigationBar:
   
   public let rightItemButton = UIButton().builder
     .with {
-      $0.setImage(.iconAdd, for: .normal)
+      $0.setImage(.iconMore, for: .normal)
     }
     .build()
   
@@ -45,17 +45,17 @@ final class CategoryNavigationBar:
   
   // MARK: - Initialization & Deinitialization
   
-  override func initialize() {
+  public override func initialize() {
     super.initialize()
     setupUI()
   }
   
-  override func setupConstraints() {
+  public override func setupConstraints() {
     super.setupConstraints()
     layout()
   }
   
-  func configure(by viewModel: CategoryNavigationBarViewMdoel) {
+  public func configure(by viewModel: CategoryNavigationBarViewMdoel) {
     categoryTagView.configure(by: viewModel.categoryViewModel)
     rightItemButton.isHidden = viewModel.isHiddenRightItem
   }
@@ -85,6 +85,7 @@ final class CategoryNavigationBar:
   private func makeTitleLabelConstraints() {
     categoryTagView.snp.makeConstraints {
       $0.center.equalToSuperview()
+      $0.bottom.equalToSuperview().priority(.low)
     }
   }
   

@@ -44,4 +44,12 @@ final class TimeLogRunningInteractor:
     listener?.detachTimeLogRunningRIB()
   }
   
+  func didTapAddBookmark() {
+    print("didTapAddBookmark")
+  }
+  
+  func didTapDeleteCurrentLog() {
+    print("didTapDeleteCurrentLog")
+  }
+  
 }

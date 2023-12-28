@@ -28,6 +28,7 @@ final class CategoryTagView:
   // MARK: - UI Components
   
   private let circleView = UIView().builder
+    .backgroundColor(.red)
     .with {
       $0.layer.masksToBounds = true
       $0.layer.cornerRadius = Metric.circleViewSize / 2
@@ -78,24 +79,20 @@ final class CategoryTagView:
   private func layout() {
     circleView.snp.makeConstraints {
       $0.centerY.equalToSuperview()
-      $0.top.bottom.equalToSuperview().inset(Metric.circleViewInset)
+      $0.top.bottom.equalToSuperview().inset(Metric.circleViewInset).priority(.high)
       $0.leading.equalToSuperview().offset(Metric.circleViewInset)
       $0.size.equalTo(Metric.circleViewSize)
     }
     
     tagLabel.snp.makeConstraints {
-      $0.leading.equalTo(circleView.snp.trailing).offset(Metric.tagLabelLeadingMargin)
-      $0.top.bottom.greaterThanOrEqualToSuperview().inset(Metric.tagLabelTopBottmMargin)
-      $0.trailing.equalToSuperview().offset(-Metric.tagLabelTrailingMargin)
+      $0.leading.equalTo(circleView.snp.trailing).offset(Metric.tagLabelLeadingMargin).priority(.high)
+      $0.centerY.equalToSuperview()
+      $0.trailing.equalToSuperview().offset(-Metric.tagLabelTrailingMargin).priority(.high)
     }
   }
   
   private func remakeConstraints() {
-    tagLabel.snp.remakeConstraints {
-      $0.leading.equalTo(circleView.snp.trailing).offset(Metric.tagLabelLeadingMargin).priority(.high)
-      $0.top.bottom.greaterThanOrEqualToSuperview().inset(Metric.tagLabelTopBottmMargin)
-      $0.trailing.equalToSuperview().offset(-Metric.tagLabelTrailingMargin).priority(.high)
-    }
+    layout()
     
     layoutIfNeeded()
   }
