@@ -42,7 +42,11 @@ final class TimeLogRunningViewController:
   
   // MARK: - UI Components
   
-  private let customNavigationBar = CustomNavigationBar()
+  private let customNavigationBar = CustomNavigationBar().builder
+    .with {
+  
+    }
+    .build()
   
   private let currentActivityView = UIView()
   

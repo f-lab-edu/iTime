@@ -2,12 +2,14 @@
 //  File.swift
 //  
 //
-//  Created by 이상헌 on 11/14/23.
+//  Created by 이상헌 on 12/28/23.
 //
 
 import UIKit
 
-public final class CustomNavigationBar: BaseView {
+import SharedUI
+
+final class TimeRunningNavigationBar: BaseView {
   
   // MARK: - Constants
   
@@ -26,11 +28,7 @@ public final class CustomNavigationBar: BaseView {
     }
     .build()
   
-  private let titleLabel = UILabel().builder
-    .text("즐겨찾기 설정")
-    .font(.custom(.bold, 16))
-    .textColor(.white)
-    .build()
+  private let
   
   public let addButton = UIButton().builder
     .with {
@@ -40,22 +38,16 @@ public final class CustomNavigationBar: BaseView {
   
   // MARK: - Initialization & Deinitialization
   
-  public override func initialize() {
+  override func initialize() {
     super.initialize()
     setupUI()
   }
   
-  public override func setupConstraints() {
+  override func setupConstraints() {
     super.setupConstraints()
     layout()
   }
-  
-  // MARK: - Methods
-  
-  public func setTitleLabel(_ text: String) {
-    titleLabel.text = text
-  }
-  
+
   // MARK: Layout
   
   private func setupUI() {
@@ -74,7 +66,6 @@ public final class CustomNavigationBar: BaseView {
   private func makeBackButtonCostraints() {
     backButton.snp.makeConstraints {
       $0.leading.equalToSuperview().offset(Metric.backButtonLeadingMargin)
-      $0.size.equalTo(Metric.backButtonSize)
       $0.top.bottom.equalToSuperview().inset(Metric.backButtonTopBottomMargin)
     }
   }
