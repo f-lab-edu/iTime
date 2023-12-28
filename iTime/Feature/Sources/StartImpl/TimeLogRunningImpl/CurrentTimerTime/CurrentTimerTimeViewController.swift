@@ -39,7 +39,7 @@ final class CurrentTimerTimeViewController:
   // MARK: - UI Components
   
   private let mainCurrentTimeLabel = UILabel().builder
-    .text("0:00:03")
+    .text("0:00:01")
     .font(.custom(.bold, 40))
     .textColor(.white)
     .build()

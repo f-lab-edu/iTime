@@ -14,7 +14,7 @@ public final class TagView:
   Configurable
 {
   
-  public typealias ViewModel = String
+  public typealias ViewModel = TagViewModel
   
   // MARK: - Constants
   
@@ -52,16 +52,20 @@ public final class TagView:
     layer.cornerRadius = Metric.contentViewRadius
   }
   
-  public func configure(by viewModel: String) {
+  public func configure(by viewModel: TagViewModel) {
     DispatchQueue.main.async { [weak self] in
-      self?.tagLabel.text = viewModel
+      self?.tagLabel.text = viewModel.title
+      self?.backgroundColor = viewModel.backgroundColor
+      self?.layer.borderWidth = viewModel.borderWidth
+      self?.tagLabel.font = UIFontMetrics.default.scaledFont(for: viewModel.font)
       
       self?.remakeConstraints()
     }
   }
   
   private func setupUI() {
-    backgroundColor = .black90
+    backgroundColor = .clear
+    layer.borderColor = UIColor.pointGreen.cgColor
     addSubview(tagLabel)
   }
   

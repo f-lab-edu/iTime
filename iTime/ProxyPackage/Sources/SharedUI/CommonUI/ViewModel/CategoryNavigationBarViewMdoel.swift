@@ -10,4 +10,9 @@ import Foundation
 public struct CategoryNavigationBarViewMdoel {
   let categoryViewModel: CategoryViewModel
   let isHiddenRightItem: Bool
+  
+  public init(categoryViewModel: CategoryViewModel, isHiddenRightItem: Bool) {
+    self.categoryViewModel = categoryViewModel
+    self.isHiddenRightItem = isHiddenRightItem
+  }
 }
