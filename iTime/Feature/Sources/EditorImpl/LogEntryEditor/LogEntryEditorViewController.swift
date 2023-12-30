@@ -17,7 +17,7 @@ import SharedUI
 // MARK: - LogEntryEditorPresentableListener
 
 protocol LogEntryEditorPresentableListener: AnyObject {
-  func didTapStartButton(_ title: String)
+  func didTapStartButton(_ title: String?)
   func didTapCategoryStateView()
   func didTapCloseButton()
 }
@@ -105,7 +105,7 @@ extension LogEntryEditorViewController {
     startButton.rx.tap
       .preventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in owner.listener?.didTapStartButton(owner.editorRoutingTextField.text ?? "-") }
+      .drive(with: self) { owner, _ in owner.listener?.didTapStartButton(owner.editorRoutingTextField.text) }
       .disposed(by: disposeBag)
   }
   

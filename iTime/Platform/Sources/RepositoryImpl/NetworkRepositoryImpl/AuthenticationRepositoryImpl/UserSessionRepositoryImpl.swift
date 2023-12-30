@@ -4,6 +4,7 @@
 //
 //  Created by 이상헌 on 2023/10/31.
 //
+import OSLog
 
 import RxSwift
 
@@ -53,7 +54,7 @@ final class UserSessionRepositoryImpl: UserSessionRepository {
         if oldSession == nil {
           return this.firestoreRepository.update(
             reference: DatabaseReference.singleUser(userID: userID),
-            with: UserSession(session.data).toJson() ?? [:],
+            with: this.unwrappedUserSession(session: session),
             merge: false
           )
           .map { _ in Void() }
@@ -73,7 +74,7 @@ final class UserSessionRepositoryImpl: UserSessionRepository {
       .flatMap { this, _ in
         this.firestoreRepository.update(
           reference: DatabaseReference.singleUser(userID: userID),
-          with: UserSession(session.data).toJson() ?? [:],
+          with: this.unwrappedUserSession(session: session),
           merge: true
         )
       }
@@ -82,4 +83,14 @@ final class UserSessionRepositoryImpl: UserSessionRepository {
         this.sessionObservable(with: userID).compactMap { $0 }
       }
   }
+  
+  private func unwrappedUserSession(session: UserModel) -> [String: Any] {
+    do {
+      return try UserSession(session.data).toJson().unwrap()
+    } catch {
+      os_log(.error, log: .infra, "UserSession unwrapping fail")
+    }
+    return [:]
+  }
+  
 }

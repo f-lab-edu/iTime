@@ -19,10 +19,10 @@ public struct ActivityLog: PropertyBuilderCompatible {
 }
 
 extension Activity {
-  public static func toActivity(_ activity: ActivityLog) -> Self {
+  public static func toActivity(_ activity: ActivityLog) throws -> Self {
     Activity(
-      title: activity.title ?? String(),
-      category: .toCategory(activity.category ?? .empty)
+      title: try activity.title.unwrap(),
+      category: try .toCategory(activity.category.unwrap())
     )
   }
 }
