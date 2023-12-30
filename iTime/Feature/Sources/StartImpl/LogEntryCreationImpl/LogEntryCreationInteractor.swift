@@ -65,6 +65,10 @@ final class LogEntryCreationInteractor:
     router?.attachBookmarkEditorRIB()
   }
   
+  func didTapTagCell(at index: IndexPath) {
+    print(index)
+  }
+
 }
 
 // MARK: - Listener

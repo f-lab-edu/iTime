@@ -1,6 +1,6 @@
 //
 //  BookmarkListViewController.swift
-//  
+//
 //
 //  Created by 이상헌 on 12/10/23.
 //
@@ -11,6 +11,7 @@ import RIBs
 import RxSwift
 
 import SharedUI
+import AppFoundation
 
 // MARK: - BookmarkListPresentableListener
 
@@ -19,7 +20,7 @@ protocol BookmarkListPresentableListener:
   BookmarkCollectionViewCellDelegate,
   BookmarkTagsCollectionViewAdapterDataSource
 {
-  
+  func loadBookmarkList()
 }
 
 // MARK: - BookmarkListViewController
@@ -27,7 +28,8 @@ protocol BookmarkListPresentableListener:
 final class BookmarkListViewController:
   BaseViewController,
   BookmarkListPresentable,
-  BookmarkListViewControllable
+  BookmarkListViewControllable,
+  ErrorAlertable
 {
   
   // MARK: - Constants
@@ -42,13 +44,19 @@ final class BookmarkListViewController:
   weak var listener: BookmarkListPresentableListener?
   private let alignedCollectionViewFlowLayout: UICollectionViewFlowLayout
   private let cellBorderColor: UIColor
+  private let emptyLabelText: String
+  private let emptyTextAlignment: NSTextAlignment
   
   init(
     alignedCollectionViewFlowLayout: UICollectionViewFlowLayout,
-    cellBorderColor: UIColor
+    cellBorderColor: UIColor,
+    emptyLabelText: String,
+    emptyTextAlignment: NSTextAlignment
   ) {
     self.alignedCollectionViewFlowLayout = alignedCollectionViewFlowLayout
     self.cellBorderColor = cellBorderColor
+    self.emptyLabelText = emptyLabelText
+    self.emptyTextAlignment = emptyTextAlignment
   }
   
   // MARK: - UI Components
@@ -64,14 +72,16 @@ final class BookmarkListViewController:
     collectionView: bookmarkTagsCollectionView,
     adapterDataSource: listener,
     delegate: listener,
-    alignedCollectionViewFlowLayout: alignedCollectionViewFlowLayout, 
+    alignedCollectionViewFlowLayout: alignedCollectionViewFlowLayout,
     cellBorderColor: cellBorderColor
   )
   
-  private let emptyGuideLabel = UILabel().builder
-    .text("자주 하시는 활동으로 저장해보세요!")
+  private lazy var emptyGuideLabel = UILabel().builder
+    .numberOfLines(0)
     .font(.custom(.regular, 12))
+    .text(self.emptyLabelText)
     .textColor(.black60)
+    .textAlignment(self.emptyTextAlignment)
     .isHidden(true)
     .build()
   
@@ -80,23 +90,38 @@ final class BookmarkListViewController:
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    bindActions()
   }
-
+  
+  func presentError(_ error: DisplayErrorMessage) {
+    showErrorAlert(with: error)
+  }
+  
+  func hiddenEmptyIfneeded(_ isHidden: Bool) {
+    emptyGuideLabel.isHidden = isHidden
+  }
+  
+  func reloadBookmarks() {
+    bookmarkTagsCollectionView.reloadData()
+  }
+  
 }
 
-// MARK: - Bind Action
+// MARK: - Bind Actions
 
 extension BookmarkListViewController {
   private func bindActions() {
-    
+    bindLoadBookmarkList()
   }
-
-}
-
-// MARK: - Bind State
-
-extension BookmarkListViewController {
   
+  private func bindLoadBookmarkList() {
+    rx.viewWillAppear
+      .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
+      .subscribe(with: self) { owner, _ in
+        owner.listener?.loadBookmarkList()
+      }
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Layout
@@ -134,6 +159,6 @@ extension BookmarkListViewController {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview("UIKit Portrait") {
-  BookmarkListViewController(alignedCollectionViewFlowLayout: CenterAlignedCollectionViewFlowLayout(), cellBorderColor: .pointGreen)
+  BookmarkListViewController(alignedCollectionViewFlowLayout: CenterAlignedCollectionViewFlowLayout(), cellBorderColor: .pointGreen, emptyLabelText: "emptyLabel", emptyTextAlignment: .left)
 }
 #endif

@@ -1,24 +1,30 @@
 //
 //  BookmarkListInteractor.swift
-//  
+//
 //
 //  Created by 이상헌 on 12/10/23.
 //
+import Foundation
 
 import RIBs
 import RxSwift
 
+import Entities
 import Start
+import AppFoundation
 
 // MARK: - BookmarkListPresentable
 
 protocol BookmarkListPresentable: Presentable {
   var listener: BookmarkListPresentableListener? { get set }
+  func presentError(_ error: DisplayErrorMessage)
+  func hiddenEmptyIfneeded(_ isHidden: Bool)
+  func reloadBookmarks()
 }
 
 // MARK: - BookmarkListInteractor
 
-final class BookmarkListInteractor: 
+final class BookmarkListInteractor:
   PresentableInteractor<BookmarkListPresentable>,
   BookmarkListInteractable,
   BookmarkListPresentableListener
@@ -28,34 +34,61 @@ final class BookmarkListInteractor:
   
   weak var router: BookmarkListRouting?
   weak var listener: BookmarkListListener?
+  private let bookmarkModelDataStream: BookmarkModelDataStream
+  private var state: BookmarkListModel.State
   
   // MARK: - Initialization & DeInitialization
   
-  override init(presenter: BookmarkListPresentable) {
+  init(
+    initialState: BookmarkListModel.State,
+    presenter: BookmarkListPresentable,
+    bookmarkModelDataStream: BookmarkModelDataStream
+  ) {
+    self.state = initialState
+    self.bookmarkModelDataStream = bookmarkModelDataStream
     super.init(presenter: presenter)
     presenter.listener = self
   }
   
-  // MARK: - LifeCycle
-  
-  override func didBecomeActive() {
-    super.didBecomeActive()
+  deinit {
+    print("deinit \(type(of: self))")
   }
   
-  func didTapBookmarkTagEditor() {
-    
+  func loadBookmarkList() {
+    bookmarkModelDataStream.bookmarks
+      .catch({ [weak self] error in
+        guard let self else { return .empty() }
+        self.presenter.presentError(self.bookmarkListErrorMessage(error.localizedDescription))
+        return .empty()
+      })
+      .subscribe(with: self) { owner, bookmarks in
+        var newState = owner.state
+        newState.bookmarks = bookmarks
+        owner.state = newState
+        owner.presenter.reloadBookmarks()
+        owner.presenter.hiddenEmptyIfneeded(!bookmarks.isEmpty)
+      }
+      .disposeOnDeactivate(interactor: self)
   }
   
   func numberOfItems() -> Int {
-    2
+    state.bookmarks.count
   }
   
   func bookmark(at index: Int) -> String {
-    "22"
+    state.bookmarks[index].title
   }
   
-  func didTapTagCell() {
-    listener?.didTapTagCell()
+  func didTapTagCell(at index: IndexPath) {
+    listener?.didTapTagCell(at: index)
+  }
+  
+  private func bookmarkListErrorMessage(_ message: String) -> DisplayErrorMessage {
+    return DisplayErrorMessage(
+      title: "Bookmark List Error",
+      message: message,
+      confirmActionTitle: "Confirm"
+    )
   }
 }
 
