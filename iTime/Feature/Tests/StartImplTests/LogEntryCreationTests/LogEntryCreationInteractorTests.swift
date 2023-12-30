@@ -17,7 +17,7 @@ final class LogEntryCreationInteractorTests: XCTestCase {
   
   private var sut: LogEntryCreationInteractor!
   private var presenter: LogEntryCreationPresentableSpy!
-  private var bookmarkModelDataStream: BookmarkModelDataStreamImpl!
+  private var bookmarkModelDataStream: BookmarkModelDataStream!
   private var router: LogEntryCreationRoutingSpy!
   private var listener: LogEntryCreationListenerSpy!
   private var disposeBag: DisposeBag!
@@ -25,7 +25,7 @@ final class LogEntryCreationInteractorTests: XCTestCase {
   override func setUp() {
     
     presenter = LogEntryCreationPresentableSpy()
-    bookmarkModelDataStream = BookmarkModelDataStreamImpl()
+    bookmarkModelDataStream = BookmarkModelDataStream()
     router = LogEntryCreationRoutingSpy()
     listener = LogEntryCreationListenerSpy()
     disposeBag = DisposeBag()

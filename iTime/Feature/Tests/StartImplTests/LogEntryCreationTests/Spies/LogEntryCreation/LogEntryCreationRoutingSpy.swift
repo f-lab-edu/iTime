@@ -14,6 +14,18 @@ import RIBsTestSupport
 // MARK: - LogEntryCreationRoutingSpy
 
 final class LogEntryCreationRoutingSpy: LogEntryCreationRouting {
+  func detachLogEntryEditorRIB() {
+    
+  }
+  
+  func detachTimeLogRunningRIB() {
+    
+  }
+  
+  func detachBookmarkEditorRIB() {
+    
+  }
+  
   
   public var attachLogEntryEditorRIBCallCount: Int = 0
   func attachLogEntryEditorRIB() {

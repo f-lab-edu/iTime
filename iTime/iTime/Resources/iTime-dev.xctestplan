@@ -1,0 +1,59 @@
+{
+  "configurations" : [
+    {
+      "id" : "BC96417A-9A7F-4C97-B047-83442DD3618E",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Domain",
+        "identifier" : "UsecaseImplTests",
+        "name" : "UsecaseImplTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Feature",
+        "identifier" : "LoggedInImplTests",
+        "name" : "LoggedInImplTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Feature",
+        "identifier" : "LoggedOutImplTests",
+        "name" : "LoggedOutImplTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Feature",
+        "identifier" : "StartImplTests",
+        "name" : "StartImplTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Platform",
+        "identifier" : "RepositoryImplTests",
+        "name" : "RepositoryImplTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:ProxyPackage",
+        "identifier" : "ProxyPackageTests",
+        "name" : "ProxyPackageTests"
+      }
+    }
+  ],
+  "version" : 1
+}

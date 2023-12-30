@@ -5,7 +5,10 @@
 //  Created by 이상헌 on 11/18/23.
 //
 
+import Foundation
+
 import RxSwift
+import RIBs
 
 import Start
 import RIBsTestSupport
@@ -13,6 +16,22 @@ import RIBsTestSupport
 @testable import StartImpl
 
 final class LogEntryCreationInteratableSpy: LogEntryCreationInteractable {
+  func detachLogEntryEditorRIB() {
+    
+  }
+  
+  func didTapTagCell(at index: IndexPath) {
+    
+  }
+  
+  func detachTimeLogRunningRIB() {
+    
+  }
+  
+  func detachBookmarkEditorRIB() {
+    
+  }
+  
   func detachLocationEntryEditorRIB() {
   
   }
@@ -43,6 +62,12 @@ final class LogEntryCreationViewControllableSpy:
   ViewControllableMock,
   LogEntryCreationViewControllable
 {
+  func addBookmarkList(_ view: RIBs.ViewControllable) {
+   
+  }
   
+  func addLoggingRetention(_ view: RIBs.ViewControllable) {
+   
+  }
 }
 
