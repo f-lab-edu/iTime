@@ -23,6 +23,12 @@ final class RunningTimeTrackerImplTests: XCTestCase, @unchecked Sendable {
     sut = RunningTimeTrackerImpl(timer: testClock)
   }
   
+  override func tearDown() {
+    super.tearDown()
+    testClock = nil
+    sut = nil
+  }
+  
   func test_StartDate_When_TimerStart() {
     // When
     sut.start()
