@@ -8,7 +8,7 @@
 import RIBs
 import RxSwift
 
-import CurrentLogging
+import History
 
 // MARK: - CurrentLoggingPresentable
 

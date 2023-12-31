@@ -7,7 +7,7 @@
 
 import RIBs
 
-import CurrentLogging
+import History
 
 // MARK: - CurrentLoggingInteractable
 

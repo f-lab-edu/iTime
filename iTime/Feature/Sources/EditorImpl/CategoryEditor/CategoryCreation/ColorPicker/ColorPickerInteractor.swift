@@ -8,7 +8,7 @@
 import RIBs
 import RxSwift
 
-import ColorPicker
+import Editor
 
 // MARK: - ColorPickerPresentable
 

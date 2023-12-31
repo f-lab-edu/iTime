@@ -8,7 +8,7 @@
 import RIBs
 import RxSwift
 
-import TextEntry
+import Editor
 
 // MARK: - TextEntryPresentable
 

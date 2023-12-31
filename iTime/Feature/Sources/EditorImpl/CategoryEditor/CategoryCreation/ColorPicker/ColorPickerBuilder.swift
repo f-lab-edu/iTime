@@ -7,7 +7,7 @@
 
 import RIBs
 
-import ColorPicker
+import Editor
 
 // MARK: - ColorPickerDependency
 

@@ -7,7 +7,7 @@
 
 import RIBs
 
-import CategoryList
+import Editor
 
 // MARK: - CategoryListInteractable
 

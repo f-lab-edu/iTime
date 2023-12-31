@@ -7,7 +7,7 @@
 
 import RIBs
 
-import TextEntry
+import Editor
 
 // MARK: - TextEntryInteractable
 
