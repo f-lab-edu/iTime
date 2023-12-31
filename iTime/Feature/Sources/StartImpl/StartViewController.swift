@@ -15,6 +15,7 @@ import SharedUI
 // MARK: - StartPresentableListener
 
 protocol StartPresentableListener: AnyObject {
+  func loadData()
 }
 
 // MARK: - StartViewController
@@ -39,6 +40,7 @@ final class StartViewController:
     super.viewDidLoad()
     setupUI()
     setTabBarItem()
+    bindActions()
   }
   
   // MARK: - Private methods
@@ -51,6 +53,23 @@ final class StartViewController:
     )
   }
   
+}
+
+// MARK: - Bind Action
+
+extension StartViewController {
+  func bindActions() {
+    bindLoadData()
+  }
+  
+  private func bindLoadData() {
+    rx.viewWillAppear
+      .throttle(.seconds(1), latest: false , scheduler: MainScheduler.instance)
+      .subscribe(with: self) { owner, _ in
+        owner.listener?.loadData()
+      }
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Layout

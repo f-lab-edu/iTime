@@ -10,6 +10,7 @@ import RIBs
 import Start
 import Editor
 import Entities
+import Usecase
 import AppFoundation
 
 // MARK: - StartDependency
@@ -21,6 +22,7 @@ public protocol StartDependency: Dependency {
   var bookmarkModelDataStream: BookmarkModelDataStream { get }
   var timeFormatter: TimeFormatter { get }
   var logEntryCreationBuilder: LogEntryCreationBuildable { get }
+  var timeLogUsecase: TimeLogUsecase { get }
 }
 
 // MARK: - StartComponent
@@ -46,6 +48,10 @@ final class StartComponent: Component<StartDependency> {
     dependency.logEntryEditorBuilder
   }
   
+  fileprivate var timeLogUsecase: TimeLogUsecase {
+    dependency.timeLogUsecase
+  }
+  
   fileprivate var logEntryCreationBuilder: LogEntryCreationBuildable {
     dependency.logEntryCreationBuilder
   }
@@ -65,7 +71,10 @@ public final class StartBuilder:
   public func build(withListener listener: StartListener) -> StartRouting {
     let component = StartComponent(dependency: dependency)
     let viewController = StartViewController()
-    let interactor = StartInteractor(presenter: viewController)
+    let interactor = StartInteractor(
+      presenter: viewController,
+      timeLogUsecase: component.timeLogUsecase
+    )
     interactor.listener = listener
     return StartRouter(
       interactor: interactor,

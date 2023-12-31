@@ -9,6 +9,7 @@ import UIKit
 import RIBs
 
 import AppFoundation
+import Entities
 import SharedUI
 
 // MARK: - BookmarkListBuildable
@@ -48,6 +49,6 @@ public protocol BookmarkListRouting: ViewableRouting {
 // MARK: - BookmarkListListener
 
 public protocol BookmarkListListener: AnyObject {
-  func didTapTagCell(at index: IndexPath)
+  func didTapTagCell(_ bookmark: Bookmark)
 }
 

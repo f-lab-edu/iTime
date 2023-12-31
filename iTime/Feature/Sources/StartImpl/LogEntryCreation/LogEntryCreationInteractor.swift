@@ -27,6 +27,7 @@ final class LogEntryCreationInteractor:
   LogEntryCreationInteractable,
   LogEntryCreationPresentableListener
 {
+
   
   // MARK: - Properties
   
@@ -70,8 +71,8 @@ final class LogEntryCreationInteractor:
     router?.attachBookmarkEditorRIB()
   }
   
-  func didTapTagCell(at index: IndexPath) {
-    print(index)
+  func didTapTagCell(_ bookmark: Entities.Bookmark) {
+    print(bookmark)
   }
 
 }

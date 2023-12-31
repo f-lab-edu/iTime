@@ -62,7 +62,6 @@ final class ActivityHistoryInteractor:
       timeLogRecordModelDataStream.timeLogRecords.map { $0.map(\.activity) },
       bookmarkModelDataStream.bookmarks
     )
-    .debug("shle")
     .catch ({ [weak self] error in
       guard let self else { return .empty() }
       self.presenter.presentError(self.activityListErrorMessage(error.localizedDescription))

@@ -4,7 +4,6 @@
 //
 //  Created by 이상헌 on 2023/10/26.
 //
-import OSLog
 
 import RIBs
 
@@ -30,15 +29,12 @@ final class AppRootInteractor:
   weak var listener: AppRootListener?
   
   private let authenticationUsecase: AuthenticationUsecase
-  private let timeLogUsecase: TimeLogUsecase
   
   init(
     presenter: AppRootPresentable,
-    timeLogUsecase: TimeLogUsecase,
     authenticationUsecase: AuthenticationUsecase
   ) {
     self.authenticationUsecase = authenticationUsecase
-    self.timeLogUsecase = timeLogUsecase
     super.init(presenter: presenter)
     presenter.listener = self
   }
@@ -46,22 +42,12 @@ final class AppRootInteractor:
   override func didBecomeActive() {
     super.didBecomeActive()
     routeInitalLaunch()
-    loadData()
   }
   
   private func routeInitalLaunch() {
     authenticationUsecase.isLoggedIn() ?
     router?.attachLoggedIn() :
     router?.attachLoggedOut()
-  }
-  
-  private func loadData() {
-    _ = timeLogUsecase.preLoadAllData()
-      .subscribe(with: self) { owner, _ in
-        os_log(.debug, log: .presenter, "preLoadData is success")
-      } onFailure: { owner, error in
-        os_log(.error, log: .presenter, "%@", error.localizedDescription)
-      }
   }
   
   func detachLoggedOut() {
