@@ -53,9 +53,11 @@ public final class TagView:
   }
   
   public func configure(by viewModel: String) {
-    tagLabel.text = viewModel
-    
-    remakeConstraints()
+    DispatchQueue.main.async { [weak self] in
+      self?.tagLabel.text = viewModel
+      
+      self?.remakeConstraints()
+    }
   }
   
   private func setupUI() {

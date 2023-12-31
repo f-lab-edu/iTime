@@ -20,7 +20,7 @@ public final class TimeStartFacadeImpl: TimeStartFacade {
   private let timerInfoModelDataStream: TimerInfoModelDataStream
   private let userDefaultRepository: UserDefaultRepository
   
-  init(
+  public init(
     locationTracker: LocationTracker,
     runningTimeTracker: RunningTimeTracker,
     timerInfoModelDataStream: TimerInfoModelDataStream,
@@ -33,13 +33,17 @@ public final class TimeStartFacadeImpl: TimeStartFacade {
   }
   
   public func start() -> Observable<Void> {
-    runningTimeTracker.currentSeconds()
-      .filter { $0 != .zero }
+    Observable.combineLatest(
+      Observable.just(runningTimeTracker.start()),
+      runningTimeTracker.currentSeconds().debug("check")
+    ) { $1 }
       .withUnretained(self)
       .map { owner, time in
-        owner.locationTracker.startLocationTracking()
         owner.timerInfoModelDataStream.updateRunningTime(with: time)
         owner.userDefaultRepository.updateLastlyTrackedTime(with: time)
       }
+      .do(onSubscribe: { [weak self] in
+        self?.locationTracker.startLocationTracking()
+      })
   }
 }

@@ -15,6 +15,7 @@ import SharedUI
 // MARK: - CurrentActivityPresentableListener
 
 protocol CurrentActivityPresentableListener: AnyObject {
+  func loadData()
 }
 
 // MARK: - CurrentActivityViewController
@@ -37,17 +38,15 @@ final class CurrentActivityViewController:
   
   // MARK: - UI Components
   
-  private let tagView = TagView().builder
-    .with {
-      $0.configure(by: "영어공부")
-    }
-    .build()
+  private let tagView = TagView()
   
   // MARK: - View LifeCycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    
+    bindLoadData()
   }
   
 }
@@ -55,13 +54,23 @@ final class CurrentActivityViewController:
 // MARK: - Bind Action
 
 extension CurrentActivityViewController {
-  
+  private func bindLoadData() {
+    rx.viewWillAppear
+      .throttle(.seconds(1), latest: false, scheduler: MainScheduler.asyncInstance)
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in
+        owner.listener?.loadData()
+      }
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Bind State
 
 extension CurrentActivityViewController {
-  
+  func bindTageViewTitle(_ title: String) {
+    tagView.configure(by: title)
+  }
 }
 
 // MARK: - Layout

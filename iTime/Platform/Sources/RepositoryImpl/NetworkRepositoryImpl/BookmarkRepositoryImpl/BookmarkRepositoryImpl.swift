@@ -4,6 +4,7 @@
 //
 //  Created by 이상헌 on 11/19/23.
 //
+import OSLog
 
 import RxSwift
 
@@ -53,7 +54,7 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
   public func update(with bookmarks: [Bookmark]) -> Single<[Bookmark]> {
     firestoreRepository.update(
       reference: DatabaseReference.bookmarkSession(userID: userDefaultRepository.userID()),
-      with: translator.translateToPerformList(by: bookmarks).toJson() ?? [:] ,
+      with: unwrappedPerformList(bookmarks) ,
       merge: false
     )
     .withUnretained(self)
@@ -96,4 +97,12 @@ public final class BookmarkRepositoryImpl: BookmarkRepository {
       .map(translator.translateToBookmarks(by:))
   }
   
+  private func unwrappedPerformList(_ bookmarks: [Bookmark]) -> [String: Any] {
+    do {
+      return try translator.translateToPerformList(by: bookmarks).toJson().unwrap()
+    } catch {
+      os_log(.error, log: .infra, "PerformList unwrapping fail")
+    }
+    return [:]
+  }
 }

@@ -14,7 +14,7 @@ import Entities
 import Repository
 import AppFoundation
 
-final class TimeLogRecordBuilder {
+public final class TimeLogRecordBuilder {
   
   // MARK: - Properties
   
@@ -27,7 +27,7 @@ final class TimeLogRecordBuilder {
   
   // MARK: Initialization
   
-  init(
+  public init(
     locationTracker: LocationTracker,
     runningTimeTracker: RunningTimeTracker,
     timerInfoModelDataStream: TimerInfoModelDataStream
@@ -38,12 +38,13 @@ final class TimeLogRecordBuilder {
   }
   
   func timeLogRecord(activity: Activity) -> Observable<TimeLogRecord> {
-    Observable<Void>.zip(
+    Observable<Any>.zip(
       Observable.just(saveID()),
       Observable.just(saveActivity(activity)),
       saveCurrentLocation(),
       saveDate()
-    ) { _,_,_,_  in return Void() }
+    )
+    .map { _ in return Void() }
     .flatMap(timeLogRecordRelay.asObservable)
   }
   

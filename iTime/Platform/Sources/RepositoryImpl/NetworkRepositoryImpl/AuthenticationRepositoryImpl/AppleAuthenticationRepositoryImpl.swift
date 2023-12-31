@@ -55,6 +55,10 @@ public final class AppleAuthenticationRepositoryImpl:
   public func isLoggedIn() -> Bool {
     Auth.auth().currentUser?.uid != nil ? true : false
   }
+  
+  public func userID() -> String? {
+    Auth.auth().currentUser?.uid
+  }
 }
 
 // MARK: - Sign In

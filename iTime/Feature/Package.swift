@@ -70,7 +70,8 @@ let package = Package(
     .target(
       name: "Editor",
       dependencies: [
-        "ProxyPackage"
+        "ProxyPackage",
+        "Start"
       ]),
     .target(
       name: "EditorImpl",
@@ -148,6 +149,7 @@ let package = Package(
       name: "StartImplTests",
       dependencies: [
         "StartImpl",
+        .product(name: "UsecaseTestSupports", package: "Domain"),
         .product(name: "RepositoryTestSupports", package: "Domain"),
         .product(name: "Entities", package: "Domain"),
         .product(name: "RIBsTestSupport", package: "ProxyPackage"),

@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import CoreLocation
 
 import RIBs
+import Clocks
 
 import AppRoot
 import AppRootImpl
@@ -48,6 +50,7 @@ final class AppComponent:
   TimerOperationDependency,
   CurrentActivityDependency
 {
+  
   var logEntryCreationBuilder: LogEntryCreationBuildable {
     LogEntryCreationBuilder(dependency: self)
   }
@@ -123,7 +126,7 @@ final class AppComponent:
     let firebaseAnalyticsLogger = FirebaseAnalyticsLoggerImpl(
       userID: userDefaultRepository.userID
     )
-    
+    self.activityLogModelStream = ActivityLogModelStream()
     let timeLogUsecase = TimeLogUsecaseImpl(
       bookmarkRepository: bookmarkRepository,
       timeLogRecordRepository: timeLogRecordRepository,
@@ -138,7 +141,47 @@ final class AppComponent:
     
     self.authenticationUsecase = AuthenticationUsecaseImpl(
       appleAuthenticationRepository: AppleAuthenticationRepositoryImpl(),
-      authorizationContextProvider: UIApplication.shared
+      authorizationContextProvider: UIApplication.shared, 
+      userDefaultRepository: userDefaultRepository
+    )
+    
+    let locationTracker = LocationTrackerImpl(
+      applicationShared: UIApplication.shared,
+      locationFetcher: CLLocationManager()
+    )
+    let runningTimeTracker = RunningTimeTrackerImpl(timer: ContinuousClock())
+    self.timerInfoModelDataStream = TimerInfoModelDataStream()
+    
+    let timeLogRecordBuilder = TimeLogRecordBuilder(
+      locationTracker: locationTracker,
+      runningTimeTracker: runningTimeTracker,
+      timerInfoModelDataStream: timerInfoModelDataStream
+    )
+
+    let timeStartFacade = TimeStartFacadeImpl(
+      locationTracker: locationTracker,
+      runningTimeTracker: runningTimeTracker,
+      timerInfoModelDataStream: timerInfoModelDataStream,
+      userDefaultRepository: userDefaultRepository
+    )
+    
+    let timeSuspenseFacade = TimeSuspenseFacadeImpl(
+      runningTimeTracker: runningTimeTracker,
+      locationTracker: locationTracker
+    )
+    
+    let timeFinishFacade = TimeFinishFacadeImpl(
+      locationTracker: locationTracker,
+      runningTimeTracker: runningTimeTracker,
+      timeLogRecordRepository: timeLogRecordRepository,
+      timeLogRecordModelDataStream: timeLogRecordModelDataStream
+    )
+    
+    self.timerUsecase = TimerUsecaseImpl(
+      timeLogRecordBuilder: timeLogRecordBuilder,
+      timeStartFacade: timeStartFacade,
+      timeSuspenseFacade: timeSuspenseFacade,
+      timeFinishFacade: timeFinishFacade
     )
     
     super.init(dependency: EmptyComponent())
@@ -146,12 +189,18 @@ final class AppComponent:
   
   let timeLogUsecase: TimeLogUsecase
   
+  let timerUsecase: TimerUsecase
+  
   let authenticationUsecase: AuthenticationUsecase
+  
+  let timerInfoModelDataStream: TimerInfoModelDataStream
   
   let bookmarkModelDataStream: BookmarkModelDataStream
   
   let timeLogRecordModelDataStream: TimeLogRecordModelDataStream
   
-  var timeFormatter = TimeFormatter()
+  let activityLogModelStream: ActivityLogModelStream
+  
+  let timeFormatter = TimeFormatter()
 }
 

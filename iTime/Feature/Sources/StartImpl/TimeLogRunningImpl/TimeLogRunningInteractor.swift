@@ -40,4 +40,8 @@ final class TimeLogRunningInteractor:
     listener?.detachTimeLogRunningRIB()
   }
   
+  func detachTimeLogRunningRIB() {
+    listener?.detachTimeLogRunningRIB()
+  }
+  
 }

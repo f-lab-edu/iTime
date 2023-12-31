@@ -21,6 +21,7 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
   
   private let appleAuthenticationRepository: AuthenticationRepository
   private let authorizationContextProvider: AuthorizationContextProviding
+  private let userDefaultRepository: WriteUserIDRepository
   
   fileprivate var notificationCenter: Addable
   
@@ -29,11 +30,13 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
   public init(
     appleAuthenticationRepository: AuthenticationRepository,
     notificationCenter: Addable = NotificationCenter.default,
-    authorizationContextProvider: AuthorizationContextProviding
+    authorizationContextProvider: AuthorizationContextProviding,
+    userDefaultRepository: WriteUserIDRepository
   ) {
     self.appleAuthenticationRepository = appleAuthenticationRepository
     self.notificationCenter = notificationCenter
     self.authorizationContextProvider = authorizationContextProvider
+    self.userDefaultRepository = userDefaultRepository
   }
   
   public func signIn() -> Single<Void> {
@@ -46,8 +49,11 @@ public final class AuthenticationUsecaseImpl: AuthenticationUsecase {
             observer(.failure(error))
         }
       }
-      
       this.appleAuthenticationRepository.signIn(this.authorizationContextProvider)
+      guard let userID = this.appleAuthenticationRepository.userID() else {
+        return Disposables.create()
+      }
+      this.userDefaultRepository.updateUserID(with: userID)
       return Disposables.create()
     }
   }

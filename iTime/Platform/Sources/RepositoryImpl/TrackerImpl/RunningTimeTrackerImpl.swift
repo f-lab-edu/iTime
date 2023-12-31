@@ -1,6 +1,6 @@
 //
 //  File.swift
-//
+//  
 //
 //  Created by 이상헌 on 12/12/23.
 //
@@ -71,6 +71,7 @@ public final class RunningTimeTrackerImpl: RunningTimeTracker {
   }
   
   private func initTimer() {
-      timerTask = nil
+    timerTask?.cancel()
+    timerTask = nil
   }
 }

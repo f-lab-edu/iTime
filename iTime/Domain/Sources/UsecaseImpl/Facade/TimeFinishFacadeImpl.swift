@@ -11,14 +11,14 @@ import Entities
 import Usecase
 import Repository
 
-final class TimeFinishFacadeImpl: TimeFinishFacade {
+public final class TimeFinishFacadeImpl: TimeFinishFacade {
   
   private let locationTracker: LocationTracker
   private let runningTimeTracker: RunningTimeTracker
   private let timeLogRecordRepository: TimeLogRecordRepository
   private let timeLogRecordModelDataStream: TimeLogRecordModelDataStream
   
-  init(
+  public init(
     locationTracker: LocationTracker,
     runningTimeTracker: RunningTimeTracker,
     timeLogRecordRepository: TimeLogRecordRepository,
@@ -30,12 +30,12 @@ final class TimeFinishFacadeImpl: TimeFinishFacade {
     self.timeLogRecordModelDataStream = timeLogRecordModelDataStream
   }
   
-  func finish(_ record: TimeLogRecord) -> Observable<Void> {
+  public func finish(_ record: TimeLogRecord) -> Observable<Void> {
     runningTimeTracker.finish()
     locationTracker.resetLocationTracking()
     timeLogRecordModelDataStream.append(record)
     return timeLogRecordRepository.append(record)
-      .asObservable() // TODO: Check, asSingle()
+      .asObservable()
       .map { _ in return Void() }
   }
   

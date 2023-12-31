@@ -38,10 +38,10 @@ final class TimeStartFacadeImplTests: XCTestCase {
   
   func test_start() async throws {
     // Given
-    let dummyLastlyTrackTime = userDefaultRepository.dummyLastlyTrackTime + 1
+    let dummyLastlyTrackTime = userDefaultRepository.dummyLastlyTrackTime + 2
     
     // When
-    async let start = sut.start().take(1).values
+    async let start = sut.start().take(2).values
     async let modelStream = timerInfoModelDataStream.timerInfoModelDataStream.map(\.runningTime).filter { $0 != Int() }.take(1).values
     
     // Then
@@ -50,7 +50,7 @@ final class TimeStartFacadeImplTests: XCTestCase {
     XCTAssertNotNil(void)
     XCTAssertEqual(locationTracker.startLocationTrackingCallCount, 1)
     XCTAssertEqual(runningTime, 1)
-    XCTAssertEqual(userDefaultRepository.updateLastlyTrackedTimeCallCount, 1)
+    XCTAssertEqual(userDefaultRepository.updateLastlyTrackedTimeCallCount, 2)
     XCTAssertEqual(dummyLastlyTrackTime, userDefaultRepository.lastlyTrackedTime())
   }
   

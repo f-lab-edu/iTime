@@ -14,6 +14,7 @@ import Start
 
 protocol CurrentActivityPresentable: Presentable {
   var listener: CurrentActivityPresentableListener? { get set }
+  func bindTageViewTitle(_ title: String)
 }
 
 // MARK: - CurrentActivityInteractor
@@ -29,16 +30,30 @@ final class CurrentActivityInteractor:
   weak var router: CurrentActivityRouting?
   weak var listener: CurrentActivityListener?
   
+  private let activityLogModelStream: ActivityLogModelStream
+  
   // MARK: - Initialization & DeInitialization
   
-  override init(presenter: CurrentActivityPresentable) {
+  init(
+    presenter: CurrentActivityPresentable,
+    activityLogModelStream: ActivityLogModelStream
+  ) {
+    self.activityLogModelStream = activityLogModelStream
     super.init(presenter: presenter)
     presenter.listener = self
   }
   
-  // MARK: - LifeCycle
-  
-  override func didBecomeActive() {
-    super.didBecomeActive()
+  func loadData() {
+    activityLogModelStream
+      .activityLogStream
+      .map(\.title)
+      .take(1)
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, title in
+        owner.presenter.bindTageViewTitle(title ?? "내가 지금 할 것은...")
+      }
+      .disposeOnDeactivate(interactor: self)
   }
+  
+  
 }

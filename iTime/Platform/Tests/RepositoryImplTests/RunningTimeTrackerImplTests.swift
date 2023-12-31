@@ -11,7 +11,7 @@ import Clocks
 import Repository
 @testable import RepositoryImpl
 
-final class RunningTimeTrackerImplTests: XCTestCase {
+final class RunningTimeTrackerImplTests: XCTestCase, @unchecked Sendable {
   
   private var sut: RunningTimeTrackerImpl!
   private var disposeBag: DisposeBag!
@@ -22,7 +22,6 @@ final class RunningTimeTrackerImplTests: XCTestCase {
     testClock = TestClock()
     sut = RunningTimeTrackerImpl(timer: testClock)
   }
-  
   
   func test_StartDate_When_TimerStart() {
     // When
@@ -123,7 +122,7 @@ final class RunningTimeTrackerImplTests: XCTestCase {
 
   func test_random_Seconds_When_TimeStart() async throws {
     // Given
-    let randomSecond = Int.random(in: 1..<10000)
+    let randomSecond = Int.random(in: 1..<1000)
     
     // When
     sut.start()

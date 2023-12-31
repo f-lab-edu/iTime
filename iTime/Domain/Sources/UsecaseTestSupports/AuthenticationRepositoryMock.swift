@@ -10,6 +10,10 @@ import Repository
 // MARK: - AuthenticationRepositoryMock
 
 public final class AuthenticationRepositoryMock: AuthenticationRepository {
+  public func userID() -> String? {
+    return ""
+  }
+  
   
   public var signInCallCount = 0
   public var componentCallCount: Any?

@@ -11,12 +11,13 @@ import RIBs
 import RxSwift
 import SnapKit
 
+import Start
 import SharedUI
 
 // MARK: - LogEntryEditorPresentableListener
 
 protocol LogEntryEditorPresentableListener: AnyObject {
-  func didTapStartButton()
+  func didTapStartButton(_ title: String?)
   func didTapCategoryStateView()
   func didTapCloseButton()
 }
@@ -104,7 +105,7 @@ extension LogEntryEditorViewController {
     startButton.rx.tap
       .preventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in owner.listener?.didTapStartButton() }
+      .drive(with: self) { owner, _ in owner.listener?.didTapStartButton(owner.editorRoutingTextField.text) }
       .disposed(by: disposeBag)
   }
   

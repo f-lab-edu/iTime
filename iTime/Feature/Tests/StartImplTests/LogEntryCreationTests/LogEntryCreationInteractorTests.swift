@@ -10,6 +10,7 @@ import RxSwift
 
 import Entities
 import RepositoryTestSupports
+import UsecaseTestSupports
 import ProxyTestSupport
 @testable import StartImpl
 
@@ -20,6 +21,8 @@ final class LogEntryCreationInteractorTests: XCTestCase {
   private var bookmarkModelDataStream: BookmarkModelDataStream!
   private var router: LogEntryCreationRoutingSpy!
   private var listener: LogEntryCreationListenerSpy!
+  private var timerUsecase: TimerUsecaseMock!
+  
   private var disposeBag: DisposeBag!
   
   override func setUp() {
@@ -28,11 +31,13 @@ final class LogEntryCreationInteractorTests: XCTestCase {
     bookmarkModelDataStream = BookmarkModelDataStream()
     router = LogEntryCreationRoutingSpy()
     listener = LogEntryCreationListenerSpy()
+    timerUsecase = TimerUsecaseMock()
     disposeBag = DisposeBag()
     
     sut = LogEntryCreationInteractor(
       presenter: presenter,
-      bookmarkModelDataStream: bookmarkModelDataStream
+      bookmarkModelDataStream: bookmarkModelDataStream,
+      timerUsecase: timerUsecase
     )
     sut.router = router
     sut.listener = listener
