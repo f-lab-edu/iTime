@@ -17,6 +17,8 @@ import AppFoundation
 
 protocol TimeLogRunningPresentableListener: AnyObject {
   func didTapBackButton()
+  func didTapAddBookmark()
+  func didTapDeleteCurrentLog()
 }
 
 // MARK: - TimeLogRunningViewController
@@ -24,7 +26,8 @@ protocol TimeLogRunningPresentableListener: AnyObject {
 final class TimeLogRunningViewController:
   BaseViewController,
   TimeLogRunningPresentable,
-  TimeLogRunningViewControllable
+  TimeLogRunningViewControllable,
+  HasActionSheetable
 {
   
   // MARK: - Constants
@@ -42,7 +45,7 @@ final class TimeLogRunningViewController:
   
   // MARK: - UI Components
   
-  private let customNavigationBar = CustomNavigationBar()
+  private let categoryNavigationBar = CategoryNavigationBar()
   
   private let currentActivityView = UIView()
   
@@ -67,13 +70,29 @@ final class TimeLogRunningViewController:
 extension TimeLogRunningViewController {
   private func bindActions() {
     bindDidTapBackButton()
+    bindDidTapMoreButton()
   }
   
   private func bindDidTapBackButton() {
-    customNavigationBar.backButton.rx
+    categoryNavigationBar.backButton.rx
       .tapWithPreventDuplication()
       .asDriver(onErrorDriveWith: .empty())
       .drive(with: self) { owner, _ in owner.listener?.didTapBackButton() }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindDidTapMoreButton() {
+    categoryNavigationBar.rightItemButton.rx
+      .tapWithPreventDuplication()
+      .withUnretained(self)
+      .flatMap { owner, _ in owner.showActionSheet() }
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, action in
+        switch action {
+        case .addBookmark: owner.listener?.didTapAddBookmark()
+        case .delete: owner.listener?.didTapDeleteCurrentLog()
+        }
+      }
       .disposed(by: disposeBag)
   }
 }
@@ -88,7 +107,7 @@ extension TimeLogRunningViewController {
 
 extension TimeLogRunningViewController {
   private func setupUI() {
-    view.addSubview(customNavigationBar)
+    view.addSubview(categoryNavigationBar)
     view.addSubview(currentActivityView)
     view.addSubview(currentTimerTimeView)
     view.addSubview(datePickerSectionView)
@@ -98,15 +117,15 @@ extension TimeLogRunningViewController {
   }
   
   private func layout() {
-    makeCustomNavigationBarConstraints()
+    makeCategoryNavigationBarConstraints()
     makeTagViewConstraints()
     makeMainCurrentTimeLabelConstraints()
     makeDatePickerSectionViewConstraints()
     makeTimeOperatorButtonsViewConstraints()
   }
   
-  private func makeCustomNavigationBarConstraints() {
-    customNavigationBar.snp.makeConstraints {
+  private func makeCategoryNavigationBarConstraints() {
+    categoryNavigationBar.snp.makeConstraints {
       $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       $0.leading.trailing.equalToSuperview()
     }
@@ -114,7 +133,7 @@ extension TimeLogRunningViewController {
   
   private func makeTagViewConstraints() {
     currentActivityView.snp.makeConstraints {
-      $0.top.equalTo(customNavigationBar.snp.bottom).offset(Metric.tagViewTopMargin)
+      $0.top.equalTo(categoryNavigationBar.snp.bottom).offset(Metric.tagViewTopMargin)
       $0.centerX.equalToSuperview()
     }
   }

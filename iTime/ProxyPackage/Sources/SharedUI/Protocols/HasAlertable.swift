@@ -13,8 +13,8 @@ public protocol HasAlertable: AnyObject {
     func showAlert(title: String, message: String?, isNeedCancel: Bool) -> Observable<ActionType>
 }
 
-public extension HasAlertable where Self: UIViewController {
-    func showAlert(title: String, message: String? = nil, isNeedCancel: Bool = false) -> Observable<ActionType> {
+extension HasAlertable where Self: UIViewController {
+  public func showAlert(title: String, message: String? = nil, isNeedCancel: Bool = false) -> Observable<ActionType> {
         return Observable.create { [weak self] observer in
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             if isNeedCancel {

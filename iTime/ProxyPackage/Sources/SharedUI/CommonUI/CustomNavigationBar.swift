@@ -50,6 +50,14 @@ public final class CustomNavigationBar: BaseView {
     layout()
   }
   
+  // MARK: - Methods
+  
+  public func setTitleLabel(_ text: String) {
+    titleLabel.text = text
+  }
+  
+  // MARK: Layout
+  
   private func setupUI() {
     backgroundColor = .clear
     addSubview(backButton)

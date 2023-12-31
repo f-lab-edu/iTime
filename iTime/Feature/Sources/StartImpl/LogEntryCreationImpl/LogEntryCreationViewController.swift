@@ -63,7 +63,7 @@ final class LogEntryCreationViewController:
   
   private let tagView = TagView().builder
     .with {
-      $0.configure(by: "즐겨찾기")
+      $0.configure(by: .init(title: "즐겨찾기"))
     }
     .build()
   

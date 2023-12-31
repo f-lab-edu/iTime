@@ -84,7 +84,7 @@ public final class TimeLogRecordRepositoryImpl: TimeLogRecordRepository {
       for: DatabaseReference.timeLogHistorySession(userID: userDefaultRepository.userID()),
       includeMetadata: false
     )
-    .map { try $0.decode() ?? .init([]) }
+    .map { try $0.decode() ?? TimeLogList([]) }
     .ifEmpty(default: TimeLogList([]))
     .take(1) // https://github.com/ReactiveX/RxSwift/issues/1654
     .asSingle()

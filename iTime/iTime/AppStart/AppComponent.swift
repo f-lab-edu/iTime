@@ -191,16 +191,25 @@ final class AppComponent:
       timeLogRecordRepository: timeLogRecordRepository
     )
     
+    self.timerInfoModelDataStream = TimerInfoModelDataStream()
+    
+    self.timerUsecase = TimerUsecaseImpl(
+      timeLogRecordBuilder: timeLogRecordBuilder,
+      timeStartFacade: timeStartFacade,
+      timeSuspenseFacade: timeSuspenseFacade,
+      timeFinishFacade: timeFinishFacade
+    )
+    
     super.init(dependency: EmptyComponent())
   }
   
   let timeLogUsecase: TimeLogUsecase
   
-  let timerUsecase: TimerUsecase
+  var timerUsecase: TimerUsecase
   
   let authenticationUsecase: AuthenticationUsecase
   
-  let timerInfoModelDataStream: TimerInfoModelDataStream
+  var timerInfoModelDataStream: TimerInfoModelDataStream
   
   let editorUsecase: EditorUsecase
   

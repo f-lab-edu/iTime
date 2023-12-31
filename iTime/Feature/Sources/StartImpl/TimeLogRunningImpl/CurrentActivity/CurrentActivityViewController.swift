@@ -69,7 +69,12 @@ extension CurrentActivityViewController {
 
 extension CurrentActivityViewController {
   func bindTageViewTitle(_ title: String) {
-    tagView.configure(by: title)
+    tagView.configure(by: .init(
+      title: title,
+      borderWidth: 1,
+      backgroundColor: .clear,
+      font: .custom(.semiBold, 20)
+    ))
   }
 }
 
