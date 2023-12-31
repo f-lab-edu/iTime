@@ -1,6 +1,6 @@
 //
 //  BookmarkEditorInteractor.swift
-//  
+//
 //
 //  Created by 이상헌 on 11/14/23.
 //
@@ -9,19 +9,22 @@ import Foundation
 import RIBs
 import RxSwift
 
+
 import Editor
 import Usecase
 import Entities
+import AppFoundation
 
 // MARK: - BookmarkEditorPresentable
 
 protocol BookmarkEditorPresentable: Presentable {
   var listener: BookmarkEditorPresentableListener? { get set }
+  func presentError(_ error: DisplayErrorMessage)
 }
 
 // MARK: - BookmarkEditorInteractor
 
-final class BookmarkEditorInteractor: 
+final class BookmarkEditorInteractor:
   PresentableInteractor<BookmarkEditorPresentable>,
   BookmarkEditorInteractable,
   BookmarkEditorPresentableListener
@@ -31,33 +34,35 @@ final class BookmarkEditorInteractor:
   
   weak var router: BookmarkEditorRouting?
   weak var listener: BookmarkEditorListener?
-  private let bookmarkModelDataStream: BookmarkModelDataStream
+  private let editorUsecase: EditorUsecase
   
   // MARK: - Initialization & DeInitialization
   
   init(
     presenter: BookmarkEditorPresentable,
-    bookmarkModelDataStream: BookmarkModelDataStream
+    editorUsecase: EditorUsecase
   ) {
-    self.bookmarkModelDataStream = bookmarkModelDataStream
+    self.editorUsecase = editorUsecase
     super.init(presenter: presenter)
     presenter.listener = self
-  }
-  
-  // MARK: - LifeCycle
-  
-  override func didBecomeActive() {
-    super.didBecomeActive()
   }
   
   // MARK: - Mutation
   
   func didTapSaveButton() {
-      
+    editorUsecase.uploadBookmarks()
+      .catch ({ [weak self] error in
+        guard let self else { return .never() }
+        self.presenter.presentError(self.saveButtonErrorMessage(error.localizedDescription))
+        return .never()
+      })
+      .debug("save button Test")
+      .subscribe()
+      .disposeOnDeactivate(interactor: self)
   }
   
   func didTapAddButton() {
-   
+    
   }
   
   func didTapBackButton() {
@@ -65,46 +70,17 @@ final class BookmarkEditorInteractor:
   }
   
   func didTapTagCell(at index: IndexPath) {
-    print(index)
-  }
-  
-   // MARK: - Private
-  
-  private func presentError(error: Error) {
     
   }
-
-}
-
-// MARK: - SavedItemSection
-
-extension BookmarkEditorInteractor {
-  func numberOfSavedItems() -> Int {
-    3
+  
+  // MARK: - Private
+  
+  private func saveButtonErrorMessage(_ message: String) -> DisplayErrorMessage {
+    return DisplayErrorMessage(
+      title: "Save button Error",
+      message: message,
+      confirmActionTitle: "Confirm"
+    )
   }
   
-  func configurationSavedItem(at index: Int) -> String {
-    "SavedItem"
-  }
-  
-  func didTapSaveItemSectionCell() {
-    print("didTapSaveItemSectionCell")
-  }
-}
-
-// MARK: - ItemHistorySection
-
-extension BookmarkEditorInteractor {
-  
-  func numberOfHistoryItems() -> Int {
-    3
-  }
-  
-  func configurationHistoryItem(at index: Int) -> String {
-    "HistoryItem"
-  }
-  
-  func didTapItemHistorySectionCell() {
-    print("didTapItemHistorySectionCell")
-  }
 }

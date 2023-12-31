@@ -46,6 +46,7 @@ final class AppRootInteractor:
   override func didBecomeActive() {
     super.didBecomeActive()
     routeInitalLaunch()
+    loadData()
   }
   
   private func routeInitalLaunch() {

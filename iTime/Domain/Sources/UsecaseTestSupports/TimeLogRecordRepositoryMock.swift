@@ -16,8 +16,10 @@ public final class TimeLogRecordRepositoryMock: TimeLogRecordRepository {
   public var dummy = DummyData.DummyTimeLogRecord.dummyTimeLogRecords
    
   public var updateCallCount: Int = 0
+  public var updatingRecords: [TimeLogRecord] = []
   public func update(with records: [Entities.TimeLogRecord]) -> RxSwift.Single<[Entities.TimeLogRecord]> {
     updateCallCount += 1
+    updatingRecords = records
     return .just([])
   }
   

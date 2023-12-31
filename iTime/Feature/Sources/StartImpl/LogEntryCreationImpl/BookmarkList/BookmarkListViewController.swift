@@ -97,12 +97,16 @@ final class BookmarkListViewController:
     showErrorAlert(with: error)
   }
   
-  func hiddenEmptyIfneeded(_ isHidden: Bool) {
+  func hiddenEmptyIfNeeded(_ isHidden: Bool) {
     emptyGuideLabel.isHidden = isHidden
   }
   
   func reloadBookmarks() {
     bookmarkTagsCollectionView.reloadData()
+    bookmarkTagsCollectionView.layoutIfNeeded()
+    bookmarkTagsCollectionView.snp.updateConstraints {
+      $0.height.equalTo(bookmarkTagsCollectionView.intrinsicContentSize)
+    }
   }
   
 }
@@ -144,6 +148,7 @@ extension BookmarkListViewController {
   private func makeBookmarkTagsCollectionViewConstraints() {
     bookmarkTagsCollectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
+      $0.height.equalTo(bookmarkTagsCollectionView.intrinsicContentSize)
     }
   }
   

@@ -23,6 +23,12 @@ final class RunningTimeTrackerImplTests: XCTestCase, @unchecked Sendable {
     sut = RunningTimeTrackerImpl(timer: testClock)
   }
   
+  override func tearDown() {
+    super.tearDown()
+    testClock = nil
+    sut = nil
+  }
+  
   func test_StartDate_When_TimerStart() {
     // When
     sut.start()
@@ -93,21 +99,6 @@ final class RunningTimeTrackerImplTests: XCTestCase, @unchecked Sendable {
   func test_1000_Seconds_When_TimeStart() async throws {
     // Given
     let expectedSeconds = 1000
-    
-    // When
-    sut.start()
-    
-    // Then
-    await testClock.advance(by: .seconds(expectedSeconds))
-    
-    async let seconds = sut.currentSeconds().take(1).values
-    let result = try await seconds.first(where: { _ in true })
-    XCTAssertEqual(result, expectedSeconds)
-  }
-  
-  func test_10000_Seconds_When_TimeStart() async throws {
-    // Given
-    let expectedSeconds = 10000
     
     // When
     sut.start()

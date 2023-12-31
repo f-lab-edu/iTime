@@ -15,9 +15,11 @@ final class SaveBookmarkButtonSectionView: BaseView {
   
   private enum Metric {
     static let guideLabelTopMargin: CGFloat = 12
+    static let guideLabelHeight: CGFloat = 24
     static let saveButtonRadius: CGFloat = 8
     static let saveButtonTopMargin: CGFloat = 10
     static let saveButtonLeadingTrailingMargin: CGFloat = 24
+    static let saveButtonHeight: CGFloat = 52
   }
   
   // MARK: - UI Components
@@ -65,6 +67,7 @@ final class SaveBookmarkButtonSectionView: BaseView {
     guideLabel.snp.makeConstraints {
       $0.top.equalToSuperview().offset(Metric.guideLabelTopMargin)
       $0.centerX.equalToSuperview()
+      $0.height.equalTo(Metric.guideLabelHeight)
     }
   }
   
@@ -72,6 +75,7 @@ final class SaveBookmarkButtonSectionView: BaseView {
     saveButton.snp.makeConstraints {
       $0.top.equalTo(guideLabel.snp.bottom).offset(Metric.saveButtonTopMargin)
       $0.leading.trailing.bottom.equalToSuperview().inset(Metric.saveButtonLeadingTrailingMargin)
+      $0.height.equalTo(Metric.saveButtonHeight)
     }
   }
 }

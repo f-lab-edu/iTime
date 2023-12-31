@@ -18,6 +18,8 @@ import SharedUI
 public protocol BookmarkEditorDependency: Dependency {
   var bookmarkModelDataStream: BookmarkModelDataStream { get }
   var bookmarkListBuilder: BookmarkListBuildable { get }
+  var timeLogRecordModelDataStream: TimeLogRecordModelDataStream { get }
+  var editorUsecase: EditorUsecase { get }
 }
 
 // MARK: - BookmarkEditorComponent
@@ -26,9 +28,20 @@ final class BookmarkEditorComponent:
   Component<BookmarkEditorDependency>,
   ActivityHistoryDependency
 {
+  var bookmarkModelDataStream: BookmarkModelDataStream {
+    dependency.bookmarkModelDataStream
+  }
+  
+  var timeLogRecordModelDataStream: TimeLogRecordModelDataStream {
+    dependency.timeLogRecordModelDataStream
+  }
   
   fileprivate var activityHistoryBuilder: ActivityHistoryBuildable {
       ActivityHistoryBuilder(dependency: self)
+  }
+  
+  fileprivate var editorUsecase: EditorUsecase {
+    dependency.editorUsecase
   }
 }
 
@@ -48,7 +61,7 @@ public final class BookmarkEditorBuilder:
     let viewController = BookmarkEditorViewController()
     let interactor = BookmarkEditorInteractor(
       presenter: viewController,
-      bookmarkModelDataStream: dependency.bookmarkModelDataStream 
+      editorUsecase: component.editorUsecase
     )
     interactor.listener = listener
     return BookmarkEditorRouter(

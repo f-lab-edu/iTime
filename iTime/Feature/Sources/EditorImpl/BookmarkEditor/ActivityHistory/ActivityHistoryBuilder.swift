@@ -7,18 +7,28 @@
 
 import RIBs
 
+import Entities
 import Editor
 
 // MARK: - ActivityHistoryDependency
 
 public protocol ActivityHistoryDependency: Dependency {
-  
+  var timeLogRecordModelDataStream: TimeLogRecordModelDataStream { get }
+  var bookmarkModelDataStream: BookmarkModelDataStream { get }
 }
 
 // MARK: - ActivityHistoryComponent
 
 final class ActivityHistoryComponent: Component<ActivityHistoryDependency> {
+  fileprivate let initialState: ActivityHistoryModel.State = .init()
   
+  fileprivate var timeLogRecordModelDataStream: TimeLogRecordModelDataStream {
+    dependency.timeLogRecordModelDataStream
+  }
+  
+  fileprivate var bookmarkModelDataStream: BookmarkModelDataStream {
+    dependency.bookmarkModelDataStream
+  }
 }
 
 // MARK: - ActivityHistoryBuilder
@@ -35,7 +45,12 @@ public final class ActivityHistoryBuilder:
   public func build(withListener listener: ActivityHistoryListener) -> ActivityHistoryRouting {
     let component = ActivityHistoryComponent(dependency: dependency)
     let viewController = ActivityHistoryViewController()
-    let interactor = ActivityHistoryInteractor(presenter: viewController)
+    let interactor = ActivityHistoryInteractor(
+      initialState: component.initialState,
+      presenter: viewController,
+      timeLogRecordModelDataStream: component.timeLogRecordModelDataStream,
+      bookmarkModelDataStream: component.bookmarkModelDataStream
+    )
     interactor.listener = listener
     return ActivityHistoryRouter(
       interactor: interactor,

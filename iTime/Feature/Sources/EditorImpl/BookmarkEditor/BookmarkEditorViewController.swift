@@ -11,6 +11,7 @@ import RIBs
 import RxSwift
 
 import SharedUI
+import AppFoundation
 
 // MARK: - BookmarkEditorPresentableListener
 
@@ -25,16 +26,19 @@ protocol BookmarkEditorPresentableListener: AnyObject {
 final class BookmarkEditorViewController:
   BaseViewController,
   BookmarkEditorPresentable,
-  BookmarkEditorViewControllable
+  BookmarkEditorViewControllable,
+  ErrorAlertable
 {
-  
+   
   // MARK: - Constants
   
   private enum Metric {
     static let separatedViewHeight: CGFloat = 9
     static let sectionHeaderTitleLabelTopMargin: CGFloat = 16
     static let sectionHeaderTitleLabelLeadingMargin: CGFloat = 24
+    static let sectionHeaderTitleLabelHeight: CGFloat = 24
     static let currentCountIndexLabelTrailingMargin: CGFloat = 24
+    static let guideLabelHeight: CGFloat = 20
     static let guideLabelTopMargin: CGFloat = 4
     static let separationTopMargin: CGFloat = 24
   }
@@ -65,7 +69,6 @@ final class BookmarkEditorViewController:
     .backgroundColor(.black90)
     .build()
   
-  
   private let activityHistorySectionHeaderTitleLabel = UILabel().builder
     .text("현재 기록")
     .font(.custom(.bold, 16))
@@ -90,6 +93,10 @@ final class BookmarkEditorViewController:
     bindActions()
   }
   
+  func presentError(_ error: DisplayErrorMessage) {
+    showErrorAlert(with: error)
+  }
+  
 }
 
 // MARK: - Bind Action
@@ -103,17 +110,17 @@ extension BookmarkEditorViewController {
   
   private func bindSaveButtonTapAction() {
     saveBookmarkButtonSectionView.saveButton.rx
-          .tapWithPreventDuplication()
-          .asDriver(onErrorDriveWith: .empty())
-          .drive(with: self) { owner, _ in print("tap") }
-          .disposed(by: disposeBag)
+      .tapWithPreventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in owner.listener?.didTapSaveButton() }
+      .disposed(by: disposeBag)
   }
   
   private func bindAddButtonTapAction() {
     customNavigationBar.addButton.rx
       .tapWithPreventDuplication()
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, _ in print("tap") }
+      .drive(with: self) { owner, _ in owner.listener?.didTapAddButton() }
       .disposed(by: disposeBag)
   }
   
@@ -126,13 +133,6 @@ extension BookmarkEditorViewController {
   }
   
 }
-
-// MARK: - Bind State
-
-extension BookmarkEditorViewController {
-  
-}
-
 
 // MARK: - Layout
 
@@ -174,6 +174,7 @@ extension BookmarkEditorViewController {
     bookmarkListSectionHeaderTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().offset(Metric.sectionHeaderTitleLabelLeadingMargin)
       $0.top.equalTo(customNavigationBar.snp.bottom).offset(Metric.sectionHeaderTitleLabelTopMargin)
+      $0.height.equalTo(Metric.sectionHeaderTitleLabelHeight)
     }
   }
   
@@ -181,6 +182,7 @@ extension BookmarkEditorViewController {
     currentCountIndexLabel.snp.makeConstraints {
       $0.centerY.equalTo(bookmarkListSectionHeaderTitleLabel)
       $0.trailing.equalToSuperview().offset(-Metric.currentCountIndexLabelTrailingMargin)
+      $0.height.equalTo(Metric.sectionHeaderTitleLabelHeight)
     }
   }
   
@@ -194,7 +196,7 @@ extension BookmarkEditorViewController {
   
   private func makeSeparatedViewConstraints() {
     separatedView.snp.makeConstraints {
-      $0.top.equalTo(bookmarkListContainterView.snp.bottom).offset(Metric.separationTopMargin)
+      $0.top.equalTo(bookmarkListContainterView.snp.bottom).offset(Metric.separationTopMargin).priority(.high)
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(Metric.separatedViewHeight)
     }
@@ -204,6 +206,7 @@ extension BookmarkEditorViewController {
     activityHistorySectionHeaderTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().offset(Metric.sectionHeaderTitleLabelLeadingMargin)
       $0.top.equalTo(separatedView.snp.bottom).offset(Metric.sectionHeaderTitleLabelTopMargin)
+      $0.height.equalTo(Metric.sectionHeaderTitleLabelHeight)
     }
   }
   
@@ -211,6 +214,7 @@ extension BookmarkEditorViewController {
     guideLabel.snp.makeConstraints {
       $0.leading.equalTo(activityHistorySectionHeaderTitleLabel)
       $0.top.equalTo(activityHistorySectionHeaderTitleLabel.snp.bottom).offset(Metric.guideLabelTopMargin)
+      $0.height.equalTo(Metric.guideLabelHeight)
     }
   }
   
@@ -218,7 +222,7 @@ extension BookmarkEditorViewController {
     activityHistoryContainterView.snp.makeConstraints {
       $0.top.equalTo(guideLabel.snp.bottom)
       $0.leading.trailing.equalTo(bookmarkListContainterView)
-      $0.bottom.equalTo(bookmarkListContainterView.snp.top).priority(.low)
+      $0.bottom.equalTo(saveBookmarkButtonSectionView.snp.top)
     }
   }
   
