@@ -63,10 +63,7 @@ final class LogEntryCreationInteractor:
   
   func didTapStartButton() {
     timerUsecase.start()
-      .subscribe(with: self) { owner, _ in
-        owner.router?.attachTimeLogRunningRIB()
-      }
-      .disposeOnDeactivate(interactor: self)
+    router?.attachTimeLogRunningRIB()
   }
   
   func didTapBookmarkTagEditor() {

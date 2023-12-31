@@ -11,16 +11,21 @@ import Entities
 import Usecase
 
 public class TimerUsecaseMock: TimerUsecase {
-  public func start() -> RxSwift.Observable<Void> {
-    return .just(Void())
+  
+  public var startCallCount: Int = 0
+  public func start() {
+    startCallCount += 1
   }
   
+  public var suspendCallCount: Int = 0
   public func suspend() {
-    
+    suspendCallCount += 1
   }
   
+  public var finishCallCount: Int = 0
   public func finish(_ activity: Entities.Activity) -> RxSwift.Observable<Void> {
-    return .empty()
+    finishCallCount += 1
+    return .just(Void())
   }
   
   public init() {}
