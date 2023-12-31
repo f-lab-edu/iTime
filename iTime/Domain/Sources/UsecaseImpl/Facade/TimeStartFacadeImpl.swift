@@ -35,7 +35,7 @@ public final class TimeStartFacadeImpl: TimeStartFacade {
   public func start() -> Observable<Void> {
     Observable.combineLatest(
       Observable.just(runningTimeTracker.start()),
-      runningTimeTracker.currentSeconds()
+      runningTimeTracker.currentSeconds().debug("check")
     ) { $1 }
       .withUnretained(self)
       .map { owner, time in

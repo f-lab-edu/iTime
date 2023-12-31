@@ -39,13 +39,12 @@ public final class RunningTimeTrackerMock: RunningTimeTracker {
   }
   
   public func currentSeconds() -> Observable<Int> {
-    return Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.asyncInstance)
+    return Observable<Int>.timer(.seconds(1), period: .seconds(1), scheduler: MainScheduler.instance)
   }
   
   public func getStartDate() -> Date? {
     return Date()
   }
-  
   
   public init() {}
 }
