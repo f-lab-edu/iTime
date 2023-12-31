@@ -73,6 +73,5 @@ public final class RunningTimeTrackerImpl: RunningTimeTracker {
   private func initTimer() {
     timerTask?.cancel()
     timerTask = nil
-    timers.setEventHandler(handler: nil)
   }
 }

@@ -191,38 +191,7 @@ final class AppComponent:
       timeLogRecordRepository: timeLogRecordRepository
     )
     
-    let locationTracker = LocationTrackerImpl(
-      applicationShared: UIApplication.shared,
-      locationFetcher: CLLocationManager()
-    )
-    let runningTimeTracker = RunningTimeTrackerImpl()
-    
     self.timerInfoModelDataStream = TimerInfoModelDataStream()
-    
-    let timeLogRecordBuilder = TimeLogRecordBuilder(
-      locationTracker: locationTracker,
-      runningTimeTracker: runningTimeTracker,
-      timerInfoModelDataStream: timerInfoModelDataStream
-    )
-
-    let timeStartFacade = TimeStartFacadeImpl(
-      locationTracker: locationTracker,
-      runningTimeTracker: runningTimeTracker,
-      timerInfoModelDataStream: timerInfoModelDataStream,
-      userDefaultRepository: userDefaultRepository
-    )
-    
-    let timeSuspenseFacade = TimeSuspenseFacadeImpl(
-      runningTimeTracker: runningTimeTracker,
-      locationTracker: locationTracker
-    )
-    
-    let timeFinishFacade = TimeFinishFacadeImpl(
-      locationTracker: locationTracker,
-      runningTimeTracker: runningTimeTracker,
-      timeLogRecordRepository: timeLogRecordRepository,
-      timeLogRecordModelDataStream: timeLogRecordModelDataStream
-    )
     
     self.timerUsecase = TimerUsecaseImpl(
       timeLogRecordBuilder: timeLogRecordBuilder,
@@ -236,11 +205,11 @@ final class AppComponent:
   
   let timeLogUsecase: TimeLogUsecase
   
-  let timerUsecase: TimerUsecase
+  var timerUsecase: TimerUsecase
   
   let authenticationUsecase: AuthenticationUsecase
   
-  let timerInfoModelDataStream: TimerInfoModelDataStream
+  var timerInfoModelDataStream: TimerInfoModelDataStream
   
   let editorUsecase: EditorUsecase
   
