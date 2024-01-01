@@ -62,7 +62,7 @@ final class TimeLogUsecaseImplTests: XCTestCase {
     
     // When
     scheduler.scheduleAt(1) {
-      _ = self.sut.preLoadAllData().subscribe()
+      _ = self.sut.reloadAllData().subscribe()
     }
     
     scheduler.scheduleAt(2) {
@@ -85,7 +85,7 @@ final class TimeLogUsecaseImplTests: XCTestCase {
     
     // When
     scheduler.scheduleAt(1) {
-      _ = self.sut.preLoadAllData().subscribe()
+      _ = self.sut.reloadAllData().subscribe()
     }
     
     scheduler.scheduleAt(2) {

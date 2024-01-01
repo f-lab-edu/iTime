@@ -62,7 +62,6 @@ final class ActivityHistoryInteractor:
       timeLogRecordModelDataStream.timeLogRecords.map { $0.map(\.activity) },
       bookmarkModelDataStream.bookmarks
     )
-    .debug("shle")
     .catch ({ [weak self] error in
       guard let self else { return .empty() }
       self.presenter.presentError(self.activityListErrorMessage(error.localizedDescription))
@@ -102,8 +101,10 @@ final class ActivityHistoryInteractor:
   
   private func filterSolidActivitiyList(_ activityList: [Activity], _ bookmarkList: [Bookmark]) -> [Activity] {
     activityList
-      .enumerated()
-      .filter { bookmarkList[safe: $0.offset]?.title != $0.element.title }
-      .map(\.element)
+      .filter { activity in
+        !bookmarkList.contains { bookmark in
+          bookmark.title == activity.title
+        }
+      }
   }
 }

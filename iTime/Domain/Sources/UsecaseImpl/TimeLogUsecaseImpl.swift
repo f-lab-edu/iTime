@@ -43,7 +43,7 @@ public final class TimeLogUsecaseImpl:
   
   // MARK: - Internal Methods
   
-  public func preLoadAllData() -> Single<Void> {
+  public func reloadAllData() -> Single<Void> {
     Single.zip(
       [loadTimeLogRecords(),
         loadBookmarks(),
@@ -55,7 +55,7 @@ public final class TimeLogUsecaseImpl:
   
   public func loadDataIfNeeded() {
     guard !isLoaded else { return }
-    _ = preLoadAllData()
+    _ = reloadAllData()
         .subscribe()
   }
   

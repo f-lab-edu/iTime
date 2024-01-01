@@ -12,6 +12,7 @@ import Entities
 import RepositoryTestSupports
 import UsecaseTestSupports
 import ProxyTestSupport
+import FeatureTestSupports
 @testable import StartImpl
 
 final class LogEntryCreationInteractorTests: XCTestCase {

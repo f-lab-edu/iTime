@@ -9,6 +9,6 @@ import Start
 
 // MARK: - LogEntryCreationListenerSpy
 
-final class LogEntryCreationListenerSpy: LogEntryCreationListener {
-  init() {}
+public final class LogEntryCreationListenerSpy: LogEntryCreationListener {
+  public init() {}
 }

@@ -22,8 +22,8 @@ public final class TimeLogUsecaseMonitoringDecorator: TimeLogUsecase {
     self.logger = logger
   }
   
-  public func preLoadAllData() -> Single<Void> {
+  public func reloadAllData() -> Single<Void> {
     logger.LogPreLoadAllData()
-    return decoratee.preLoadAllData()
+    return decoratee.reloadAllData()
   }
 }

@@ -13,57 +13,57 @@ import RIBsTestSupport
 
 // MARK: - LogEntryCreationRoutingSpy
 
-final class LogEntryCreationRoutingSpy: LogEntryCreationRouting {
-  func detachLogEntryEditorRIB() {
+public final class LogEntryCreationRoutingSpy: LogEntryCreationRouting {
+  public func detachLogEntryEditorRIB() {
     
   }
   
-  func detachTimeLogRunningRIB() {
+  public func detachTimeLogRunningRIB() {
     
   }
   
-  func detachBookmarkEditorRIB() {
+  public func detachBookmarkEditorRIB() {
     
   }
   
   
   public var attachLogEntryEditorRIBCallCount: Int = 0
-  func attachLogEntryEditorRIB() {
+  public func attachLogEntryEditorRIB() {
     attachLogEntryEditorRIBCallCount += 1
   }
   
   public var attachBookmarkEditorRIbCallCount: Int = 0
-  func attachBookmarkEditorRIB() {
+  public func attachBookmarkEditorRIB() {
     attachBookmarkEditorRIbCallCount += 1
   }
   
   public var attachTimeLogRunningRIBCallCount: Int = 0
-  func attachTimeLogRunningRIB() {
+  public func attachTimeLogRunningRIB() {
     attachTimeLogRunningRIBCallCount += 1
   }
   
-  var viewControllable: RIBs.ViewControllable
+  public var viewControllable: RIBs.ViewControllable
   
-  var interactable: RIBs.Interactable
+  public var interactable: RIBs.Interactable
   
-  var children: [RIBs.Routing]
+  public var children: [RIBs.Routing]
   
   public var loadCallCount: Int = 0
-  func load() {
+  public func load() {
     loadCallCount += 1
   }
   
   public var attachChildCallCount: Int = 0
-  func attachChild(_ child: RIBs.Routing) {
+  public func attachChild(_ child: RIBs.Routing) {
     attachChildCallCount += 1
   }
   
   public var detachChildCallCount: Int = 0
-  func detachChild(_ child: RIBs.Routing) {
+  public func detachChild(_ child: RIBs.Routing) {
     detachChildCallCount += 1
   }
   
-  var lifecycle: RxSwift.Observable<RIBs.RouterLifecycle>
+  public var lifecycle: RxSwift.Observable<RIBs.RouterLifecycle>
   
   public init(
     viewControllable: RIBs.ViewControllable = ViewControllableMock(),

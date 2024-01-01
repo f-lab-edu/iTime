@@ -80,7 +80,8 @@ final class BookmarkListInteractor:
   }
   
   func didTapTagCell(at index: IndexPath) {
-    listener?.didTapTagCell(at: index)
+    guard let selectedBookmark = state.bookmarks[safe: index.row] else { return }
+    listener?.didTapTagCell(selectedBookmark)
   }
   
   private func bookmarkListErrorMessage(_ message: String) -> DisplayErrorMessage {

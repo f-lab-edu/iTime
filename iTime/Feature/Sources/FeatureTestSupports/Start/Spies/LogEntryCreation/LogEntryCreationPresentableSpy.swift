@@ -15,6 +15,6 @@ public final class LogEntryCreationPresentableSpy: LogEntryCreationPresentable {
       self.listener = listener
   }
   
-  private(set) var listenerSetCallCount = 0
+  public private(set) var listenerSetCallCount = 0
   public var listener: LogEntryCreationPresentableListener? { didSet { self.listenerSetCallCount += 1 } }
 }

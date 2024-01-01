@@ -37,8 +37,7 @@ public final class AppRootBuilder:
     let viewController = AppRootViewController()
     let _ = AppRootComponent(dependency: dependency)
     let interactor = AppRootInteractor(
-      presenter: viewController, 
-      timeLogUsecase: dependency.timeLogUsecase,
+      presenter: viewController,
       authenticationUsecase: dependency.authenticationUsecase
     )
     

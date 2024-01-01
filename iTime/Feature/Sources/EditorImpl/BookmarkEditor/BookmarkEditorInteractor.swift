@@ -17,7 +17,7 @@ import AppFoundation
 
 // MARK: - BookmarkEditorPresentable
 
-protocol BookmarkEditorPresentable: Presentable {
+public protocol BookmarkEditorPresentable: Presentable {
   var listener: BookmarkEditorPresentableListener? { get set }
   func presentError(_ error: DisplayErrorMessage)
 }
@@ -35,13 +35,16 @@ final class BookmarkEditorInteractor:
   weak var router: BookmarkEditorRouting?
   weak var listener: BookmarkEditorListener?
   private let editorUsecase: EditorUsecase
+  private let bookmarkModelDataStream: BookmarkModelDataStream
   
   // MARK: - Initialization & DeInitialization
   
   init(
     presenter: BookmarkEditorPresentable,
+    bookmarkModelDataStream: BookmarkModelDataStream,
     editorUsecase: EditorUsecase
   ) {
+    self.bookmarkModelDataStream = bookmarkModelDataStream
     self.editorUsecase = editorUsecase
     super.init(presenter: presenter)
     presenter.listener = self
@@ -56,7 +59,6 @@ final class BookmarkEditorInteractor:
         self.presenter.presentError(self.saveButtonErrorMessage(error.localizedDescription))
         return .never()
       })
-      .debug("save button Test")
       .subscribe()
       .disposeOnDeactivate(interactor: self)
   }
@@ -69,8 +71,8 @@ final class BookmarkEditorInteractor:
     listener?.detachBookmarkEditorRIB()
   }
   
-  func didTapTagCell(at index: IndexPath) {
-    
+  func didTapTagCell(_ bookmark: Bookmark) {
+    bookmarkModelDataStream.remove(bookmark)
   }
   
   // MARK: - Private

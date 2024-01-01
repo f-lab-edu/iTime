@@ -60,7 +60,8 @@ public final class BookmarkEditorBuilder:
     let component = BookmarkEditorComponent(dependency: dependency)
     let viewController = BookmarkEditorViewController()
     let interactor = BookmarkEditorInteractor(
-      presenter: viewController,
+      presenter: viewController, 
+      bookmarkModelDataStream: component.bookmarkModelDataStream,
       editorUsecase: component.editorUsecase
     )
     interactor.listener = listener

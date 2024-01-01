@@ -23,6 +23,9 @@ let package = Package(
       name: "EditorImpl",
       targets: ["EditorImpl"]),
     .library(
+      name: "FeatureTestSupports",
+      targets: ["FeatureTestSupports"]),
+    .library(
       name: "History",
       targets: ["History"]),
     .library(
@@ -81,6 +84,18 @@ let package = Package(
         .product(name: "Usecase", package: "Domain"),
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),
+      ]),
+    .target(
+      name: "FeatureTestSupports",
+      dependencies: [
+        "AppRoot",
+        "History",
+        "LoggedIn",
+        "LoggedOut",
+        "Start",
+        "StartImpl",
+        "Editor",
+        "EditorImpl",
       ]),
     .target(
       name: "LoggedIn",
@@ -149,12 +164,25 @@ let package = Package(
       name: "StartImplTests",
       dependencies: [
         "StartImpl",
+        "FeatureTestSupports",
         .product(name: "UsecaseTestSupports", package: "Domain"),
         .product(name: "RepositoryTestSupports", package: "Domain"),
         .product(name: "Entities", package: "Domain"),
         .product(name: "RIBsTestSupport", package: "ProxyPackage"),
         .product(name: "ProxyTestSupport", package: "ProxyPackage"),
       ]
-    )
+    ),
+    .testTarget(
+      name: "EditorImplTests",
+      dependencies: [
+        "EditorImpl",
+        "FeatureTestSupports",
+        .product(name: "UsecaseTestSupports", package: "Domain"),
+        .product(name: "RepositoryTestSupports", package: "Domain"),
+        .product(name: "Entities", package: "Domain"),
+        .product(name: "RIBsTestSupport", package: "ProxyPackage"),
+        .product(name: "ProxyTestSupport", package: "ProxyPackage"),
+      ]
+    ),
   ]
 )

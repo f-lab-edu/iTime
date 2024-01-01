@@ -6,11 +6,9 @@
 //
 
 import XCTest
-import Foundation
-import RepositoryTestSupports
 import ProxyTestSupport
-import Entities
 import SnapshotTesting
+import FeatureTestSupports
 @testable import StartImpl
 
 final class LogEntryCreationViewTests: XCTestCase {
