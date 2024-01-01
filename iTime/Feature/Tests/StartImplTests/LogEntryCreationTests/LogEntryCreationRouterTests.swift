@@ -12,6 +12,7 @@ import RIBs
 import Start
 import Editor
 import RIBsTestSupport
+import FeatureTestSupports
 @testable import StartImpl
 
 final class LogEntryCreationRouterTests: XCTestCase {

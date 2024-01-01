@@ -15,7 +15,7 @@ import AppFoundation
 
 // MARK: - BookmarkEditorPresentableListener
 
-protocol BookmarkEditorPresentableListener: AnyObject {
+public protocol BookmarkEditorPresentableListener: AnyObject {
   func didTapSaveButton()
   func didTapAddButton()
   func didTapBackButton()

@@ -74,7 +74,6 @@ final class LogEntryCreationInteractor:
   func didTapTagCell(_ bookmark: Entities.Bookmark) {
     print(bookmark)
   }
-
 }
 
 // MARK: - Listener

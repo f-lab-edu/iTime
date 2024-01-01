@@ -11,37 +11,34 @@ import RxSwift
 import RIBs
 
 import Start
+import Entities
 import RIBsTestSupport
 
 @testable import StartImpl
 
-final class LogEntryCreationInteratableSpy: LogEntryCreationInteractable {
-  func detachLogEntryEditorRIB() {
+public final class LogEntryCreationInteratableSpy: LogEntryCreationInteractable {
+  public func didTapTagCell(_ bookmark: Bookmark) {
     
   }
   
-  func didTapTagCell(at index: IndexPath) {
+  public func detachLogEntryEditorRIB() {
     
   }
   
-  func detachTimeLogRunningRIB() {
+  public func detachTimeLogRunningRIB() {
     
   }
   
-  func detachBookmarkEditorRIB() {
+  public func detachBookmarkEditorRIB() {
     
   }
   
-  func detachLocationEntryEditorRIB() {
-  
-  }
-  
-  func attachTimeLogRunningRIB() {
+  public func attachTimeLogRunningRIB() {
     
   }
   
-  var router: LogEntryCreationRouting?
-  var listener: LogEntryCreationListener?
+  public var router: LogEntryCreationRouting?
+  public var listener: LogEntryCreationListener?
   
   public func activate() {
     
@@ -56,17 +53,19 @@ final class LogEntryCreationInteratableSpy: LogEntryCreationInteractable {
   public var isActiveStream: Observable<Bool> { isActiveSubject.asObservable()}
   
   private let isActiveSubject = BehaviorSubject<Bool>(value: false)
+  
+  public init() {}
 }
 
-final class LogEntryCreationViewControllableSpy:
+public final class LogEntryCreationViewControllableSpy:
   ViewControllableMock,
   LogEntryCreationViewControllable
 {
-  func addBookmarkList(_ view: RIBs.ViewControllable) {
+  public func addBookmarkList(_ view: RIBs.ViewControllable) {
    
   }
   
-  func addLoggingRetention(_ view: RIBs.ViewControllable) {
+  public func addLoggingRetention(_ view: RIBs.ViewControllable) {
    
   }
 }

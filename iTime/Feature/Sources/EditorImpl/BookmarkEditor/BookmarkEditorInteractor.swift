@@ -17,7 +17,7 @@ import AppFoundation
 
 // MARK: - BookmarkEditorPresentable
 
-protocol BookmarkEditorPresentable: Presentable {
+public protocol BookmarkEditorPresentable: Presentable {
   var listener: BookmarkEditorPresentableListener? { get set }
   func presentError(_ error: DisplayErrorMessage)
 }

@@ -21,7 +21,7 @@ public enum DummyData {
     public static let dummyBookmarkTwo: Bookmark = .init(title: "테스트2", category: .init(title: "테스트", color: "테스트"))
     
     public static let dummyBookmarksOne: [Bookmark] = [dummyBookmarkOne]
-    public static let dummyBookmarksTwo: [Bookmark] = [dummyBookmarkOne, dummyBookmarkOne]
+    public static let dummyBookmarksTwo: [Bookmark] = [dummyBookmarkOne, dummyBookmarkTwo]
     public static let dummyBookmarksThree: [Bookmark] = [dummyBookmarkOne, dummyBookmarkOne, dummyBookmarkOne]
     public static let dummyBookmarksFour: [Bookmark] = [dummyBookmarkOne, dummyBookmarkOne, dummyBookmarkOne, dummyBookmarkOne]
   }
