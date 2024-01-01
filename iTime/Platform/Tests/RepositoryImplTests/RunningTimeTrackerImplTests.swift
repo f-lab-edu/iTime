@@ -98,7 +98,7 @@ final class RunningTimeTrackerImplTests: XCTestCase, @unchecked Sendable {
   
   func test_1000_Seconds_When_TimeStart() async throws {
     // Given
-    let expectedSeconds = 1000
+    let expectedSeconds = 100 // TEMP: swift-clock PR 반영된후 반영
     
     // When
     sut.start()
