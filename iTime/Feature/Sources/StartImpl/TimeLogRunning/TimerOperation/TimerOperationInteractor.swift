@@ -50,11 +50,7 @@ final class TimerOperationInteractor:
   
   func didTapStartButton() {
     timerUsecase.start()
-      .take(1)
-      .subscribe(with: self) { owner, _ in
-        owner.presenter.isTimeRunning(true)
-      }
-      .disposeOnDeactivate(interactor: self)
+    presenter.isTimeRunning(true)
   }
   
   func didTapPauseButton() {

@@ -39,13 +39,11 @@ final class TimerUsecaseImplTests: XCTestCase {
     
   }
   
-  func test_start() async throws {
+  func test_start() {
     // When
-    async let result = sut.start().take(1).values
+    sut.start()
     
     // Then
-    let void: Void? = try await result.first(where: { _ in true })
-    XCTAssertNotNil(void)
     XCTAssertEqual(timeStartFacade.startCallCount, 1)
   }
   

@@ -147,7 +147,7 @@ extension BookmarkListViewController {
   
   private func makeBookmarkTagsCollectionViewConstraints() {
     bookmarkTagsCollectionView.snp.makeConstraints {
-      $0.edges.equalToSuperview()
+      $0.edges.equalToSuperview().priority(.high)
       $0.height.equalTo(bookmarkTagsCollectionView.intrinsicContentSize)
     }
   }

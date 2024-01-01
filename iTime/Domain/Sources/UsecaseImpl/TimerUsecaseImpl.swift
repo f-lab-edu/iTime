@@ -25,6 +25,8 @@ public final class TimerUsecaseImpl: TimerUsecase {
   private let timeSuspenseFacade: TimeSuspenseFacade
   private let timeFinishFacade: TimeFinishFacade
   
+  private let compositeDisposable = CompositeDisposable()
+  
   // MARK: - Initialization
   
   public init(
@@ -39,8 +41,10 @@ public final class TimerUsecaseImpl: TimerUsecase {
     self.timeFinishFacade = timeFinishFacade
   }
   
-  public func start() -> Observable<Void> {
-    timeStartFacade.start()
+  public func start() {
+    let disposable = timeStartFacade.start().subscribe()
+    
+    _ = compositeDisposable.insert(disposable)
   }
   
   public func suspend() {

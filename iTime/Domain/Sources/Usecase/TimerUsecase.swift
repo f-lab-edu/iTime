@@ -12,7 +12,7 @@ import Foundation
 // MARK: - TimerUsecase
 
 public protocol TimerUsecase {
-  func start() -> Observable<Void>
+  func start()
   func suspend()
   func finish(_ activity: Activity) -> Observable<Void>
 }

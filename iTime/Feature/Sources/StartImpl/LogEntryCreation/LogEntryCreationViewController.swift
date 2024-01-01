@@ -226,7 +226,7 @@ extension LogEntryCreationViewController {
   
   private func makeEditorRoutingButtonConstraints() {
     editorRoutingButton.snp.makeConstraints {
-      $0.leading.trailing.equalToSuperview().inset(Metric.buttonsLeadingTrailingMargin)
+      $0.leading.trailing.equalToSuperview().inset(Metric.buttonsLeadingTrailingMargin).priority(.high)
       $0.height.equalTo(Metric.buttonsHeight)
     }
   }
@@ -249,7 +249,7 @@ extension LogEntryCreationViewController {
   private func makeBookmarkListContainerViewConstraints() {
     bookmarkListContainerView.snp.makeConstraints {
       $0.top.equalTo(tagView.snp.bottom).offset(Metric.bookmarkTagsCollectionViewTopMargin)
-      $0.leading.trailing.equalToSuperview().inset(Metric.bookmarkTagsViewLeadingTrailingInset)
+      $0.leading.trailing.equalToSuperview()
     }
   }
   

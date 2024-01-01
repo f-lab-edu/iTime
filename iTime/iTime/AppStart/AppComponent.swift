@@ -191,8 +191,6 @@ final class AppComponent:
       timeLogRecordRepository: timeLogRecordRepository
     )
     
-    self.timerInfoModelDataStream = TimerInfoModelDataStream()
-    
     self.timerUsecase = TimerUsecaseImpl(
       timeLogRecordBuilder: timeLogRecordBuilder,
       timeStartFacade: timeStartFacade,
