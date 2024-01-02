@@ -96,6 +96,7 @@ let package = Package(
         "StartImpl",
         "Editor",
         "EditorImpl",
+        .product(name: "RIBsTestSupport", package: "ProxyPackage"),
       ]),
     .target(
       name: "LoggedIn",

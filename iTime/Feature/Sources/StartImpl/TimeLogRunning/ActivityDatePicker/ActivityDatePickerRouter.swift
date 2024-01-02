@@ -11,14 +11,14 @@ import Start
 
 // MARK: - ActivityDatePickerInteractable
 
-protocol ActivityDatePickerInteractable: Interactable {
+public protocol ActivityDatePickerInteractable: Interactable {
   var router: ActivityDatePickerRouting? { get set }
   var listener: ActivityDatePickerListener? { get set }
 }
 
 // MARK: - ActivityDatePickerViewControllable
 
-protocol ActivityDatePickerViewControllable: ViewControllable {
+public protocol ActivityDatePickerViewControllable: ViewControllable {
 }
 
 // MARK: - ActivityDatePickerRouter

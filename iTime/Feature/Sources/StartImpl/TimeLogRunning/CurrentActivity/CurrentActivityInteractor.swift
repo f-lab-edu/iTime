@@ -48,8 +48,8 @@ final class CurrentActivityInteractor:
       .activityLogStream
       .map(\.title)
       .take(1)
-      .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, title in
+      .observe(on: MainScheduler.asyncInstance)
+      .subscribe(with: self) { owner, title in
         owner.presenter.bindTageViewTitle(title ?? "내가 지금 할 것은...")
       }
       .disposeOnDeactivate(interactor: self)

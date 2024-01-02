@@ -14,7 +14,7 @@ import Start
 
 // MARK: - TimerOperationPresentable
 
-protocol TimerOperationPresentable: Presentable {
+public protocol TimerOperationPresentable: Presentable {
   var listener: TimerOperationPresentableListener? { get set }
   func isTimeRunning(_ isRunning: Bool)
 }

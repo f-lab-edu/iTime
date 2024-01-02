@@ -15,7 +15,7 @@ import AppFoundation
 
 // MARK: - ActivityDatePickerPresentableListener
 
-protocol ActivityDatePickerPresentableListener: AnyObject {
+public protocol ActivityDatePickerPresentableListener: AnyObject {
 }
 
 // MARK: - ActivityDatePickerViewController
