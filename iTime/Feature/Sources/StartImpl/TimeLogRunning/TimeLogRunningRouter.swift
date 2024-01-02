@@ -1,6 +1,6 @@
 //
 //  TimeLogRunningRouter.swift
-//  
+//
 //
 //  Created by 이상헌 on 11/25/23.
 //
@@ -11,12 +11,12 @@ import Start
 
 // MARK: - TimeLogRunningInteractable
 
-protocol TimeLogRunningInteractable: 
+public protocol TimeLogRunningInteractable:
   Interactable,
-CurrentActivityListener,
-CurrentTimerTimeListener,
-ActivityDatePickerListener,
-TimerOperationListener
+  CurrentActivityListener,
+  CurrentTimerTimeListener,
+  ActivityDatePickerListener,
+  TimerOperationListener
 {
   var router: TimeLogRunningRouting? { get set }
   var listener: TimeLogRunningListener? { get set }
@@ -24,7 +24,7 @@ TimerOperationListener
 
 // MARK: - TimeLogRunningViewControllable
 
-protocol TimeLogRunningViewControllable: ViewControllable {
+public protocol TimeLogRunningViewControllable: ViewControllable {
   func addCurrentActivity(_ view: ViewControllable)
   func addCurrentTimerTime(_ view: ViewControllable)
   func addActivityDatePicker(_ view: ViewControllable)

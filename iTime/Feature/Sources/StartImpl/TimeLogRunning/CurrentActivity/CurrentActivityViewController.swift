@@ -14,7 +14,7 @@ import SharedUI
 
 // MARK: - CurrentActivityPresentableListener
 
-protocol CurrentActivityPresentableListener: AnyObject {
+public protocol CurrentActivityPresentableListener: AnyObject {
   func loadData()
 }
 

@@ -12,7 +12,7 @@ import Start
 
 // MARK: - TimeLogRunningPresentable
 
-protocol TimeLogRunningPresentable: Presentable {
+public protocol TimeLogRunningPresentable: Presentable {
   var listener: TimeLogRunningPresentableListener? { get set }
 }
 

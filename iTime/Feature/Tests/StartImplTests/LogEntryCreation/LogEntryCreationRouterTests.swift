@@ -143,10 +143,4 @@ final class LogEntryCreationRouterTests: XCTestCase {
     wait(timeout: 1)
    // XCTAssertEqual(viewController.dismissCallCount, 1)
   }
-  
-  
-  func wait(timeout: TimeInterval) {
-      let expectation = XCTestExpectation(description: "Waiting for \(timeout) seconds")
-      XCTWaiter().wait(for: [expectation], timeout: timeout)
-  }
 }

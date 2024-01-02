@@ -15,7 +15,7 @@ import AppFoundation
 
 // MARK: - TimeLogRunningPresentableListener
 
-protocol TimeLogRunningPresentableListener: AnyObject {
+public protocol TimeLogRunningPresentableListener: AnyObject {
   func didTapBackButton()
   func didTapAddBookmark()
   func didTapDeleteCurrentLog()

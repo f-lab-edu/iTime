@@ -15,7 +15,7 @@ import AppFoundation
 
 // MARK: - BookmarkListPresentableListener
 
-protocol BookmarkListPresentableListener:
+public protocol BookmarkListPresentableListener:
   AnyObject,
   BookmarkCollectionViewCellDelegate,
   BookmarkTagsCollectionViewAdapterDataSource

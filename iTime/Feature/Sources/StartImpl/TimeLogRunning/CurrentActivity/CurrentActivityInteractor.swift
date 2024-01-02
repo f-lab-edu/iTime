@@ -12,7 +12,7 @@ import Start
 
 // MARK: - CurrentActivityPresentable
 
-protocol CurrentActivityPresentable: Presentable {
+public protocol CurrentActivityPresentable: Presentable {
   var listener: CurrentActivityPresentableListener? { get set }
   func bindTageViewTitle(_ title: String)
 }

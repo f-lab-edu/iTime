@@ -15,7 +15,7 @@ import AppFoundation
 
 // MARK: - BookmarkListPresentable
 
-protocol BookmarkListPresentable: Presentable {
+public protocol BookmarkListPresentable: Presentable {
   var listener: BookmarkListPresentableListener? { get set }
   func presentError(_ error: DisplayErrorMessage)
   func hiddenEmptyIfNeeded(_ isHidden: Bool)
