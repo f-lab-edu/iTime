@@ -62,10 +62,11 @@ final class TimerOperationInteractor:
     activityLogModelStream.activityLogStream
       .map(Activity.toActivity(_:))
       .flatMap(timerUsecase.finish)
+      .withUnretained(self)
+      .map { owner, _ in owner.listener?.detachTimeLogRunningRIB() }
       .take(1)
-      .subscribe(with: self) { owner, _ in
-        owner.listener?.detachTimeLogRunningRIB()
-      }
+      .debug("shlee")
+      .subscribe()
       .disposeOnDeactivate(interactor: self)
   }
   

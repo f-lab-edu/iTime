@@ -4,12 +4,13 @@
 //
 //  Created by 이상헌 on 1/2/24.
 //
+import Foundation
 
 import XCTest
 import FeatureTestSupports
 import RIBsTestSupport
 import Entities
-import RxTest
+import RxSwift
 @testable import StartImpl
 
 final class CurrentTimeTimerInteractorTests: XCTestCase {
@@ -44,25 +45,21 @@ final class CurrentTimeTimerInteractorTests: XCTestCase {
     XCTAssertEqual(currentTimerTimePresenter.listenerSetCallCount, 1)
   }
   
-  func test_loadCurrentTime() async throws {
+  func test_loadCurrentTime() {
     // Given
-    let dummyTimerInfo = TimerInfo(
-      lastlyForegroundTrackedDate: Date(),
-      currentDate: Date(),
-      runningTime: 10,
-      startTime: 1
-    )
-    timerInfoModelDataStream.updateTimerInfo(with: dummyTimerInfo)
+    let expectation = XCTestExpectation()
     
-    // When
+    // When & Then
+    currentTimerTimePresenter.currentRunningTimeHandler = {
+      XCTAssertEqual(self.currentTimerTimePresenter.currentRunningTimeCallCount, 1)
+      XCTAssertFalse(self.currentTimerTimePresenter.currentRunningTimeSetValue.isEmpty)
+      expectation.fulfill()
+    }
+    
+    sut.activate()
     sut.loadCurrentTime()
-    
-    // Then
-    async let response = timerInfoModelDataStream.timerInfoModelDataStream.filter { $0 == dummyTimerInfo }.values
-    let result = try await response.first(where: { _ in true })
-    XCTAssertNotNil(result)
-    XCTAssertEqual(currentTimerTimePresenter.currentRunningTimeCallCount, 1)
-    XCTAssertFalse(currentTimerTimePresenter.currentRunningTimeSetValue.isEmpty)
+
+    wait(for: [expectation], timeout: 5)
   }
 
 }

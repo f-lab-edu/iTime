@@ -8,9 +8,12 @@
 import Start
 
 public class TimerOperationListenerSpy: TimerOperationListener {
+  
+  public var detachTimeLogRunningHandler: (()->())?
   public var detachTimeLogRunningRIBCallCount: Int = 0
   public func detachTimeLogRunningRIB() {
     detachTimeLogRunningRIBCallCount += 1
+    detachTimeLogRunningHandler?()
   }
   public init() {}
 }

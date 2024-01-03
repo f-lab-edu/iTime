@@ -37,19 +37,24 @@ final class CurrentActivityInteractorTests: XCTestCase {
     XCTAssertEqual(currentActivityPresenter.listenerSetCallCount, 1)
   }
   
-  func test_loadData() async {
+  func test_loadData() {
     // Given
+    let expectation = XCTestExpectation()
     let dummyTitle = "DUMMY"
     let dummyActivityLog = ActivityLog(title: dummyTitle)
     activityLogModelStream.updateActivityLog(with: dummyActivityLog)
     
-    // When
+    // When & Then
+    currentActivityPresenter.bindTageViewTitleHandler = {
+      XCTAssertEqual(self.currentActivityPresenter.bindTagViewTitleCallCount, 1)
+      XCTAssertEqual(self.currentActivityPresenter.bindTagViewTitleSetValue, dummyTitle)
+      expectation.fulfill()
+    }
+
+    sut.activate()
     sut.loadData()
-    async let _ = activityLogModelStream.activityLogStream.values
     
-    // Then
-    XCTAssertEqual(currentActivityPresenter.bindTagViewTitleCallCount, 1)
-    XCTAssertEqual(currentActivityPresenter.bindTagViewTitleSetValue, dummyTitle)
+    wait(for: [expectation], timeout: 5)
   }
 
 }

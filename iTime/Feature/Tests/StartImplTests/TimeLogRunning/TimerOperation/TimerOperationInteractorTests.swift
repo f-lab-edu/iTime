@@ -67,19 +67,24 @@ final class TimerOperationInteractorTests: XCTestCase {
     XCTAssertFalse(timerOperationPresenter.isTimeRunningSetValue)
   }
   
-  func test_didTapStopButton() async throws {
+  func test_didTapStopButton() {
     // Given
+    let expectation = XCTestExpectation()
     let dummyTitle = "foo"
-    let dummyActivityLog = ActivityLog(title: dummyTitle)
+    let dummyActivityLog = ActivityLog(title: dummyTitle, category: .empty)
     activityLogModelStream.updateActivityLog(with: dummyActivityLog)
     
-    // When
-    sut.didTapStopButton()
-    async let _ = activityLogModelStream.activityLogStream.values
+    // When & Then
+    timerOperationListener.detachTimeLogRunningHandler = {
+      XCTAssertEqual(self.timerUsecase.finishCallCount, 1)
+      XCTAssertEqual(self.timerUsecase.activityValue.title, dummyTitle)
+      XCTAssertEqual(self.timerOperationListener.detachTimeLogRunningRIBCallCount, 1)
+      expectation.fulfill()
+    }
     
-    // Then
-    XCTAssertEqual(timerUsecase.finishCallCount, 1)
-    XCTAssertEqual(timerUsecase.activityValue.title, dummyTitle)
-    XCTAssertEqual(timerOperationListener.detachTimeLogRunningRIBCallCount, 1)
+    sut.activate()
+    sut.didTapStopButton()
+
+    wait(for: [expectation], timeout: 5)
   }
 }
