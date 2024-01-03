@@ -22,6 +22,8 @@ public struct Bookmark {
     self.title = activity.title
     self.category = activity.category
   }
+  
+  public static let empty: Self = .init(title: String(), category: .empty)
 }
 
 // MARK: - Equatable
