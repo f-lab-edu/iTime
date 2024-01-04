@@ -13,7 +13,7 @@ import Start
 
 // MARK: - CurrentTimerTimePresentable
 
-protocol CurrentTimerTimePresentable: Presentable {
+public protocol CurrentTimerTimePresentable: Presentable {
   var listener: CurrentTimerTimePresentableListener? { get set }
   func currentRunningTime(_ time: String)
 }
@@ -32,14 +32,17 @@ final class CurrentTimerTimeInteractor:
   weak var listener: CurrentTimerTimeListener?
   
   private let timerInfoModelDataStream: TimerInfoModelDataStream
+  private let observationScheduler: SchedulerType
   
   // MARK: - Initialization & DeInitialization
   
   init(
     presenter: CurrentTimerTimePresentable,
-    timerInfoModelDataStream: TimerInfoModelDataStream
+    timerInfoModelDataStream: TimerInfoModelDataStream,
+    observationScheduler: SchedulerType = MainScheduler.asyncInstance
   ) {
     self.timerInfoModelDataStream = timerInfoModelDataStream
+    self.observationScheduler = observationScheduler
     super.init(presenter: presenter)
     presenter.listener = self
   }
@@ -47,14 +50,14 @@ final class CurrentTimerTimeInteractor:
   func loadCurrentTime() {
     timerInfoModelDataStream.timerInfoModelDataStream
       .map(\.runningTime)
-      .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, time in
+      .observe(on: observationScheduler)
+      .subscribe(with: self) { owner, time in
         owner.presenter.currentRunningTime(owner.timeString(time))
       }
       .disposeOnDeactivate(interactor: self)
   }
   
-  func timeString(_ time: Int) -> String {
+  private func timeString(_ time: Int) -> String {
       let hours = time / 3600
       let minutes = time / 60 % 60
       let seconds = time % 60

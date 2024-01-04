@@ -23,8 +23,10 @@ public class TimerUsecaseMock: TimerUsecase {
   }
   
   public var finishCallCount: Int = 0
+  public var activityValue: Activity = .empty
   public func finish(_ activity: Entities.Activity) -> RxSwift.Observable<Void> {
     finishCallCount += 1
+    activityValue = activity
     return .just(Void())
   }
   

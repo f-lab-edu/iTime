@@ -8,6 +8,6 @@
 import Foundation
 import Start
 
-public final class CurrentActivityListenerSpy: CurrentActivityListener {
+public class CurrentTimerTimeListenerSpy: CurrentTimerTimeListener {
   public init() {}
 }

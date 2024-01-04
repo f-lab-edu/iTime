@@ -11,14 +11,14 @@ import Start
 
 // MARK: - CurrentActivityInteractable
 
-protocol CurrentActivityInteractable: Interactable {
+public protocol CurrentActivityInteractable: Interactable {
   var router: CurrentActivityRouting? { get set }
   var listener: CurrentActivityListener? { get set }
 }
 
 // MARK: - CurrentActivityViewControllable
 
-protocol CurrentActivityViewControllable: ViewControllable {
+public protocol CurrentActivityViewControllable: ViewControllable {
 }
 
 // MARK: - CurrentActivityRouter

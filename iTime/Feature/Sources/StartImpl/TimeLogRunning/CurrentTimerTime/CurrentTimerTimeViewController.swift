@@ -14,7 +14,7 @@ import SharedUI
 
 // MARK: - CurrentTimerTimePresentableListener
 
-protocol CurrentTimerTimePresentableListener: AnyObject {
+public protocol CurrentTimerTimePresentableListener: AnyObject {
   func loadCurrentTime()
 }
 

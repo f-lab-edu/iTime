@@ -31,14 +31,17 @@ final class CurrentActivityInteractor:
   weak var listener: CurrentActivityListener?
   
   private let activityLogModelStream: ActivityLogModelStream
+  private let observationScheduler: SchedulerType
   
   // MARK: - Initialization & DeInitialization
   
   init(
     presenter: CurrentActivityPresentable,
-    activityLogModelStream: ActivityLogModelStream
+    activityLogModelStream: ActivityLogModelStream,
+    observationScheduler: SchedulerType = MainScheduler.asyncInstance
   ) {
     self.activityLogModelStream = activityLogModelStream
+    self.observationScheduler = observationScheduler
     super.init(presenter: presenter)
     presenter.listener = self
   }
@@ -48,12 +51,11 @@ final class CurrentActivityInteractor:
       .activityLogStream
       .map(\.title)
       .take(1)
-      .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, title in
+      .observe(on: observationScheduler)
+      .subscribe(with: self) { owner, title in
         owner.presenter.bindTageViewTitle(title ?? "내가 지금 할 것은...")
       }
       .disposeOnDeactivate(interactor: self)
   }
-  
   
 }

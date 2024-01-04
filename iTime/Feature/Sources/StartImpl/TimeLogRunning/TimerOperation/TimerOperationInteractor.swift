@@ -14,7 +14,7 @@ import Start
 
 // MARK: - TimerOperationPresentable
 
-protocol TimerOperationPresentable: Presentable {
+public protocol TimerOperationPresentable: Presentable {
   var listener: TimerOperationPresentableListener? { get set }
   func isTimeRunning(_ isRunning: Bool)
 }
@@ -32,18 +32,22 @@ final class TimerOperationInteractor:
   
   weak var router: TimerOperationRouting?
   weak var listener: TimerOperationListener?
+  
   private let timerUsecase: TimerUsecase
   private let activityLogModelStream: ActivityLogModelStream
+  private let observationScheduler: SchedulerType
   
   // MARK: - Initialization & DeInitialization
   
   init(
     presenter: TimerOperationPresentable,
     timerUsecase: TimerUsecase,
-    activityLogModelStream: ActivityLogModelStream
+    activityLogModelStream: ActivityLogModelStream,
+    observationScheduler: SchedulerType = MainScheduler.asyncInstance
   ) {
     self.timerUsecase = timerUsecase
     self.activityLogModelStream = activityLogModelStream
+    self.observationScheduler = observationScheduler
     super.init(presenter: presenter)
     presenter.listener = self
   }
@@ -62,7 +66,9 @@ final class TimerOperationInteractor:
     activityLogModelStream.activityLogStream
       .map(Activity.toActivity(_:))
       .flatMap(timerUsecase.finish)
+      .withUnretained(self)
       .take(1)
+      .observe(on: observationScheduler)
       .subscribe(with: self) { owner, _ in
         owner.listener?.detachTimeLogRunningRIB()
       }

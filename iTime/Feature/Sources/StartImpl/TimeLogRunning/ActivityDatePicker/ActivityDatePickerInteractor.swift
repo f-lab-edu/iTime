@@ -12,7 +12,7 @@ import Start
 
 // MARK: - ActivityDatePickerPresentable
 
-protocol ActivityDatePickerPresentable: Presentable {
+public protocol ActivityDatePickerPresentable: Presentable {
   var listener: ActivityDatePickerPresentableListener? { get set }
 }
 

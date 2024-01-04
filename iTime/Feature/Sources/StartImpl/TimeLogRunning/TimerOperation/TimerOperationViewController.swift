@@ -14,7 +14,7 @@ import SharedUI
 
 // MARK: - TimerOperationPresentableListener
 
-protocol TimerOperationPresentableListener: AnyObject {
+public protocol TimerOperationPresentableListener: AnyObject {
   func didTapStartButton()
   func didTapPauseButton()
   func didTapStopButton()
