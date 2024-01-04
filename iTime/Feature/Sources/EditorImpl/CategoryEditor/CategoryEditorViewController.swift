@@ -37,6 +37,8 @@ final class CategoryEditorViewController:
   
   // MARK: - UI Components
   
+  private let closeNavigationBar = CloseNavigationBar()
+  
   // MARK: - View LifeCycle
   
   override func viewDidLoad() {
@@ -67,7 +69,14 @@ extension CategoryEditorViewController {
   }
   
   private func layout() {
-    
+    makeCloseNavigationBarConstraints()
+  }
+  
+  private func makeCloseNavigationBarConstraints() {
+    closeNavigationBar.snp.makeConstraints {
+      $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+      $0.leading.trailing.equalToSuperview()
+    }
   }
 }
 
