@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import RxTest
 import FeatureTestSupports
 import UsecaseTestSupports
 import RIBsTestSupport
@@ -20,8 +21,10 @@ final class TimerOperationInteractorTests: XCTestCase {
   private var timerOperationListener: TimerOperationListenerSpy!
   private var timerOperationRouter: TimerOperationRoutingSpy!
   private var activityLogModelStream: ActivityLogModelStream!
+  private var scheduler: TestScheduler!
 
   override func setUp() {
+    scheduler = TestScheduler(initialClock: 0)
     timerUsecase = TimerUsecaseMock()
     timerOperationListener = TimerOperationListenerSpy()
     timerOperationPresenter = TimerOperationPresentableSpy()
@@ -33,7 +36,8 @@ final class TimerOperationInteractorTests: XCTestCase {
     sut = TimerOperationInteractor(
       presenter: timerOperationPresenter,
       timerUsecase: timerUsecase,
-      activityLogModelStream: activityLogModelStream
+      activityLogModelStream: activityLogModelStream,
+      observationScheduler: scheduler
     )
     sut.listener = timerOperationListener
     sut.router = timerOperationRouter
@@ -69,22 +73,19 @@ final class TimerOperationInteractorTests: XCTestCase {
   
   func test_didTapStopButton() {
     // Given
-    let expectation = XCTestExpectation()
     let dummyTitle = "foo"
     let dummyActivityLog = ActivityLog(title: dummyTitle, category: .empty)
     activityLogModelStream.updateActivityLog(with: dummyActivityLog)
     
-    // When & Then
-    timerOperationListener.detachTimeLogRunningHandler = {
-      XCTAssertEqual(self.timerUsecase.finishCallCount, 1)
-      XCTAssertEqual(self.timerUsecase.activityValue.title, dummyTitle)
-      XCTAssertEqual(self.timerOperationListener.detachTimeLogRunningRIBCallCount, 1)
-      expectation.fulfill()
-    }
-    
+    // When
     sut.activate()
     sut.didTapStopButton()
 
-    wait(for: [expectation], timeout: 5)
+    // Then
+    scheduler.start()
+    
+    XCTAssertEqual(timerUsecase.finishCallCount, 1)
+    XCTAssertEqual(timerUsecase.activityValue.title, dummyTitle)
+    XCTAssertEqual(timerOperationListener.detachTimeLogRunningRIBCallCount, 1)
   }
 }

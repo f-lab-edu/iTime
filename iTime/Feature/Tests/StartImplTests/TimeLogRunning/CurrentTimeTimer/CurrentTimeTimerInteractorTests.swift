@@ -10,7 +10,7 @@ import XCTest
 import FeatureTestSupports
 import RIBsTestSupport
 import Entities
-import RxSwift
+import RxTest
 @testable import StartImpl
 
 final class CurrentTimeTimerInteractorTests: XCTestCase {
@@ -20,8 +20,10 @@ final class CurrentTimeTimerInteractorTests: XCTestCase {
   private var currentTimerTimeListener: CurrentTimerTimeListenerSpy!
   private var currentTimerTimeRouter: CurrentTimerTimeRoutingSpy!
   private var timerInfoModelDataStream: TimerInfoModelDataStream!
+  private var scheduler: TestScheduler!
   
   override func setUp() {
+    scheduler = TestScheduler(initialClock: 0)
     currentTimerTimePresenter = CurrentTimerTimePresentableSpy()
     timerInfoModelDataStream = TimerInfoModelDataStream()
     currentTimerTimeRouter = CurrentTimerTimeRoutingSpy(
@@ -31,7 +33,8 @@ final class CurrentTimeTimerInteractorTests: XCTestCase {
     currentTimerTimeListener = CurrentTimerTimeListenerSpy()
     sut = CurrentTimerTimeInteractor(
       presenter: currentTimerTimePresenter,
-      timerInfoModelDataStream: timerInfoModelDataStream
+      timerInfoModelDataStream: timerInfoModelDataStream,
+      observationScheduler: scheduler
     )
     sut.listener = currentTimerTimeListener
     sut.router = currentTimerTimeRouter
@@ -46,20 +49,16 @@ final class CurrentTimeTimerInteractorTests: XCTestCase {
   }
   
   func test_loadCurrentTime() {
-    // Given
-    let expectation = XCTestExpectation()
-    
-    // When & Then
-    currentTimerTimePresenter.currentRunningTimeHandler = {
-      XCTAssertEqual(self.currentTimerTimePresenter.currentRunningTimeCallCount, 1)
-      XCTAssertFalse(self.currentTimerTimePresenter.currentRunningTimeSetValue.isEmpty)
-      expectation.fulfill()
-    }
-    
+    // When
     sut.activate()
     sut.loadCurrentTime()
-
-    wait(for: [expectation], timeout: 5)
+    
+    
+    // Then
+    scheduler.start()
+    
+    XCTAssertEqual(currentTimerTimePresenter.currentRunningTimeCallCount, 1)
+    XCTAssertFalse(currentTimerTimePresenter.currentRunningTimeSetValue.isEmpty)
   }
 
 }
