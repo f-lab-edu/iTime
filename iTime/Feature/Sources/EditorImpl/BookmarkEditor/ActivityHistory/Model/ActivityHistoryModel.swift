@@ -7,8 +7,6 @@
 
 import Entities
 
-public enum ActivityHistoryModel {
-  struct State {
-    var activityList: [Activity] = []
-  }
+public struct ActivityHistoryState {
+  var activityList: [Activity] = []
 }

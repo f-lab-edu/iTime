@@ -47,13 +47,13 @@ final class TimeLogRunningViewController:
   
   private let categoryNavigationBar = CategoryNavigationBar()
   
-  private let currentActivityView = UIView()
+  private let currentActivityContainerView = UIView()
   
-  private let currentTimerTimeView = UIView()
+  private let currentTimerTimeContainerView = UIView()
   
-  private lazy var datePickerSectionView = UIView()
+  private lazy var datePickerSectionContainerView = UIView()
   
-  private let timeOperatorButtonsView = UIView()
+  private let timeOperatorButtonsContainerView = UIView()
   
   // MARK: - View LifeCycle
   
@@ -108,10 +108,10 @@ extension TimeLogRunningViewController {
 extension TimeLogRunningViewController {
   private func setupUI() {
     view.addSubview(categoryNavigationBar)
-    view.addSubview(currentActivityView)
-    view.addSubview(currentTimerTimeView)
-    view.addSubview(datePickerSectionView)
-    view.addSubview(timeOperatorButtonsView)
+    view.addSubview(currentActivityContainerView)
+    view.addSubview(currentTimerTimeContainerView)
+    view.addSubview(datePickerSectionContainerView)
+    view.addSubview(timeOperatorButtonsContainerView)
     
     layout()
   }
@@ -132,48 +132,48 @@ extension TimeLogRunningViewController {
   }
   
   private func makeTagViewConstraints() {
-    currentActivityView.snp.makeConstraints {
+    currentActivityContainerView.snp.makeConstraints {
       $0.top.equalTo(categoryNavigationBar.snp.bottom).offset(Metric.tagViewTopMargin)
       $0.centerX.equalToSuperview()
     }
   }
   
   private func makeMainCurrentTimeLabelConstraints() {
-    currentTimerTimeView.snp.makeConstraints {
-      $0.top.equalTo(currentActivityView.snp.bottom).offset(Metric.mainCurrentTimeLabelTopMargin)
+    currentTimerTimeContainerView.snp.makeConstraints {
+      $0.top.equalTo(currentActivityContainerView.snp.bottom).offset(Metric.mainCurrentTimeLabelTopMargin)
       $0.centerX.equalToSuperview()
     }
   }
   
   private func makeDatePickerSectionViewConstraints() {
-    datePickerSectionView.snp.makeConstraints {
-      $0.top.equalTo(currentTimerTimeView.snp.bottom).offset(Metric.datePickerSectionViewTopMargin)
+    datePickerSectionContainerView.snp.makeConstraints {
+      $0.top.equalTo(currentTimerTimeContainerView.snp.bottom).offset(Metric.datePickerSectionViewTopMargin)
       $0.leading.trailing.greaterThanOrEqualToSuperview().priority(.low)
       $0.centerX.equalToSuperview()
     }
   }
   
   private func makeTimeOperatorButtonsViewConstraints() {
-    timeOperatorButtonsView.snp.makeConstraints {
+    timeOperatorButtonsContainerView.snp.makeConstraints {
       $0.centerX.equalToSuperview()
       $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-Metric.timeOperatorButtonsViewBottomMargin)
     }
   }
   
   func addCurrentActivity(_ view: ViewControllable) {
-    addChildViewController(container: currentActivityView, child: view)
+    addChildViewController(container: currentActivityContainerView, child: view)
   }
   
   func addCurrentTimerTime(_ view: ViewControllable) {
-    addChildViewController(container: currentTimerTimeView, child: view)
+    addChildViewController(container: currentTimerTimeContainerView, child: view)
   }
   
   func addActivityDatePicker(_ view: ViewControllable) {
-    addChildViewController(container: datePickerSectionView, child: view)
+    addChildViewController(container: datePickerSectionContainerView, child: view)
   }
   
   func addTimerOperation(_ view: ViewControllable) {
-    addChildViewController(container: timeOperatorButtonsView, child: view)
+    addChildViewController(container: timeOperatorButtonsContainerView, child: view)
   }
 }
 

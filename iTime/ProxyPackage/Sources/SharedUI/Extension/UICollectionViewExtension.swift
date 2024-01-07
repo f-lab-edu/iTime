@@ -8,11 +8,11 @@
 import UIKit
 
 extension UICollectionView {
-  func register<Cell: UICollectionViewCell>(_: Cell.Type) where Cell: Reusable {
+  public func register<Cell: UICollectionViewCell>(_: Cell.Type) where Cell: Reusable {
     self.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
   }
 
-  func register<View: UICollectionReusableView>(_: View.Type) where View: Reusable & HasElementKind {
+  public func register<View: UICollectionReusableView>(_: View.Type) where View: Reusable & HasElementKind {
     self.register(
       View.self,
       forSupplementaryViewOfKind: View.elementKind,
@@ -20,7 +20,7 @@ extension UICollectionView {
     )
   }
 
-  func dequeue<Cell: UICollectionViewCell>(_: Cell.Type, indexPath: IndexPath) -> Cell where Cell: Reusable {
+  public func dequeue<Cell: UICollectionViewCell>(_: Cell.Type, indexPath: IndexPath) -> Cell where Cell: Reusable {
     if let cell = dequeueReusableCell(withReuseIdentifier: Cell.identifier, for: indexPath) as? Cell {
       return cell
     } else {
@@ -28,7 +28,7 @@ extension UICollectionView {
     }
   }
 
-  func dequeue<View: UICollectionReusableView>(
+  public func dequeue<View: UICollectionReusableView>(
     _: View.Type,
     indexPath: IndexPath
   ) -> View where View: Reusable & HasElementKind {

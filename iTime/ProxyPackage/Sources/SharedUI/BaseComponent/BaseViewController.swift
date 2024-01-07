@@ -36,7 +36,8 @@ open class BaseViewController:
   
   @available(*, unavailable)
   public required convenience init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    assertionFailure("init(coder:) has not been implemented")
+    self.init()
   }
   
   deinit {

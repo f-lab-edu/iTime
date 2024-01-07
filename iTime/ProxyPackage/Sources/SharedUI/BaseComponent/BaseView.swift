@@ -30,7 +30,8 @@ open class BaseView:
     
     @available(*, unavailable)
     public required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+      assertionFailure("init(coder:) has not been implemented")
+      super.init(coder: aDecoder)
     }
     
     open override func updateConstraints() {

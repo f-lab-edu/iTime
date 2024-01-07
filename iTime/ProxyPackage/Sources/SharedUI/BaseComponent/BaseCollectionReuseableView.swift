@@ -13,15 +13,12 @@ class BaseCollectionReusableView:
   UICollectionReusableView,
   BaseViewable,
   Reusable,
-  HasDisposeBag,
-  HasCompositeDisposable,
-  DisposablesManageable
+  HasDisposeBag
 {
 
   // MARK: - Properties
 
   var disposeBag = DisposeBag()
-  var disposables = CompositeDisposable()
 
   private(set) var didSetupConstrints: Bool = false
 
@@ -34,18 +31,15 @@ class BaseCollectionReusableView:
 
   @available(*, unavailable)
   required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  deinit {
-    disposeDisposables()
+    assertionFailure("init(coder:) has not been implemented")
+    super.init(coder: aDecoder)
   }
 
   // MARK: - Inheritance
 
   override func prepareForReuse() {
     super.prepareForReuse()
-    resetDisposables()
+    disposeBag = DisposeBag()
   }
 
   // MARK: - Layout Constraints
