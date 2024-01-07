@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol Reusable {
+public protocol Reusable {
     static var identifier: String { get }
 }
 
 extension Reusable {
-    static var identifier: String {
+    public static var identifier: String {
         String(describing: Self.self)
     }
 }

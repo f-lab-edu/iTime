@@ -35,12 +35,12 @@ final class BookmarkListInteractor:
   weak var router: BookmarkListRouting?
   weak var listener: BookmarkListListener?
   private let bookmarkModelDataStream: BookmarkModelDataStream
-  private var state: BookmarkListModel.State
+  private var state: BookmarkListState
   
   // MARK: - Initialization & DeInitialization
   
   init(
-    initialState: BookmarkListModel.State,
+    initialState: BookmarkListState,
     presenter: BookmarkListPresentable,
     bookmarkModelDataStream: BookmarkModelDataStream
   ) {

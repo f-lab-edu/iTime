@@ -15,6 +15,7 @@ public final class CloseNavigationBar: BaseView {
     static let backButtonLeadingMargin: CGFloat = 8
     static let backButtonTopBottomMargin: CGFloat = 4
     static let backButtonSize: CGFloat = 44
+    static let separationViewHeight: CGFloat = 1
   }
   
   // MARK: - UI Components
@@ -29,6 +30,10 @@ public final class CloseNavigationBar: BaseView {
     .text("카테고리 설정")
     .font(.custom(.bold, 16))
     .textColor(.white)
+    .build()
+  
+  private let separationView = UIView().builder
+    .backgroundColor(.black90)
     .build()
   
   // MARK: - Initialization & Deinitialization
@@ -55,11 +60,13 @@ public final class CloseNavigationBar: BaseView {
     backgroundColor = .clear
     addSubview(backButton)
     addSubview(titleLabel)
+    addSubview(separationView)
   }
   
   private func layout() {
     makeBackButtonCostraints()
     makeTitleLabelConstraints()
+    makeSeparationViewConstraints()
   }
   
   private func makeBackButtonCostraints() {
@@ -73,6 +80,13 @@ public final class CloseNavigationBar: BaseView {
   private func makeTitleLabelConstraints() {
     titleLabel.snp.makeConstraints {
       $0.center.equalToSuperview()
+    }
+  }
+  
+  private func makeSeparationViewConstraints() {
+    separationView.snp.makeConstraints {
+      $0.leading.trailing.bottom.equalToSuperview()
+      $0.height.equalTo(Metric.separationViewHeight)
     }
   }
   

@@ -22,7 +22,7 @@ public protocol BookmarkListDependency: Dependency {
 // MARK: - BookmarkListComponent
 
 final class BookmarkListComponent: Component<BookmarkListDependency> {
-  var initalState: BookmarkListModel.State = .init()
+  var initalState: BookmarkListState = .init()
   
   var bookmarkModelDataStream: BookmarkModelDataStream {
     dependency.bookmarkModelDataStream

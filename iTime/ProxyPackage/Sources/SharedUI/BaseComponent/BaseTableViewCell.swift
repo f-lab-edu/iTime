@@ -9,61 +9,53 @@ import UIKit
 
 import RxSwift
 
-class BaseTableViewCell:
+open class BaseTableViewCell:
     UITableViewCell,
-    BaseViewable,
     Reusable,
-    HasDisposeBag,
-    HasCompositeDisposable,
-    DisposablesManageable
+    HasDisposeBag
 {
     
     // MARK: Properties
     
-    var disposeBag = DisposeBag()
-    var disposables = CompositeDisposable()
+    public var disposeBag = DisposeBag()
     
     private(set) var didSetupConstrints: Bool = false
     
     // MARK: - initialization & Deinitialization
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.initialize()
     }
     
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        disposeDisposables()
+    required public init?(coder: NSCoder) {
+      assertionFailure("init(coder:) has not been implemented")
+      super.init(coder: coder)
     }
     
     // MARK: - Inheritance
     
-    override func prepareForReuse() {
+    open override func prepareForReuse() {
         super.prepareForReuse()
-        resetDisposables()
+      disposeBag = DisposeBag()
     }
     
     // MARK: Layout Constraints
     
-    override func updateConstraints() {
+    open override func updateConstraints() {
         self.setupConstraintsIfNeeded()
         super.updateConstraints()
     }
     
-    func initialize() {
+    open func initialize() {
         // Override point
         setNeedsUpdateConstraints()
         selectionStyle = .none
         backgroundColor = .white
     }
     
-    
-    func setupConstraints() {
+    open func setupConstraints() {
         // Override here
     }
     

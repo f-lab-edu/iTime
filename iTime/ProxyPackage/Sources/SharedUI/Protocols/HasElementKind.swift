@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol HasElementKind {
+public protocol HasElementKind {
   static var elementKind: String { get }
 }

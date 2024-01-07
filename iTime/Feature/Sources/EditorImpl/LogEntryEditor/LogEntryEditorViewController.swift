@@ -96,9 +96,9 @@ final class LogEntryEditorViewController:
 
 extension LogEntryEditorViewController {
   private func bindActions() {
-    bindCloseButtonTapAction()
     bindStartButtonTapAction()
-    bindDetachAction()
+    bindCategoryStateViewTapAction()
+    bindDidTapCloseButtonAction()
   }
   
   private func bindStartButtonTapAction() {
@@ -117,8 +117,9 @@ extension LogEntryEditorViewController {
       .disposed(by: disposeBag)
   }
   
-  private func bindDetachAction() {
-    detachAction
+  private func bindDidTapCloseButtonAction() {
+    headerView.closeButton.rx
+      .tapWithPreventDuplication()
       .asDriver(onErrorDriveWith: .empty())
       .drive(with: self) { owner, _ in owner.listener?.didTapCloseButton() }
       .disposed(by: disposeBag)
