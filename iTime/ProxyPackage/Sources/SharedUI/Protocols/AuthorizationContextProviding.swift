@@ -5,7 +5,7 @@
 //  Created by 이상헌 on 2023/11/06.
 //
 
-import UIKit
+import UIKit.UIApplication
 import AuthenticationServices
 
 import AppFoundation

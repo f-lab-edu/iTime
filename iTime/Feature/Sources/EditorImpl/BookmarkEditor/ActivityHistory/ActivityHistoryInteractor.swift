@@ -36,12 +36,12 @@ final class ActivityHistoryInteractor:
   weak var listener: ActivityHistoryListener?
   private let timeLogRecordModelDataStream: TimeLogRecordModelDataStream
   private let bookmarkModelDataStream: BookmarkModelDataStream
-  private var state: ActivityHistoryModel.State
+  private var state: ActivityHistoryState
   
   // MARK: - Initialization & DeInitialization
   
   init(
-    initialState: ActivityHistoryModel.State,
+    initialState: ActivityHistoryState,
     presenter: ActivityHistoryPresentable,
     timeLogRecordModelDataStream: TimeLogRecordModelDataStream,
     bookmarkModelDataStream: BookmarkModelDataStream

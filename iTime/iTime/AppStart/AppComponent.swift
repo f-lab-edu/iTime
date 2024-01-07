@@ -48,8 +48,12 @@ final class AppComponent:
   CurrentTimerTimeDependency,
   ActivityDatePickerDependency,
   TimerOperationDependency,
-  CurrentActivityDependency
+  CurrentActivityDependency,
+  CategoryListDependency
 {
+  var categoryListBuilder: CategoryListBuildable {
+    CategoryListBuilder(dependency: self)
+  }
   
   var logEntryCreationBuilder: LogEntryCreationBuildable {
     LogEntryCreationBuilder(dependency: self)

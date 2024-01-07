@@ -8,8 +8,6 @@
 import Entities
 import AppFoundation
 
-enum BookmarkListModel {
-  struct State {
-    var bookmarks: [Bookmark] = []
-  }
+public struct BookmarkListState {
+  var bookmarks: [Bookmark] = []
 }

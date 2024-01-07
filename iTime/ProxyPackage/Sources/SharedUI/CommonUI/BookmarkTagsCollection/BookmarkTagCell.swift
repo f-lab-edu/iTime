@@ -31,7 +31,7 @@ public final class BookmarkTagCell:
     .textColor(.black60)
     .textAlignment(.center)
     .build()
-  
+    
   // MARK: Initialization
   
   override func initialize() {
@@ -44,16 +44,12 @@ public final class BookmarkTagCell:
     layout()
   }
   
-  public override func layerWillDraw(_ layer: CALayer) {
-    super.layerWillDraw(layer)
-  }
-  
   // MARK: - Internal methods
   
   public func configure(by viewModel: BookmarkCollectionCellViewModel) {
     tagLabel.text = viewModel.title
     contentView.clipsToBounds = true
-    contentView.applyRoundedCorners(
+    contentView.addCornerRadius(
       Metric.contentViewRadius,
       widthBorder: 1,
       borderColor: viewModel.borderColor

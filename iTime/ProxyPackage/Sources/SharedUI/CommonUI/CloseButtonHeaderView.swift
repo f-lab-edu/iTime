@@ -18,7 +18,7 @@ public final class CloseButtonHeaderView: BaseView {
     static let separatedViewHeight: CGFloat = 1
   }
   
-  let closeButton = UIButton().builder
+  public let closeButton = UIButton().builder
     .with {
       $0.setImage(.exit, for: .normal)
     }
