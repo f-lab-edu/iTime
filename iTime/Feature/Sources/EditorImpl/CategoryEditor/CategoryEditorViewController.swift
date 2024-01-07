@@ -28,7 +28,10 @@ final class CategoryEditorViewController:
   // MARK: - Constants
   
   private enum Metric {
-    
+    static let guideLabelTopMargin: CGFloat = 10
+    static let currentActivityTopMargin: CGFloat = 60
+    static let categoryListViewHeightRatio: CGFloat = 0.48
+    static let categoryListViewRadius: CGFloat = 24
   }
   
   // MARK: - Properties
@@ -38,6 +41,19 @@ final class CategoryEditorViewController:
   // MARK: - UI Components
   
   private let closeNavigationBar = CloseNavigationBar()
+  
+  private let guideLabel = UILabel().builder
+    .text("실행하는 동안 시간은 잠시 멈출게요.")
+    .textColor(.black60)
+    .build()
+  
+  private let currentActivityContainerView = UIView()
+  
+  private let categoryListContrainerView = UIView().builder
+    .set(\.layer.cornerRadius, to: Metric.categoryListViewRadius)
+    .set(\.layer.masksToBounds, to: true)
+    .set(\.layer.maskedCorners, to: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+    .build()
   
   // MARK: - View LifeCycle
   
@@ -64,12 +80,19 @@ extension CategoryEditorViewController {
 
 extension CategoryEditorViewController {
   private func setupUI() {
+    view.addSubview(closeNavigationBar)
+    view.addSubview(guideLabel)
+    view.addSubview(currentActivityContainerView)
+    view.addSubview(categoryListContrainerView)
     
     layout()
   }
   
   private func layout() {
     makeCloseNavigationBarConstraints()
+    makeGuideLabelConstraints()
+    makeCurrentActivityContainerViewContraints()
+    makeCategoryListContainerViewConstraints()
   }
   
   private func makeCloseNavigationBarConstraints() {
@@ -77,6 +100,35 @@ extension CategoryEditorViewController {
       $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       $0.leading.trailing.equalToSuperview()
     }
+  }
+  
+  private func makeGuideLabelConstraints() {
+    guideLabel.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.top.equalTo(closeNavigationBar.snp.bottom).offset(Metric.guideLabelTopMargin)
+    }
+  }
+  
+  private func makeCurrentActivityContainerViewContraints() {
+    currentActivityContainerView.snp.makeConstraints {
+      $0.top.greaterThanOrEqualTo(guideLabel.snp.bottom).offset(Metric.currentActivityTopMargin)
+      $0.centerX.equalToSuperview()
+    }
+  }
+  
+  private func makeCategoryListContainerViewConstraints() {
+    categoryListContrainerView.snp.makeConstraints {
+      $0.leading.bottom.trailing.equalToSuperview()
+      $0.height.equalToSuperview().multipliedBy(Metric.categoryListViewHeightRatio)
+    }
+  }
+  
+  func addCurrentActivity(_ view: RIBs.ViewControllable) {
+    addChildViewController(container: currentActivityContainerView, child: view)
+  }
+  
+  func addCategoryList(_ view: ViewControllable) {
+    addChildViewController(container: categoryListContrainerView, child: view)
   }
 }
 

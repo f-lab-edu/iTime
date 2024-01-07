@@ -8,17 +8,25 @@
 import RIBs
 
 import Editor
+import Start
 
 // MARK: - CategoryEditorDependency
 
 public protocol CategoryEditorDependency: Dependency {
-  
+  var currentActivityBuilder: CurrentActivityBuildable { get }
+  var categoryListBuilder: CategoryListBuildable { get }
 }
 
 // MARK: - CategoryEditorComponent
 
 final class CategoryEditorComponent: Component<CategoryEditorDependency> {
+  fileprivate var currentActivityBuilder: CurrentActivityBuildable {
+    dependency.currentActivityBuilder
+  }
   
+  fileprivate var categoryListBuilder: CategoryListBuildable {
+    dependency.categoryListBuilder
+  }
 }
 
 // MARK: - CategoryEditorBuilder
@@ -39,7 +47,9 @@ public final class CategoryEditorBuilder:
     interactor.listener = listener
     return CategoryEditorRouter(
       interactor: interactor,
-      viewController: viewController
+      viewController: viewController,
+      currentActivityBuilder: component.currentActivityBuilder,
+      categoryListBuilder: component.categoryListBuilder
     )
   }
 }
