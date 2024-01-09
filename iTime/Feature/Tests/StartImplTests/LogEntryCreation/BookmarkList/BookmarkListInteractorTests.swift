@@ -67,10 +67,10 @@ final class BookmarkListInteractorTests: XCTestCase {
     let dummyBookmarks = DummyData.DummyBookmark.dummyBookmarksFour
     bookmarkModelDataStream.update(with: dummyBookmarks)
     sut.loadBookmarkList()
-    async let _ = bookmarkModelDataStream.bookmarks.values
     
     // When
     let result = sut.numberOfItems()
+    async let _ = bookmarkModelDataStream.bookmarks.values
     
     // Then
     XCTAssertEqual(result, dummyBookmarks.count)
@@ -81,10 +81,10 @@ final class BookmarkListInteractorTests: XCTestCase {
     let dummyBookmarks = DummyData.DummyBookmark.dummyBookmarksFour
     bookmarkModelDataStream.update(with: dummyBookmarks)
     sut.loadBookmarkList()
-    async let _ = bookmarkModelDataStream.bookmarks.values
     
     // When
     let bookmarkTitle = sut.bookmark(at: 0)
+    async let _ = bookmarkModelDataStream.bookmarks.values
     
     // Then
     XCTAssertEqual(bookmarkTitle, dummyBookmarks[0].title)
