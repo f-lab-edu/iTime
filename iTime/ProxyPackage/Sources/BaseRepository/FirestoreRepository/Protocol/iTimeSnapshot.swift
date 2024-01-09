@@ -1,11 +1,11 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by 이상헌 on 2023/10/27.
 //
 
-import Foundation
+import FirebaseFirestore
 
 // MARK: - iTimeDocumentSnapshot
 
@@ -34,5 +34,15 @@ extension iTimeDocumentSnapshot {
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .secondsSince1970
     return try decoder.decode(T.self, from: json)
+  }
+}
+
+// MARK: - DocumentSnapshot & QuerySnapshot
+
+extension DocumentSnapshot: iTimeDocumentSnapshot {}
+
+extension QuerySnapshot: iTimeQuerySnapshot {
+  public var iTimeDocuments: [iTimeDocumentSnapshot] {
+    self.documents
   }
 }

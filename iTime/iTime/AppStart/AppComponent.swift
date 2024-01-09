@@ -10,6 +10,7 @@ import CoreLocation
 
 import RIBs
 import Clocks
+import FirebaseFirestore
 
 import AppRoot
 import AppRootImpl
@@ -112,7 +113,7 @@ final class AppComponent:
   }
   
   init() {
-    let firestoreRepository = FirestoreRepositoryImpl()
+    let firestoreRepository = FirestoreRepositoryImpl(firestore: Firestore.firestore())
     let userDefaultRepository = UserDefaultRepositoryImpl()
     let bookmarkRepository = BookmarkRepositoryImpl(
       firestoreRepository: firestoreRepository,
