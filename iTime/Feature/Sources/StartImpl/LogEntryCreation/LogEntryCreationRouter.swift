@@ -126,8 +126,9 @@ final class LogEntryCreationRouter:
     let router = logEntryEditorBuilder.build(withListener: interactor)
     logEntryEditorRouter = router
     attachChild(router)
+    let navigationControllerable = NavigationControllerable(root: router.viewControllable)
     viewController.presentFullScreen(
-      router.viewControllable,
+      navigationControllerable,
       animated: true,
       completion: nil
     )

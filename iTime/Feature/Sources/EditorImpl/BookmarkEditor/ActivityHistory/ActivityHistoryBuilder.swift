@@ -20,7 +20,7 @@ public protocol ActivityHistoryDependency: Dependency {
 // MARK: - ActivityHistoryComponent
 
 final class ActivityHistoryComponent: Component<ActivityHistoryDependency> {
-  fileprivate let initialState: ActivityHistoryModel.State = .init()
+  fileprivate let initialState: ActivityHistoryState = .init()
   
   fileprivate var timeLogRecordModelDataStream: TimeLogRecordModelDataStream {
     dependency.timeLogRecordModelDataStream

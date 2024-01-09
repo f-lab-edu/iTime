@@ -53,7 +53,9 @@ final class LogEntryEditorRouter:
   
   func attachCategoryEditorRIB() {
     guard categoryEditorRouter == nil else { return }
-    let router = categoryEditorBuilder.build(withListener: interactor)
+    let router = categoryEditorBuilder.build(
+      withListener: interactor
+    )
     categoryEditorRouter = router
     attachChild(router)
     viewController.pushViewController(router.viewControllable, animated: true)
@@ -61,7 +63,7 @@ final class LogEntryEditorRouter:
   
   func detachCategoryEditorRIB() {
     guard let router = categoryEditorRouter else { return }
-    categoryEditorRouter == nil
+    categoryEditorRouter = nil
     detachChild(router)
     viewController.popViewController(animated: true, completion: nil)
   }

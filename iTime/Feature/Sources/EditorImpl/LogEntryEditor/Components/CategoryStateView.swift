@@ -52,6 +52,7 @@ final class CategoryStateView:
   }
   
   private func setupUI() {
+    backgroundColor = .black90
     addSubview(circleDotView)
     addSubview(titleLabel)
   }

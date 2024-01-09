@@ -43,22 +43,12 @@ final class LogEntryEditorInteractor:
     presenter.listener = self
   }
   
-  // MARK: - LifeCycle
-  
-  override func didBecomeActive() {
-    super.didBecomeActive()
-  }
-  
-  // MARK: - Mutation
   func didTapStartButton(_ title: String?) {
     activityLogModelStream.updateActivityTitle(with: title ?? "")
-    
-    
     listener?.attachTimeLogRunningRIB()
     listener?.detachLogEntryEditorRIB()
   }
-  
-  
+
   func didTapCategoryStateView() {
     router?.attachCategoryEditorRIB()
   }
