@@ -35,7 +35,7 @@ public final class CloseNavigationBar: BaseView {
   private let separationView = UIView().builder
     .backgroundColor(.black90)
     .build()
-  
+
   // MARK: - Initialization & Deinitialization
   
   public override func initialize() {
@@ -89,5 +89,4 @@ public final class CloseNavigationBar: BaseView {
       $0.height.equalTo(Metric.separationViewHeight)
     }
   }
-  
 }
