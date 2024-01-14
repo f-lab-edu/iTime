@@ -10,6 +10,7 @@ import CoreLocation
 
 import RIBs
 import Clocks
+import FirebaseFirestore
 
 import AppRoot
 import AppRootImpl
@@ -112,7 +113,7 @@ final class AppComponent:
   }
   
   init() {
-    let firestoreRepository = FirestoreRepositoryImpl()
+    let firestoreRepository = FirestoreRepositoryImpl(firestore: Firestore.firestore())
     let userDefaultRepository = UserDefaultRepositoryImpl()
     let bookmarkRepository = BookmarkRepositoryImpl(
       firestoreRepository: firestoreRepository,
@@ -195,23 +196,16 @@ final class AppComponent:
       timeLogRecordRepository: timeLogRecordRepository
     )
     
-    self.timerUsecase = TimerUsecaseImpl(
-      timeLogRecordBuilder: timeLogRecordBuilder,
-      timeStartFacade: timeStartFacade,
-      timeSuspenseFacade: timeSuspenseFacade,
-      timeFinishFacade: timeFinishFacade
-    )
-    
     super.init(dependency: EmptyComponent())
   }
   
   let timeLogUsecase: TimeLogUsecase
   
-  var timerUsecase: TimerUsecase
+  let timerUsecase: TimerUsecase
   
   let authenticationUsecase: AuthenticationUsecase
   
-  var timerInfoModelDataStream: TimerInfoModelDataStream
+  let timerInfoModelDataStream: TimerInfoModelDataStream
   
   let editorUsecase: EditorUsecase
   

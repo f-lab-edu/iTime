@@ -11,25 +11,22 @@ import RxSwift
 import BaseRepository
 import Repository
 
-// MARK: - DocumentSnapshot & QuerySnapshot
-
-extension DocumentSnapshot: iTimeDocumentSnapshot {}
-
-extension QuerySnapshot: iTimeQuerySnapshot {
-  public var iTimeDocuments: [iTimeDocumentSnapshot] {
-    self.documents
-  }
-}
-
 // MARK: - FirestoreRepository Implemetation
 
 public final class FirestoreRepositoryImpl: FirestoreRepository {
+  
+  private let firestore: iTimeFirestore
+  
+  public init(firestore: iTimeFirestore) {
+    self.firestore = firestore
+  }
+  
   public func create(
     reference: DocumentReferenceConvertible,
     with data: [String : Any]
   ) -> Observable<String> {
-    Observable.create { observer in
-      let document = Firestore.firestore().collection(reference.referencePath).document()
+    Observable.create(with: self) { owner, observer in
+      let document = owner.firestore.iTimeCollection(reference.referencePath).document()
       document.setData(data, merge: true) { error in
         if let error = error {
           observer.onError(error)
@@ -46,8 +43,8 @@ public final class FirestoreRepositoryImpl: FirestoreRepository {
     with data: [String: Any],
     merge: Bool
   ) -> Observable<String> {
-    Observable.create { observer in
-      let document = Firestore.firestore().document(reference.referencePath)
+    Observable.create(with: self) { owner, observer in
+      let document = owner.firestore.iTimeDocument(reference.referencePath)
       document.setData(data, merge: merge) { error in
         if let error = error{
           observer.onError(error)
@@ -64,8 +61,8 @@ public final class FirestoreRepositoryImpl: FirestoreRepository {
     includeMetadata: Bool
   ) -> Observable<iTimeQuerySnapshot> {
     let changesSubject = PublishSubject<iTimeQuerySnapshot>()
-    Firestore.firestore()
-      .collection(reference.referencePath)
+    firestore
+      .iTimeCollection(reference.referencePath)
       .addSnapshotListener(includeMetadataChanges: includeMetadata) { snapshot, error in
         if let error = error {
           changesSubject.onError(error)
@@ -82,8 +79,8 @@ public final class FirestoreRepositoryImpl: FirestoreRepository {
     includeMetadata: Bool
   ) -> Observable<iTimeDocumentSnapshot> {
     let changesSubject = PublishSubject<iTimeDocumentSnapshot>()
-    Firestore.firestore()
-      .document(reference.referencePath)
+    firestore
+      .iTimeDocument(reference.referencePath)
       .addSnapshotListener(includeMetadataChanges: includeMetadata) { snapshot, error in
         if let error = error {
           changesSubject.onError(error)
@@ -93,6 +90,4 @@ public final class FirestoreRepositoryImpl: FirestoreRepository {
       }
     return changesSubject.asObservable()
   }
-  
-  public init() {}
 }
