@@ -15,7 +15,8 @@ import Start
 public protocol CategoryEditorInteractable: 
   Interactable,
   CurrentActivityListener,
-  CategoryListListener
+  CategoryListListener,
+  CategoryCreationListener
 {
   var router: CategoryEditorRouting? { get set }
   var listener: CategoryEditorListener? { get set }
@@ -44,16 +45,21 @@ final class CategoryEditorRouter:
   private let categoryListBuilder: CategoryListBuildable
   private var categoryListRouter: CategoryListRouting?
   
+  private let categoryCreationBuilder: CategoryCreationBuildable
+  private var categoryCreationRouter: CategoryCreationRouting?
+  
   // MARK: - Initialization & DeInitialization
   
   init(
     interactor: CategoryEditorInteractable,
     viewController: CategoryEditorViewControllable,
     currentActivityBuilder: CurrentActivityBuildable,
-    categoryListBuilder: CategoryListBuildable
+    categoryListBuilder: CategoryListBuildable,
+    categoryCreationBuilder: CategoryCreationBuildable
   ) {
     self.currentActivityBuilder = currentActivityBuilder
     self.categoryListBuilder = categoryListBuilder
+    self.categoryCreationBuilder = categoryCreationBuilder
     super.init(interactor: interactor, viewController: viewController)
     interactor.router = self
   }
@@ -84,6 +90,16 @@ final class CategoryEditorRouter:
     categoryListRouter = router
     attachChild(router)
     viewController.addCategoryList(router.viewControllable)
+  }
+  
+  func attachCategoryCreationRIB() {
+    guard categoryCreationRouter == nil else { return }
+    let router = categoryCreationBuilder.build(
+      withListener: interactor
+    )
+    categoryCreationRouter = router
+    attachChild(router)
+    viewController.push(viewController: router.viewControllable)
   }
   
 }

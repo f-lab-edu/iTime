@@ -12,13 +12,20 @@ import Editor
 // MARK: - CategoryCreationDependency
 
 public protocol CategoryCreationDependency: Dependency {
-  
+  var textEntryBuilder: TextEntryBuildable { get }
+  var colorPickerBuilder: ColorPickerBuildable { get }
 }
 
 // MARK: - CategoryCreationComponent
 
 final class CategoryCreationComponent: Component<CategoryCreationDependency> {
+  fileprivate var textEntryBuilder: TextEntryBuildable {
+    dependency.textEntryBuilder
+  }
   
+  fileprivate var colorPickerbuilder: ColorPickerBuildable {
+    dependency.colorPickerBuilder
+  }
 }
 
 // MARK: - CategoryCreationBuilder
@@ -39,7 +46,9 @@ public final class CategoryCreationBuilder:
     interactor.listener = listener
     return CategoryCreationRouter(
       interactor: interactor,
-      viewController: viewController
+      viewController: viewController,
+      textEntryBuilder: component.textEntryBuilder,
+      colorPickerBuilder: component.colorPickerbuilder
     )
   }
 }

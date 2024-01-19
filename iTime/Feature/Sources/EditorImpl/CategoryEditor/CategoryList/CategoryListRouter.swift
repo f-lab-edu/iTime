@@ -11,7 +11,10 @@ import Editor
 
 // MARK: - CategoryListInteractable
 
-protocol CategoryListInteractable: Interactable {
+protocol CategoryListInteractable: 
+  Interactable,
+  CategoryCreationListener
+{
   var router: CategoryListRouting? { get set }
   var listener: CategoryListListener? { get set }
 }

@@ -26,6 +26,7 @@ final class CategoryListInteractor:
   CategoryListInteractable,
   CategoryListPresentableListener
 {
+  
   var error: Observable<DisplayErrorMessage> {
     state
       .map(\.error)
@@ -78,6 +79,14 @@ final class CategoryListInteractor:
         owner.reduceTimeLogRecords(timeLogRecords)
       }
       .disposeOnDeactivate(interactor: self)
+  }
+  
+  func didTapCell() {
+    print("didTapCell")
+  }
+  
+  func didTapCategoryCreationLabel() {
+    listener?.didTapCategoryCreationLabel()
   }
   
   private func categoryListErrorMessage(_ message: String) -> DisplayErrorMessage {

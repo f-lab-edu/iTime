@@ -50,8 +50,23 @@ final class AppComponent:
   ActivityDatePickerDependency,
   TimerOperationDependency,
   CurrentActivityDependency,
-  CategoryListDependency
+  CategoryListDependency, 
+  CategoryCreationDependency,
+  TextEntryDependency,
+  ColorPickerDependency
 {
+  var textEntryBuilder: TextEntryBuildable {
+    TextEntryBuilder(dependency: self)
+  }
+  
+  var colorPickerBuilder: ColorPickerBuildable {
+    ColorPickerBuilder(dependency: self)
+  }
+  
+  var categoryCreationBuilder: CategoryCreationBuilder {
+    CategoryCreationBuilder(dependency: self)
+  }
+  
   var categoryListBuilder: CategoryListBuildable {
     CategoryListBuilder(dependency: self)
   }

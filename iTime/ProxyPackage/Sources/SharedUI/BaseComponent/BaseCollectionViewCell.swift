@@ -8,7 +8,7 @@ import UIKit
 
 import RxSwift
 
-public class BaseCollectionViewCell:
+open class BaseCollectionViewCell:
   UICollectionViewCell,
   BaseViewable,
   Reusable,
@@ -29,7 +29,7 @@ public class BaseCollectionViewCell:
   }
 
   @available(*, unavailable)
-  required init?(coder aDecoder: NSCoder) {
+  required public init?(coder aDecoder: NSCoder) {
     assertionFailure("init(coder:) has not been implemented")
     super.init(coder: aDecoder)
   }
@@ -50,12 +50,12 @@ public class BaseCollectionViewCell:
 
   // MARK: - Internal methods
 
-  func initialize() {
+  open func initialize() {
     // Override point
     setNeedsUpdateConstraints()
   }
 
-  func setupConstraints() {
+  open func setupConstraints() {
     // Override here
   }
 

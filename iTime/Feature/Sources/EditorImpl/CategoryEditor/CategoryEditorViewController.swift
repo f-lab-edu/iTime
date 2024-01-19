@@ -64,18 +64,6 @@ final class CategoryEditorViewController:
   
 }
 
-// MARK: - Bind Action
-
-extension CategoryEditorViewController {
-  
-}
-
-// MARK: - Bind State
-
-extension CategoryEditorViewController {
-  
-}
-
 // MARK: - Layout
 
 extension CategoryEditorViewController {

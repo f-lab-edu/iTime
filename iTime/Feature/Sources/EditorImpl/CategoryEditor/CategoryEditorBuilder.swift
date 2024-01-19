@@ -15,6 +15,7 @@ import Start
 public protocol CategoryEditorDependency: Dependency {
   var currentActivityBuilder: CurrentActivityBuildable { get }
   var categoryListBuilder: CategoryListBuildable { get }
+  var categoryCreationBuilder: CategoryCreationBuilder { get }
 }
 
 // MARK: - CategoryEditorComponent
@@ -26,6 +27,10 @@ final class CategoryEditorComponent: Component<CategoryEditorDependency> {
   
   fileprivate var categoryListBuilder: CategoryListBuildable {
     dependency.categoryListBuilder
+  }
+  
+  fileprivate var categoryCreationBuilder: CategoryCreationBuilder {
+    dependency.categoryCreationBuilder
   }
 }
 
@@ -49,7 +54,8 @@ public final class CategoryEditorBuilder:
       interactor: interactor,
       viewController: viewController,
       currentActivityBuilder: component.currentActivityBuilder,
-      categoryListBuilder: component.categoryListBuilder
+      categoryListBuilder: component.categoryListBuilder,
+      categoryCreationBuilder: component.categoryCreationBuilder
     )
   }
 }
