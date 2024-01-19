@@ -16,6 +16,7 @@ public protocol CategoryEditorBuildable: Buildable {
 // MARK: - CategoryEditorRouting
 
 public protocol CategoryEditorRouting: ViewableRouting {
+  func attachCategoryCreationRIB()
 }
 
 // MARK: - CategoryEditorListener

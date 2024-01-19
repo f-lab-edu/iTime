@@ -18,7 +18,7 @@ public protocol ColorPickerDependency: Dependency {
 // MARK: - ColorPickerComponent
 
 final class ColorPickerComponent: Component<ColorPickerDependency> {
-  
+  fileprivate var initialState: ColorPickerState = .init()
 }
 
 // MARK: - ColorPickerBuilder
@@ -35,7 +35,10 @@ public final class ColorPickerBuilder:
   public func build(withListener listener: ColorPickerListener) -> ColorPickerRouting {
     let component = ColorPickerComponent(dependency: dependency)
     let viewController = ColorPickerViewController()
-    let interactor = ColorPickerInteractor(presenter: viewController)
+    let interactor = ColorPickerInteractor(
+      initialState: component.initialState,
+      presenter: viewController
+    )
     interactor.listener = listener
     return ColorPickerRouter(
       interactor: interactor,

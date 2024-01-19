@@ -21,5 +21,6 @@ public protocol CategoryListRouting: ViewableRouting {
 // MARK: - CategoryListListener
 
 public protocol CategoryListListener: AnyObject {
+  func didTapCategoryCreationLabel()
 }
 
