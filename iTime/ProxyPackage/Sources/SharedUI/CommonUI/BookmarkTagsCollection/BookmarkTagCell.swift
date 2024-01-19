@@ -34,7 +34,7 @@ public final class BookmarkTagCell:
     
   // MARK: Initialization
   
-  override func initialize() {
+  public override func initialize() {
     super.initialize()
     setupUI()
   }

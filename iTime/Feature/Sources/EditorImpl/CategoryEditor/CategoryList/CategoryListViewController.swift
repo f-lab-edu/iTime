@@ -19,6 +19,8 @@ public protocol CategoryListPresentableListener: AnyObject {
   var error: Observable<DisplayErrorMessage> { get }
   var viewModel: Observable<CategoryListViewModel> { get }
   func loadData()
+  func didTapCell()
+  func didTapCategoryCreationLabel()
 }
 
 // MARK: - CategoryListViewController
@@ -75,6 +77,8 @@ final class CategoryListViewController:
 extension CategoryListViewController {
   private func bindAction() {
     bindLoadData()
+    bindDidTapCell()
+    bindDidTapCategoryCreationLabel()
   }
   
   private func bindLoadData() {
@@ -82,6 +86,25 @@ extension CategoryListViewController {
       .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance)
       .subscribe(with: self) { owner, _ in
         owner.listener?.loadData()
+      }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindDidTapCell() {
+    tableView.rx.modelSelected(CategoryListSection.self)
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, model in
+          print(model)
+      }
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindDidTapCategoryCreationLabel() {
+    categoryCreationLabel.rx
+      .tapGestureWithPreventDuplication()
+      .asDriver(onErrorDriveWith: .empty())
+      .drive(with: self) { owner, _ in
+        owner.listener?.didTapCategoryCreationLabel()
       }
       .disposed(by: disposeBag)
   }

@@ -41,4 +41,8 @@ final class TextEntryInteractor:
   override func didBecomeActive() {
     super.didBecomeActive()
   }
+  
+  func didChangeCategoryTextField(_ text: String) {
+    print(text)
+  }
 }

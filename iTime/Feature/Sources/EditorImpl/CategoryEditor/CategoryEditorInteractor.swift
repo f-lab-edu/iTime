@@ -41,4 +41,8 @@ final class CategoryEditorInteractor:
   override func didBecomeActive() {
     super.didBecomeActive()
   }
+  
+  func didTapCategoryCreationLabel() {
+    router?.attachCategoryCreationRIB()
+  }
 }
