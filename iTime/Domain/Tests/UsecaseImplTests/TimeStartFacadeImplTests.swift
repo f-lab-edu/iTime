@@ -10,6 +10,7 @@ import XCTest
 import Entities
 import UsecaseTestSupports
 import RepositoryTestSupports
+import ConcurrencyExtras
 
 @testable import UsecaseImpl
 
@@ -37,21 +38,23 @@ final class TimeStartFacadeImplTests: XCTestCase {
   }
   
   func test_start() async throws {
-    // Given
-    let dummyLastlyTrackTime = userDefaultRepository.dummyLastlyTrackTime + 2
-    
-    // When
-    async let start = sut.start().take(2).values
-    async let modelStream = timerInfoModelDataStream.timerInfoModelDataStream.map(\.runningTime).filter { $0 != Int() }.take(1).values
-    
-    // Then
-    let void: Void? = try await start.first(where: { _ in true })
-    let runningTime = try await modelStream.first(where: { _ in true })
-    XCTAssertNotNil(void)
-    XCTAssertEqual(locationTracker.startLocationTrackingCallCount, 1)
-    XCTAssertEqual(runningTime, 1)
-    XCTAssertEqual(userDefaultRepository.updateLastlyTrackedTimeCallCount, 2)
-    XCTAssertEqual(dummyLastlyTrackTime, userDefaultRepository.lastlyTrackedTime())
+    try await withMainSerialExecutor {
+      // Given
+      let dummyLastlyTrackTime = userDefaultRepository.dummyLastlyTrackTime + 2
+      
+      // When
+      async let start = sut.start().take(2).values
+      async let modelStream = timerInfoModelDataStream.timerInfoModelDataStream.map(\.runningTime).filter { $0 != Int() }.take(1).values
+      
+      // Then
+      let void: Void? = try await start.first(where: { _ in true })
+      let runningTime = try await modelStream.first(where: { _ in true })
+      XCTAssertNotNil(void)
+      XCTAssertEqual(locationTracker.startLocationTrackingCallCount, 1)
+      XCTAssertEqual(runningTime, 1)
+      XCTAssertEqual(userDefaultRepository.updateLastlyTrackedTimeCallCount, 2)
+      XCTAssertEqual(dummyLastlyTrackTime, userDefaultRepository.lastlyTrackedTime())
+    }
   }
   
 
