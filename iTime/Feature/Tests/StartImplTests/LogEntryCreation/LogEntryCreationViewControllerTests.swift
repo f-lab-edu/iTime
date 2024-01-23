@@ -25,8 +25,7 @@ final class LogEntryCreationViewTests: XCTestCase {
   func test_LogEntryCreation() {
     
     // Then
-    // assertSnapshot(of: sut, as: .image(on: .iPhone13ProMax))
-    // snapShot 테스트 본격적으로 작성시 같이 반영 -TODO: 
+    assertSnapshot(of: sut, as: .image)
   }
   
 }

@@ -132,7 +132,6 @@ extension BookmarkListViewController {
 
 extension BookmarkListViewController {
   private func setupUI() {
-    view.backgroundColor = .clear
     view.addSubview(bookmarkTagsCollectionView)
     view.addSubview(emptyGuideLabel)
     _ = adapter

@@ -7,6 +7,7 @@
 
 import XCTest
 import SharedUI
+import SnapshotTesting
 import FeatureTestSupports
 @testable import StartImpl
 
@@ -16,6 +17,7 @@ final class BookmarkListViewControllerTests: XCTestCase {
   private var bookmarkListPresentableListener: BookmarkListPresentableListenerSpy!
   
   override func setUp() {
+    bookmarkListPresentableListener = BookmarkListPresentableListenerSpy()
     sut = BookmarkListViewController(
       alignedCollectionViewFlowLayout: LeadingAlignedCollectionViewFlowLayout(),
       cellBorderColor: .black10,
@@ -26,11 +28,7 @@ final class BookmarkListViewControllerTests: XCTestCase {
   }
   
   func test_snapshot_when_presentError() { // TODO:
-    // Given
     
-    // When
-    
-    // Then
   }
   
   func test_snapshot_when_hiddenEmptyIfNeeded() { // TODO:

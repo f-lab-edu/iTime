@@ -12,6 +12,7 @@ import RIBs
 import Start
 import Editor
 import RIBsTestSupport
+import ProxyTestSupport
 import FeatureTestSupports
 @testable import StartImpl
 

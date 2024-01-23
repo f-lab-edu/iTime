@@ -25,7 +25,7 @@ public final class BookmarkListPresentableListenerSpy: BookmarkListPresentableLi
   public var numberOfItemsCallCount: Int = 0
   public func numberOfItems() -> Int {
     numberOfItemsCallCount += 1
-    return 0
+    return 10
   }
   
   public var bookmarkIndex: Int = 0
@@ -33,7 +33,9 @@ public final class BookmarkListPresentableListenerSpy: BookmarkListPresentableLi
   public func bookmark(at index: Int) -> String {
     bookmarkIndex += 1
     bookmarkCallCount += 1
-    return ""
+    return "TEST"
   }
+  
+  public init() {}
 }
 

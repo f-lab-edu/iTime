@@ -69,6 +69,7 @@ let package = Package(
         .product(name: "RxTest", package: "RxSwift"),
         .product(name: "RxBlocking", package: "RxSwift"),
         .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+        "SharedUI"
       ]
     ),
     .target(
