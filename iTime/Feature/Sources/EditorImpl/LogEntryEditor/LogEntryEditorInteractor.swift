@@ -5,6 +5,8 @@
 //  Created by 이상헌 on 11/13/23.
 //
 
+import Foundation
+
 import RIBs
 import RxSwift
 
@@ -58,6 +60,6 @@ final class LogEntryEditorInteractor:
   }
   
   func detachCategoryEditorRIB() {
-    listener?.detachLogEntryEditorRIB()
+    router?.detachCategoryEditorRIB()
   }
 }

@@ -22,5 +22,6 @@ public protocol CategoryEditorRouting: ViewableRouting {
 // MARK: - CategoryEditorListener
 
 public protocol CategoryEditorListener: AnyObject {
+  func detachCategoryEditorRIB()
 }
 

@@ -36,6 +36,10 @@ final class CategoryEditorInteractor:
     presenter.listener = self
   }
   
+  func didTapBackButton() {
+    listener?.detachCategoryEditorRIB()
+  }
+  
   // MARK: - LifeCycle
   
   override func didBecomeActive() {

@@ -32,7 +32,10 @@ final class CategoryListInteractor:
       .map(\.error)
       .filter { $0 != .noError }
       .map(\.localizedDescription)
-      .map(categoryListErrorMessage)
+      .withUnretained(self)
+      .map { owner, message in
+        owner.categoryListErrorMessage(message)
+      }
   }
   
   var viewModel: Observable<CategoryListViewModel> {

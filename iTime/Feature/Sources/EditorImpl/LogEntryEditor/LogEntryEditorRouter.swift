@@ -5,6 +5,8 @@
 //  Created by 이상헌 on 11/13/23.
 //
 
+import Foundation
+
 import RIBs
 
 import Editor
@@ -58,13 +60,13 @@ final class LogEntryEditorRouter:
     )
     categoryEditorRouter = router
     attachChild(router)
-    viewController.pushViewController(router.viewControllable, animated: true)
+    viewController.push(viewController: router.viewControllable, animated: true)
   }
   
   func detachCategoryEditorRIB() {
     guard let router = categoryEditorRouter else { return }
     categoryEditorRouter = nil
     detachChild(router)
-    viewController.popViewController(animated: true, completion: nil)
+    viewController.pop(router.viewControllable, animated: false)
   }
 }

@@ -34,7 +34,7 @@ final class CategoryListCell: BaseTableViewCell {
   
   private let editButton = UIButton().builder
     .with {
-      $0.setImage(.add, for: .normal)
+      $0.setImage(.edit, for: .normal)
     }
     .build()
   

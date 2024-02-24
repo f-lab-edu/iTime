@@ -32,4 +32,5 @@ extension UIImage {
   public static let timerFill: UIImage = .init(resource: .timerFill)
   public static let analysis: UIImage = .init(resource: .analysis)
   public static let analysisFill: UIImage = .init(resource: .analysisFill)
+  public static let edit: UIImage = .init(resource: .edit)
 }

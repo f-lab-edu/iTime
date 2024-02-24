@@ -19,6 +19,7 @@ public protocol LogEntryEditorBuildable: Buildable {
 
 public protocol LogEntryEditorRouting: ViewableRouting {
   func attachCategoryEditorRIB()
+  func detachCategoryEditorRIB()
 }
 
 // MARK: - LogEntryEditorListener

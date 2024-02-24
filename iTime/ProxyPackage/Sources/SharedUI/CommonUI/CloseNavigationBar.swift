@@ -20,7 +20,7 @@ public final class CloseNavigationBar: BaseView {
   
   // MARK: - UI Components
   
-  public let backButton = UIButton().builder
+  public let closeButton = UIButton().builder
     .with {
       $0.setImage(.iconArrowLeft, for: .normal)
     }
@@ -58,7 +58,7 @@ public final class CloseNavigationBar: BaseView {
   
   private func setupUI() {
     backgroundColor = .clear
-    addSubview(backButton)
+    addSubview(closeButton)
     addSubview(titleLabel)
     addSubview(separationView)
   }
@@ -70,7 +70,7 @@ public final class CloseNavigationBar: BaseView {
   }
   
   private func makeBackButtonCostraints() {
-    backButton.snp.makeConstraints {
+    closeButton.snp.makeConstraints {
       $0.leading.equalToSuperview().offset(Metric.backButtonLeadingMargin)
       $0.size.equalTo(Metric.backButtonSize)
       $0.top.bottom.equalToSuperview().inset(Metric.backButtonTopBottomMargin)

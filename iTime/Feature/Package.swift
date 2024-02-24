@@ -132,6 +132,7 @@ let package = Package(
         "ProxyPackage",
         .product(name: "AppFoundation", package: "ProxyPackage"),
         .product(name: "SharedUI", package: "ProxyPackage"),
+        .product(name: "Entities", package: "Domain"),
       ]),
     .target(
       name: "StartImpl",
