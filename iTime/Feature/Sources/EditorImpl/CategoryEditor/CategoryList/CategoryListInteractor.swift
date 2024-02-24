@@ -84,8 +84,8 @@ final class CategoryListInteractor:
       .disposeOnDeactivate(interactor: self)
   }
   
-  func didTapCell() {
-    print("didTapCell")
+  func didTapCell(from model: CategoryListCellViewModel) {
+    listener?.didTapCategoryListCell(from: model.toCategory())
   }
   
   func didTapCategoryCreationLabel() {

@@ -7,6 +7,8 @@
 
 import RIBs
 
+import Entities
+
 // MARK: - CategoryListBuildable
 
 public protocol CategoryListBuildable: Buildable {
@@ -22,5 +24,6 @@ public protocol CategoryListRouting: ViewableRouting {
 
 public protocol CategoryListListener: AnyObject {
   func didTapCategoryCreationLabel()
+  func didTapCategoryListCell(from category: Category)
 }
 

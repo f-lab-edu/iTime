@@ -19,7 +19,7 @@ public protocol CategoryListPresentableListener: AnyObject {
   var error: Observable<DisplayErrorMessage> { get }
   var viewModel: Observable<CategoryListViewModel> { get }
   func loadData()
-  func didTapCell()
+  func didTapCell(from model: CategoryListCellViewModel)
   func didTapCategoryCreationLabel()
 }
 
@@ -91,10 +91,13 @@ extension CategoryListViewController {
   }
   
   private func bindDidTapCell() {
-    tableView.rx.modelSelected(CategoryListSection.self)
+    tableView.rx.modelSelected(CategoryListSection.Item.self)
       .asDriver(onErrorDriveWith: .empty())
-      .drive(with: self) { owner, model in
-          print(model)
+      .drive(with: self) { owner, item in
+        switch item {
+        case let .list(model):
+          owner.listener?.didTapCell(from: model)
+        }
       }
       .disposed(by: disposeBag)
   }

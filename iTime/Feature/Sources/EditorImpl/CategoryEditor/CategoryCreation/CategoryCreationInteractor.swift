@@ -7,6 +7,7 @@
 
 import RIBs
 import RxSwift
+import RxRelay
 
 import Editor
 
@@ -28,10 +29,15 @@ final class CategoryCreationInteractor:
   
   weak var router: CategoryCreationRouting?
   weak var listener: CategoryCreationListener?
+  private let state: BehaviorRelay<CategoryCreationState>
   
   // MARK: - Initialization & DeInitialization
   
-  override init(presenter: CategoryCreationPresentable) {
+  init(
+    initialState: BehaviorRelay<CategoryCreationState>,
+    presenter: CategoryCreationPresentable
+  ) {
+    self.state = initialState
     super.init(presenter: presenter)
     presenter.listener = self
   }

@@ -9,7 +9,16 @@ import UIKit
 
 import Entities
 
-struct CategoryListCellViewModel: Equatable {
+public struct CategoryListCellViewModel: Equatable {
   let color: UIColor
   let title: String
+}
+
+extension CategoryListCellViewModel {
+  func toCategory() -> Entities.Category {
+    .init(
+      title: title,
+      color: color.toHex ?? ""
+    )
+  }
 }

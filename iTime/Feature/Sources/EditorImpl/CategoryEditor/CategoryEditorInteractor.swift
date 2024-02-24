@@ -8,7 +8,9 @@
 import RIBs
 import RxSwift
 
+import Entities
 import Editor
+
 
 // MARK: - CategoryEditorPresentable
 
@@ -34,6 +36,10 @@ final class CategoryEditorInteractor:
   override init(presenter: CategoryEditorPresentable) {
     super.init(presenter: presenter)
     presenter.listener = self
+  }
+  
+  func didTapCategoryListCell(from category: Category) {
+    router?.attachCategoryCreationRIB()
   }
   
   func didTapBackButton() {

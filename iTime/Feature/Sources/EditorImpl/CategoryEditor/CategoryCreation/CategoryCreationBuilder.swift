@@ -19,6 +19,8 @@ public protocol CategoryCreationDependency: Dependency {
 // MARK: - CategoryCreationComponent
 
 final class CategoryCreationComponent: Component<CategoryCreationDependency> {
+  fileprivate var initialState: CategoryCreationState = .init()
+  
   fileprivate var textEntryBuilder: TextEntryBuildable {
     dependency.textEntryBuilder
   }
@@ -42,7 +44,10 @@ public final class CategoryCreationBuilder:
   public func build(withListener listener: CategoryCreationListener) -> CategoryCreationRouting {
     let component = CategoryCreationComponent(dependency: dependency)
     let viewController = CategoryCreationViewController()
-    let interactor = CategoryCreationInteractor(presenter: viewController)
+    let interactor = CategoryCreationInteractor(
+      initialState: .init(value: component.initialState),
+      presenter: viewController
+    )
     interactor.listener = listener
     return CategoryCreationRouter(
       interactor: interactor,
