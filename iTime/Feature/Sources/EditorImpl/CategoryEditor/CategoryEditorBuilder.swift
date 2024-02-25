@@ -8,6 +8,7 @@
 import RIBs
 
 import Editor
+import Usecase
 import Start
 
 // MARK: - CategoryEditorDependency
@@ -16,11 +17,16 @@ public protocol CategoryEditorDependency: Dependency {
   var currentActivityBuilder: CurrentActivityBuildable { get }
   var categoryListBuilder: CategoryListBuildable { get }
   var categoryCreationBuilder: CategoryCreationBuilder { get }
+  var timerUsecase: TimerUsecase { get }
 }
 
 // MARK: - CategoryEditorComponent
 
 final class CategoryEditorComponent: Component<CategoryEditorDependency> {
+  fileprivate var timerUsecase: TimerUsecase {
+    dependency.timerUsecase
+  }
+  
   fileprivate var currentActivityBuilder: CurrentActivityBuildable {
     dependency.currentActivityBuilder
   }
@@ -48,7 +54,10 @@ public final class CategoryEditorBuilder:
   public func build(withListener listener: CategoryEditorListener) -> CategoryEditorRouting {
     let component = CategoryEditorComponent(dependency: dependency)
     let viewController = CategoryEditorViewController()
-    let interactor = CategoryEditorInteractor(presenter: viewController)
+    let interactor = CategoryEditorInteractor(
+      timerUsecase: component.timerUsecase,
+      presenter: viewController
+    )
     interactor.listener = listener
     return CategoryEditorRouter(
       interactor: interactor,

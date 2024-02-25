@@ -9,6 +9,7 @@ import RIBs
 import RxSwift
 
 import Entities
+import Usecase
 import Editor
 
 
@@ -30,12 +31,24 @@ final class CategoryEditorInteractor:
   
   weak var router: CategoryEditorRouting?
   weak var listener: CategoryEditorListener?
+  private let timerUsecase: TimerUsecase
   
   // MARK: - Initialization & DeInitialization
   
-  override init(presenter: CategoryEditorPresentable) {
+  init(
+    timerUsecase: TimerUsecase,
+    presenter: CategoryEditorPresentable
+  ) {
+    self.timerUsecase = timerUsecase
     super.init(presenter: presenter)
     presenter.listener = self
+  }
+  
+  // MARK: - LifeCycle
+  
+  override func didBecomeActive() {
+    super.didBecomeActive()
+    suspendTimer()
   }
   
   func didTapCategoryListCell(from category: Category) {
@@ -46,10 +59,8 @@ final class CategoryEditorInteractor:
     listener?.detachCategoryEditorRIB()
   }
   
-  // MARK: - LifeCycle
-  
-  override func didBecomeActive() {
-    super.didBecomeActive()
+  private func suspendTimer() {
+    timerUsecase.suspend()
   }
   
   func didTapCategoryCreationLabel() {

@@ -33,6 +33,10 @@ public final class LogEntryEditorBuildableSpy: LogEntryEditorBuildable {
 public final class LogEntryEditorRoutingSpy:
   ViewableRoutingMock,
   LogEntryEditorRouting {
+  public var detachCategoryEditorRIBCallCount: Int = 0
+  public func detachCategoryEditorRIB() {
+    detachCategoryEditorRIBCallCount += 1
+  }
   
   public var attachCategoryEditorRIBCallCount: Int = 0
   public func attachCategoryEditorRIB() {
