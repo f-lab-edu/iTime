@@ -20,6 +20,10 @@ public protocol LogEntryEditorDependency: Dependency {
 // MARK: - LogEntryEditorComponent
 
 final class LogEntryEditorComponent: Component<LogEntryEditorDependency> {
+  fileprivate var initialState: LogEntryEditorState {
+    .init(category: .empty)
+  }
+  
   fileprivate var activityLogModelStream: ActivityLogModelStream {
     dependency.activityLogModelStream
   }
@@ -40,6 +44,7 @@ public final class LogEntryEditorBuilder:
     let component = LogEntryEditorComponent(dependency: dependency)
     let viewController = LogEntryEditorViewController()
     let interactor = LogEntryEditorInteractor(
+      initialState: component.initialState,
       presenter: viewController,
       activityLogModelStream: component.activityLogModelStream
     )

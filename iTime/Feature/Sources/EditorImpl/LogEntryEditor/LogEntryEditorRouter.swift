@@ -9,6 +9,7 @@ import Foundation
 
 import RIBs
 
+import Entities
 import Editor
 
 // MARK: - LogEntryEditorInteractable
@@ -53,11 +54,11 @@ final class LogEntryEditorRouter:
   
   // MARK: Route methods
   
-  func attachCategoryEditorRIB(with categoryTitle: String) {
+  func attachCategoryEditorRIB(with category: Entities.Category) {
     guard categoryEditorRouter == nil else { return }
     let router = categoryEditorBuilder.build(
       with: interactor,
-      title: categoryTitle
+      category: category
     )
     categoryEditorRouter = router
     attachChild(router)

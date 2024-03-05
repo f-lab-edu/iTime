@@ -33,13 +33,16 @@ final class LogEntryEditorInteractor:
   weak var listener: LogEntryEditorListener?
   
   private let activityLogModelStream: ActivityLogModelStream
+  private(set) var state: LogEntryEditorState
   
   // MARK: - Initialization & DeInitialization
   
   init(
+    initialState: LogEntryEditorState,
     presenter: LogEntryEditorPresentable,
     activityLogModelStream: ActivityLogModelStream
   ) {
+    self.state = initialState
     self.activityLogModelStream = activityLogModelStream
     super.init(presenter: presenter)
     presenter.listener = self
@@ -52,7 +55,7 @@ final class LogEntryEditorInteractor:
   }
 
   func didTapCategoryStateView() {
-    router?.attachCategoryEditorRIB(with: "")
+    router?.attachCategoryEditorRIB(with: state.category)
   }
   
   func didTapCloseButton() {

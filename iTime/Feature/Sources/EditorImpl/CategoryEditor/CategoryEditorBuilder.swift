@@ -7,8 +7,9 @@
 
 import RIBs
 
-import Editor
+import Entities
 import Usecase
+import Editor
 import Start
 
 // MARK: - CategoryEditorDependency
@@ -23,14 +24,14 @@ public protocol CategoryEditorDependency: Dependency {
 // MARK: - CategoryEditorComponentDependency
 
 struct CategoryEditorComponentDependency {
-  let categoryTitle: String
+  let category: Category
 }
 
 // MARK: - CategoryEditorComponent
 
 final class CategoryEditorComponent: Component<CategoryEditorDependency> {
   fileprivate var initalState: CategoryEditorState {
-    CategoryEditorState(categoryTitle: self.payload.categoryTitle)
+    CategoryEditorState(category: self.payload.category)
   }
   
   fileprivate var timerUsecase: TimerUsecase {
@@ -71,8 +72,8 @@ public final class CategoryEditorBuilder:
     super.init(dependency: dependency)
   }
   
-  public func build(with listener: CategoryEditorListener, title: String) -> CategoryEditorRouting {
-    let component = CategoryEditorComponent(dependency: dependency, payload: .init(categoryTitle: title))
+  public func build(with listener: CategoryEditorListener, category: Category) -> CategoryEditorRouting {
+    let component = CategoryEditorComponent(dependency: dependency, payload: .init(category: category))
     let viewController = CategoryEditorViewController()
     let interactor = CategoryEditorInteractor(
       initialState: component.initalState,

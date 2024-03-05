@@ -7,10 +7,12 @@
 
 import RIBs
 
+import Entities
+
 // MARK: - CategoryEditorBuildable
 
 public protocol CategoryEditorBuildable: Buildable {
-  func build(with listener: CategoryEditorListener, title: String) -> CategoryEditorRouting
+  func build(with listener: CategoryEditorListener, category: Category) -> CategoryEditorRouting
 }
 
 // MARK: - CategoryEditorRouting

@@ -7,6 +7,7 @@
 
 import RIBs
 
+import Entities
 import Start
 
 // MARK: - LogEntryEditorBuildable
@@ -18,7 +19,7 @@ public protocol LogEntryEditorBuildable: Buildable {
 // MARK: - LogEntryEditorRouting
 
 public protocol LogEntryEditorRouting: ViewableRouting {
-  func attachCategoryEditorRIB(with categoryTitle: String)
+  func attachCategoryEditorRIB(with category: Category)
   func detachCategoryEditorRIB()
 }
 

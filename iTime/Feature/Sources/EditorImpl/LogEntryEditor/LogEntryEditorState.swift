@@ -7,6 +7,6 @@
 
 import Entities
 
-struct CategoryEditorState {
+struct LogEntryEditorState {
   let category: Category
 }
