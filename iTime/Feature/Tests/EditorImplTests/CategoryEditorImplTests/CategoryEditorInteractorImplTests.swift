@@ -21,13 +21,13 @@ final class CategoryEditorInteractorImplTests: XCTestCase {
   private var router: CategoryEditorRouter!
   private var listener: CategoryEditorListenerSpy!
   
-  private let dummyCategoryTitle = "Dummy Category Title"
+  private let dummyCategory: Entities.Category = .init(title: "dummy category", color: "color")
 
   override func setUp() {
     timerUsecase = TimerUsecaseMock()
     viewController = CategoryEditorViewController()
     sut = CategoryEditorInteractor(
-      initialState: .init(categoryTitle: dummyCategoryTitle),
+      initialState: .init(category: dummyCategory),
       timerUsecase: timerUsecase,
       presenter: viewController
     )
@@ -56,7 +56,7 @@ final class CategoryEditorInteractorImplTests: XCTestCase {
     sut.activate()
     
     // Then
-    XCTAssertEqual(sut.state.categoryTitle, dummyCategoryTitle)
+    XCTAssertEqual(sut.state.category, dummyCategory)
   }
   
   private func test_CategoryListListCell탭할시_파라메터포함하여_값_전달이잘되는지() {

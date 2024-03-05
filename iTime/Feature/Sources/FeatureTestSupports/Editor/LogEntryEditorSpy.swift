@@ -5,6 +5,7 @@
 //  Created by 이상헌 on 11/19/23.
 //
 
+import Entities
 import Editor
 import RIBsTestSupport
 
@@ -33,13 +34,16 @@ public final class LogEntryEditorBuildableSpy: LogEntryEditorBuildable {
 public final class LogEntryEditorRoutingSpy:
   ViewableRoutingMock,
   LogEntryEditorRouting {
+  
   public var detachCategoryEditorRIBCallCount: Int = 0
   public func detachCategoryEditorRIB() {
     detachCategoryEditorRIBCallCount += 1
   }
   
   public var attachCategoryEditorRIBCallCount: Int = 0
-  public func attachCategoryEditorRIB() {
+  public var passedCategory: Category = .empty
+  public func attachCategoryEditorRIB(with category: Entities.Category) {
+    passedCategory = category
     attachCategoryEditorRIBCallCount += 1
   }
 }

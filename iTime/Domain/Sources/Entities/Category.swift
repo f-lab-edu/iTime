@@ -5,7 +5,7 @@
 //  Created by 이상헌 on 12/1/23.
 //
 
-public struct Category {
+public struct Category: Equatable {
   public let title: String
   public let color: String
   
