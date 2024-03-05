@@ -53,10 +53,11 @@ final class LogEntryEditorRouter:
   
   // MARK: Route methods
   
-  func attachCategoryEditorRIB() {
+  func attachCategoryEditorRIB(with categoryTitle: String) {
     guard categoryEditorRouter == nil else { return }
     let router = categoryEditorBuilder.build(
-      withListener: interactor
+      with: interactor,
+      title: categoryTitle
     )
     categoryEditorRouter = router
     attachChild(router)
@@ -67,6 +68,6 @@ final class LogEntryEditorRouter:
     guard let router = categoryEditorRouter else { return }
     categoryEditorRouter = nil
     detachChild(router)
-    viewController.pop(router.viewControllable, animated: false)
+    viewController.pop(router.viewControllable, animated: true)
   }
 }

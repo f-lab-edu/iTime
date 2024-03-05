@@ -31,14 +31,18 @@ final class CategoryEditorInteractor:
   
   weak var router: CategoryEditorRouting?
   weak var listener: CategoryEditorListener?
+  
   private let timerUsecase: TimerUsecase
+  private(set) var state: CategoryEditorState
   
   // MARK: - Initialization & DeInitialization
   
   init(
+    initialState: CategoryEditorState,
     timerUsecase: TimerUsecase,
     presenter: CategoryEditorPresentable
   ) {
+    self.state = initialState
     self.timerUsecase = timerUsecase
     super.init(presenter: presenter)
     presenter.listener = self

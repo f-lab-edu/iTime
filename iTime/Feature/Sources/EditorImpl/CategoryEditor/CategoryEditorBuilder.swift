@@ -20,9 +20,19 @@ public protocol CategoryEditorDependency: Dependency {
   var timerUsecase: TimerUsecase { get }
 }
 
+// MARK: - CategoryEditorComponentDependency
+
+struct CategoryEditorComponentDependency {
+  let categoryTitle: String
+}
+
 // MARK: - CategoryEditorComponent
 
 final class CategoryEditorComponent: Component<CategoryEditorDependency> {
+  fileprivate var initalState: CategoryEditorState {
+    CategoryEditorState(categoryTitle: self.payload.categoryTitle)
+  }
+  
   fileprivate var timerUsecase: TimerUsecase {
     dependency.timerUsecase
   }
@@ -38,6 +48,16 @@ final class CategoryEditorComponent: Component<CategoryEditorDependency> {
   fileprivate var categoryCreationBuilder: CategoryCreationBuilder {
     dependency.categoryCreationBuilder
   }
+  
+  private let payload: CategoryEditorComponentDependency
+  
+  public init(
+    dependency: CategoryEditorDependency,
+    payload: CategoryEditorComponentDependency
+  ) {
+    self.payload = payload
+    super.init(dependency: dependency)
+  }
 }
 
 // MARK: - CategoryEditorBuilder
@@ -51,10 +71,11 @@ public final class CategoryEditorBuilder:
     super.init(dependency: dependency)
   }
   
-  public func build(withListener listener: CategoryEditorListener) -> CategoryEditorRouting {
-    let component = CategoryEditorComponent(dependency: dependency)
+  public func build(with listener: CategoryEditorListener, title: String) -> CategoryEditorRouting {
+    let component = CategoryEditorComponent(dependency: dependency, payload: .init(categoryTitle: title))
     let viewController = CategoryEditorViewController()
     let interactor = CategoryEditorInteractor(
+      initialState: component.initalState,
       timerUsecase: component.timerUsecase,
       presenter: viewController
     )

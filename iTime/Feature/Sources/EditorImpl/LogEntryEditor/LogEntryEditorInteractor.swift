@@ -52,7 +52,7 @@ final class LogEntryEditorInteractor:
   }
 
   func didTapCategoryStateView() {
-    router?.attachCategoryEditorRIB()
+    router?.attachCategoryEditorRIB(with: "")
   }
   
   func didTapCloseButton() {

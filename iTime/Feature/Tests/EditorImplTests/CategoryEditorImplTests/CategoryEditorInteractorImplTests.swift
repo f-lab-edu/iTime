@@ -20,11 +20,14 @@ final class CategoryEditorInteractorImplTests: XCTestCase {
   private var viewController: CategoryEditorViewController!
   private var router: CategoryEditorRouter!
   private var listener: CategoryEditorListenerSpy!
+  
+  private let dummyCategoryTitle = "Dummy Category Title"
 
   override func setUp() {
     timerUsecase = TimerUsecaseMock()
     viewController = CategoryEditorViewController()
     sut = CategoryEditorInteractor(
+      initialState: .init(categoryTitle: dummyCategoryTitle),
       timerUsecase: timerUsecase,
       presenter: viewController
     )
@@ -46,6 +49,14 @@ final class CategoryEditorInteractorImplTests: XCTestCase {
     
     // Then
     XCTAssertEqual(timerUsecase.suspendCallCount, 1)
+  }
+  
+  private func test_didBecomActive했을때_기존카테고리값반영잘하는지() {
+    // When
+    sut.activate()
+    
+    // Then
+    XCTAssertEqual(sut.state.categoryTitle, dummyCategoryTitle)
   }
   
   private func test_CategoryListListCell탭할시_파라메터포함하여_값_전달이잘되는지() {
@@ -70,6 +81,14 @@ final class CategoryEditorInteractorImplTests: XCTestCase {
   private func test_카테고리추가라벨탭시_CategoryCreationRIB호출잘하는지() {
     // When
     sut.didTapCategoryCreationLabel()
+    
+    // Then
+    XCTAssertFalse(router.children.isEmpty)
+  }
+  
+  private func test_바톰시트카테고리편집버튼탭시_CategoryCreationRIB호출잘하는지() {
+    // When
+    sut.didTapCategoryListCell(from: .empty)
     
     // Then
     XCTAssertFalse(router.children.isEmpty)
