@@ -38,6 +38,8 @@ let package = Package(
     .package(url: "https://github.com/richardtop/CalendarKit.git", branch: "master"),
     .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.9.0"),
     .package(url: "https://github.com/pointfreeco/swift-clocks", from: "1.0.2"),
+    .package(url: "https://github.com/layoutBox/PinLayout", branch: "master"),
+    .package(url: "https://github.com/layoutBox/FlexLayout", branch: "master"),
   ],
   targets: [
     .target(
