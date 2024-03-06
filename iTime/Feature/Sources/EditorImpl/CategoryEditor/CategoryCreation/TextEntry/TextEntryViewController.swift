@@ -16,6 +16,7 @@ import SharedUI
 
 protocol TextEntryPresentableListener: AnyObject {
   func didChangeCategoryTextField(_ text: String)
+  func loadData()
 }
 
 // MARK: - TextEntryViewController
@@ -59,7 +60,21 @@ final class TextEntryViewController:
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    bindActions()
+  }
+  
+}
+
+// MARK: - Action
+
+extension TextEntryViewController {
+  private func bindActions() {
     bindDidChangeCategoryTextField()
+    loadData()
+  }
+  
+  private func loadData() {
+    listener?.loadData()
   }
   
   private func bindDidChangeCategoryTextField() {
@@ -74,7 +89,14 @@ final class TextEntryViewController:
       }
       .disposed(by: disposeBag)
   }
-  
+}
+
+// MARK: - State
+
+extension TextEntryViewController {
+  func updateCategoryTextField(with text: String) {
+    self.categoryTextEntryField.text = text
+  }
 }
 
 // MARK: - Layout

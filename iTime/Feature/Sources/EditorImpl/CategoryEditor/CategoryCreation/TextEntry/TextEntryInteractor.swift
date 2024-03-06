@@ -14,6 +14,7 @@ import Editor
 
 protocol TextEntryPresentable: Presentable {
   var listener: TextEntryPresentableListener? { get set }
+  func updateCategoryTextField(with text: String)
 }
 
 // MARK: - TextEntryInteractor
@@ -40,6 +41,10 @@ final class TextEntryInteractor:
   
   override func didBecomeActive() {
     super.didBecomeActive()
+  }
+  
+  func loadData() {
+    presenter.updateCategoryTextField(with: "") // TODO: fill data
   }
   
   func didChangeCategoryTextField(_ text: String) {

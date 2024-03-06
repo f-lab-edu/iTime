@@ -8,5 +8,6 @@
 import Foundation
 
 struct CategoryCreationState {
-  
+  let categoryText: String
+  let selectedColor: String
 }

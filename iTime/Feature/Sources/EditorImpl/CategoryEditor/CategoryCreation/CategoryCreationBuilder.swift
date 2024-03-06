@@ -19,7 +19,7 @@ public protocol CategoryCreationDependency: Dependency {
 // MARK: - CategoryCreationComponent
 
 final class CategoryCreationComponent: Component<CategoryCreationDependency> {
-  fileprivate var initialState: CategoryCreationState = .init()
+  fileprivate var initialState: CategoryCreationState = .init(categoryText: String(), selectedColor: String())
   
   fileprivate var textEntryBuilder: TextEntryBuildable {
     dependency.textEntryBuilder

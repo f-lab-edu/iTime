@@ -15,6 +15,7 @@ import SharedUI
 // MARK: - CategoryCreationPresentableListener
 
 protocol CategoryCreationPresentableListener: AnyObject {
+  
 }
 
 // MARK: - CategoryCreationViewController
@@ -47,13 +48,14 @@ final class CategoryCreationViewController:
   
   private let colorPickerContainerView = UIView()
   
+  private let categoryDeletionButton = UIButton()
+  
   // MARK: - View LifeCycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
   }
-  
 }
 
 // MARK: - Layout
