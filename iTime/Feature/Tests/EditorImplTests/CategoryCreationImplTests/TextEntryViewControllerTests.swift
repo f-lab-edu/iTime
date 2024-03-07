@@ -30,7 +30,13 @@ final class TextEntryViewControllerTests: XCTestCase {
   }
   
   func test_input_withMultipleText_updateCategoryTextField() {
+    // Given
+    let text = "multiple"
     
+    // When
+    
+    
+    // Then
   }
   
 }

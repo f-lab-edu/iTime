@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import SnapshotTesting
 @testable import EditorImpl
 
 final class CategoryCreationViewControllerTests: XCTestCase {
@@ -16,6 +17,16 @@ final class CategoryCreationViewControllerTests: XCTestCase {
     super.setUp()
     
     sut = CategoryCreationViewController()
+  }
+  
+  func test_viewDidLoad_addChilds() {
+    // Given
+    
+    // When
+    sut.viewDidLoad()
+    
+    // Then
+    
   }
   
 

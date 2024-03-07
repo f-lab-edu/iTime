@@ -57,6 +57,9 @@ let package = Package(
         .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
         .product(name: "CalendarKit", package: "CalendarKit"),
         .product(name: "Clocks", package: "swift-clocks"),
+        .product(name: "PinLayout", package: "PinLayout"),
+        .product(name: "FlexLayout", package: "FlexLayout"),
+        
       ]
     ),
     .target(

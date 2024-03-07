@@ -9,6 +9,7 @@ import UIKit
 
 import RIBs
 import RxSwift
+import PinLayout
 
 import SharedUI
 
@@ -23,7 +24,8 @@ protocol CategoryCreationPresentableListener: AnyObject {
 final class CategoryCreationViewController:
   BaseViewController,
   CategoryCreationPresentable,
-  CategoryCreationViewControllable
+  CategoryCreationViewControllable,
+  KeyboardAddable
 {
   
   // MARK: - Constants
@@ -32,6 +34,7 @@ final class CategoryCreationViewController:
     static let sectionVeritcalInset: CGFloat = 40.0
     static let sectionHorizontalInset: CGFloat = 24.0
     static let categoryToastViewTopMargin: CGFloat = 8.0
+    static let selectedCategoryPreviewHeight: CGFloat = 88.0
   }
   
   // MARK: - Properties
@@ -50,12 +53,20 @@ final class CategoryCreationViewController:
   
   private let categoryDeletionButton = UIButton()
   
+  private let selectedCategoryPreview = SelectedCategoryPreview()
+  
   // MARK: - View LifeCycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    addKeyboardObserver()
     setupUI()
   }
+  
+  deinit {
+    removeKeyboardObserver()
+  }
+  
 }
 
 // MARK: - Layout
@@ -66,6 +77,7 @@ extension CategoryCreationViewController {
     view.addSubview(categoryTextEntryContainerView)
     view.addSubview(colorPickerContainerView)
     view.addSubview(categoryToastView)
+    view.addSubview(selectedCategoryPreview)
     
     layout()
   }
@@ -75,12 +87,20 @@ extension CategoryCreationViewController {
     makeCategoryTextEntryContainerViewConstraints()
     makeColorPickerContainerViewConstraints()
     makeCategoryToastViewConstraints()
+    makeSelectedCategoryPreviewConstraints()
   }
   
   private func makeCustomNavigationBarConstraints() {
     customNavigationBar.snp.makeConstraints {
       $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       $0.leading.trailing.equalToSuperview()
+    }
+  }
+  
+  private func makeCategoryToastViewConstraints() {
+    categoryToastView.snp.makeConstraints {
+      $0.top.equalTo(customNavigationBar.snp.bottom).offset(Metric.categoryToastViewTopMargin)
+      $0.centerX.equalToSuperview()
     }
   }
   
@@ -98,10 +118,11 @@ extension CategoryCreationViewController {
     }
   }
   
-  private func makeCategoryToastViewConstraints() {
-    categoryToastView.snp.makeConstraints {
-      $0.top.equalTo(customNavigationBar.snp.bottom).offset(Metric.categoryToastViewTopMargin)
-      $0.centerX.equalToSuperview()
+  private func makeSelectedCategoryPreviewConstraints() {
+    selectedCategoryPreview.snp.makeConstraints {
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(Metric.selectedCategoryPreviewHeight)
+      bottomConstraint = $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).constraint
     }
   }
   

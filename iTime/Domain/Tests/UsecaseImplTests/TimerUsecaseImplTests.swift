@@ -70,7 +70,6 @@ final class TimerUsecaseImplTests: XCTestCase {
     XCTAssertNotNil(void)
     XCTAssertEqual(timeFinishFacade.finishCallCount, 1)
     XCTAssertNotNil(timeFinishFacade.record)
-    
   }
 
 }
