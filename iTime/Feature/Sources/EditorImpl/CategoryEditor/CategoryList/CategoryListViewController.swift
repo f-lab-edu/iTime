@@ -19,7 +19,7 @@ public protocol CategoryListPresentableListener: AnyObject {
   var error: Observable<DisplayErrorMessage> { get }
   var viewModel: Observable<CategoryListViewModel> { get }
   func loadData()
-  func didTapCell(from model: CategoryListCellViewModel)
+  func didTapCell(from model: CategoryViewModel)
   func didTapCategoryCreationLabel()
 }
 

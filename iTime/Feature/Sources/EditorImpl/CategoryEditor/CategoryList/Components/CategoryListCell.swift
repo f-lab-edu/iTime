@@ -54,7 +54,7 @@ final class CategoryListCell: BaseTableViewCell {
     layout()
   }
   
-  func configure(_ viewModel: CategoryListCellViewModel) {
+  func configure(_ viewModel: CategoryViewModel) {
     circleView.backgroundColor = viewModel.color
     titleLabel.text = viewModel.title
   }

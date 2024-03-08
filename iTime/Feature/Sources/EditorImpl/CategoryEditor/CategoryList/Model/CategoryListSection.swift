@@ -11,7 +11,7 @@ enum CategoryListSection {
   case category(_ items: [Item])
   
   enum Item {
-    case list(CategoryListCellViewModel)
+    case list(CategoryViewModel)
   }
   
   var items: [Item] {

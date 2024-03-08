@@ -10,7 +10,6 @@ import UIKit
 import PinLayout
 
 import SharedUI
-import Entities
 
 final class SelectedCategoryPreview: BaseView {
   
@@ -18,7 +17,8 @@ final class SelectedCategoryPreview: BaseView {
   
   private enum Metric {
     static let seperatedViewHeight: CGFloat = 2.0
-    static let previewLabelBelowMargin: CGFloat = 17.0
+    static let previewLabelVerticalMargin: CGFloat = 17.0
+    static let categoryDetailPreviewVerticalMargin: CGFloat = 5.0
   }
   
   // MARK: - UI Componenets
@@ -33,6 +33,8 @@ final class SelectedCategoryPreview: BaseView {
     .font(.systemFont(ofSize: 14, weight: .regular))
     .build()
   
+  private let categoryDetailPreview = CategoryDetailPreview()
+  
   // MARK: - Initialization & Deinitialization
   
   override func initialize() {
@@ -45,27 +47,44 @@ final class SelectedCategoryPreview: BaseView {
     layout()
   }
   
-  func setCategory(with category: Entities.Category) {
-    
+  func configure(with viewModel: CategoryViewModel) {
+    categoryDetailPreview.configure(with: viewModel)
   }
   
   private func setupUI() {
     backgroundColor = .black200
     addSubview(seperatedView)
     addSubview(previewLabel)
+    addSubview(categoryDetailPreview)
   }
   
   private func layout() {
     makeSeperatedViewLayout()
     makePreviewLabelLayout()
+    makeCategoryDetailPreview()
   }
   
   private func makeSeperatedViewLayout() {
-    seperatedView.pin.top().left().right().height(Metric.seperatedViewHeight)
+    seperatedView.pin
+      .top()
+      .left()
+      .right()
+      .height(Metric.seperatedViewHeight)
   }
   
   private func makePreviewLabelLayout() {
-    previewLabel.pin.below(of: seperatedView, aligned: .center).marginVertical(Metric.previewLabelBelowMargin).hCenter().sizeToFit()
+    previewLabel.pin
+      .below(of: seperatedView, aligned: .center)
+      .marginVertical(Metric.previewLabelVerticalMargin)
+      .hCenter()
+      .sizeToFit()
+  }
+  
+  private func makeCategoryDetailPreview() {
+    categoryDetailPreview.pin
+      .wrapContent()
+      .below(of: previewLabel, aligned: .center)
+      .marginVertical(Metric.categoryDetailPreviewVerticalMargin)
   }
   
 }
