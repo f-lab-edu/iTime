@@ -43,7 +43,13 @@ final class CategoryCreationViewController:
   
   // MARK: - UI Components
   
-  private let customNavigationBar = CustomNavigationBar()
+  private let customNavigationBar = CustomNavigationBar().builder
+    .with {
+      $0.setTitleLabel("카테고리 수정")
+      $0.setTitleLabelAlignment(.left)
+      $0.setRightButtonTitle("저장")
+    }
+    .build()
   
   private let categoryToastView = CategoryToastView()
   
