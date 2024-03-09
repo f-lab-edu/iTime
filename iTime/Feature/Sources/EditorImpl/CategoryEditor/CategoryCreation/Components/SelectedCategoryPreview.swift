@@ -47,8 +47,13 @@ final class SelectedCategoryPreview: BaseView {
     layout()
   }
   
-  func configure(with viewModel: CategoryViewModel) {
-    categoryDetailPreview.configure(with: viewModel)
+  func updateColor(with color: UIColor) {
+    categoryDetailPreview.updateColor(with: color)
+  }
+  
+  func updateTitle(with title: String) {
+    categoryDetailPreview.updateTitle(with: title)
+    makeCategoryDetailPreview()
   }
   
   private func setupUI() {

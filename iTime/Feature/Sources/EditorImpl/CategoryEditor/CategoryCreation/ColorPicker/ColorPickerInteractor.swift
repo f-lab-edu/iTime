@@ -43,7 +43,7 @@ final class ColorPickerInteractor:
     presenter.listener = self
   }
   
-  func didTapColorButton(_ index: Int) {
+  func didTapColorButton(_ index: Int, _ hex: String) {
     let element: CategoryColors.Element
     
     switch index {
@@ -62,5 +62,6 @@ final class ColorPickerInteractor:
     state.categoryColors.insert(element)
     
     presenter.categoryColors(state.categoryColors)
+    listener?.currentCategoryColorHex(with: hex)
   }
 }

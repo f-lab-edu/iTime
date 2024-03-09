@@ -21,5 +21,6 @@ public protocol TextEntryRouting: ViewableRouting {
 // MARK: - TextEntryListener
 
 public protocol TextEntryListener: AnyObject {
+  func currentCategoryTitle(with title: String)
 }
 

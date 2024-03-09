@@ -53,6 +53,9 @@ final class TextEntryViewController:
     .leftView(UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)))
     .leftViewMode(.always)
     .backgroundColor(.black60)
+    .with {
+      $0.becomeFirstResponder()
+    }
     .build()
   
   // MARK: - View LifeCycle
@@ -77,17 +80,31 @@ extension TextEntryViewController {
     listener?.loadData()
   }
   
+  // 띄어쓰기, 카운터 8
   private func bindDidChangeCategoryTextField() {
     categoryTextEntryField.rx
       .text
       .orEmpty
-      .debounce(.milliseconds(300), scheduler: MainScheduler.asyncInstance)
+      .scan(categoryTextEntryField.text) { [weak self] (prev, current) -> String? in
+        guard current.count <= 8 else { return prev }
+        return self?.spaceFilteredText(prev, current)
+      }
+      .withUnretained(self)
+      .compactMap { owner, text in
+        owner.categoryTextEntryField.text = text
+        return text
+      }
       .distinctUntilChanged()
       .asDriver(onErrorDriveWith: .empty())
       .drive(with: self) { owner, text in
         owner.listener?.didChangeCategoryTextField(text)
       }
       .disposed(by: disposeBag)
+  }
+  
+  private func spaceFilteredText(_ prev: String?, _ current: String) -> String? {
+    let removeSpaceString = current.replacingOccurrences(of: " ", with: "")
+    return removeSpaceString.count == current.count ? current : prev
   }
 }
 

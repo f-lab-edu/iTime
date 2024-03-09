@@ -16,6 +16,7 @@ final class CategoryColorOptionButton: UIButton {
   private enum Metric {
     static let circleViewSize: CGFloat = 24.0
     static let borderViewSize: CGFloat = 32.0
+    static let allMargin: CGFloat = 10.0
   }
   
   // MARK: - UI Components
@@ -63,8 +64,8 @@ final class CategoryColorOptionButton: UIButton {
   }
   
   override var isSelected: Bool {
-    willSet {
-      setSelectedState(newValue)
+    didSet {
+      setSelectedState(isSelected)
     }
   }
   
@@ -83,9 +84,9 @@ final class CategoryColorOptionButton: UIButton {
   }
   
   private func layout() {
-    setLayers()
     makeBoarderViewLayout()
     makeCircleViewLayout()
+    setLayers()
   }
   
   private func setLayers() {

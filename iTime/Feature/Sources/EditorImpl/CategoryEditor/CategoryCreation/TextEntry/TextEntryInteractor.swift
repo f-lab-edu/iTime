@@ -48,6 +48,6 @@ final class TextEntryInteractor:
   }
   
   func didChangeCategoryTextField(_ text: String) {
-    print(text)
+    listener?.currentCategoryTitle(with: text)
   }
 }
