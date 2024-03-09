@@ -33,7 +33,7 @@ public final class RunningGIFBuilder:
   }
   
   public func build(withListener listener: RunningGIFListener) -> RunningGIFRouting {
-    let component = RunningGIFComponent(dependency: dependency)
+    let _ = RunningGIFComponent(dependency: dependency)
     let viewController = RunningGIFViewController()
     let interactor = RunningGIFInteractor(presenter: viewController)
     interactor.listener = listener

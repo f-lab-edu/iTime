@@ -33,7 +33,7 @@ public final class LoggingRetentionBuilder:
   }
   
   public func build(withListener listener: LoggingRetentionListener) -> LoggingRetentionRouting {
-    let component = LoggingRetentionComponent(dependency: dependency)
+    let _ = LoggingRetentionComponent(dependency: dependency)
     let viewController = LoggingRetentionViewController()
     let interactor = LoggingRetentionInteractor(presenter: viewController)
     interactor.listener = listener

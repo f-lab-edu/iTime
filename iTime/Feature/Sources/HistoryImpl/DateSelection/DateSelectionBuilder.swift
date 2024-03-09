@@ -33,7 +33,7 @@ public final class DateSelectionBuilder:
   }
   
   public func build(withListener listener: DateSelectionListener) -> DateSelectionRouting {
-    let component = DateSelectionComponent(dependency: dependency)
+    _ = DateSelectionComponent(dependency: dependency)
     let viewController = DateSelectionViewController()
     let interactor = DateSelectionInteractor(presenter: viewController)
     interactor.listener = listener

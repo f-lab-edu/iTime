@@ -33,7 +33,7 @@ public final class CurrentLoggingBuilder:
   }
   
   public func build(withListener listener: CurrentLoggingListener) -> CurrentLoggingRouting {
-    let component = CurrentLoggingComponent(dependency: dependency)
+    _ = CurrentLoggingComponent(dependency: dependency)
     let viewController = CurrentLoggingViewController()
     let interactor = CurrentLoggingInteractor(presenter: viewController)
     interactor.listener = listener

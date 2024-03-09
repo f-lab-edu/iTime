@@ -80,7 +80,7 @@ extension TextEntryViewController {
     listener?.loadData()
   }
   
-  // 띄어쓰기, 카운터 8
+  // TODO: refact
   private func bindDidChangeCategoryTextField() {
     categoryTextEntryField.rx
       .text

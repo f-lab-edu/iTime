@@ -33,7 +33,7 @@ public final class HistoryBuilder:
   }
   
   public func build(withListener listener: HistoryListener) -> HistoryRouting {
-    let component = HistoryComponent(dependency: dependency)
+    _ = HistoryComponent(dependency: dependency)
     let viewController = HistoryViewController()
     let interactor = HistoryInteractor(presenter: viewController)
     interactor.listener = listener
