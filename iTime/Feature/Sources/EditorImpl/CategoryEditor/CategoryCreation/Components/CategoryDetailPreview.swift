@@ -27,7 +27,7 @@ final class CategoryDetailPreview: BaseView {
     .build()
   
   private let categoryTitleLabel = UILabel().builder
-    .text("   ") // for layout
+    .text("No Category")
     .textColor(.white)
     .font(.systemFont(ofSize: 15, weight: .medium))
     .build()

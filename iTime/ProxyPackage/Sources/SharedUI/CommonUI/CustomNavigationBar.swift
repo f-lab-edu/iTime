@@ -15,7 +15,8 @@ public final class CustomNavigationBar: BaseView {
     static let backButtonLeadingMargin: CGFloat = 8
     static let backButtonTopBottomMargin: CGFloat = 4
     static let backButtonSize: CGFloat = 44
-    static let addButtonTrailingMargin: CGFloat = 16
+    static let rightButtonTrailingMargin: CGFloat = 16
+    static let titleLabelLeadingMargin: CGFloat = 16
   }
   
   // MARK: - UI Components
@@ -56,8 +57,11 @@ public final class CustomNavigationBar: BaseView {
     titleLabel.text = text
   }
   
-  public func setTitleLabelAlignment(_ alignment: NSTextAlignment) {
-    titleLabel.textAlignment = alignment
+  public func updateTitleLabelConstraintsToLeft() {
+    titleLabel.snp.remakeConstraints {
+      $0.left.equalTo(backButton.snp.right).offset(Metric.titleLabelLeadingMargin)
+      $0.centerY.equalToSuperview()
+    }
   }
   
   public func setRightButtonTitle(_ text: String) {
@@ -100,7 +104,7 @@ public final class CustomNavigationBar: BaseView {
   private func makeAddButtonConstraints() {
     rightButton.snp.makeConstraints {
       $0.centerY.equalTo(backButton)
-      $0.trailing.equalToSuperview().offset(-Metric.addButtonTrailingMargin)
+      $0.trailing.equalToSuperview().offset(-Metric.rightButtonTrailingMargin)
     }
   }
   

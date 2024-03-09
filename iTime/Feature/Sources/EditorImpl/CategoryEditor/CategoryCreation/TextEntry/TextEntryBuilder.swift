@@ -33,7 +33,7 @@ public final class TextEntryBuilder:
   }
   
   public func build(withListener listener: TextEntryListener) -> TextEntryRouting {
-    _ = TextEntryComponent(dependency: dependency)
+    let _ = TextEntryComponent(dependency: dependency)
     let viewController = TextEntryViewController()
     let interactor = TextEntryInteractor(presenter: viewController)
     interactor.listener = listener

@@ -22,7 +22,7 @@ final class CategoryDeletionButton: UIButton {
   // MARK: - UI Components
   
   private let deletionImageView = UIImageView().builder
-    .image(.analysis)
+    .image(.delete)
     .build()
   
   private let deletionTitleLabel = UILabel().builder
@@ -48,6 +48,7 @@ final class CategoryDeletionButton: UIButton {
   }
   
   private func setupUI() {
+    backgroundColor = .black90
     addSubview(deletionImageView)
     addSubview(deletionTitleLabel)
   }
@@ -60,8 +61,6 @@ final class CategoryDeletionButton: UIButton {
   private func makeDeletionImageViewLayout() {
     deletionImageView.pin
       .left(Metric.deletionImageViewLeftMargin)
-      .vCenter()
-      .top().bottom()
       .vertically(Metric.deletionImageViewVerticalMargin)
       .size(Metric.deletionImageViewSize)
   }
@@ -70,8 +69,8 @@ final class CategoryDeletionButton: UIButton {
     deletionTitleLabel.pin
       .left(to: deletionImageView.edge.right)
       .right()
-      .hCenter()
-      .sizeToFit()
+      .vCenter(to: deletionImageView.edge.vCenter)
+      .sizeToFit(.width)
       .marginLeft(7)
       .marginRight(12)
   }
