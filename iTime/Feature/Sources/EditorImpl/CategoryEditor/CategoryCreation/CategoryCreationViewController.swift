@@ -35,6 +35,7 @@ final class CategoryCreationViewController:
     static let sectionHorizontalInset: CGFloat = 24.0
     static let categoryToastViewTopMargin: CGFloat = 8.0
     static let selectedCategoryPreviewHeight: CGFloat = 88.0
+    static let categoryDeletionButtonHeight: CGFloat = 40.0
   }
   
   // MARK: - Properties
@@ -57,7 +58,10 @@ final class CategoryCreationViewController:
   
   private let colorPickerContainerView = UIView()
   
-  private let categoryDeletionButton = UIButton()
+  private let categoryDeletionButton = CategoryDeletionButton().builder
+    .set(\.layer.masksToBounds, to: true)
+    .set(\.layer.cornerRadius, to: Metric.categoryDeletionButtonHeight)
+    .build()
   
   private let selectedCategoryPreview = SelectedCategoryPreview()
   
