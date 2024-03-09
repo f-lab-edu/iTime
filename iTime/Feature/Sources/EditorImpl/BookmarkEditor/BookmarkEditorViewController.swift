@@ -117,7 +117,7 @@ extension BookmarkEditorViewController {
   }
   
   private func bindAddButtonTapAction() {
-    customNavigationBar.addButton.rx
+    customNavigationBar.rightButton.rx
       .tapWithPreventDuplication()
       .asDriver(onErrorDriveWith: .empty())
       .drive(with: self) { owner, _ in owner.listener?.didTapAddButton() }

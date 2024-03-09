@@ -85,6 +85,8 @@ extension TextEntryViewController {
     categoryTextEntryField.rx
       .text
       .orEmpty
+      .distinctUntilChanged()
+      .skip(1)
       .scan(categoryTextEntryField.text) { [weak self] (prev, current) -> String? in
         guard current.count <= 8 else { return prev }
         return self?.spaceFilteredText(prev, current)
@@ -94,7 +96,6 @@ extension TextEntryViewController {
         owner.categoryTextEntryField.text = text
         return text
       }
-      .distinctUntilChanged()
       .asDriver(onErrorDriveWith: .empty())
       .drive(with: self) { owner, text in
         owner.listener?.didChangeCategoryTextField(text)

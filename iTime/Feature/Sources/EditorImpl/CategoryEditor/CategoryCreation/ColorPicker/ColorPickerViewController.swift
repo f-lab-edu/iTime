@@ -63,6 +63,7 @@ final class ColorPickerViewController:
     setupButtons()
   }
   
+  // TODO: refact
   private func setupButtons() {
     for (index, color) in [ UIColor.category1, .category2, .category3 , .category4 , .category5, .category6, .category7, .category8 ].enumerated() {
       let circleButton = CategoryColorOptionButton().builder
@@ -85,7 +86,6 @@ final class ColorPickerViewController:
         .disposed(by: disposeBag)
       
       buttons.append(circleButton)
-      
       colorStackView.addArrangedSubview(circleButton)
     }
   }

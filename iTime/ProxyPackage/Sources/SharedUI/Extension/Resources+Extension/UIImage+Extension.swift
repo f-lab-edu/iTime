@@ -20,6 +20,7 @@ extension UIImage {
   public static let iconAdd: UIImage = .init(resource: .iconAdd)
   public static let iconArrowLeft: UIImage = .init(resource: .iconArrowLeft)
   public static let iconMore: UIImage = .init(resource: .iconMore)
+  public static let delete: UIImage = .init(resource: .delete)
   
   // MARK: - Control
   

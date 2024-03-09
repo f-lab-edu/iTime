@@ -15,7 +15,7 @@ final class CategoryColorOptionButton: UIButton {
   
   private enum Metric {
     static let circleViewSize: CGFloat = 24.0
-    static let borderViewSize: CGFloat = 32.0
+    static let borderViewSize: CGFloat = 42.0
     static let allMargin: CGFloat = 10.0
   }
   
@@ -39,7 +39,7 @@ final class CategoryColorOptionButton: UIButton {
   private var borderLayer: CALayer {
     let layer = CAShapeLayer()
     layer.path = UIBezierPath(
-      roundedRect: borderView.bounds.insetBy(dx: 0, dy: 0),
+      roundedRect: borderView.bounds.insetBy(dx: 5, dy: 5),
       cornerRadius: borderView.bounds.height / 2
     ).cgPath
     layer.fillColor = UIColor.clear.cgColor
