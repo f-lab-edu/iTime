@@ -67,6 +67,13 @@ final class CategoryCreationViewController:
     removeKeyboardObserver()
   }
   
+  func updateCategoryTitle(with title: String) {
+    selectedCategoryPreview.updateTitle(with: title)
+  }
+  
+  func updateCategoryColorHex(with hex: String) {
+    selectedCategoryPreview.updateColor(with: UIColor(hex: hex) ?? .gray)
+  }
 }
 
 // MARK: - Layout

@@ -15,6 +15,8 @@ import Editor
 
 protocol CategoryCreationPresentable: Presentable {
   var listener: CategoryCreationPresentableListener? { get set }
+  func updateCategoryTitle(with title: String)
+  func updateCategoryColorHex(with hex: String)
 }
 
 // MARK: - CategoryCreationInteractor
@@ -24,7 +26,7 @@ final class CategoryCreationInteractor:
   CategoryCreationInteractable,
   CategoryCreationPresentableListener
 {
-  
+
   // MARK: - Properties
   
   weak var router: CategoryCreationRouting?
@@ -46,5 +48,13 @@ final class CategoryCreationInteractor:
   
   override func didBecomeActive() {
     super.didBecomeActive()
+  }
+  
+  func currentCategoryTitle(with title: String) {
+    presenter.updateCategoryTitle(with: title)
+  }
+  
+  func currentCategoryColorHex(with hex: String) {
+    presenter.updateCategoryColorHex(with: hex)
   }
 }

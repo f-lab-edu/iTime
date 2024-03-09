@@ -15,7 +15,7 @@ import SharedUI
 // MARK: - ColorPickerPresentableListener
 
 protocol ColorPickerPresentableListener: AnyObject {
-  func didTapColorButton(_ index: Int)
+  func didTapColorButton(_ index: Int, _ hex: String)
 }
 
 // MARK: - ColorPickerViewController
@@ -64,7 +64,7 @@ final class ColorPickerViewController:
   }
   
   private func setupButtons() {
-    for (index, color) in [ UIColor.blue, .green, .red , .purple , .orange, .brown, .white, .yellow].enumerated() {
+    for (index, color) in [ UIColor.category1, .category2, .category3 , .category4 , .category5, .category6, .category7, .category8 ].enumerated() {
       let circleButton = CategoryColorOptionButton().builder
         .with {
           $0.configureButtonColor(with: color)
@@ -73,9 +73,14 @@ final class ColorPickerViewController:
       
       circleButton.rx
         .tapWithPreventDuplication()
+        .catch({ error in
+          assertionFailure(error.localizedDescription)
+          return .just(())
+        })
+        .map { try color.toHex.unwrap() }
         .asDriver(onErrorDriveWith: .empty())
-        .drive(with: self) { owner, _ in
-          owner.listener?.didTapColorButton(index)
+        .drive(with: self) { owner, hex in
+          owner.listener?.didTapColorButton(index, hex)
         }
         .disposed(by: disposeBag)
       

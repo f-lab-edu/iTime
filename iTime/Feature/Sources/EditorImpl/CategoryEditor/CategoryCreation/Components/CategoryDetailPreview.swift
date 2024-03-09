@@ -27,8 +27,9 @@ final class CategoryDetailPreview: BaseView {
     .build()
   
   private let categoryTitleLabel = UILabel().builder
-    .text("아리가또")
-    .textColor(.yellow)
+    .text("   ") // for layout
+    .textColor(.white)
+    .font(.systemFont(ofSize: 15, weight: .medium))
     .build()
   
   // MARK: - Initialization & Deinitialization
@@ -43,9 +44,13 @@ final class CategoryDetailPreview: BaseView {
     layout()
   }
   
-  func configure(with viewModel: CategoryViewModel) {
-    categoryCircleView.backgroundColor = viewModel.color
-    categoryTitleLabel.text = viewModel.title
+  func updateColor(with color: UIColor) {
+    categoryCircleView.backgroundColor = color
+  }
+  
+  func updateTitle(with title: String) {
+    categoryTitleLabel.text = title
+    layout()
   }
   
   private func setupUI() {
@@ -68,8 +73,9 @@ final class CategoryDetailPreview: BaseView {
   private func makeCategoryTitleLabel() {
     categoryTitleLabel.pin
       .after(of: categoryCircleView)
+      .right().bottom().top()
+      .sizeToFit(.widthFlexible)
       .marginHorizontal(Metric.categoryCircleViewRightMargin)
-      .sizeToFit()
   }
   
 }
