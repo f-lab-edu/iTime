@@ -32,9 +32,9 @@ public final class CustomNavigationBar: BaseView {
     .textColor(.white)
     .build()
   
-  public let addButton = UIButton().builder
+  public let rightButton = UIButton().builder
     .with {
-      $0.setImage(.iconAdd, for: .normal)
+      $0.setTitleColor(.pointGreen, for: .normal)
     }
     .build()
   
@@ -56,13 +56,25 @@ public final class CustomNavigationBar: BaseView {
     titleLabel.text = text
   }
   
+  public func setTitleLabelAlignment(_ alignment: NSTextAlignment) {
+    titleLabel.textAlignment = alignment
+  }
+  
+  public func setRightButtonTitle(_ text: String) {
+    rightButton.setTitle(text, for: .normal)
+  }
+  
+  public func setRightButtonImage(_ image: UIImage) {
+    rightButton.setImage(image, for: .normal)
+  }
+  
   // MARK: Layout
   
   private func setupUI() {
     backgroundColor = .clear
     addSubview(backButton)
     addSubview(titleLabel)
-    addSubview(addButton)
+    addSubview(rightButton)
   }
   
   private func layout() {
@@ -86,7 +98,7 @@ public final class CustomNavigationBar: BaseView {
   }
   
   private func makeAddButtonConstraints() {
-    addButton.snp.makeConstraints {
+    rightButton.snp.makeConstraints {
       $0.centerY.equalTo(backButton)
       $0.trailing.equalToSuperview().offset(-Metric.addButtonTrailingMargin)
     }
