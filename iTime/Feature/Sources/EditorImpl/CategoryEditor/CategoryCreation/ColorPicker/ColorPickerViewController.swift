@@ -65,10 +65,9 @@ final class ColorPickerViewController:
   
   private func setupButtons() {
     for (index, color) in [ UIColor.blue, .green, .red , .purple , .orange, .brown, .white, .yellow].enumerated() {
-      let circleButton = UIButton().builder
+      let circleButton = CategoryColorOptionButton().builder
         .with {
-          $0.setImage(.exitCircleFill.withTintColor(color), for: .normal)
-          $0.setImage(.analysisFill.withTintColor(color), for: .selected) // TODO: 이미지 수정 필요
+          $0.configureButtonColor(with: color)
         }
         .build()
       
