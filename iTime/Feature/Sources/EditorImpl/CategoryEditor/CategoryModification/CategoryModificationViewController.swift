@@ -15,7 +15,7 @@ import SharedUI
 // MARK: - CategoryModificationPresentableListener
 
 protocol CategoryModificationPresentableListener: AnyObject {
-  func didTriggerDissapearAction()
+  func didTriggerDisappearAction()
 }
 
 // MARK: - CategoryModificationViewController
@@ -112,7 +112,7 @@ extension CategoryModificationViewController {
     detachAction
       .asDriver(onErrorDriveWith: .empty())
       .drive(with: self) { owner, _ in
-        owner.listener?.didTriggerDissapearAction()
+        owner.listener?.didTriggerDisappearAction()
       }
       .disposed(by: disposeBag)
   }

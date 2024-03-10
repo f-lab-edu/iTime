@@ -59,7 +59,7 @@ final class CategoryEditorInteractor:
     router?.attachCategoryModificationRIB(with: category)
   }
   
-  func didTapBackButton() {
+  func didTriggerDisappearAction() {
     listener?.detachCategoryEditorRIB()
   }
   

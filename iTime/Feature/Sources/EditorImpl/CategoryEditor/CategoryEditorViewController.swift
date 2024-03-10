@@ -15,7 +15,7 @@ import SharedUI
 // MARK: - CategoryEditorPresentableListener
 
 protocol CategoryEditorPresentableListener: AnyObject {
-  func didTapBackButton()
+  func didTriggerDisappearAction()
 }
 
 // MARK: - CategoryEditorViewController
@@ -71,17 +71,25 @@ final class CategoryEditorViewController:
 extension CategoryEditorViewController {
   private func bindActions() {
     bindDidTapCloseButtonAction()
+    bindDetachAction()
   }
   
   private func bindDidTapCloseButtonAction() {
     closeNavigationBar.closeButton.rx
       .tapWithPreventDuplication()
+      .bind(to: self.detachAction)
+      .disposed(by: disposeBag)
+  }
+  
+  private func bindDetachAction() {
+    detachAction
       .asDriver(onErrorDriveWith: .empty())
       .drive(with: self) { owner, _ in
-        owner.listener?.didTapBackButton()
+        owner.listener?.didTriggerDisappearAction()
       }
       .disposed(by: disposeBag)
   }
+  
 }
 
 // MARK: - Layout

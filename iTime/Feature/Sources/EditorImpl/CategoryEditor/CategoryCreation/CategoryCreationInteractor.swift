@@ -58,7 +58,7 @@ final class CategoryCreationInteractor:
     presenter.updateCategoryColorHex(with: hex)
   }
 
-  func didTriggerDissapearAction() {
+  func didTriggerDisappearAction() {
     listener?.detachCategoryCreationRIB()
   }
   

@@ -16,7 +16,7 @@ import SharedUI
 // MARK: - CategoryCreationPresentableListener
 
 protocol CategoryCreationPresentableListener: AnyObject {
-  func didTriggerDissapearAction()
+  func didTriggerDisappearAction()
 }
 
 // MARK: - CategoryCreationViewController
@@ -94,7 +94,7 @@ extension CategoryCreationViewController {
     detachAction
       .asDriver(onErrorDriveWith: .empty())
       .drive(with: self) { owner, _ in
-        owner.listener?.didTriggerDissapearAction()
+        owner.listener?.didTriggerDisappearAction()
       }
       .disposed(by: disposeBag)
   }

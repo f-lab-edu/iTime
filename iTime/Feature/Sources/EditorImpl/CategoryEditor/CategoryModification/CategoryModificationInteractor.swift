@@ -52,7 +52,7 @@ final class CategoryModificationInteractor:
     presenter.updateCategoryColorHex(with: hex)
   }
   
-  func didTriggerDissapearAction() {
+  func didTriggerDisappearAction() {
     listener?.detachCategoryModificationRIB()
   }
 }
