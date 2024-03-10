@@ -36,6 +36,7 @@ final class CategoryEditorInteractorImplTests: XCTestCase {
       viewController: viewController,
       currentActivityBuilder: CurrentActivityBuilderSpy(),
       categoryListBuilder: CategoryListBuilderSpy(),
+      categoryModificationBuilder: CategoryModificationBuilderSpy(),
       categoryCreationBuilder: CategoryCreationBuilderSpy()
     )
     listener = CategoryEditorListenerSpy()
@@ -70,9 +71,9 @@ final class CategoryEditorInteractorImplTests: XCTestCase {
     XCTAssertFalse(router.children.isEmpty)
   }
   
-  private func test_backButton탭시_listener에게전달하는지() {
+  private func test_didTriggerDisappearAction시_listener에게전달하는지() {
     // When
-    sut.didTapBackButton()
+    sut.didTriggerDisappearAction()
     
     // Then
     XCTAssertEqual(listener.detachCategoryEditorRIBCallCount, 1)

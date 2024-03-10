@@ -40,7 +40,7 @@ final class ColorPickerViewController:
   
   // MARK: - UI Components
   
-  private var buttons: [UIButton] = []
+  private var buttons: [UIButton]
   
   private let sectionTitleLabel = UILabel().builder
     .text("색상")
@@ -56,6 +56,10 @@ final class ColorPickerViewController:
     .build()
   
   // MARK: - View LifeCycle
+  
+  init(buttons: [UIButton] = []) {
+    self.buttons = buttons
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -91,14 +95,14 @@ final class ColorPickerViewController:
   }
   
   func categoryColors(_ colors: CategoryColors) {
-    buttons[0].isSelected = colors.contains(.gray)
-    buttons[1].isSelected = colors.contains(.red)
-    buttons[2].isSelected = colors.contains(.yellow)
-    buttons[3].isSelected = colors.contains(.green)
-    buttons[4].isSelected = colors.contains(.greenblue)
-    buttons[5].isSelected = colors.contains(.blue)
-    buttons[6].isSelected = colors.contains(.pulple)
-    buttons[7].isSelected = colors.contains(.greenpulple)
+    buttons[safe: 0]?.isSelected = colors.contains(.gray)
+    buttons[safe: 1]?.isSelected = colors.contains(.red)
+    buttons[safe: 2]?.isSelected = colors.contains(.yellow)
+    buttons[safe: 3]?.isSelected = colors.contains(.green)
+    buttons[safe: 4]?.isSelected = colors.contains(.greenblue)
+    buttons[safe: 5]?.isSelected = colors.contains(.blue)
+    buttons[safe: 6]?.isSelected = colors.contains(.pulple)
+    buttons[safe: 7]?.isSelected = colors.contains(.greenpulple)
   }
   
 }

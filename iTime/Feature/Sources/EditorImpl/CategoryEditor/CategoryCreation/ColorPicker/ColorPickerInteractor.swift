@@ -30,7 +30,7 @@ final class ColorPickerInteractor:
   weak var router: ColorPickerRouting?
   weak var listener: ColorPickerListener?
   
-  private var state: ColorPickerState
+  private(set) var state: ColorPickerState
   
   // MARK: - Initialization & DeInitialization
   
@@ -43,25 +43,28 @@ final class ColorPickerInteractor:
     presenter.listener = self
   }
   
-  func didTapColorButton(_ index: Int, _ hex: String) {
-    let element: CategoryColors.Element
-    
-    switch index {
-    case 0: element = .gray
-    case 1: element = .red
-    case 2: element = .yellow
-    case 3: element = .green
-    case 4: element = .greenblue
-    case 5: element = .blue
-    case 6: element = .pulple
-    case 7: element = .greenpulple
-    default: element = .greenpulple
-    }
-    
-    state.categoryColors.remove(.all)
-    state.categoryColors.insert(element)
-    
+  func didTapColorButton(_ index: Int, _ hex: String = "") {
+    updateCategoryColors(element: targetElement(index, hex))
     presenter.categoryColors(state.categoryColors)
     listener?.currentCategoryColorHex(with: hex)
+  }
+  
+  private func updateCategoryColors(element: CategoryColors.Element) {
+    state.categoryColors.remove(.all)
+    state.categoryColors.insert(element)
+  }
+  
+  private func targetElement(_ index: Int, _ hex: String) -> CategoryColors.Element {
+    switch index {
+    case 0: return .gray
+    case 1: return .red
+    case 2: return .yellow
+    case 3: return .green
+    case 4: return .greenblue
+    case 5: return .blue
+    case 6: return .pulple
+    case 7: return .greenpulple
+    default: return .greenpulple
+    }
   }
 }
