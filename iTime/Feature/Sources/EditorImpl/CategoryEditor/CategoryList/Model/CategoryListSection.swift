@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedUI
 
 enum CategoryListSection {
   case category(_ items: [Item])

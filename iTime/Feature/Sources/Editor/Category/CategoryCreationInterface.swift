@@ -21,5 +21,6 @@ public protocol CategoryCreationRouting: ViewableRouting {
 // MARK: - CategoryCreationListener
 
 public protocol CategoryCreationListener: AnyObject {
+  func detachCategoryCreationRIB()
 }
 

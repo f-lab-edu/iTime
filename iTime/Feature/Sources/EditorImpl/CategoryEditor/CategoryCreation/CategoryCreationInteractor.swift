@@ -26,7 +26,7 @@ final class CategoryCreationInteractor:
   CategoryCreationInteractable,
   CategoryCreationPresentableListener
 {
-
+  
   // MARK: - Properties
   
   weak var router: CategoryCreationRouting?
@@ -57,4 +57,9 @@ final class CategoryCreationInteractor:
   func currentCategoryColorHex(with hex: String) {
     presenter.updateCategoryColorHex(with: hex)
   }
+
+  func didTriggerDissapearAction() {
+    listener?.detachCategoryCreationRIB()
+  }
+  
 }

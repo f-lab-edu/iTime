@@ -17,7 +17,8 @@ import Start
 public protocol CategoryEditorDependency: Dependency {
   var currentActivityBuilder: CurrentActivityBuildable { get }
   var categoryListBuilder: CategoryListBuildable { get }
-  var categoryCreationBuilder: CategoryCreationBuilder { get }
+  var categoryCreationBuilder: CategoryCreationBuildable { get }
+  var categoryModificationBulider: CategoryModificationBuildable { get }
   var timerUsecase: TimerUsecase { get }
 }
 
@@ -46,8 +47,12 @@ final class CategoryEditorComponent: Component<CategoryEditorDependency> {
     dependency.categoryListBuilder
   }
   
-  fileprivate var categoryCreationBuilder: CategoryCreationBuilder {
+  fileprivate var categoryCreationBuilder: CategoryCreationBuildable {
     dependency.categoryCreationBuilder
+  }
+  
+  fileprivate var categoryModificationBuilder: CategoryModificationBuildable {
+    dependency.categoryModificationBulider
   }
   
   private let payload: CategoryEditorComponentDependency
@@ -85,7 +90,7 @@ public final class CategoryEditorBuilder:
       interactor: interactor,
       viewController: viewController,
       currentActivityBuilder: component.currentActivityBuilder,
-      categoryListBuilder: component.categoryListBuilder,
+      categoryListBuilder: component.categoryListBuilder, categoryModificationBuilder: component.categoryModificationBuilder,
       categoryCreationBuilder: component.categoryCreationBuilder
     )
   }

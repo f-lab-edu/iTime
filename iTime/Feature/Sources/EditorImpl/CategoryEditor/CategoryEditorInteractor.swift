@@ -56,7 +56,7 @@ final class CategoryEditorInteractor:
   }
   
   func didTapCategoryListCell(from category: Category) {
-    router?.attachCategoryCreationRIB()
+    router?.attachCategoryModificationRIB(with: category)
   }
   
   func didTapBackButton() {
@@ -69,5 +69,17 @@ final class CategoryEditorInteractor:
   
   func didTapCategoryCreationLabel() {
     router?.attachCategoryCreationRIB()
+  }
+}
+
+// MARK: - listener
+
+extension CategoryEditorInteractor {
+  func detachCategoryCreationRIB() {
+    router?.detachCategoryCreationRIB()
+  }
+  
+  func detachCategoryModificationRIB() {
+    router?.detachCategoryModificationRIB()
   }
 }

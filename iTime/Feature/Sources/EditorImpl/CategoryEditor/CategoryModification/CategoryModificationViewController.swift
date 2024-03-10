@@ -1,30 +1,29 @@
 //
-//  CategoryCreationViewController.swift
+//  CategoryModificationViewController.swift
 //  
 //
-//  Created by 이상헌 on 12/7/23.
+//  Created by 이상헌 on 3/10/24.
 //
 
 import UIKit
 
 import RIBs
 import RxSwift
-import PinLayout
 
 import SharedUI
 
-// MARK: - CategoryCreationPresentableListener
+// MARK: - CategoryModificationPresentableListener
 
-protocol CategoryCreationPresentableListener: AnyObject {
+protocol CategoryModificationPresentableListener: AnyObject {
   func didTriggerDissapearAction()
 }
 
-// MARK: - CategoryCreationViewController
+// MARK: - CategoryModificationViewController
 
-final class CategoryCreationViewController:
+final class CategoryModificationViewController:
   BaseViewController,
-  CategoryCreationPresentable,
-  CategoryCreationViewControllable,
+  CategoryModificationPresentable,
+  CategoryModificationViewControllable,
   KeyboardAddable
 {
   
@@ -42,22 +41,26 @@ final class CategoryCreationViewController:
   
   // MARK: - Properties
   
-  weak var listener: CategoryCreationPresentableListener?
+  weak var listener: CategoryModificationPresentableListener?
   
   // MARK: - UI Components
   
   private let customNavigationBar = CustomNavigationBar().builder
     .with {
-      $0.setTitleLabel("카테고리 만들기")
-      $0.setRightButtonTitle("만들기")
+      $0.setTitleLabel("카테고리 수정")
+      $0.updateTitleLabelConstraintsToLeft()
+      $0.setRightButtonTitle("저장")
     }
     .build()
-  
-  private let categoryToastView = CategoryToastView()
-  
+
   private let categoryTextEntryContainerView = UIView()
   
   private let colorPickerContainerView = UIView()
+  
+  private let categoryDeletionButton = CategoryDeletionButton().builder
+    .set(\.layer.masksToBounds, to: true)
+    .set(\.layer.cornerRadius, to: 8)
+    .build()
   
   private let selectedCategoryPreview = SelectedCategoryPreview()
   
@@ -73,11 +76,26 @@ final class CategoryCreationViewController:
   deinit {
     removeKeyboardObserver()
   }
+  
+  func updateCategoryTitle(with title: String) {
+    selectedCategoryPreview.updateTitle(with: title)
+  }
+  
+  func updateCategoryColorHex(with hex: String) {
+    selectedCategoryPreview.updateColor(with: UIColor(hex: hex) ?? .gray)
+  }
+  
 }
 
-// MARK: - Action
+// MARK: - Bind Action
 
-extension CategoryCreationViewController {
+extension CategoryModificationViewController {
+  
+}
+
+// MARK: - Bind State
+
+extension CategoryModificationViewController {
   private func bindActions() {
     bindDidTapBackbutton()
     bindDetachAction()
@@ -100,26 +118,14 @@ extension CategoryCreationViewController {
   }
 }
 
-// MARK: - State
-
-extension CategoryCreationViewController {
-  func updateCategoryTitle(with title: String) {
-    selectedCategoryPreview.updateTitle(with: title)
-  }
-  
-  func updateCategoryColorHex(with hex: String) {
-    selectedCategoryPreview.updateColor(with: UIColor(hex: hex) ?? .gray)
-  }
-}
-
 // MARK: - Layout
 
-extension CategoryCreationViewController {
+extension CategoryModificationViewController {
   private func setupUI() {
     view.addSubview(customNavigationBar)
     view.addSubview(categoryTextEntryContainerView)
     view.addSubview(colorPickerContainerView)
-    view.addSubview(categoryToastView)
+    view.addSubview(categoryDeletionButton)
     view.addSubview(selectedCategoryPreview)
     
     layout()
@@ -128,8 +134,8 @@ extension CategoryCreationViewController {
   private func layout() {
     makeCustomNavigationBarConstraints()
     makeCategoryTextEntryContainerViewConstraints()
-    makeCategoryToastViewConstraints()
     makeColorPickerContainerViewConstraints()
+    makeCategoryDeletionButtonConstraints()
     makeSelectedCategoryPreviewConstraints()
   }
   
@@ -137,13 +143,6 @@ extension CategoryCreationViewController {
     customNavigationBar.snp.makeConstraints {
       $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
       $0.leading.trailing.equalToSuperview()
-    }
-  }
-  
-  private func makeCategoryToastViewConstraints() {
-    categoryToastView.snp.makeConstraints {
-      $0.top.equalTo(customNavigationBar.snp.bottom).offset(Metric.categoryToastViewTopMargin)
-      $0.centerX.equalToSuperview()
     }
   }
   
@@ -158,6 +157,15 @@ extension CategoryCreationViewController {
     colorPickerContainerView.snp.makeConstraints {
       $0.top.equalTo(categoryTextEntryContainerView.snp.bottom).offset(Metric.sectionVeritcalInset)
       $0.leading.trailing.equalTo(categoryTextEntryContainerView)
+    }
+  }
+  
+  private func makeCategoryDeletionButtonConstraints() {
+    categoryDeletionButton.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.height.equalTo(Metric.categoryDeletionButtonHeight)
+      $0.width.equalTo(Metric.categoryDeletionButtonWidth)
+      $0.bottom.equalTo(selectedCategoryPreview.snp.top).offset(-Metric.categoryDeletionButtonBottomMargin)
     }
   }
   
@@ -176,12 +184,11 @@ extension CategoryCreationViewController {
   func addColorPicker(_ view: ViewControllable) {
     addChildViewController(container: colorPickerContainerView, child: view)
   }
-  
 }
 
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview("UIKit Portrait") {
-  CategoryCreationViewController()
+  CategoryModificationViewController()
 }
 #endif

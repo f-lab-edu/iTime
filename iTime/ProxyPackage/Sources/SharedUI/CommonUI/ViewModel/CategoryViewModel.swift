@@ -2,17 +2,27 @@
 //  File.swift
 //  
 //
-//  Created by 이상헌 on 12/28/23.
+//  Created by 이상헌 on 1/5/24.
 //
 
 import UIKit
 
-public struct CategoryViewModel {
-  public let title: String
+
+public struct CategoryViewModel: Equatable {
   public let color: UIColor
+  public let title: String
   
-  public init(title: String, color: UIColor) {
-    self.title = title
+  public init(color: UIColor, title: String) {
     self.color = color
+    self.title = title
   }
 }
+
+//extension CategoryViewModel {
+//  func toCategory() -> Entities.Category {
+//    .init(
+//      title: title,
+//      color: color.toHex ?? ""
+//    )
+//  }
+//}
