@@ -21,6 +21,6 @@ public protocol ColorPickerRouting: ViewableRouting {
 // MARK: - ColorPickerListener
 
 public protocol ColorPickerListener: AnyObject {
-  func currentCategoryColorHex(with: String) 
+  func currentCategoryColorHex(with hex: String)
 }
 
