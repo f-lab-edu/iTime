@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct TextEntryState {
+  var currentCategoryText: String = String()
+}

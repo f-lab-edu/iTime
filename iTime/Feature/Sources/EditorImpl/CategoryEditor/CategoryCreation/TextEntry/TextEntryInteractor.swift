@@ -29,11 +29,15 @@ final class TextEntryInteractor:
   
   weak var router: TextEntryRouting?
   weak var listener: TextEntryListener?
-  private(set) var state = 
+  private(set) var state: TextEntryState
   
   // MARK: - Initialization & DeInitialization
   
-  override init(presenter: TextEntryPresentable) {
+  init(
+    initalState: TextEntryState,
+    presenter: TextEntryPresentable
+  ) {
+    self.state = initalState
     super.init(presenter: presenter)
     presenter.listener = self
   }
@@ -45,10 +49,11 @@ final class TextEntryInteractor:
   }
   
   func loadData() {
-    presenter.updateCategoryTextField(with: "") // TODO: fill data
+    presenter.updateCategoryTextField(with: state.currentCategoryText)
   }
   
   func didChangeCategoryTextField(_ text: String) {
+    state.currentCategoryText = text
     listener?.currentCategoryTitle(with: text)
   }
 }

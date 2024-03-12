@@ -18,6 +18,19 @@ public protocol TextEntryDependency: Dependency {
 // MARK: - TextEntryComponent
 
 final class TextEntryComponent: Component<TextEntryDependency> {
+  fileprivate var intialState: TextEntryState {
+    .init(currentCategoryText: String())
+  }
+  
+  private let payload: TextEntryComponentDependency
+  
+  public init(
+    dependency: TextEntryDependency,
+    payload: TextEntryComponentDependency
+  ) {
+    self.payload = payload
+    super.init(dependency: dependency)
+  }
   
 }
 
@@ -32,10 +45,19 @@ public final class TextEntryBuilder:
     super.init(dependency: dependency)
   }
   
-  public func build(withListener listener: TextEntryListener) -> TextEntryRouting {
-    let _ = TextEntryComponent(dependency: dependency)
+  public func build(
+    withListener listener: TextEntryListener,
+    payload: TextEntryComponentDependency
+  ) -> TextEntryRouting {
+    let component = TextEntryComponent(
+      dependency: dependency,
+      payload: payload
+    )
     let viewController = TextEntryViewController()
-    let interactor = TextEntryInteractor(presenter: viewController)
+    let interactor = TextEntryInteractor(
+      initalState: component.intialState,
+      presenter: viewController
+    )
     interactor.listener = listener
     return TextEntryRouter(
       interactor: interactor,

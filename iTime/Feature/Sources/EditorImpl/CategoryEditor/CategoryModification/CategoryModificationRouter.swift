@@ -70,7 +70,8 @@ final class CategoryModificationRouter:
   private func attachTextEntryRIB() {
     guard textEntryRouter == nil else { return }
     let router = textEntryBuilder.build(
-      withListener: interactor
+      withListener: interactor,
+      payload: .init(categoryTitle: nil) // TODO: !!
     )
     textEntryRouter = router
     attachChild(router)

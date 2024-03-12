@@ -11,16 +11,13 @@ import FeatureTestSupports
 @testable import EditorImpl
 
 final class TextEntryInteractorTests: XCTestCase {
-  
-  private var sut: TextEntryInteractor!
+
   private var listener: TextEntryListenerSpy!
   private var presenter: TextEntryPresenterSpy!
   
   override func setUp() {
     listener = TextEntryListenerSpy()
     presenter = TextEntryPresenterSpy()
-    sut = TextEntryInteractor(presenter: presenter)
-    sut.listener = listener
   }
   
   // Let's TDD!
@@ -30,7 +27,7 @@ final class TextEntryInteractorTests: XCTestCase {
     let stringCategoryText = "운동"
     
     // When
-    sut.loadData()
+    makeSUT(.init(currentCategoryText: stringCategoryText)).loadData()
     
     // Then
     XCTAssertEqual(presenter.updateCategoryTextFieldCallCount, 1)
@@ -42,7 +39,7 @@ final class TextEntryInteractorTests: XCTestCase {
     let emojiCategoryText = "🤦🤦🤦"
     
     // When
-    sut.loadData()
+    makeSUT(.init(currentCategoryText: emojiCategoryText)).loadData()
     
     // Then
     XCTAssertEqual(presenter.updateCategoryTextFieldCallCount, 1)
@@ -54,7 +51,7 @@ final class TextEntryInteractorTests: XCTestCase {
     let spacesCategoryText = "   "
     
     // When
-    sut.loadData()
+    makeSUT(.init(currentCategoryText: spacesCategoryText)).loadData()
     
     // Then
     XCTAssertEqual(presenter.updateCategoryTextFieldCallCount, 1)
@@ -66,7 +63,7 @@ final class TextEntryInteractorTests: XCTestCase {
     let validCountCategoryText = "1234"
     
     // When
-    sut.loadData()
+    makeSUT(.init(currentCategoryText: validCountCategoryText)).loadData()
     
     // Then
     XCTAssertEqual(presenter.updateCategoryTextFieldCallCount, 1)
@@ -78,7 +75,7 @@ final class TextEntryInteractorTests: XCTestCase {
     let invalidCategoryText = "123456789"
     
     // When
-    sut.loadData()
+    makeSUT(.init(currentCategoryText: invalidCategoryText)).loadData()
     
     // Then
     XCTAssertEqual(presenter.updateCategoryTextFieldCallCount, 1)
@@ -89,5 +86,15 @@ final class TextEntryInteractorTests: XCTestCase {
     
   }
   
+  // MARK: - Helper
+  
+  private func makeSUT(_ state: TextEntryState) -> TextEntryInteractor {
+    let sut = TextEntryInteractor(
+      initalState: state,
+      presenter: presenter
+    )
+    sut.listener = listener
+    return sut
+  }
   
 }
