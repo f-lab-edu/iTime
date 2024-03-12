@@ -12,7 +12,7 @@ import Editor
 
 // MARK: - TextEntryPresentable
 
-protocol TextEntryPresentable: Presentable {
+public protocol TextEntryPresentable: Presentable {
   var listener: TextEntryPresentableListener? { get set }
   func updateCategoryTextField(with text: String)
 }
@@ -29,6 +29,7 @@ final class TextEntryInteractor:
   
   weak var router: TextEntryRouting?
   weak var listener: TextEntryListener?
+  private(set) var state = 
   
   // MARK: - Initialization & DeInitialization
   

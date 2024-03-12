@@ -14,7 +14,7 @@ import SharedUI
 
 // MARK: - TextEntryPresentableListener
 
-protocol TextEntryPresentableListener: AnyObject {
+public protocol TextEntryPresentableListener: AnyObject {
   func didChangeCategoryTextField(_ text: String)
   func loadData()
 }
