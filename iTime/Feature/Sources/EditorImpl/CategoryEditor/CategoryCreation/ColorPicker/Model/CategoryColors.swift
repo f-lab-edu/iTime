@@ -19,6 +19,7 @@ struct CategoryColors: OptionSet {
   static let blue         = CategoryColors(rawValue:  1 << 5)
   static let pulple       = CategoryColors(rawValue:  1 << 6)
   static let greenpulple  = CategoryColors(rawValue:  1 << 7)
+  static let unknown      = CategoryColors(rawValue: .zero)
   
   static let all: CategoryColors = [ .gray, .red, .yellow, .green, .greenblue, .blue, .pulple, .greenpulple ]
 }

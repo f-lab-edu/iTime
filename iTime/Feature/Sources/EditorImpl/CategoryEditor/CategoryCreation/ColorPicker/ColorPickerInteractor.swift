@@ -64,7 +64,7 @@ final class ColorPickerInteractor:
     case 5: return .blue
     case 6: return .pulple
     case 7: return .greenpulple
-    default: return .greenpulple
+    default: return .unknown
     }
   }
 }
