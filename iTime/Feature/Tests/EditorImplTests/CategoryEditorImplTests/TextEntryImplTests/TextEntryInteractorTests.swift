@@ -20,8 +20,6 @@ final class TextEntryInteractorTests: XCTestCase {
     presenter = TextEntryPresenterSpy()
   }
   
-  // Let's TDD!
-  
   func test_loadData_withCategoryStringTitle_callupdateCategoryTextFieldWithTitle() {
     // Given
     let stringCategoryText = "운동"
@@ -82,13 +80,37 @@ final class TextEntryInteractorTests: XCTestCase {
     XCTAssertEqual(presenter.updateCategoryTextFieldPassedText, invalidCategoryText)
   }
   
-  func test_didChageCategoryTextField_withText_() {
+  func test_didChageCategoryTextField_withText_updateStateAndListenerWithText() {
+    // Given
+    let text = "운동"
+    let sut = makeSUT()
     
+    // When
+    sut.didChangeCategoryTextField(text)
+    
+    // Then
+    XCTAssertEqual(sut.state.currentCategoryText, text)
+    XCTAssertEqual(listener.currentCategoryTitleCallCount, 1)
+    XCTAssertEqual(listener.passedTitle, text)
+  }
+  
+  func test_didChageCategoryTextField_withEmptyText_updateStateAndListenerWithText() {
+    // Given
+    let text = ""
+    let sut = makeSUT()
+    
+    // When
+    sut.didChangeCategoryTextField(text)
+    
+    // Then
+    XCTAssertEqual(sut.state.currentCategoryText, text)
+    XCTAssertEqual(listener.currentCategoryTitleCallCount, 1)
+    XCTAssertEqual(listener.passedTitle, text)
   }
   
   // MARK: - Helper
   
-  private func makeSUT(_ state: TextEntryState) -> TextEntryInteractor {
+  private func makeSUT(_ state: TextEntryState = .init()) -> TextEntryInteractor {
     let sut = TextEntryInteractor(
       initalState: state,
       presenter: presenter
