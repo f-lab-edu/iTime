@@ -59,7 +59,10 @@ final class CategoryCreationViewController:
   
   private let colorPickerContainerView = UIView()
   
-  private let selectedCategoryPreview = SelectedCategoryPreview()
+  private let categoryDeletionButton = CategoryDeletionButton().builder
+    .set(\.layer.masksToBounds, to: true)
+    .set(\.layer.cornerRadius, to: 8)
+    .build()
   
   // MARK: - View LifeCycle
   
@@ -120,6 +123,7 @@ extension CategoryCreationViewController {
     view.addSubview(categoryTextEntryContainerView)
     view.addSubview(colorPickerContainerView)
     view.addSubview(categoryToastView)
+    view.addSubview(categoryDeletionButton)
     view.addSubview(selectedCategoryPreview)
     
     layout()
@@ -158,6 +162,15 @@ extension CategoryCreationViewController {
     colorPickerContainerView.snp.makeConstraints {
       $0.top.equalTo(categoryTextEntryContainerView.snp.bottom).offset(Metric.sectionVeritcalInset)
       $0.leading.trailing.equalTo(categoryTextEntryContainerView)
+    }
+  }
+  
+  private func makeCategoryDeletionButtonConstraints() {
+    categoryDeletionButton.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.height.equalTo(Metric.categoryDeletionButtonHeight)
+      $0.width.equalTo(Metric.categoryDeletionButtonWidth)
+      $0.bottom.equalTo(selectedCategoryPreview.snp.top).offset(-Metric.categoryDeletionButtonBottomMargin)
     }
   }
   
