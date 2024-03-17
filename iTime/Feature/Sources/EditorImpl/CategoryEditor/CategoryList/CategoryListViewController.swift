@@ -10,6 +10,7 @@ import UIKit
 import RIBs
 import RxSwift
 
+import Entities
 import SharedUI
 import AppFoundation
 
@@ -19,7 +20,7 @@ public protocol CategoryListPresentableListener: AnyObject {
   var error: Observable<DisplayErrorMessage> { get }
   var viewModel: Observable<CategoryListViewModel> { get }
   func loadData()
-  func didTapCell(from model: CategoryViewModel)
+  func didTapCell(from model: Entities.Category)
   func didTapCategoryCreationLabel()
 }
 
@@ -96,7 +97,7 @@ extension CategoryListViewController {
       .drive(with: self) { owner, item in
         switch item {
         case let .list(model):
-          owner.listener?.didTapCell(from: model)
+          owner.listener?.didTapCell(from: .init(title: model.title, color: model.color.toHex ?? ""))
         }
       }
       .disposed(by: disposeBag)

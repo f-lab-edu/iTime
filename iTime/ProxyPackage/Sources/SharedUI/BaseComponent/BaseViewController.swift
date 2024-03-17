@@ -48,7 +48,6 @@ open class BaseViewController:
   
   open override func viewDidLoad() {
     super.viewDidLoad()
-    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     view.setNeedsUpdateConstraints()
     view.backgroundColor = .black200
     navigationController?.navigationBar.isHidden = true
@@ -60,7 +59,8 @@ open class BaseViewController:
   
   open override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    guard isMovingToParent || isBeingDismissed else { return }
+    print("isMoving: \(isMovingToParent)")
+    guard isMovingFromParent || isBeingDismissed else { return }
     self.detachAction.accept(Void())
   }
   

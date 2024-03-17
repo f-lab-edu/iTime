@@ -7,6 +7,7 @@
 
 import RIBs
 
+import Entities
 import Editor
 import Start
 
@@ -16,7 +17,8 @@ public protocol CategoryEditorInteractable:
   Interactable,
   CurrentActivityListener,
   CategoryListListener,
-  CategoryCreationListener
+  CategoryCreationListener,
+  CategoryModificationListener
 {
   var router: CategoryEditorRouting? { get set }
   var listener: CategoryEditorListener? { get set }
@@ -48,6 +50,9 @@ final class CategoryEditorRouter:
   private let categoryCreationBuilder: CategoryCreationBuildable
   private var categoryCreationRouter: CategoryCreationRouting?
   
+  private let categoryModificationBuilder: CategoryModificationBuildable
+  private var categoryModificationRouter: CategoryModificationRouting?
+  
   // MARK: - Initialization & DeInitialization
   
   init(
@@ -55,10 +60,12 @@ final class CategoryEditorRouter:
     viewController: CategoryEditorViewControllable,
     currentActivityBuilder: CurrentActivityBuildable,
     categoryListBuilder: CategoryListBuildable,
+    categoryModificationBuilder: CategoryModificationBuildable,
     categoryCreationBuilder: CategoryCreationBuildable
   ) {
     self.currentActivityBuilder = currentActivityBuilder
     self.categoryListBuilder = categoryListBuilder
+    self.categoryModificationBuilder = categoryModificationBuilder
     self.categoryCreationBuilder = categoryCreationBuilder
     super.init(interactor: interactor, viewController: viewController)
     interactor.router = self
@@ -101,6 +108,30 @@ final class CategoryEditorRouter:
     categoryCreationRouter = router
     attachChild(router)
     viewController.push(viewController: router.viewControllable)
+  }
+  
+  func detachCategoryCreationRIB() {
+    guard let router = categoryCreationRouter else { return }
+    categoryCreationRouter = nil
+    detachChild(router)
+    viewController.pop(router.viewControllable)
+  }
+  
+  func attachCategoryModificationRIB(with category: Category) {
+    guard categoryModificationRouter == nil else { return }
+    let router = categoryModificationBuilder.build(
+      withListener: interactor
+    )
+    categoryModificationRouter = router
+    attachChild(router)
+    viewController.push(viewController: router.viewControllable)
+  }
+  
+  func detachCategoryModificationRIB() {
+    guard let router = categoryModificationRouter else { return }
+    categoryModificationRouter = nil
+    detachChild(router)
+    viewController.pop(router.viewControllable)
   }
   
 }

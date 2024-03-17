@@ -53,8 +53,13 @@ final class AppComponent:
   CategoryListDependency, 
   CategoryCreationDependency,
   TextEntryDependency,
-  ColorPickerDependency
+  ColorPickerDependency,
+  CategoryModificationDependency
 {
+  var categoryModificationBulider: CategoryModificationBuildable {
+    CategoryModificationBuilder(dependency: self)
+  }
+  
   var textEntryBuilder: TextEntryBuildable {
     TextEntryBuilder(dependency: self)
   }
@@ -63,7 +68,7 @@ final class AppComponent:
     ColorPickerBuilder(dependency: self)
   }
   
-  var categoryCreationBuilder: CategoryCreationBuilder {
+  var categoryCreationBuilder: CategoryCreationBuildable {
     CategoryCreationBuilder(dependency: self)
   }
   

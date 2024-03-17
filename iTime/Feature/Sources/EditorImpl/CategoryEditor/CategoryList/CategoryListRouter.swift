@@ -12,8 +12,7 @@ import Editor
 // MARK: - CategoryListInteractable
 
 protocol CategoryListInteractable: 
-  Interactable,
-  CategoryCreationListener
+  Interactable
 {
   var router: CategoryListRouting? { get set }
   var listener: CategoryListListener? { get set }
